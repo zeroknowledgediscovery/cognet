@@ -1,0 +1,2007 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>cognet.cognet API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#666666;background-color:black;//mix-blend-mode:difference;color:#bbbbbb;z-index:3}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#66bb66;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#66FF66}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:transparent;padding:1px 4px;color:#FFA500;overflow-wrap:break-word}h1 code{background:transparent}pre{overflow-wrap:break-word;background:#111111;word-wrap:break-word;border:0;border-top:1px solid #666;border-bottom:1px solid #666;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#333333;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#aaeeaa;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;color:#bbbbbb;background-color:black;overflow-wrap:break-word}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>cognet.cognet</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import numpy as np
+import pandas as pd
+import random
+from quasinet.qnet import Qnet, qdistance, load_qnet, qdistance_matrix
+from quasinet.qsampling import qsample, targeted_qsample
+import os
+os.system(&#34;module unload openmpi&#34;)
+#from mpi4py.futures import MPIPoolExecutor
+import sys
+import subprocess
+from pqdm.processes import pqdm
+from scipy.stats import entropy
+
+import multiprocessing as mp
+import time
+
+class Qnet_Constructor:
+    &#34;&#34;&#34;Aggregate related Qnet functions
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Init
+        &#34;&#34;&#34;
+        self.year = None
+        self.n_jobs = 28
+        self.qnet = None
+        self.steps = 120
+        self.num_qsamples = None
+        self.samples = None
+        self.samples_as_strings = None
+        self.features = None
+        self.cols = None
+        self.immutable_vars = None
+        self.mutable_vars = None
+        self.poles = None
+        self.polar_features = None
+        self.polar_indices = None
+        self.pL = None
+        self.pR = None
+        self.d0 = None
+        self.qdistance_matrix_file = None
+        self.dissonance_file = None
+        self.s_null = None
+        self.D_null = None
+        self.mask_prob = 0.5
+
+    def load_data(self,
+                  year, 
+                  features_by_year,
+                  samples,
+                  qnet):
+        &#34;&#34;&#34;load cols, features, samples, and qnet.
+
+        Args:
+            year (str): to identify cols/features.
+            features_by_year (str): file containing all features by year of the dataset.
+            samples (str): file of samples for that year.
+            Qnet (str): Qnet file location.
+        &#34;&#34;&#34;
+        self.qnet = load_qnet(qnet)
+        self.year = year
+        self.cols = np.array((pd.read_csv(features_by_year,
+                               keep_default_na=True, 
+                               index_col=0).set_index(
+                                   &#39;year&#39;)).loc[int(year)].apply(
+                                       eval).values[0])
+        self.features = pd.DataFrame(columns=self.cols)
+        #[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+        self.samples=pd.read_csv(samples)
+        self.samples = pd.concat([self.samples,self.features], axis=0)
+        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        self.s_null=[&#39;&#39;]*len(self.samples_as_strings[0])
+        self.D_null=self.qnet.predict_distributions(self.s_null)
+
+        self.mutable_vars = [x for x in self.cols]
+
+    def set_immutable_vars(self,
+                           IMMUTABLE_FILE):
+        &#39;&#39;&#39;
+        set vars to immutable and mutable, 
+        can prob combine this with the load_data func: only set the immutable vars if necessary
+
+        args:
+            IMMUTABLE_FILE (str): file containing the immutable features/vars
+        &#39;&#39;&#39;
+        if self.cols is None:
+            raise ValueError(&#34;load_data first!&#34;)
+        self.immutable_vars = pd.read_csv(IMMUTABLE_FILE,index_col=0).transpose()
+        self.mutable_vars = None
+        self.mutable_vars = [x for x in self.cols
+                             if x.upper() not in self.immutable_vars.columns]
+    
+    def set_nsamples(self,
+                     num_samples):
+        &#39;&#39;&#39;
+        select a subset of the samples
+
+        Args:
+            num_samples (int): Set num of samples to subset
+        &#39;&#39;&#39;
+        
+        if all(x is not None for x in [num_samples, self.samples]):
+            if num_samples &gt; len(self.samples.index):
+                string = &#39;The number of selected samples ({}) &#39; + \
+                     &#39;is greater than the number of samples ({})!&#39;
+                string = string.format(num_samples, len(self.samples.index))
+                raise ValueError(string)
+
+            if num_samples == len(self.samples.index):
+                string = &#39;The number of selected samples ({}) &#39; + \
+                     &#39;is equal the number of samples ({})!&#39;
+                string = string.format(num_samples, len(self.samples.index))
+                print(string)
+                return
+            self.samples = self.samples.sample(num_samples)
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+        elif self.samples is None:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def variation_weight(self,
+                         index):
+        &#39;&#39;&#39;
+        
+        args:
+            index (int): index of D_null to take
+        &#39;&#39;&#39;
+        d_=self.D_null[index]
+        v=[]
+        for val in d_.values():
+            v=np.append(v,val)
+        return entropy(v,base=len(v))
+
+    def getBaseFrequency(self, 
+                         sample):
+        &#39;&#39;&#39;
+        get frequency of the variables
+        helper func for qsampling
+
+        Args:
+            sample (list[str]): vector of sample, must have the same dimensions as the qnet
+        &#39;&#39;&#39;
+        MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
+        WITHVAL=[x for x in self.cols[np.where(sample)[0]] if x in self.mutable_vars ]
+                
+        for m in self.mutable_vars:
+            MUTABLE[m]=1.0
+        mutable_x=MUTABLE.values[0]
+        base_frequency=mutable_x/mutable_x.sum()
+
+        for i in range(len(base_frequency)):
+            if base_frequency[i]&gt;0.0:
+                base_frequency[i]= self.variation_weight(i)*base_frequency[i]
+
+        return base_frequency/base_frequency.sum()
+
+    def qsampling(self,
+                  sample,
+                  steps,
+                  immutable=False):
+        &#39;&#39;&#39;
+        perturb the sample based on thet qnet distributions and number of steps
+
+        args:
+            # qnet: qnet instance/model
+            sample (1d array-like): vector of sample, must have the same dimensions as the qnet
+            steps (int): number of steps to qsample
+            immutable (bool): are there variables that are immutable?
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.mutable_vars, self.immutable_vars, sample]):
+            if immutable == True:
+                return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
+            else:
+                return qsample(sample,self.qnet,steps)
+        elif self.mutable_vars is None:
+            raise ValueError(&#34;load_data first!&#34;)
+        elif self.immutable_vars is None:
+            raise ValueError(&#34;load immutable variables first!&#34;)
+
+    def set_poles(self,
+                  POLEFILE,
+                  steps=0):
+        &#39;&#39;&#39;
+        set the poles and samples such that the samples contain features in poles
+
+
+        args:
+            # qnet: qnet instance/model
+            steps (int): number of steps to qsample
+            POLEFILE (str): file containing poles samples and features
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples]):
+            poles = pd.read_csv(POLEFILE, index_col=0)
+            L=poles.L.to_dict()
+            R=poles.R.to_dict()
+            self.poles=poles.transpose()
+
+            cols = [x for x in self.poles.columns if x in self.samples.columns]
+            self.samples=self.samples[cols]
+        
+            for x in self.poles.columns:
+                if x not in self.samples.columns:
+                    self.samples[x]=np.nan
+
+            # print(&#34;testing samples&#34;)
+            # print(self.samples.head(3))
+            self.samples = pd.concat([self.samples,self.features], axis=0)
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            # print(self.samples.head(3))
+
+            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            pL= self.polar_features.loc[&#39;L&#39;][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            pR= self.polar_features.loc[&#39;R&#39;][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+            self.pL=self.qsampling(pL,steps)
+            self.pR=self.qsampling(pR,steps)
+        elif self.samples is None:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def distfunc(self, 
+                 x, 
+                 y):
+        &#39;&#39;&#39;
+        Compute distance between two samples
+
+        args:
+            x : first sample
+            y : second sample
+        &#39;&#39;&#39;
+        d=qdistance(x,y,qnet,qnet)
+        return d
+
+    def dfunc_line(self,
+                   row):
+        &#39;&#39;&#39;
+        compute the dist for a row, or vector of samples
+
+        args:
+            k (int): row
+        return:
+            numpy.ndarray(float)
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features]):
+            w = self.samples.index.size
+            p_all = pd.concat([self.samples, self.features], axis=0)[cols].fillna(&#39;&#39;).values.astype(str)[:]
+            line = np.zeros(w)
+            y = p_all[row]
+            for j in range(w):
+                # only compute half of the distance matrix
+                if j &gt; row:
+                    x = p_all[j]
+                    line[j] = distfunc(x, y)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+        return line
+
+    def embed(self,
+              infile,
+              name_pref,
+              out_dir):
+        &#39;&#39;&#39;
+        embed data
+
+        args:
+            infile (str): input file to be embedded
+            name_pref (str): preferred name for output file
+            out_dir (str): output dir for results
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.year]):
+            yr = self.year
+            PREF = name_pref
+            FILE = infile
+
+            EMBED = &#39;../GSS/bin/embed&#39;
+            DATAFILE = &#39;data_&#39; +yr
+            EFILE = out_dir + PREF + &#39;_E_&#39; +yr
+            DFILE = out_dir + PREF + &#39;_D_&#39; +yr
+
+            pd.read_csv(infile,header=None).to_csv(out_dir + DATAFILE,sep=&#39; &#39;,header=None,index=None)
+            STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
+            subprocess.call(STR,shell=True)
+        elif self.year is None:
+            raise ValueError(&#34;load_data first!&#34;)
+        
+    def compute_DLI(self,
+                    i,):
+        &#39;&#39;&#39;
+        return ideology index, dL, dR, Qsd (std), Q (max) for one sample
+
+        args:
+            i (int): index of sample
+        &#39;&#39;&#39;
+        p = self.samples_as_strings[i]
+        dR = qdistance(self.pR, p, self.qnet, self.qnet)
+        dL = qdistance(self.pL, p, self.qnet, self.qnet)
+        ideology_index = (dR-dL)/self.d0
+        
+        Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
+        Qset = np.array(Qset)
+
+        matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
+        Q = matrix.max()
+        Qsd = matrix.std()
+
+        return [ideology_index, dL, dR, Qsd, Q]
+       
+    def compute_all_DLI(self,
+                        num_qsamples,
+                        outfile,
+                        steps=5,
+                        n_jobs=28):
+        &#39;&#39;&#39;
+        compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples
+
+        args:
+            num_qsamples (int): number of qsamples to compute
+            steps (int): number of steps to qsample
+            outfile (str): output file for results
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features,
+                                    self.pL, self.pR]):
+            self.num_qsamples = num_qsamples
+            self.steps = steps
+            self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
+
+            result=pqdm(range(len(self.samples)), self.compute_DLI, n_jobs)
+            pd.DataFrame(result,
+                        columns=[&#39;ido&#39;, &#39;dL&#39;, &#39;dR&#39;, &#39;Qsd&#39;, &#39;Q&#39;]).to_csv(outfile)
+
+        elif self.pL is None or self.pR is None:
+            raise ValueError(&#34;set_poles first!&#34;)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+    
+    def compute_polar_indices(self,
+                              num_samples = None,
+                              polar_comp = False,
+                              POLEFILE = None,
+                              steps = 5):
+        &#39;&#39;&#39;
+        set up polar indices for dissonance func
+
+        args:
+            num_samples (int): subset of samples to take
+            polar_comp (bool): whether or not to set poles
+            POLEFILE (None): file containing pole samples and features
+            steps (int): number of steps to qsample
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features, self.poles]):
+            if num_samples is not None:
+                self.set_nsamples(num_samples)
+
+            # read sample data
+            if polar_comp:
+                self.set_poles(self.qnet, steps, POLEFILE)
+            
+            polar_features = pd.concat([self.poles, self.features], axis=0)
+            self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
+        
+        elif self.poles is None:
+            raise ValueError(&#34;set_poles first!&#34;)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def getDissonance_per_sample(self,
+                                sample_index,
+                                MISSING_VAL=0.0):
+        &#39;&#39;&#39;
+        compute dissonance for each sample_index, helper function for all_dissonance
+        
+        args:
+            sample_index (int): index of the sample to compute dissonance
+            MISSING_VAL (float): 
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features, 
+                                       self.poles]):
+            s = self.samples_as_strings[sample_index]
+            if self.polar_indices is None:
+                self.polar_indices = range(len(s))
+
+            Ds=self.qnet.predict_distributions(s)
+            
+            diss=np.ones(len(Ds))*MISSING_VAL
+            for i in self.polar_indices:
+                if s[i] != &#39;&#39;:
+                    if s[i] in Ds[i].keys():
+                        diss[i]=1-Ds[i][s[i]]/np.max(
+                            list(Ds[i].values())) 
+                    else:
+                        diss[i]=1.0
+
+            # print(&#34;diss:{}&#34;.format(diss))
+            # print(&#34;polar_indices:{}&#34;.format(self.polar_indices))
+            # print(s)
+            return diss[self.polar_indices]
+
+        elif self.poles is None:
+            raise ValueError(&#34;set_poles first!&#34;)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+    
+    def all_dissonance(self,
+                       n_jobs=28):
+        &#39;&#39;&#39;
+        get the dissonance for all samples
+
+        args:
+            n_jobs (int): number of jobs for pdqm
+        &#39;&#39;&#39;
+        result=pqdm(range(len(self.samples)), self.getDissonance_per_sample, n_jobs)
+        out_file = &#39;DISSONANCE_&#39;+self.year+&#39;.csv&#39;
+        print(result)
+        pd.DataFrame(result,
+                    columns=self.polar_features[self.cols].dropna(
+                    axis=1).columns).to_csv(out_file)
+        self.dissonance_file = out_file
+    
+    def choose_one(self,
+                   X):
+        &#39;&#39;&#39;
+        returns a random element of X
+
+        args:
+            X (1D array-like): vector from which random element is to be chosen
+        &#39;&#39;&#39;
+        X=list(X)
+        if len(X)&gt;0:
+            return X[np.random.randint(len(X))]
+        return None
+
+    def getMaskedSample(self,
+                        s,
+                        mask_prob=0.5,
+                        allow_all_mutable=False):
+        &#39;&#39;&#39;
+        inputs a sample and randomly mask elements of the sample
+
+        args:
+            s (list[str]): vector of sample, must have the same dimensions as the qnet
+            mask_prob (float): float btwn 0 and 1, prob to mask element of sample
+            allow_all_mutable (bool): whether or not all variables are mutable
+        &#39;&#39;&#39;
+        if self.samples is not None:   
+            MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
+            WITHVAL=[x for x in self.cols[np.where(s)[0]] if x in self.mutable_vars ]
+            MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
+            for m in MASKrand:
+                MUTABLE[m]=1.0
+            
+            mutable_x=MUTABLE.values[0]
+            base_frequency=mutable_x/mutable_x.sum()
+
+            if np.isnan(base_frequency).any():
+                print(&#34;repeating&#34;)
+                return None
+                return self.getMaskedSample(s)
+
+            s1=s.copy()
+            for i in range(len(base_frequency)):
+                if base_frequency[i]&gt;0.0001:
+                    s1[i]=&#39;&#39;
+                    
+            s_rand=np.copy(s)
+            rnd_match_prob=[]        
+            max_match_prob=[]        
+            D=self.qnet.predict_distributions(s)
+            for i in MASKrand:
+                s_rand[np.where(
+                    self.cols==i)[0][0]]=self.choose_one(
+                        self.D_null[np.where(self.cols==i)[0][0]].keys())
+                rnd_match_prob=np.append(rnd_match_prob,1/len(
+                    self.D_null[np.where(self.cols==i)[0][0]].keys()))
+                max_match_prob=np.append(
+                    max_match_prob,np.max(
+                        list(D[np.where(
+                            self.cols==i)[0][0]].values())))
+                
+            if allow_all_mutable:
+                for m in mutable_vars:
+                    MUTABLE[m]=1.0
+                mutable_x=MUTABLE.values[0]
+                base_frequency=mutable_x/mutable_x.sum()
+
+            #print(rnd_match_prob)
+
+            return s1,base_frequency,MASKrand,np.where(
+                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def getRedError(self,
+                    index,
+                    return_dict):
+        &#39;&#39;&#39;
+        reconstruct the masked sample by qsampling and comparing to original
+        set self.mask_prob and self.steps if needed
+
+        args:
+            index (int): index of sample to take
+        &#39;&#39;&#39;
+        start = time.time()
+        s=self.samples_as_strings[index]
+
+        mask_time = time.time()
+        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s,
+                                                                    self.mask_prob)
+        mask_time_end = time.time()
+        print(&#34;mask_time:{}&#34;.format(mask_time_end - mask_time))
+
+        if np.isnan(bp).any():
+                print(&#34;repeating&#34;)
+                return self.getRedError(index, return_dict)
+
+        qs=qsample(s1,self.qnet,self.steps,bp)
+
+        # if CMPR_SAVE:
+        #     cmpf=pd.DataFrame([s,qs,s_rand],columns=cols,index=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])[mask_].transpose()
+        #     cmpf.index.name=&#39;gssvar&#39;
+        #     if DEBUG2:
+        #         cmpf.to_csv(&#39;tmpCMPF-&#39;+yr+str(index)+&#39;.csv&#39;)
+        #     else:
+        #         cmpf.to_csv(&#39;CMPF-&#39;+yr+str(index)+&#39;.csv&#39;)
+
+        qdistance_time = time.time()
+        dqestim=qdistance(s,qs,self.qnet,self.qnet)
+        #drand=qdistance(s,s_rand,qnet,qnet)
+        dactual=qdistance(s,s1,self.qnet,self.qnet)
+        qdistance_time_end = time.time()
+        print(&#34;qdistance_time:{}&#34;.format(qdistance_time_end - qdistance_time))
+
+        # print(&#34;dqestim:{}&#34;.format(dqestim))
+        # print(&#34;dactual:{}&#34;.format(dactual))
+        end = time.time()
+        tmp_time = end-start
+        print(&#34;func_time:{}&#34;.format(tmp_time))
+        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
+        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch
+
+    def get_partial_estimate(self):
+        &#39;&#39;&#39;
+        saves the results of the predicted masked sample
+
+        args:
+        &#39;&#39;&#39;
+        start = time.time()
+        #print([x for x in range(len(self.samples))])
+        # with mp.Pool(processes=15) as pool:
+        #         result = pool.map(self.getRedError, range(len(self.samples)))
+        #pqdm(range(len(self.samples)), self.getRedError, n_jobs=2)#self.n_jobs)
+        manager = mp.Manager()
+        return_dict = manager.dict()
+        processes = []
+        for i in range(len(self.samples)):
+            p = mp.Process(target=self.getRedError, args=(i, return_dict))
+            processes.append(p)
+
+        [x.start() for x in processes]
+        [x.join() for x in processes]
+        print(return_dict.values())
+        end = time.time()
+        print(&#34;pqdm time:{}&#34;.format(end - start))
+        # result=list(result)
+        # result=[x for x in result if isinstance(x, tuple) ]
+        # result=pd.DataFrame(result,columns=[&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;])
+        # result.rederr=result.rederr.astype(float)
+        #print(result)
+
+        #if self.poles is not None:
+            #result.to_csv(&#39;Qnet_Constructor_tmp/rederror&#39;+self.year+str(self.steps)+&#39;.csv&#39;)
+        #else:
+            #result.to_csv(&#39;Qnet_Constructor_tmp/polar_unrestrict_rederror&#39;+self.year+str(self.steps)+&#39;.csv&#39;)
+        
+        # print(result.rederr.mean(),result.rand_err.mean())
+        # return result.rederr.mean(), result.rand_err.mean()</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="cognet.cognet.Qnet_Constructor"><code class="flex name class">
+<span>class <span class="ident">Qnet_Constructor</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Aggregate related Qnet functions</p>
+<p>Init</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class Qnet_Constructor:
+    &#34;&#34;&#34;Aggregate related Qnet functions
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Init
+        &#34;&#34;&#34;
+        self.year = None
+        self.n_jobs = 28
+        self.qnet = None
+        self.steps = 120
+        self.num_qsamples = None
+        self.samples = None
+        self.samples_as_strings = None
+        self.features = None
+        self.cols = None
+        self.immutable_vars = None
+        self.mutable_vars = None
+        self.poles = None
+        self.polar_features = None
+        self.polar_indices = None
+        self.pL = None
+        self.pR = None
+        self.d0 = None
+        self.qdistance_matrix_file = None
+        self.dissonance_file = None
+        self.s_null = None
+        self.D_null = None
+        self.mask_prob = 0.5
+
+    def load_data(self,
+                  year, 
+                  features_by_year,
+                  samples,
+                  qnet):
+        &#34;&#34;&#34;load cols, features, samples, and qnet.
+
+        Args:
+            year (str): to identify cols/features.
+            features_by_year (str): file containing all features by year of the dataset.
+            samples (str): file of samples for that year.
+            Qnet (str): Qnet file location.
+        &#34;&#34;&#34;
+        self.qnet = load_qnet(qnet)
+        self.year = year
+        self.cols = np.array((pd.read_csv(features_by_year,
+                               keep_default_na=True, 
+                               index_col=0).set_index(
+                                   &#39;year&#39;)).loc[int(year)].apply(
+                                       eval).values[0])
+        self.features = pd.DataFrame(columns=self.cols)
+        #[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+        self.samples=pd.read_csv(samples)
+        self.samples = pd.concat([self.samples,self.features], axis=0)
+        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        self.s_null=[&#39;&#39;]*len(self.samples_as_strings[0])
+        self.D_null=self.qnet.predict_distributions(self.s_null)
+
+        self.mutable_vars = [x for x in self.cols]
+
+    def set_immutable_vars(self,
+                           IMMUTABLE_FILE):
+        &#39;&#39;&#39;
+        set vars to immutable and mutable, 
+        can prob combine this with the load_data func: only set the immutable vars if necessary
+
+        args:
+            IMMUTABLE_FILE (str): file containing the immutable features/vars
+        &#39;&#39;&#39;
+        if self.cols is None:
+            raise ValueError(&#34;load_data first!&#34;)
+        self.immutable_vars = pd.read_csv(IMMUTABLE_FILE,index_col=0).transpose()
+        self.mutable_vars = None
+        self.mutable_vars = [x for x in self.cols
+                             if x.upper() not in self.immutable_vars.columns]
+    
+    def set_nsamples(self,
+                     num_samples):
+        &#39;&#39;&#39;
+        select a subset of the samples
+
+        Args:
+            num_samples (int): Set num of samples to subset
+        &#39;&#39;&#39;
+        
+        if all(x is not None for x in [num_samples, self.samples]):
+            if num_samples &gt; len(self.samples.index):
+                string = &#39;The number of selected samples ({}) &#39; + \
+                     &#39;is greater than the number of samples ({})!&#39;
+                string = string.format(num_samples, len(self.samples.index))
+                raise ValueError(string)
+
+            if num_samples == len(self.samples.index):
+                string = &#39;The number of selected samples ({}) &#39; + \
+                     &#39;is equal the number of samples ({})!&#39;
+                string = string.format(num_samples, len(self.samples.index))
+                print(string)
+                return
+            self.samples = self.samples.sample(num_samples)
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+        elif self.samples is None:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def variation_weight(self,
+                         index):
+        &#39;&#39;&#39;
+        
+        args:
+            index (int): index of D_null to take
+        &#39;&#39;&#39;
+        d_=self.D_null[index]
+        v=[]
+        for val in d_.values():
+            v=np.append(v,val)
+        return entropy(v,base=len(v))
+
+    def getBaseFrequency(self, 
+                         sample):
+        &#39;&#39;&#39;
+        get frequency of the variables
+        helper func for qsampling
+
+        Args:
+            sample (list[str]): vector of sample, must have the same dimensions as the qnet
+        &#39;&#39;&#39;
+        MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
+        WITHVAL=[x for x in self.cols[np.where(sample)[0]] if x in self.mutable_vars ]
+                
+        for m in self.mutable_vars:
+            MUTABLE[m]=1.0
+        mutable_x=MUTABLE.values[0]
+        base_frequency=mutable_x/mutable_x.sum()
+
+        for i in range(len(base_frequency)):
+            if base_frequency[i]&gt;0.0:
+                base_frequency[i]= self.variation_weight(i)*base_frequency[i]
+
+        return base_frequency/base_frequency.sum()
+
+    def qsampling(self,
+                  sample,
+                  steps,
+                  immutable=False):
+        &#39;&#39;&#39;
+        perturb the sample based on thet qnet distributions and number of steps
+
+        args:
+            # qnet: qnet instance/model
+            sample (1d array-like): vector of sample, must have the same dimensions as the qnet
+            steps (int): number of steps to qsample
+            immutable (bool): are there variables that are immutable?
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.mutable_vars, self.immutable_vars, sample]):
+            if immutable == True:
+                return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
+            else:
+                return qsample(sample,self.qnet,steps)
+        elif self.mutable_vars is None:
+            raise ValueError(&#34;load_data first!&#34;)
+        elif self.immutable_vars is None:
+            raise ValueError(&#34;load immutable variables first!&#34;)
+
+    def set_poles(self,
+                  POLEFILE,
+                  steps=0):
+        &#39;&#39;&#39;
+        set the poles and samples such that the samples contain features in poles
+
+
+        args:
+            # qnet: qnet instance/model
+            steps (int): number of steps to qsample
+            POLEFILE (str): file containing poles samples and features
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples]):
+            poles = pd.read_csv(POLEFILE, index_col=0)
+            L=poles.L.to_dict()
+            R=poles.R.to_dict()
+            self.poles=poles.transpose()
+
+            cols = [x for x in self.poles.columns if x in self.samples.columns]
+            self.samples=self.samples[cols]
+        
+            for x in self.poles.columns:
+                if x not in self.samples.columns:
+                    self.samples[x]=np.nan
+
+            # print(&#34;testing samples&#34;)
+            # print(self.samples.head(3))
+            self.samples = pd.concat([self.samples,self.features], axis=0)
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            # print(self.samples.head(3))
+
+            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            pL= self.polar_features.loc[&#39;L&#39;][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            pR= self.polar_features.loc[&#39;R&#39;][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+            self.pL=self.qsampling(pL,steps)
+            self.pR=self.qsampling(pR,steps)
+        elif self.samples is None:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def distfunc(self, 
+                 x, 
+                 y):
+        &#39;&#39;&#39;
+        Compute distance between two samples
+
+        args:
+            x : first sample
+            y : second sample
+        &#39;&#39;&#39;
+        d=qdistance(x,y,qnet,qnet)
+        return d
+
+    def dfunc_line(self,
+                   row):
+        &#39;&#39;&#39;
+        compute the dist for a row, or vector of samples
+
+        args:
+            k (int): row
+        return:
+            numpy.ndarray(float)
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features]):
+            w = self.samples.index.size
+            p_all = pd.concat([self.samples, self.features], axis=0)[cols].fillna(&#39;&#39;).values.astype(str)[:]
+            line = np.zeros(w)
+            y = p_all[row]
+            for j in range(w):
+                # only compute half of the distance matrix
+                if j &gt; row:
+                    x = p_all[j]
+                    line[j] = distfunc(x, y)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+        return line
+
+    def embed(self,
+              infile,
+              name_pref,
+              out_dir):
+        &#39;&#39;&#39;
+        embed data
+
+        args:
+            infile (str): input file to be embedded
+            name_pref (str): preferred name for output file
+            out_dir (str): output dir for results
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.year]):
+            yr = self.year
+            PREF = name_pref
+            FILE = infile
+
+            EMBED = &#39;../GSS/bin/embed&#39;
+            DATAFILE = &#39;data_&#39; +yr
+            EFILE = out_dir + PREF + &#39;_E_&#39; +yr
+            DFILE = out_dir + PREF + &#39;_D_&#39; +yr
+
+            pd.read_csv(infile,header=None).to_csv(out_dir + DATAFILE,sep=&#39; &#39;,header=None,index=None)
+            STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
+            subprocess.call(STR,shell=True)
+        elif self.year is None:
+            raise ValueError(&#34;load_data first!&#34;)
+        
+    def compute_DLI(self,
+                    i,):
+        &#39;&#39;&#39;
+        return ideology index, dL, dR, Qsd (std), Q (max) for one sample
+
+        args:
+            i (int): index of sample
+        &#39;&#39;&#39;
+        p = self.samples_as_strings[i]
+        dR = qdistance(self.pR, p, self.qnet, self.qnet)
+        dL = qdistance(self.pL, p, self.qnet, self.qnet)
+        ideology_index = (dR-dL)/self.d0
+        
+        Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
+        Qset = np.array(Qset)
+
+        matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
+        Q = matrix.max()
+        Qsd = matrix.std()
+
+        return [ideology_index, dL, dR, Qsd, Q]
+       
+    def compute_all_DLI(self,
+                        num_qsamples,
+                        outfile,
+                        steps=5,
+                        n_jobs=28):
+        &#39;&#39;&#39;
+        compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples
+
+        args:
+            num_qsamples (int): number of qsamples to compute
+            steps (int): number of steps to qsample
+            outfile (str): output file for results
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features,
+                                    self.pL, self.pR]):
+            self.num_qsamples = num_qsamples
+            self.steps = steps
+            self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
+
+            result=pqdm(range(len(self.samples)), self.compute_DLI, n_jobs)
+            pd.DataFrame(result,
+                        columns=[&#39;ido&#39;, &#39;dL&#39;, &#39;dR&#39;, &#39;Qsd&#39;, &#39;Q&#39;]).to_csv(outfile)
+
+        elif self.pL is None or self.pR is None:
+            raise ValueError(&#34;set_poles first!&#34;)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+    
+    def compute_polar_indices(self,
+                              num_samples = None,
+                              polar_comp = False,
+                              POLEFILE = None,
+                              steps = 5):
+        &#39;&#39;&#39;
+        set up polar indices for dissonance func
+
+        args:
+            num_samples (int): subset of samples to take
+            polar_comp (bool): whether or not to set poles
+            POLEFILE (None): file containing pole samples and features
+            steps (int): number of steps to qsample
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features, self.poles]):
+            if num_samples is not None:
+                self.set_nsamples(num_samples)
+
+            # read sample data
+            if polar_comp:
+                self.set_poles(self.qnet, steps, POLEFILE)
+            
+            polar_features = pd.concat([self.poles, self.features], axis=0)
+            self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
+        
+        elif self.poles is None:
+            raise ValueError(&#34;set_poles first!&#34;)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def getDissonance_per_sample(self,
+                                sample_index,
+                                MISSING_VAL=0.0):
+        &#39;&#39;&#39;
+        compute dissonance for each sample_index, helper function for all_dissonance
+        
+        args:
+            sample_index (int): index of the sample to compute dissonance
+            MISSING_VAL (float): 
+        &#39;&#39;&#39;
+        if all(x is not None for x in [self.samples, self.features, 
+                                       self.poles]):
+            s = self.samples_as_strings[sample_index]
+            if self.polar_indices is None:
+                self.polar_indices = range(len(s))
+
+            Ds=self.qnet.predict_distributions(s)
+            
+            diss=np.ones(len(Ds))*MISSING_VAL
+            for i in self.polar_indices:
+                if s[i] != &#39;&#39;:
+                    if s[i] in Ds[i].keys():
+                        diss[i]=1-Ds[i][s[i]]/np.max(
+                            list(Ds[i].values())) 
+                    else:
+                        diss[i]=1.0
+
+            # print(&#34;diss:{}&#34;.format(diss))
+            # print(&#34;polar_indices:{}&#34;.format(self.polar_indices))
+            # print(s)
+            return diss[self.polar_indices]
+
+        elif self.poles is None:
+            raise ValueError(&#34;set_poles first!&#34;)
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+    
+    def all_dissonance(self,
+                       n_jobs=28):
+        &#39;&#39;&#39;
+        get the dissonance for all samples
+
+        args:
+            n_jobs (int): number of jobs for pdqm
+        &#39;&#39;&#39;
+        result=pqdm(range(len(self.samples)), self.getDissonance_per_sample, n_jobs)
+        out_file = &#39;DISSONANCE_&#39;+self.year+&#39;.csv&#39;
+        print(result)
+        pd.DataFrame(result,
+                    columns=self.polar_features[self.cols].dropna(
+                    axis=1).columns).to_csv(out_file)
+        self.dissonance_file = out_file
+    
+    def choose_one(self,
+                   X):
+        &#39;&#39;&#39;
+        returns a random element of X
+
+        args:
+            X (1D array-like): vector from which random element is to be chosen
+        &#39;&#39;&#39;
+        X=list(X)
+        if len(X)&gt;0:
+            return X[np.random.randint(len(X))]
+        return None
+
+    def getMaskedSample(self,
+                        s,
+                        mask_prob=0.5,
+                        allow_all_mutable=False):
+        &#39;&#39;&#39;
+        inputs a sample and randomly mask elements of the sample
+
+        args:
+            s (list[str]): vector of sample, must have the same dimensions as the qnet
+            mask_prob (float): float btwn 0 and 1, prob to mask element of sample
+            allow_all_mutable (bool): whether or not all variables are mutable
+        &#39;&#39;&#39;
+        if self.samples is not None:   
+            MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
+            WITHVAL=[x for x in self.cols[np.where(s)[0]] if x in self.mutable_vars ]
+            MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
+            for m in MASKrand:
+                MUTABLE[m]=1.0
+            
+            mutable_x=MUTABLE.values[0]
+            base_frequency=mutable_x/mutable_x.sum()
+
+            if np.isnan(base_frequency).any():
+                print(&#34;repeating&#34;)
+                return None
+                return self.getMaskedSample(s)
+
+            s1=s.copy()
+            for i in range(len(base_frequency)):
+                if base_frequency[i]&gt;0.0001:
+                    s1[i]=&#39;&#39;
+                    
+            s_rand=np.copy(s)
+            rnd_match_prob=[]        
+            max_match_prob=[]        
+            D=self.qnet.predict_distributions(s)
+            for i in MASKrand:
+                s_rand[np.where(
+                    self.cols==i)[0][0]]=self.choose_one(
+                        self.D_null[np.where(self.cols==i)[0][0]].keys())
+                rnd_match_prob=np.append(rnd_match_prob,1/len(
+                    self.D_null[np.where(self.cols==i)[0][0]].keys()))
+                max_match_prob=np.append(
+                    max_match_prob,np.max(
+                        list(D[np.where(
+                            self.cols==i)[0][0]].values())))
+                
+            if allow_all_mutable:
+                for m in mutable_vars:
+                    MUTABLE[m]=1.0
+                mutable_x=MUTABLE.values[0]
+                base_frequency=mutable_x/mutable_x.sum()
+
+            #print(rnd_match_prob)
+
+            return s1,base_frequency,MASKrand,np.where(
+                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+        else:
+            raise ValueError(&#34;load_data first!&#34;)
+
+    def getRedError(self,
+                    index,
+                    return_dict):
+        &#39;&#39;&#39;
+        reconstruct the masked sample by qsampling and comparing to original
+        set self.mask_prob and self.steps if needed
+
+        args:
+            index (int): index of sample to take
+        &#39;&#39;&#39;
+        start = time.time()
+        s=self.samples_as_strings[index]
+
+        mask_time = time.time()
+        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s,
+                                                                    self.mask_prob)
+        mask_time_end = time.time()
+        print(&#34;mask_time:{}&#34;.format(mask_time_end - mask_time))
+
+        if np.isnan(bp).any():
+                print(&#34;repeating&#34;)
+                return self.getRedError(index, return_dict)
+
+        qs=qsample(s1,self.qnet,self.steps,bp)
+
+        # if CMPR_SAVE:
+        #     cmpf=pd.DataFrame([s,qs,s_rand],columns=cols,index=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])[mask_].transpose()
+        #     cmpf.index.name=&#39;gssvar&#39;
+        #     if DEBUG2:
+        #         cmpf.to_csv(&#39;tmpCMPF-&#39;+yr+str(index)+&#39;.csv&#39;)
+        #     else:
+        #         cmpf.to_csv(&#39;CMPF-&#39;+yr+str(index)+&#39;.csv&#39;)
+
+        qdistance_time = time.time()
+        dqestim=qdistance(s,qs,self.qnet,self.qnet)
+        #drand=qdistance(s,s_rand,qnet,qnet)
+        dactual=qdistance(s,s1,self.qnet,self.qnet)
+        qdistance_time_end = time.time()
+        print(&#34;qdistance_time:{}&#34;.format(qdistance_time_end - qdistance_time))
+
+        # print(&#34;dqestim:{}&#34;.format(dqestim))
+        # print(&#34;dactual:{}&#34;.format(dactual))
+        end = time.time()
+        tmp_time = end-start
+        print(&#34;func_time:{}&#34;.format(tmp_time))
+        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
+        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch
+
+    def get_partial_estimate(self):
+        &#39;&#39;&#39;
+        saves the results of the predicted masked sample
+
+        args:
+        &#39;&#39;&#39;
+        start = time.time()
+        #print([x for x in range(len(self.samples))])
+        # with mp.Pool(processes=15) as pool:
+        #         result = pool.map(self.getRedError, range(len(self.samples)))
+        #pqdm(range(len(self.samples)), self.getRedError, n_jobs=2)#self.n_jobs)
+        manager = mp.Manager()
+        return_dict = manager.dict()
+        processes = []
+        for i in range(len(self.samples)):
+            p = mp.Process(target=self.getRedError, args=(i, return_dict))
+            processes.append(p)
+
+        [x.start() for x in processes]
+        [x.join() for x in processes]
+        print(return_dict.values())
+        end = time.time()
+        print(&#34;pqdm time:{}&#34;.format(end - start))</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="cognet.cognet.Qnet_Constructor.all_dissonance"><code class="name flex">
+<span>def <span class="ident">all_dissonance</span></span>(<span>self, n_jobs=28)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>get the dissonance for all samples</p>
+<p>args:
+n_jobs (int): number of jobs for pdqm</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def all_dissonance(self,
+                   n_jobs=28):
+    &#39;&#39;&#39;
+    get the dissonance for all samples
+
+    args:
+        n_jobs (int): number of jobs for pdqm
+    &#39;&#39;&#39;
+    result=pqdm(range(len(self.samples)), self.getDissonance_per_sample, n_jobs)
+    out_file = &#39;DISSONANCE_&#39;+self.year+&#39;.csv&#39;
+    print(result)
+    pd.DataFrame(result,
+                columns=self.polar_features[self.cols].dropna(
+                axis=1).columns).to_csv(out_file)
+    self.dissonance_file = out_file</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.choose_one"><code class="name flex">
+<span>def <span class="ident">choose_one</span></span>(<span>self, X)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>returns a random element of X</p>
+<p>args:
+X (1D array-like): vector from which random element is to be chosen</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def choose_one(self,
+               X):
+    &#39;&#39;&#39;
+    returns a random element of X
+
+    args:
+        X (1D array-like): vector from which random element is to be chosen
+    &#39;&#39;&#39;
+    X=list(X)
+    if len(X)&gt;0:
+        return X[np.random.randint(len(X))]
+    return None</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.compute_DLI"><code class="name flex">
+<span>def <span class="ident">compute_DLI</span></span>(<span>self, i)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>return ideology index, dL, dR, Qsd (std), Q (max) for one sample</p>
+<p>args:
+i (int): index of sample</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_DLI(self,
+                i,):
+    &#39;&#39;&#39;
+    return ideology index, dL, dR, Qsd (std), Q (max) for one sample
+
+    args:
+        i (int): index of sample
+    &#39;&#39;&#39;
+    p = self.samples_as_strings[i]
+    dR = qdistance(self.pR, p, self.qnet, self.qnet)
+    dL = qdistance(self.pL, p, self.qnet, self.qnet)
+    ideology_index = (dR-dL)/self.d0
+    
+    Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
+    Qset = np.array(Qset)
+
+    matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
+    Q = matrix.max()
+    Qsd = matrix.std()
+
+    return [ideology_index, dL, dR, Qsd, Q]</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.compute_all_DLI"><code class="name flex">
+<span>def <span class="ident">compute_all_DLI</span></span>(<span>self, num_qsamples, outfile, steps=5, n_jobs=28)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples</p>
+<p>args:
+num_qsamples (int): number of qsamples to compute
+steps (int): number of steps to qsample
+outfile (str): output file for results</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_all_DLI(self,
+                    num_qsamples,
+                    outfile,
+                    steps=5,
+                    n_jobs=28):
+    &#39;&#39;&#39;
+    compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples
+
+    args:
+        num_qsamples (int): number of qsamples to compute
+        steps (int): number of steps to qsample
+        outfile (str): output file for results
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.samples, self.features,
+                                self.pL, self.pR]):
+        self.num_qsamples = num_qsamples
+        self.steps = steps
+        self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
+
+        result=pqdm(range(len(self.samples)), self.compute_DLI, n_jobs)
+        pd.DataFrame(result,
+                    columns=[&#39;ido&#39;, &#39;dL&#39;, &#39;dR&#39;, &#39;Qsd&#39;, &#39;Q&#39;]).to_csv(outfile)
+
+    elif self.pL is None or self.pR is None:
+        raise ValueError(&#34;set_poles first!&#34;)
+    else:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.compute_polar_indices"><code class="name flex">
+<span>def <span class="ident">compute_polar_indices</span></span>(<span>self, num_samples=None, polar_comp=False, POLEFILE=None, steps=5)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>set up polar indices for dissonance func</p>
+<p>args:
+num_samples (int): subset of samples to take
+polar_comp (bool): whether or not to set poles
+POLEFILE (None): file containing pole samples and features
+steps (int): number of steps to qsample</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_polar_indices(self,
+                          num_samples = None,
+                          polar_comp = False,
+                          POLEFILE = None,
+                          steps = 5):
+    &#39;&#39;&#39;
+    set up polar indices for dissonance func
+
+    args:
+        num_samples (int): subset of samples to take
+        polar_comp (bool): whether or not to set poles
+        POLEFILE (None): file containing pole samples and features
+        steps (int): number of steps to qsample
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.samples, self.features, self.poles]):
+        if num_samples is not None:
+            self.set_nsamples(num_samples)
+
+        # read sample data
+        if polar_comp:
+            self.set_poles(self.qnet, steps, POLEFILE)
+        
+        polar_features = pd.concat([self.poles, self.features], axis=0)
+        self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
+    
+    elif self.poles is None:
+        raise ValueError(&#34;set_poles first!&#34;)
+    else:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.dfunc_line"><code class="name flex">
+<span>def <span class="ident">dfunc_line</span></span>(<span>self, row)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>compute the dist for a row, or vector of samples</p>
+<p>args:
+k (int): row
+return:
+numpy.ndarray(float)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def dfunc_line(self,
+               row):
+    &#39;&#39;&#39;
+    compute the dist for a row, or vector of samples
+
+    args:
+        k (int): row
+    return:
+        numpy.ndarray(float)
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.samples, self.features]):
+        w = self.samples.index.size
+        p_all = pd.concat([self.samples, self.features], axis=0)[cols].fillna(&#39;&#39;).values.astype(str)[:]
+        line = np.zeros(w)
+        y = p_all[row]
+        for j in range(w):
+            # only compute half of the distance matrix
+            if j &gt; row:
+                x = p_all[j]
+                line[j] = distfunc(x, y)
+    else:
+        raise ValueError(&#34;load_data first!&#34;)
+    return line</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.distfunc"><code class="name flex">
+<span>def <span class="ident">distfunc</span></span>(<span>self, x, y)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute distance between two samples</p>
+<p>args:
+x : first sample
+y : second sample</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def distfunc(self, 
+             x, 
+             y):
+    &#39;&#39;&#39;
+    Compute distance between two samples
+
+    args:
+        x : first sample
+        y : second sample
+    &#39;&#39;&#39;
+    d=qdistance(x,y,qnet,qnet)
+    return d</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.embed"><code class="name flex">
+<span>def <span class="ident">embed</span></span>(<span>self, infile, name_pref, out_dir)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>embed data</p>
+<p>args:
+infile (str): input file to be embedded
+name_pref (str): preferred name for output file
+out_dir (str): output dir for results</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def embed(self,
+          infile,
+          name_pref,
+          out_dir):
+    &#39;&#39;&#39;
+    embed data
+
+    args:
+        infile (str): input file to be embedded
+        name_pref (str): preferred name for output file
+        out_dir (str): output dir for results
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.year]):
+        yr = self.year
+        PREF = name_pref
+        FILE = infile
+
+        EMBED = &#39;../GSS/bin/embed&#39;
+        DATAFILE = &#39;data_&#39; +yr
+        EFILE = out_dir + PREF + &#39;_E_&#39; +yr
+        DFILE = out_dir + PREF + &#39;_D_&#39; +yr
+
+        pd.read_csv(infile,header=None).to_csv(out_dir + DATAFILE,sep=&#39; &#39;,header=None,index=None)
+        STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
+        subprocess.call(STR,shell=True)
+    elif self.year is None:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.getBaseFrequency"><code class="name flex">
+<span>def <span class="ident">getBaseFrequency</span></span>(<span>self, sample)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>get frequency of the variables
+helper func for qsampling</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>sample</code></strong> :&ensp;<code>list[str]</code></dt>
+<dd>vector of sample, must have the same dimensions as the qnet</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getBaseFrequency(self, 
+                     sample):
+    &#39;&#39;&#39;
+    get frequency of the variables
+    helper func for qsampling
+
+    Args:
+        sample (list[str]): vector of sample, must have the same dimensions as the qnet
+    &#39;&#39;&#39;
+    MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
+    WITHVAL=[x for x in self.cols[np.where(sample)[0]] if x in self.mutable_vars ]
+            
+    for m in self.mutable_vars:
+        MUTABLE[m]=1.0
+    mutable_x=MUTABLE.values[0]
+    base_frequency=mutable_x/mutable_x.sum()
+
+    for i in range(len(base_frequency)):
+        if base_frequency[i]&gt;0.0:
+            base_frequency[i]= self.variation_weight(i)*base_frequency[i]
+
+    return base_frequency/base_frequency.sum()</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.getDissonance_per_sample"><code class="name flex">
+<span>def <span class="ident">getDissonance_per_sample</span></span>(<span>self, sample_index, MISSING_VAL=0.0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>compute dissonance for each sample_index, helper function for all_dissonance</p>
+<p>args:
+sample_index (int): index of the sample to compute dissonance
+MISSING_VAL (float):</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getDissonance_per_sample(self,
+                            sample_index,
+                            MISSING_VAL=0.0):
+    &#39;&#39;&#39;
+    compute dissonance for each sample_index, helper function for all_dissonance
+    
+    args:
+        sample_index (int): index of the sample to compute dissonance
+        MISSING_VAL (float): 
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.samples, self.features, 
+                                   self.poles]):
+        s = self.samples_as_strings[sample_index]
+        if self.polar_indices is None:
+            self.polar_indices = range(len(s))
+
+        Ds=self.qnet.predict_distributions(s)
+        
+        diss=np.ones(len(Ds))*MISSING_VAL
+        for i in self.polar_indices:
+            if s[i] != &#39;&#39;:
+                if s[i] in Ds[i].keys():
+                    diss[i]=1-Ds[i][s[i]]/np.max(
+                        list(Ds[i].values())) 
+                else:
+                    diss[i]=1.0
+
+        # print(&#34;diss:{}&#34;.format(diss))
+        # print(&#34;polar_indices:{}&#34;.format(self.polar_indices))
+        # print(s)
+        return diss[self.polar_indices]
+
+    elif self.poles is None:
+        raise ValueError(&#34;set_poles first!&#34;)
+    else:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.getMaskedSample"><code class="name flex">
+<span>def <span class="ident">getMaskedSample</span></span>(<span>self, s, mask_prob=0.5, allow_all_mutable=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>inputs a sample and randomly mask elements of the sample</p>
+<p>args:
+s (list[str]): vector of sample, must have the same dimensions as the qnet
+mask_prob (float): float btwn 0 and 1, prob to mask element of sample
+allow_all_mutable (bool): whether or not all variables are mutable</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getMaskedSample(self,
+                    s,
+                    mask_prob=0.5,
+                    allow_all_mutable=False):
+    &#39;&#39;&#39;
+    inputs a sample and randomly mask elements of the sample
+
+    args:
+        s (list[str]): vector of sample, must have the same dimensions as the qnet
+        mask_prob (float): float btwn 0 and 1, prob to mask element of sample
+        allow_all_mutable (bool): whether or not all variables are mutable
+    &#39;&#39;&#39;
+    if self.samples is not None:   
+        MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
+        WITHVAL=[x for x in self.cols[np.where(s)[0]] if x in self.mutable_vars ]
+        MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
+        for m in MASKrand:
+            MUTABLE[m]=1.0
+        
+        mutable_x=MUTABLE.values[0]
+        base_frequency=mutable_x/mutable_x.sum()
+
+        if np.isnan(base_frequency).any():
+            print(&#34;repeating&#34;)
+            return None
+            return self.getMaskedSample(s)
+
+        s1=s.copy()
+        for i in range(len(base_frequency)):
+            if base_frequency[i]&gt;0.0001:
+                s1[i]=&#39;&#39;
+                
+        s_rand=np.copy(s)
+        rnd_match_prob=[]        
+        max_match_prob=[]        
+        D=self.qnet.predict_distributions(s)
+        for i in MASKrand:
+            s_rand[np.where(
+                self.cols==i)[0][0]]=self.choose_one(
+                    self.D_null[np.where(self.cols==i)[0][0]].keys())
+            rnd_match_prob=np.append(rnd_match_prob,1/len(
+                self.D_null[np.where(self.cols==i)[0][0]].keys()))
+            max_match_prob=np.append(
+                max_match_prob,np.max(
+                    list(D[np.where(
+                        self.cols==i)[0][0]].values())))
+            
+        if allow_all_mutable:
+            for m in mutable_vars:
+                MUTABLE[m]=1.0
+            mutable_x=MUTABLE.values[0]
+            base_frequency=mutable_x/mutable_x.sum()
+
+        #print(rnd_match_prob)
+
+        return s1,base_frequency,MASKrand,np.where(
+            base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+    else:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.getRedError"><code class="name flex">
+<span>def <span class="ident">getRedError</span></span>(<span>self, index, return_dict)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>reconstruct the masked sample by qsampling and comparing to original
+set self.mask_prob and self.steps if needed</p>
+<p>args:
+index (int): index of sample to take</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def getRedError(self,
+                index,
+                return_dict):
+    &#39;&#39;&#39;
+    reconstruct the masked sample by qsampling and comparing to original
+    set self.mask_prob and self.steps if needed
+
+    args:
+        index (int): index of sample to take
+    &#39;&#39;&#39;
+    start = time.time()
+    s=self.samples_as_strings[index]
+
+    mask_time = time.time()
+    s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s,
+                                                                self.mask_prob)
+    mask_time_end = time.time()
+    print(&#34;mask_time:{}&#34;.format(mask_time_end - mask_time))
+
+    if np.isnan(bp).any():
+            print(&#34;repeating&#34;)
+            return self.getRedError(index, return_dict)
+
+    qs=qsample(s1,self.qnet,self.steps,bp)
+
+    # if CMPR_SAVE:
+    #     cmpf=pd.DataFrame([s,qs,s_rand],columns=cols,index=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])[mask_].transpose()
+    #     cmpf.index.name=&#39;gssvar&#39;
+    #     if DEBUG2:
+    #         cmpf.to_csv(&#39;tmpCMPF-&#39;+yr+str(index)+&#39;.csv&#39;)
+    #     else:
+    #         cmpf.to_csv(&#39;CMPF-&#39;+yr+str(index)+&#39;.csv&#39;)
+
+    qdistance_time = time.time()
+    dqestim=qdistance(s,qs,self.qnet,self.qnet)
+    #drand=qdistance(s,s_rand,qnet,qnet)
+    dactual=qdistance(s,s1,self.qnet,self.qnet)
+    qdistance_time_end = time.time()
+    print(&#34;qdistance_time:{}&#34;.format(qdistance_time_end - qdistance_time))
+
+    # print(&#34;dqestim:{}&#34;.format(dqestim))
+    # print(&#34;dactual:{}&#34;.format(dactual))
+    end = time.time()
+    tmp_time = end-start
+    print(&#34;func_time:{}&#34;.format(tmp_time))
+    return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
+    return (1 - (dqestim/dactual))*100,rmatch_u,rmatch</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.get_partial_estimate"><code class="name flex">
+<span>def <span class="ident">get_partial_estimate</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>saves the results of the predicted masked sample</p>
+<p>args:</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_partial_estimate(self):
+    &#39;&#39;&#39;
+    saves the results of the predicted masked sample
+
+    args:
+    &#39;&#39;&#39;
+    start = time.time()
+    #print([x for x in range(len(self.samples))])
+    # with mp.Pool(processes=15) as pool:
+    #         result = pool.map(self.getRedError, range(len(self.samples)))
+    #pqdm(range(len(self.samples)), self.getRedError, n_jobs=2)#self.n_jobs)
+    manager = mp.Manager()
+    return_dict = manager.dict()
+    processes = []
+    for i in range(len(self.samples)):
+        p = mp.Process(target=self.getRedError, args=(i, return_dict))
+        processes.append(p)
+
+    [x.start() for x in processes]
+    [x.join() for x in processes]
+    print(return_dict.values())
+    end = time.time()
+    print(&#34;pqdm time:{}&#34;.format(end - start))</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.load_data"><code class="name flex">
+<span>def <span class="ident">load_data</span></span>(<span>self, year, features_by_year, samples, qnet)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>load cols, features, samples, and qnet.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>year</code></strong> :&ensp;<code>str</code></dt>
+<dd>to identify cols/features.</dd>
+<dt><strong><code>features_by_year</code></strong> :&ensp;<code>str</code></dt>
+<dd>file containing all features by year of the dataset.</dd>
+<dt><strong><code>samples</code></strong> :&ensp;<code>str</code></dt>
+<dd>file of samples for that year.</dd>
+<dt><strong><code>Qnet</code></strong> :&ensp;<code>str</code></dt>
+<dd>Qnet file location.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_data(self,
+              year, 
+              features_by_year,
+              samples,
+              qnet):
+    &#34;&#34;&#34;load cols, features, samples, and qnet.
+
+    Args:
+        year (str): to identify cols/features.
+        features_by_year (str): file containing all features by year of the dataset.
+        samples (str): file of samples for that year.
+        Qnet (str): Qnet file location.
+    &#34;&#34;&#34;
+    self.qnet = load_qnet(qnet)
+    self.year = year
+    self.cols = np.array((pd.read_csv(features_by_year,
+                           keep_default_na=True, 
+                           index_col=0).set_index(
+                               &#39;year&#39;)).loc[int(year)].apply(
+                                   eval).values[0])
+    self.features = pd.DataFrame(columns=self.cols)
+    #[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+    self.samples=pd.read_csv(samples)
+    self.samples = pd.concat([self.samples,self.features], axis=0)
+    self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+    self.s_null=[&#39;&#39;]*len(self.samples_as_strings[0])
+    self.D_null=self.qnet.predict_distributions(self.s_null)
+
+    self.mutable_vars = [x for x in self.cols]</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.qsampling"><code class="name flex">
+<span>def <span class="ident">qsampling</span></span>(<span>self, sample, steps, immutable=False)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>perturb the sample based on thet qnet distributions and number of steps</p>
+<p>args:
+# qnet: qnet instance/model
+sample (1d array-like): vector of sample, must have the same dimensions as the qnet
+steps (int): number of steps to qsample
+immutable (bool): are there variables that are immutable?</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def qsampling(self,
+              sample,
+              steps,
+              immutable=False):
+    &#39;&#39;&#39;
+    perturb the sample based on thet qnet distributions and number of steps
+
+    args:
+        # qnet: qnet instance/model
+        sample (1d array-like): vector of sample, must have the same dimensions as the qnet
+        steps (int): number of steps to qsample
+        immutable (bool): are there variables that are immutable?
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.mutable_vars, self.immutable_vars, sample]):
+        if immutable == True:
+            return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
+        else:
+            return qsample(sample,self.qnet,steps)
+    elif self.mutable_vars is None:
+        raise ValueError(&#34;load_data first!&#34;)
+    elif self.immutable_vars is None:
+        raise ValueError(&#34;load immutable variables first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.set_immutable_vars"><code class="name flex">
+<span>def <span class="ident">set_immutable_vars</span></span>(<span>self, IMMUTABLE_FILE)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>set vars to immutable and mutable,
+can prob combine this with the load_data func: only set the immutable vars if necessary</p>
+<p>args:
+IMMUTABLE_FILE (str): file containing the immutable features/vars</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_immutable_vars(self,
+                       IMMUTABLE_FILE):
+    &#39;&#39;&#39;
+    set vars to immutable and mutable, 
+    can prob combine this with the load_data func: only set the immutable vars if necessary
+
+    args:
+        IMMUTABLE_FILE (str): file containing the immutable features/vars
+    &#39;&#39;&#39;
+    if self.cols is None:
+        raise ValueError(&#34;load_data first!&#34;)
+    self.immutable_vars = pd.read_csv(IMMUTABLE_FILE,index_col=0).transpose()
+    self.mutable_vars = None
+    self.mutable_vars = [x for x in self.cols
+                         if x.upper() not in self.immutable_vars.columns]</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.set_nsamples"><code class="name flex">
+<span>def <span class="ident">set_nsamples</span></span>(<span>self, num_samples)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>select a subset of the samples</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>num_samples</code></strong> :&ensp;<code>int</code></dt>
+<dd>Set num of samples to subset</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_nsamples(self,
+                 num_samples):
+    &#39;&#39;&#39;
+    select a subset of the samples
+
+    Args:
+        num_samples (int): Set num of samples to subset
+    &#39;&#39;&#39;
+    
+    if all(x is not None for x in [num_samples, self.samples]):
+        if num_samples &gt; len(self.samples.index):
+            string = &#39;The number of selected samples ({}) &#39; + \
+                 &#39;is greater than the number of samples ({})!&#39;
+            string = string.format(num_samples, len(self.samples.index))
+            raise ValueError(string)
+
+        if num_samples == len(self.samples.index):
+            string = &#39;The number of selected samples ({}) &#39; + \
+                 &#39;is equal the number of samples ({})!&#39;
+            string = string.format(num_samples, len(self.samples.index))
+            print(string)
+            return
+        self.samples = self.samples.sample(num_samples)
+        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+    elif self.samples is None:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.set_poles"><code class="name flex">
+<span>def <span class="ident">set_poles</span></span>(<span>self, POLEFILE, steps=0)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>set the poles and samples such that the samples contain features in poles</p>
+<p>args:
+# qnet: qnet instance/model
+steps (int): number of steps to qsample
+POLEFILE (str): file containing poles samples and features</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def set_poles(self,
+              POLEFILE,
+              steps=0):
+    &#39;&#39;&#39;
+    set the poles and samples such that the samples contain features in poles
+
+
+    args:
+        # qnet: qnet instance/model
+        steps (int): number of steps to qsample
+        POLEFILE (str): file containing poles samples and features
+    &#39;&#39;&#39;
+    if all(x is not None for x in [self.samples]):
+        poles = pd.read_csv(POLEFILE, index_col=0)
+        L=poles.L.to_dict()
+        R=poles.R.to_dict()
+        self.poles=poles.transpose()
+
+        cols = [x for x in self.poles.columns if x in self.samples.columns]
+        self.samples=self.samples[cols]
+    
+        for x in self.poles.columns:
+            if x not in self.samples.columns:
+                self.samples[x]=np.nan
+
+        # print(&#34;testing samples&#34;)
+        # print(self.samples.head(3))
+        self.samples = pd.concat([self.samples,self.features], axis=0)
+        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        # print(self.samples.head(3))
+
+        self.polar_features = pd.concat([self.poles, self.features], axis=0)
+        pL= self.polar_features.loc[&#39;L&#39;][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        pR= self.polar_features.loc[&#39;R&#39;][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+
+        self.pL=self.qsampling(pL,steps)
+        self.pR=self.qsampling(pR,steps)
+    elif self.samples is None:
+        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.Qnet_Constructor.variation_weight"><code class="name flex">
+<span>def <span class="ident">variation_weight</span></span>(<span>self, index)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>args:
+index (int): index of D_null to take</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def variation_weight(self,
+                     index):
+    &#39;&#39;&#39;
+    
+    args:
+        index (int): index of D_null to take
+    &#39;&#39;&#39;
+    d_=self.D_null[index]
+    v=[]
+    for val in d_.values():
+        v=np.append(v,val)
+    return entropy(v,base=len(v))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<img src="logozed_nowhite.png" alt="drawing" style="width:400px;"/>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="cognet" href="index.html">cognet</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="cognet.cognet.Qnet_Constructor" href="#cognet.cognet.Qnet_Constructor">Qnet_Constructor</a></code></h4>
+<ul class="">
+<li><code><a title="cognet.cognet.Qnet_Constructor.all_dissonance" href="#cognet.cognet.Qnet_Constructor.all_dissonance">all_dissonance</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.choose_one" href="#cognet.cognet.Qnet_Constructor.choose_one">choose_one</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.compute_DLI" href="#cognet.cognet.Qnet_Constructor.compute_DLI">compute_DLI</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.compute_all_DLI" href="#cognet.cognet.Qnet_Constructor.compute_all_DLI">compute_all_DLI</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.compute_polar_indices" href="#cognet.cognet.Qnet_Constructor.compute_polar_indices">compute_polar_indices</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.dfunc_line" href="#cognet.cognet.Qnet_Constructor.dfunc_line">dfunc_line</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.distfunc" href="#cognet.cognet.Qnet_Constructor.distfunc">distfunc</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.embed" href="#cognet.cognet.Qnet_Constructor.embed">embed</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.getBaseFrequency" href="#cognet.cognet.Qnet_Constructor.getBaseFrequency">getBaseFrequency</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.getDissonance_per_sample" href="#cognet.cognet.Qnet_Constructor.getDissonance_per_sample">getDissonance_per_sample</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.getMaskedSample" href="#cognet.cognet.Qnet_Constructor.getMaskedSample">getMaskedSample</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.getRedError" href="#cognet.cognet.Qnet_Constructor.getRedError">getRedError</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.get_partial_estimate" href="#cognet.cognet.Qnet_Constructor.get_partial_estimate">get_partial_estimate</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.load_data" href="#cognet.cognet.Qnet_Constructor.load_data">load_data</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.qsampling" href="#cognet.cognet.Qnet_Constructor.qsampling">qsampling</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.set_immutable_vars" href="#cognet.cognet.Qnet_Constructor.set_immutable_vars">set_immutable_vars</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.set_nsamples" href="#cognet.cognet.Qnet_Constructor.set_nsamples">set_nsamples</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.set_poles" href="#cognet.cognet.Qnet_Constructor.set_poles">set_poles</a></code></li>
+<li><code><a title="cognet.cognet.Qnet_Constructor.variation_weight" href="#cognet.cognet.Qnet_Constructor.variation_weight">variation_weight</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+Author: Lynn Zheng, Jin Li and Ishanu Chattopadhyay <a href="https://zed.uchicago.edu"> Zero Knowledge Discovery, University of Chicago</a>. Email: ishanu@uchicago.edu
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
