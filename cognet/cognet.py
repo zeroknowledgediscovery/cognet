@@ -52,10 +52,10 @@ class Qnet_Constructor:
         """load cols, features, samples, and qnet.
 
         Args:
-            year (str): to identify cols/features.
-            features_by_year (str): file containing all features by year of the dataset.
-            samples (str): file of samples for that year.
-            Qnet (str): Qnet file location.
+          year (str): to identify cols/features.
+          features_by_year (str): file containing all features by year of the dataset.
+          samples (str): file of samples for that year.
+          Qnet (str): Qnet file location.
         """
         self.qnet = load_qnet(qnet)
         self.year = year
@@ -82,7 +82,7 @@ class Qnet_Constructor:
         can prob combine this with the load_data func: only set the immutable vars if necessary
 
         args:
-            IMMUTABLE_FILE (str): file containing the immutable features/vars
+          IMMUTABLE_FILE (str): file containing the immutable features/vars
         '''
         if self.cols is None:
             raise ValueError("load_data first!")
@@ -97,7 +97,7 @@ class Qnet_Constructor:
         select a subset of the samples
 
         Args:
-            num_samples (int): Set num of samples to subset
+          num_samples (int): Set num of samples to subset
         '''
         
         if all(x is not None for x in [num_samples, self.samples]):
@@ -123,8 +123,8 @@ class Qnet_Constructor:
                          index):
         '''
         
-        args:
-            index (int): index of D_null to take
+        Args:
+          index (int): index of D_null to take
         '''
         d_=self.D_null[index]
         v=[]
@@ -139,7 +139,7 @@ class Qnet_Constructor:
         helper func for qsampling
 
         Args:
-            sample (list[str]): vector of sample, must have the same dimensions as the qnet
+          sample (list[str]): vector of sample, must have the same dimensions as the qnet
         '''
         MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
         WITHVAL=[x for x in self.cols[np.where(sample)[0]] if x in self.mutable_vars ]
@@ -162,11 +162,10 @@ class Qnet_Constructor:
         '''
         perturb the sample based on thet qnet distributions and number of steps
 
-        args:
-            # qnet: qnet instance/model
-            sample (1d array-like): vector of sample, must have the same dimensions as the qnet
-            steps (int): number of steps to qsample
-            immutable (bool): are there variables that are immutable?
+        Args:
+          sample (1d array-like): vector of sample, must have the same dimensions as the qnet
+          steps (int): number of steps to qsample
+          immutable (bool): are there variables that are immutable?
         '''
         if all(x is not None for x in [self.mutable_vars, self.immutable_vars, sample]):
             if immutable == True:
@@ -185,10 +184,9 @@ class Qnet_Constructor:
         set the poles and samples such that the samples contain features in poles
 
 
-        args:
-            # qnet: qnet instance/model
-            steps (int): number of steps to qsample
-            POLEFILE (str): file containing poles samples and features
+        Args:
+          steps (int): number of steps to qsample
+          POLEFILE (str): file containing poles samples and features
         '''
         if all(x is not None for x in [self.samples]):
             poles = pd.read_csv(POLEFILE, index_col=0)
@@ -225,8 +223,8 @@ class Qnet_Constructor:
         Compute distance between two samples
 
         args:
-            x : first sample
-            y : second sample
+          x : first sample
+          y : second sample
         '''
         d=qdistance(x,y,qnet,qnet)
         return d
@@ -234,12 +232,13 @@ class Qnet_Constructor:
     def dfunc_line(self,
                    row):
         '''
-        compute the dist for a row, or vector of samples
+        Compute the dist for a row, or vector of samples
 
         args:
-            k (int): row
-        return:
-            numpy.ndarray(float)
+          k (int): row
+
+        Returns:
+          numpy.ndarray(float)
         '''
         if all(x is not None for x in [self.samples, self.features]):
             w = self.samples.index.size
@@ -262,10 +261,10 @@ class Qnet_Constructor:
         '''
         embed data
 
-        args:
-            infile (str): input file to be embedded
-            name_pref (str): preferred name for output file
-            out_dir (str): output dir for results
+        Args:
+          infile (str): input file to be embedded
+          name_pref (str): preferred name for output file
+          out_dir (str): output dir for results
         '''
         if all(x is not None for x in [self.year]):
             yr = self.year
@@ -288,8 +287,8 @@ class Qnet_Constructor:
         '''
         return ideology index, dL, dR, Qsd (std), Q (max) for one sample
 
-        args:
-            i (int): index of sample
+        Args:
+          i (int): index of sample
         '''
         p = self.samples_as_strings[i]
         dR = qdistance(self.pR, p, self.qnet, self.qnet)
@@ -313,10 +312,10 @@ class Qnet_Constructor:
         '''
         compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples
 
-        args:
-            num_qsamples (int): number of qsamples to compute
-            steps (int): number of steps to qsample
-            outfile (str): output file for results
+        Args:
+          num_qsamples (int): number of qsamples to compute
+          steps (int): number of steps to qsample
+          outfile (str): output file for results
         '''
         if all(x is not None for x in [self.samples, self.features,
                                     self.pL, self.pR]):
@@ -341,11 +340,11 @@ class Qnet_Constructor:
         '''
         set up polar indices for dissonance func
 
-        args:
-            num_samples (int): subset of samples to take
-            polar_comp (bool): whether or not to set poles
-            POLEFILE (None): file containing pole samples and features
-            steps (int): number of steps to qsample
+        Args:
+          num_samples (int): subset of samples to take
+          polar_comp (bool): whether or not to set poles
+          POLEFILE (None): file containing pole samples and features
+          steps (int): number of steps to qsample
         '''
         if all(x is not None for x in [self.samples, self.features, self.poles]):
             if num_samples is not None:
@@ -369,9 +368,9 @@ class Qnet_Constructor:
         '''
         compute dissonance for each sample_index, helper function for all_dissonance
         
-        args:
-            sample_index (int): index of the sample to compute dissonance
-            MISSING_VAL (float): 
+        Args:
+          sample_index (int): index of the sample to compute dissonance
+          MISSING_VAL (float): 
         '''
         if all(x is not None for x in [self.samples, self.features, 
                                        self.poles]):
@@ -405,8 +404,8 @@ class Qnet_Constructor:
         '''
         get the dissonance for all samples
 
-        args:
-            n_jobs (int): number of jobs for pdqm
+        Args:
+          n_jobs (int): number of jobs for pdqm
         '''
         result=pqdm(range(len(self.samples)), self.getDissonance_per_sample, n_jobs)
         out_file = 'DISSONANCE_'+self.year+'.csv'
@@ -421,8 +420,8 @@ class Qnet_Constructor:
         '''
         returns a random element of X
 
-        args:
-            X (1D array-like): vector from which random element is to be chosen
+        Args:
+          X (1D array-like): vector from which random element is to be chosen
         '''
         X=list(X)
         if len(X)>0:
@@ -436,10 +435,10 @@ class Qnet_Constructor:
         '''
         inputs a sample and randomly mask elements of the sample
 
-        args:
-            s (list[str]): vector of sample, must have the same dimensions as the qnet
-            mask_prob (float): float btwn 0 and 1, prob to mask element of sample
-            allow_all_mutable (bool): whether or not all variables are mutable
+        Args:
+          s (list[str]): vector of sample, must have the same dimensions as the qnet
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample
+          allow_all_mutable (bool): whether or not all variables are mutable
         '''
         if self.samples is not None:   
             MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
@@ -496,8 +495,8 @@ class Qnet_Constructor:
         reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
-        args:
-            index (int): index of sample to take
+        Args:
+          index (int): index of sample to take
         '''
         start = time.time()
         s=self.samples_as_strings[index]
@@ -541,7 +540,7 @@ class Qnet_Constructor:
         '''
         saves the results of the predicted masked sample
 
-        args:
+        Args:
         '''
         start = time.time()
         #print([x for x in range(len(self.samples))])
