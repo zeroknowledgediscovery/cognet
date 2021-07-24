@@ -5,7 +5,7 @@
 
 ### Analysis of response and belief dynamics using Quasinet framework
 
-<img src="logozed_white.png" width="10"/>
+<img src="logozed_white.png" width="200"/>
 
 ---
 
