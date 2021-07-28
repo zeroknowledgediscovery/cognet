@@ -217,7 +217,7 @@ class Qnet_Constructor:
         elif self.samples is None:
             raise ValueError("load_data first!")
 
-    def distfunc(self, 
+    def __distfunc(self, 
                  x, 
                  y):
         '''
@@ -230,7 +230,7 @@ class Qnet_Constructor:
         d=qdistance(x,y,self.qnet,self.qnet)
         return d
 
-    def dfunc_line(self,
+    def distfunc_line(self,
                    row):
         '''
         compute the dist for a row, or vector of samples
@@ -249,7 +249,7 @@ class Qnet_Constructor:
                 # only compute half of the distance matrix
                 if j > row:
                     x = p_all[j]
-                    line[j] = distfunc(x, y)
+                    line[j] = self.__distfunc(x, y)
         else:
             raise ValueError("load_data first!")
         return line
@@ -282,7 +282,7 @@ class Qnet_Constructor:
         elif self.year is None:
             raise ValueError("load_data first!")
         
-    def compute_DLI(self,
+    def compute_DLI_sample(self,
                     i,):
         '''
         return ideology index, dL, dR, Qsd (std), Q (max) for one sample
@@ -304,11 +304,11 @@ class Qnet_Constructor:
 
         return [ideology_index, dL, dR, Qsd, Q]
        
-    def compute_all_DLI(self,
-                        num_qsamples,
-                        outfile,
-                        steps=5,
-                        n_jobs=28):
+    def compute_DLI_samples(self,
+                    num_qsamples,
+                    outfile,
+                    steps=5,
+                    n_jobs=28):
         '''
         compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples
 
@@ -362,7 +362,7 @@ class Qnet_Constructor:
         else:
             raise ValueError("load_data first!")
 
-    def getDissonance_per_sample(self,
+    def __getDissonance_per_sample(self,
                                 sample_index,
                                 MISSING_VAL=0.0):
         '''
@@ -395,7 +395,7 @@ class Qnet_Constructor:
         else:
             raise ValueError("load_data first!")
     
-    def all_dissonance(self,
+    def get_dissonance(self,
                        output_file='DISSONANCE_'+self.year+'.csv',
                        n_jobs=28):
         '''
@@ -405,7 +405,7 @@ class Qnet_Constructor:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
-        result=pqdm(range(len(self.samples)), self.getDissonance_per_sample, n_jobs)
+        result=pqdm(range(len(self.samples)), self.__getDissonance_per_sample, n_jobs)
         out_file = output_file
 
         pd.DataFrame(result,
@@ -413,7 +413,7 @@ class Qnet_Constructor:
                     axis=1).columns).to_csv(out_file)
         self.dissonance_file = out_file
     
-    def choose_one(self,
+    def __choose_one(self,
                    X):
         '''
         returns a random element of X
@@ -463,7 +463,7 @@ class Qnet_Constructor:
             D=self.qnet.predict_distributions(s)
             for i in MASKrand:
                 s_rand[np.where(
-                    self.cols==i)[0][0]]=self.choose_one(
+                    self.cols==i)[0][0]]=self.__choose_one(
                         self.D_null[np.where(self.cols==i)[0][0]].keys())
                 rnd_match_prob=np.append(rnd_match_prob,1/len(
                     self.D_null[np.where(self.cols==i)[0][0]].keys()))
@@ -483,9 +483,9 @@ class Qnet_Constructor:
         else:
             raise ValueError("load_data first!")
 
-    def getRedError(self,
-                    index,
-                    return_dict):
+    def predict_maskedsample(self,
+                            index,
+                            return_dict):
         '''
         reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
@@ -509,9 +509,9 @@ class Qnet_Constructor:
         return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
         return (1 - (dqestim/dactual))*100,rmatch_u,rmatch
 
-    def get_partial_estimate(self):
+    def predict_maskedsamples(self):
         '''
-        saves the results of the predicted masked sample
+        runs and saves the results of the predicted masked sample
 
         Args:
         '''
@@ -520,7 +520,7 @@ class Qnet_Constructor:
         processes = []
         
         for i in range(len(self.samples)):
-            p = mp.Process(target=self.getRedError, args=(i, return_dict))
+            p = mp.Process(target=self.predict_maskedsample, args=(i, return_dict))
             processes.append(p)
 
         [x.start() for x in processes]
