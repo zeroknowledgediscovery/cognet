@@ -49,14 +49,14 @@ class Qnet_Constructor:
                   features_by_year,
                   samples,
                   qnet):
-        """load cols, features, samples, and qnet.
+        '''load cols, features, samples, and qnet.
 
         Args:
           year (str): to identify cols/features.
           features_by_year (str): file containing all features by year of the dataset.
           samples (str): file of samples for that year.
           Qnet (str): Qnet file location.
-        """
+        '''
         self.qnet = load_qnet(qnet)
         self.year = year
         self.cols = np.array((pd.read_csv(features_by_year,
@@ -81,7 +81,7 @@ class Qnet_Constructor:
         set vars to immutable and mutable, 
         can prob combine this with the load_data func: only set the immutable vars if necessary
 
-        args:
+        Args:
           IMMUTABLE_FILE (str): file containing the immutable features/vars
         '''
         if self.cols is None:
@@ -112,8 +112,8 @@ class Qnet_Constructor:
                      'is equal the number of samples ({})!'
                 string = string.format(num_samples, len(self.samples.index))
                 print(string)
-                return
-            self.samples = self.samples.sample(num_samples)
+            #self.samples = self.samples.sample(num_samples)
+            self.samples = self.samples[:10]
             self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
 
         elif self.samples is None:
@@ -179,7 +179,8 @@ class Qnet_Constructor:
 
     def set_poles(self,
                   POLEFILE,
-                  steps=0):
+                  steps=0,
+                  mutable=False):
         '''
         set the poles and samples such that the samples contain features in poles
 
@@ -187,6 +188,7 @@ class Qnet_Constructor:
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
+          mutable (boolean): Whether or not to set poles as the only mutable_vars
         '''
         if all(x is not None for x in [self.samples]):
             poles = pd.read_csv(POLEFILE, index_col=0)
@@ -201,11 +203,8 @@ class Qnet_Constructor:
                 if x not in self.samples.columns:
                     self.samples[x]=np.nan
 
-            # print("testing samples")
-            # print(self.samples.head(3))
             self.samples = pd.concat([self.samples,self.features], axis=0)
             self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
-            # print(self.samples.head(3))
 
             self.polar_features = pd.concat([self.poles, self.features], axis=0)
             pL= self.polar_features.loc['L'][self.cols].fillna('').values.astype(str)[:]
@@ -213,6 +212,8 @@ class Qnet_Constructor:
 
             self.pL=self.qsampling(pL,steps)
             self.pR=self.qsampling(pR,steps)
+            if mutable:
+                self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
         elif self.samples is None:
             raise ValueError("load_data first!")
 
@@ -222,22 +223,21 @@ class Qnet_Constructor:
         '''
         Compute distance between two samples
 
-        args:
+        Args:
           x : first sample
           y : second sample
         '''
-        d=qdistance(x,y,qnet,qnet)
+        d=qdistance(x,y,self.qnet,self.qnet)
         return d
 
     def dfunc_line(self,
                    row):
         '''
-        Compute the dist for a row, or vector of samples
+        compute the dist for a row, or vector of samples
 
-        args:
+        Args:
           k (int): row
-
-        Returns:
+        return:
           numpy.ndarray(float)
         '''
         if all(x is not None for x in [self.samples, self.features]):
@@ -388,10 +388,6 @@ class Qnet_Constructor:
                             list(Ds[i].values())) 
                     else:
                         diss[i]=1.0
-
-            # print("diss:{}".format(diss))
-            # print("polar_indices:{}".format(self.polar_indices))
-            # print(s)
             return diss[self.polar_indices]
 
         elif self.poles is None:
@@ -400,16 +396,18 @@ class Qnet_Constructor:
             raise ValueError("load_data first!")
     
     def all_dissonance(self,
+                       output_file='DISSONANCE_'+self.year+'.csv',
                        n_jobs=28):
         '''
         get the dissonance for all samples
 
         Args:
+          output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
         result=pqdm(range(len(self.samples)), self.getDissonance_per_sample, n_jobs)
-        out_file = 'DISSONANCE_'+self.year+'.csv'
-        print(result)
+        out_file = output_file
+
         pd.DataFrame(result,
                     columns=self.polar_features[self.cols].dropna(
                     axis=1).columns).to_csv(out_file)
@@ -450,10 +448,9 @@ class Qnet_Constructor:
             mutable_x=MUTABLE.values[0]
             base_frequency=mutable_x/mutable_x.sum()
 
-            if np.isnan(base_frequency).any():
-                print("repeating")
-                return None
-                return self.getMaskedSample(s)
+            # if np.isnan(base_frequency).any():
+            #     return np.nan,np.nan,np.nan
+            #     return self.getMaskedSample(s)
 
             s1=s.copy()
             for i in range(len(base_frequency)):
@@ -481,8 +478,6 @@ class Qnet_Constructor:
                 mutable_x=MUTABLE.values[0]
                 base_frequency=mutable_x/mutable_x.sum()
 
-            #print(rnd_match_prob)
-
             return s1,base_frequency,MASKrand,np.where(
                 base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
         else:
@@ -498,41 +493,19 @@ class Qnet_Constructor:
         Args:
           index (int): index of sample to take
         '''
-        start = time.time()
         s=self.samples_as_strings[index]
-
-        mask_time = time.time()
-        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s,
-                                                                    self.mask_prob)
-        mask_time_end = time.time()
-        print("mask_time:{}".format(mask_time_end - mask_time))
-
+        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s, 
+                                                                          mask_prob=self.mask_prob)
         if np.isnan(bp).any():
-                print("repeating")
-                return self.getRedError(index, return_dict)
+            return_dict[index] = np.nan,np.nan,np.nan
+            return np.nan,np.nan,np.nan
 
         qs=qsample(s1,self.qnet,self.steps,bp)
 
-        # if CMPR_SAVE:
-        #     cmpf=pd.DataFrame([s,qs,s_rand],columns=cols,index=['s','q','r'])[mask_].transpose()
-        #     cmpf.index.name='gssvar'
-        #     if DEBUG2:
-        #         cmpf.to_csv('tmpCMPF-'+yr+str(index)+'.csv')
-        #     else:
-        #         cmpf.to_csv('CMPF-'+yr+str(index)+'.csv')
-
-        qdistance_time = time.time()
         dqestim=qdistance(s,qs,self.qnet,self.qnet)
-        #drand=qdistance(s,s_rand,qnet,qnet)
         dactual=qdistance(s,s1,self.qnet,self.qnet)
         qdistance_time_end = time.time()
-        print("qdistance_time:{}".format(qdistance_time_end - qdistance_time))
 
-        # print("dqestim:{}".format(dqestim))
-        # print("dactual:{}".format(dactual))
-        end = time.time()
-        tmp_time = end-start
-        print("func_time:{}".format(tmp_time))
         return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
         return (1 - (dqestim/dactual))*100,rmatch_u,rmatch
 
@@ -542,33 +515,24 @@ class Qnet_Constructor:
 
         Args:
         '''
-        start = time.time()
-        #print([x for x in range(len(self.samples))])
-        # with mp.Pool(processes=15) as pool:
-        #         result = pool.map(self.getRedError, range(len(self.samples)))
-        #pqdm(range(len(self.samples)), self.getRedError, n_jobs=2)#self.n_jobs)
         manager = mp.Manager()
         return_dict = manager.dict()
         processes = []
+        
         for i in range(len(self.samples)):
             p = mp.Process(target=self.getRedError, args=(i, return_dict))
             processes.append(p)
 
         [x.start() for x in processes]
         [x.join() for x in processes]
-        print(return_dict.values())
-        end = time.time()
-        print("pqdm time:{}".format(end - start))
-        # result=list(result)
-        # result=[x for x in result if isinstance(x, tuple) ]
-        # result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
-        # result.rederr=result.rederr.astype(float)
-        #print(result)
 
-        #if self.poles is not None:
-            #result.to_csv('Qnet_Constructor_tmp/rederror'+self.year+str(self.steps)+'.csv')
-        #else:
-            #result.to_csv('Qnet_Constructor_tmp/polar_unrestrict_rederror'+self.year+str(self.steps)+'.csv')
+        result=[x for x in return_dict.values() if isinstance(x, tuple)]
+        result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
+        result.rederr=result.rederr.astype(float)
+
+        if self.poles is not None:
+            result.to_csv('Qnet_Constructor_tmp/rederror_first10_test'+self.year+str(self.steps)+'.csv')
+        else:
+            result.to_csv('Qnet_Constructor_tmp/polar_unrestrict_rederror'+self.year+str(self.steps)+'.csv')
         
-        # print(result.rederr.mean(),result.rand_err.mean())
-        # return result.rederr.mean(), result.rand_err.mean()
+        return result.rederr.mean(), result.rand_err.mean()
