@@ -43,6 +43,7 @@ class Qnet_Constructor:
         self.s_null = None
         self.D_null = None
         self.mask_prob = 0.5
+        self.variation_weight = None
 
     def load_data(self,
                   year, 
@@ -72,7 +73,12 @@ class Qnet_Constructor:
         self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
         self.s_null=['']*len(self.samples_as_strings[0])
         self.D_null=self.qnet.predict_distributions(self.s_null)
-
+        variation_weight = []
+        for d in self.D_null
+            v=[]
+            for val in d_.values():
+                v=np.append(v,val)
+            variation_weight.append(entropy(v,base=len(v)))
         self.mutable_vars = [x for x in self.cols]
 
     def set_immutable_vars(self,
@@ -118,19 +124,6 @@ class Qnet_Constructor:
 
         elif self.samples is None:
             raise ValueError("load_data first!")
-
-    def variation_weight(self,
-                         index):
-        '''
-        
-        Args:
-          index (int): index of D_null to take
-        '''
-        d_=self.D_null[index]
-        v=[]
-        for val in d_.values():
-            v=np.append(v,val)
-        return entropy(v,base=len(v))
 
     def getBaseFrequency(self, 
                          sample):
