@@ -4,9 +4,10 @@
 
 Analysis of response and belief dynamics using Quasinet framework
 
-### The Laboratory for Zero Knowledge Discovery, University of Chicago 
+Documentation [here](https://zeroknowledgediscovery.github.io/cognet/)
+
+### [The Laboratory for Zero Knowledge Discovery, University of Chicago ](zed.uchicago.edu)
 
 ---
 
-Documentation [here](https://zeroknowledgediscovery.github.io/cognet/)
 
