@@ -14,7 +14,7 @@ from scipy.stats import entropy
 import multiprocessing as mp
 import time
 
-class Qnet_Constructor:
+class cognet:
     """Aggregate related Qnet functions
     """
 

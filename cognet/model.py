@@ -27,7 +27,7 @@ class model:
             ValueError: [description]
             ValueError: [description]
         """
-        num_None = assert_None([samples,data_obj], False)
+        num_None = assert_None([samples,data_obj], raise_error=False)
 
         if num_None == 1:
             self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
