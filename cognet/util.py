@@ -10,4 +10,10 @@ def assert_None(args,
         else:
             return num_none
 
+def assert_array_dimension(array, dimensions):
+    '''
+    '''
+    if len(array.shape) != dimensions:
+        raise ValueError('You must pass in a {}-D array!'.format(dimensions))
+        
 #print(assert_None([None], False))

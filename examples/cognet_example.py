@@ -14,31 +14,35 @@ from cognet.model import model
 from cognet.util import embed
 from cognet.viz import distance_contour 
 ​
-data = dataFormatter(**kwargs)
+data = dataFormatter(samples=samples,
+                     test_size=0.5)
     # load the sample data
     # have option for test/train split
     # make checks to ensure we will not bark at qnet construction 
     # data.train() returns traininh data
     # data.test() returns test data
-    )
     
-# we can set mutable list
-data.set_mutable(list)
-# we can also set immutable
-data.set_immutable(list)
+
+# we can set mutable and immutable vars from list or file
+mutable_vars, immutable_vars = data.set_vars(immutable_list=list)
+mutable_vars, immutable_vars = data.set_vars(MUTABLE_FILE=file)
+features,samples = data.train()
 ​
-model.fit(data,**kwargs
+# can either input features and samples directly, or infer from data obj
+model_ = model()
+model_.fit(data_obj=data)
         # qnet construction parameters 
         # infer qnet
-        )
-model.export_dot(dotsavepath,
+        
+model_.export_dot(dotsavepath,
                  dotfile_prefix,
                  generate_trees=True)
-model.save(savepath)
-model.load(savepath)
+model_.save(savepath)
+model_.load(savepath)
 ​
 # set some paramaters in instantiating cognet class 
 # also setup Dnull, and nullbaseFreq
+# if loading from model obj, no need to load_data, otherwise, load_data
 Cg=cognet(model,samples, **kwargs)
     
 # distance calculation for individual samples    

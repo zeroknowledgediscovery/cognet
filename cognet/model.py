@@ -1,6 +1,6 @@
 from quasinet.qnet import Qnet, load_qnet, save_qnet
 from quasinet.qnet import export_qnet_tree, export_qnet_graph
-
+from util import assert_None
 class model:
     """Facilitate training and constructing Qnet
     """
@@ -11,7 +11,7 @@ class model:
         self.myQnet = None
 
     def fit(self,
-            featurenames,
+            featurenames=None,
             samples=None,
             data_obj=None,
             njobs=2):
@@ -27,18 +27,15 @@ class model:
             ValueError: [description]
             ValueError: [description]
         """
-        num_None = assert_None([samples,data_obj], raise_error=False)
-
-        if num_None == 1:
-            self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
-            if data_obj is not None:
-                samples=data_obj.train() # returns the training data
-            myQnet.fit(samples)
-
-        elif num_None == 2:
-            raise ValueError("input either samples or data object!")
-        elif num_None == 0:
-            raise ValueError("input either samples or data object, not both!")
+        num_None = assert_None([feature_names,samples,data_obj], raise_error=False)
+        if num_None == 0:
+            raise ValueError("input either samples and features or data object, not both!")
+        elif data_obj is not None:
+                featurenames, samples=data_obj.train() # returns the training data
+        elif num_None > 1:
+            raise ValueError("input both samples and features or data object!")
+        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+        self.myQnet.fit(samples)
 
     def save(self,
              file_path=None):
