@@ -29,6 +29,8 @@ class dataFormatter:
                                                            random_state=random_state)
         self.features = {}
         self.nan_cols = []
+        self.immutable_vars = None
+        self.mutable_vars = None
 
     def __Qnet_formatter(self,
                          key,
@@ -180,4 +182,5 @@ class dataFormatter:
                 mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
                                                                              LIST=mutable_list,
                                                                              lower=lower)
+        self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
         return mutable_vars, immutable_vars

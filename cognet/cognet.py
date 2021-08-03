@@ -44,9 +44,41 @@ class cognet:
         self.D_null = None
         self.mask_prob = 0.5
         self.variation_weight = None
+        self.polar_matrix = None
+    
+    def load_from_model(self,
+                        model,
+                        im_vars=None,
+                        m_vars=None):
+        """[summary]
 
+        Args:
+            model ([type]): [description]
+            im_vars ([type], optional): [description]. Defaults to None.
+            m_vars ([type], optional): [description]. Defaults to None.
+        """
+        elif model is not None:
+            self.qnet = model.myQnet
+            self.cols = model.features
+            self.features = pd.DataFrame(columns=self.cols)
+            self.immutable_vars = model.immutable_vars
+            self.mutable_vars = model.mutable_vars
+            
+            samples = pd.DataFrame(model.samples)
+            self.samples = pd.concat([samples,self.features], axis=0)
+            self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+            self.s_null=['']*len(self.samples_as_strings[0])
+            self.D_null=self.qnet.predict_distributions(self.s_null)
+            variation_weight = []
+            for d in self.D_null
+                v=[]
+                for val in d_.values():
+                    v=np.append(v,val)
+                variation_weight.append(entropy(v,base=len(v)))
+            self.variation_weight = variation_weight
+            
     def load_data(self,
-                  year, 
+                  year,
                   features_by_year,
                   samples,
                   qnet):
@@ -66,6 +98,7 @@ class cognet:
                                    'year')).loc[int(year)].apply(
                                        eval).values[0])
         self.features = pd.DataFrame(columns=self.cols)
+        self.mutable_vars = [x for x in self.cols]
         #[self.cols].fillna('').values.astype(str)[:]
 
         self.samples=pd.read_csv(samples)
@@ -79,7 +112,7 @@ class cognet:
             for val in d_.values():
                 v=np.append(v,val)
             variation_weight.append(entropy(v,base=len(v)))
-        self.mutable_vars = [x for x in self.cols]
+        self.variation_weight = variation_weight
 
     def set_immutable_vars(self,
                            IMMUTABLE_FILE):
@@ -183,6 +216,7 @@ class cognet:
           POLEFILE (str): file containing poles samples and features
           mutable (boolean): Whether or not to set poles as the only mutable_vars
         '''
+        invalid_count = 0
         if all(x is not None for x in [self.samples]):
             poles = pd.read_csv(POLEFILE, index_col=0)
             L=poles.L.to_dict()
@@ -194,6 +228,7 @@ class cognet:
         
             for x in self.poles.columns:
                 if x not in self.samples.columns:
+                    invalid_count += 1
                     self.samples[x]=np.nan
 
             self.samples = pd.concat([self.samples,self.features], axis=0)
@@ -209,7 +244,38 @@ class cognet:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
         elif self.samples is None:
             raise ValueError("load_data first!")
+        
+        print("{} pole features not found in sample features".format(invalid_count))
 
+    def distance(self,
+                 sample1,
+                 sample2,
+                 nsteps1=0,
+                 nsteps2=0):
+        """[summary]
+
+        Args:
+            sample1 ([type]): [description]
+            sample2 ([type]): [description]
+            nsteps1 (int, optional): [description]. Defaults to 0.
+            nsteps2 (int, optional): [description]. Defaults to 0.
+
+        Raises:
+            ValueError: [description]
+
+        Returns:
+            [type]: [description]
+        """
+        if self.qnet is None:
+            raise ValueError("load qnet first!")
+        sample1 = pd.DataFrame(sample1).fillna('').values.astype(str)[:]
+        sample2 = pd.DataFrame(sample1).fillna('').values.astype(str)[:]
+        bp1 = self.getBaseFrequency(sample1)
+        bp2 = self.getBaseFrequency(sample2)
+        sample1 = qsample(sample1, self.qnet, nsteps1, baseline_prob=bp1)
+        sample2 = qsample(sample2, self.qnet, nsteps2, baseline_prob=bp2)
+        return qdistance(sample1, sample2)
+    
     def __distfunc(self, 
                  x, 
                  y):
@@ -222,7 +288,23 @@ class cognet:
         '''
         d=qdistance(x,y,self.qnet,self.qnet)
         return d
+    
+    def polarDistance(self,
+                      sample):
+        """[summary]
 
+        Args:
+            sample ([type]): [description]
+
+        Returns:
+            [type]: [description]
+        """
+        distances = {}
+        for index, row in self.poles.iterrows():
+            distances[index] = distance(sample, row)
+        return distances
+            
+    
     def distfunc_line(self,
                    row):
         '''
@@ -246,7 +328,28 @@ class cognet:
         else:
             raise ValueError("load_data first!")
         return line
+    
+    def polar_separation(self,
+                         nsteps=0):
+        """[summary]
 
+        Args:
+            nsteps (int, optional): [description]. Defaults to 0.
+
+        Returns:
+            [type]: [description]
+        """
+        polar_arraydata = self.polar_features[self.cols].fillna('').values.astype(str)[:]
+        print("testing polar_separation")
+        print(polar_arraydata)
+        samples_ = []
+        for vector in polar_arraydata:
+            bp = self.getBaseFrequency(vector)
+            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
+            samples_.append(sample)
+        self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
+        return self.polar_matrix
+        
     def embed(self,
               infile,
               name_pref,
@@ -355,9 +458,9 @@ class cognet:
         else:
             raise ValueError("load_data first!")
 
-    def __getDissonance_per_sample(self,
-                                sample_index,
-                                MISSING_VAL=0.0):
+    def dissonance(self,
+                sample_index,
+                MISSING_VAL=0.0):
         '''
         compute dissonance for each sample_index, helper function for all_dissonance
         
@@ -388,9 +491,9 @@ class cognet:
         else:
             raise ValueError("load_data first!")
     
-    def get_dissonance(self,
-                       output_file='DISSONANCE_'+self.year+'.csv',
-                       n_jobs=28):
+    def dissonance_matrix(self,
+                          output_file='DISSONANCE_'+self.year+'.csv',
+                          n_jobs=28):
         '''
         get the dissonance for all samples
 
@@ -398,7 +501,7 @@ class cognet:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
-        result=pqdm(range(len(self.samples)), self.__getDissonance_per_sample, n_jobs)
+        result=pqdm(range(len(self.samples)), self.dissonance, n_jobs)
         out_file = output_file
 
         pd.DataFrame(result,
@@ -477,8 +580,9 @@ class cognet:
             raise ValueError("load_data first!")
 
     def predict_maskedsample(self,
-                            index,
-                            return_dict):
+                             sample=None,
+                             index=None,
+                             return_dict):
         '''
         reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
@@ -486,7 +590,15 @@ class cognet:
         Args:
           index (int): index of sample to take
         '''
-        s=self.samples_as_strings[index]
+        if all(x is None for x in [sample, index]):
+            raise ValueError("Must input either sample or index!")
+        elif all(x is not None for x in [sample, index]):
+            raise ValueError("Must input either sample or index not both!")
+        elif sample is not None:
+            s=pd.DataFrame(sample).fillna('').values.astype(str)[:]
+        elif index is not None:
+            s=self.samples_as_strings[index]
+            
         s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s, 
                                                                           mask_prob=self.mask_prob)
         if np.isnan(bp).any():

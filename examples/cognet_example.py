@@ -43,7 +43,8 @@ model_.load(savepath)
 # set some paramaters in instantiating cognet class 
 # also setup Dnull, and nullbaseFreq
 # if loading from model obj, no need to load_data, otherwise, load_data
-Cg=cognet(model,samples, **kwargs)
+Cg=cognet()
+Cg.load_from_model(model,samples, **kwargs)
     
 # distance calculation for individual samples    
 # we have a nsteps parameter (for sample 1 and sample2)
@@ -58,7 +59,7 @@ distance = Cg.distance(data.test[0],data.test[1])
 stast = Cg.set_poles(POLEFILE,steps)
 ​
 # compute polar distance matrix
-dmatrix = Cg.polarSeparation(nsteps=0)
+dmatrix = Cg.polar_separation(nsteps=0)
 ​
 # the following are for single samples
 #------------------
@@ -74,7 +75,7 @@ array_distances = Cg.polarDistance(sample)
 # next one must use mpi and hence will not run
 # with mpi without maybe a seprate script.
 # But look here: https://stackoverflow.com/questions/25772289/python-multiprocessing-within-mpi
-ditance_matrix=Cg.distance_matrix(samples,nsteps=0)
+distance_matrix=Cg.distance_matrix(samples,nsteps=0)
 ​
 # multiprocessing suffices
 dissonance_array = Cg.dissonance_multiple(samples)
