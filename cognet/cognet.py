@@ -57,7 +57,7 @@ class cognet:
             im_vars ([type], optional): [description]. Defaults to None.
             m_vars ([type], optional): [description]. Defaults to None.
         """
-        if model is not None:
+        elif model is not None:
             self.qnet = model.myQnet
             self.cols = model.features
             self.features = pd.DataFrame(columns=self.cols)
@@ -70,13 +70,12 @@ class cognet:
             self.s_null=['']*len(self.samples_as_strings[0])
             self.D_null=self.qnet.predict_distributions(self.s_null)
             variation_weight = []
-            for d in self.D_null:
+            for d in self.D_null
                 v=[]
-                for val in d.values():
+                for val in d_.values():
                     v=np.append(v,val)
                 variation_weight.append(entropy(v,base=len(v)))
             self.variation_weight = variation_weight
-            print(len(self.variation_weight))
             
     def load_data(self,
                   year,
@@ -508,7 +507,7 @@ class cognet:
             raise ValueError("load_data first!")
     
     def dissonance_matrix(self,
-                          output_file=None,
+                          output_file='DISSONANCE_'+self.year+'.csv',
                           n_jobs=28):
         '''
         get the dissonance for all samples
@@ -517,8 +516,6 @@ class cognet:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
-        if output_file is None:
-            output_file = 'DISSONANCE_'+self.year+'.csv'
         result=pqdm(range(len(self.samples)), self.dissonance, n_jobs)
         out_file = output_file
 
@@ -597,27 +594,17 @@ class cognet:
         else:
             raise ValueError("load_data first!")
 
-    def randomMaskReconstruction(self,
-                             return_dict,
+    def predict_maskedsample(self,
                              sample=None,
-                             index=None):
-        """
+                             index=None,
+                             return_dict):
+        '''
         reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
         Args:
           index (int): index of sample to take
-          return_dict ([type]): [description]
-          sample ([type], optional): [description]. Defaults to None.
-          index ([type], optional): [description]. Defaults to None.
-
-        Raises:
-          ValueError: [description]
-          ValueError: [description]
-
-        Returns:
-          [type]: [description]
-        """
+        '''
         if all(x is None for x in [sample, index]):
             raise ValueError("Must input either sample or index!")
         elif all(x is not None for x in [sample, index]):
