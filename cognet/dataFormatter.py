@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from util import assert_None, assert_array_dimension
+from cognet.util import assert_None, assert_array_dimension
 class dataFormatter:
     """Aggregate related Qnet functions
     """
@@ -19,16 +19,18 @@ class dataFormatter:
             train_size ([type]): [description]
             random_state ([type], optional): [description]. Defaults to None.
         """
-        self.samples = samples
+        self.samples = pd.read_csv(samples)
         self.test_size = test_size
         self.train_size = train_size
         self.random_state = None
-        self.train_data, self.test_data = train_test_split(samples,
+        self.train_data, self.test_data = train_test_split(self.samples,
                                                            test_size=test_size,
                                                            train_size=train_size,
                                                            random_state=random_state)
         self.features = {}
         self.nan_cols = []
+        self.immutable_vars = None
+        self.mutable_vars = None
 
     def __Qnet_formatter(self,
                          key,
@@ -42,13 +44,14 @@ class dataFormatter:
         Returns:
             [type]: [description]
         """
-        if not isinstance(samples, np.ndarray):
-            raise ValueError('Samples must be in numpy array form!')
-        features = np.array(self.samples.columns)
+        # if not isinstance(samples, np.ndarray):
+        #     raise ValueError('Samples must be in numpy array form!')
+        samples = pd.DataFrame(samples)
+        features = np.array(samples.columns.astype(str)[:])
         samples = samples.values.astype(str)[:]
         # remove columns that are all NaNs
-        not_all_nan_cols = ~np.all(X == '', axis=0)
-        self.nan_cols = np.all(X == '', axis=0)
+        not_all_nan_cols = ~np.all(samples == '', axis=0)
+        self.nan_cols = np.all(samples == '', axis=0)
 
         samples = samples[:, not_all_nan_cols]
         
@@ -103,10 +106,10 @@ class dataFormatter:
             [type]: [description]
         """
         if IMMUTABLE:
-            immutable_vars = LIST
+            immutable_vars = np.array(LIST)
             if FILE is not None:
                 immutable_vars = pd.read_csv(FILE,index_col=0).transpose()
-            assert_array_dimension(immutable_vars, 1)
+            #assert_array_dimension(immutable_vars, 1)
             features, immutable_vars = self.__set_varcase(immutable_vars,
                                                           lower)
             mutable_vars = [x for x in features
@@ -119,7 +122,7 @@ class dataFormatter:
             mutable_vars = LIST
             if FILE is not None:
                 mutable_vars = pd.read_csv(FILE,index_col=0).transpose()
-            assert_array_dimension(mutable_vars, 1)
+            #assert_array_dimension(mutable_vars, 1)
             features, mutable_vars = self.__set_varcase(mutable_vars,
                                                         lower)
             immutable_vars = [x for x in features
@@ -157,11 +160,11 @@ class dataFormatter:
         file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
         num_None = assert_None([immutable_list,mutable_list,
                                 IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
-        if list_None == 2 or file_None == 2:
+        if list_None == 0 or file_None == 0:
             raise ValueError("Only input either IMMUTABLE or MUTABLE vars, not both!")
         elif num_None == 4:
             raise ValueError("Too few inputs! One argument needed")
-        elif num_None != 1:
+        elif num_None != 3:
             raise ValueError("Too many inputs! Only one argument needed")
         else:
             if IMMUTABLE_FILE is not None:
@@ -180,4 +183,5 @@ class dataFormatter:
                 mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
                                                                              LIST=mutable_list,
                                                                              lower=lower)
+        self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
         return mutable_vars, immutable_vars
