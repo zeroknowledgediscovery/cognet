@@ -6,7 +6,7 @@
 
 Documentation [here](https://zeroknowledgediscovery.github.io/cognet/)
 
-### [The Laboratory for Zero Knowledge Discovery, University of Chicago ](zed.uchicago.edu)
+### [The Laboratory for Zero Knowledge Discovery, University of Chicago ](https://zed.uchicago.edu)
 
 ---
 
