@@ -57,7 +57,7 @@ class cognet:
             im_vars ([type], optional): [description]. Defaults to None.
             m_vars ([type], optional): [description]. Defaults to None.
         """
-        elif model is not None:
+        if model is not None:
             self.qnet = model.myQnet
             self.cols = model.features
             self.features = pd.DataFrame(columns=self.cols)
@@ -70,9 +70,9 @@ class cognet:
             self.s_null=['']*len(self.samples_as_strings[0])
             self.D_null=self.qnet.predict_distributions(self.s_null)
             variation_weight = []
-            for d in self.D_null
+            for d in self.D_null:
                 v=[]
-                for val in d_.values():
+                for val in d.values():
                     v=np.append(v,val)
                 variation_weight.append(entropy(v,base=len(v)))
             self.variation_weight = variation_weight
@@ -190,12 +190,36 @@ class cognet:
         mutable_x=MUTABLE.values[0]
         base_frequency=mutable_x/mutable_x.sum()
 
+        # commented out for now for testing using smaller qnet
         # for i in range(len(base_frequency)):
         #     if base_frequency[i]>0.0:
         #         base_frequency[i]= self.__variation_weight(i)*base_frequency[i]
 
         return base_frequency/base_frequency.sum()
 
+    def __getBaseFrequency_test(self, 
+                         sample):
+        '''
+        get frequency of the variables
+        helper func for qsampling
+
+        Args:
+          sample (list[str]): vector of sample, must have the same dimensions as the qnet
+        '''
+        MUTABLE=pd.DataFrame(np.zeros(len(sample)),index=sample).transpose()
+                
+        for m in sample:
+            MUTABLE[m]=1.0
+        mutable_x=MUTABLE.values[0]
+        base_frequency=mutable_x/mutable_x.sum()
+
+        # commented out for now for testing using smaller qnet
+        for i in range(len(base_frequency)):
+            if base_frequency[i]>0.0:
+                base_frequency[i]= self.variation_weight[i]*base_frequency[i]
+
+        return base_frequency/base_frequency.sum()
+    
     def qsampling(self,
                   sample,
                   steps,
@@ -285,8 +309,11 @@ class cognet:
             raise ValueError("load qnet first!")
         sample1 = pd.DataFrame(sample1).fillna('').values.astype(str)[:]
         sample2 = pd.DataFrame(sample1).fillna('').values.astype(str)[:]
-        bp1 = self.getBaseFrequency(sample1)
-        bp2 = self.getBaseFrequency(sample2)
+        bp1 = self.__getBaseFrequency_test(sample1)
+        bp2 = self.__getBaseFrequency_test(sample2)
+        print(sample1)
+        print(sample1.shape)
+        print(bp1.shape)
         sample1 = qsample(sample1, self.qnet, nsteps1, baseline_prob=bp1)
         sample2 = qsample(sample2, self.qnet, nsteps2, baseline_prob=bp2)
         return qdistance(sample1, sample2)
@@ -507,7 +534,7 @@ class cognet:
             raise ValueError("load_data first!")
     
     def dissonance_matrix(self,
-                          output_file='DISSONANCE_'+self.year+'.csv',
+                          output_file=None,
                           n_jobs=28):
         '''
         get the dissonance for all samples
@@ -516,6 +543,8 @@ class cognet:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
+        if output_file is None:
+            output_file = 'DISSONANCE_'+self.year+'.csv'
         result=pqdm(range(len(self.samples)), self.dissonance, n_jobs)
         out_file = output_file
 
@@ -594,17 +623,27 @@ class cognet:
         else:
             raise ValueError("load_data first!")
 
-    def predict_maskedsample(self,
+    def randomMaskReconstruction(self,
+                             return_dict,
                              sample=None,
-                             index=None,
-                             return_dict):
-        '''
+                             index=None):
+        """
         reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
         Args:
           index (int): index of sample to take
-        '''
+          return_dict ([type]): [description]
+          sample ([type], optional): [description]. Defaults to None.
+          index ([type], optional): [description]. Defaults to None.
+
+        Raises:
+          ValueError: [description]
+          ValueError: [description]
+
+        Returns:
+          [type]: [description]
+        """
         if all(x is None for x in [sample, index]):
             raise ValueError("Must input either sample or index!")
         elif all(x is not None for x in [sample, index]):
