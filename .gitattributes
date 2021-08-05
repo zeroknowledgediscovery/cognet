@@ -1,3 +1,10 @@
 examples/ filter=lfs diff=lfs merge=lfs -text
 examples/tmp_dot_modelclass.dot filter=lfs diff=lfs merge=lfs -text
 examples/tmp_nodelclass.joblib filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/ filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/gss_2018.csv filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/gss_2018.joblib filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/immutable.csv filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/polar_vectors.csv filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/tmp_dot_modelclass.dot filter=lfs diff=lfs merge=lfs -text
+examples/examples_data/tmp_nodelclass.joblib filter=lfs diff=lfs merge=lfs -text

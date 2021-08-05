@@ -424,8 +424,8 @@ class cognet:
         elif self.year is None:
             raise ValueError("load_data first!")
     
-    def compute_DLI_sample(self,
-                           i):
+    def ideology(self,
+                i):
         '''
         return ideology index, dL, dR, Qsd (std), Q (max) for one sample
 
@@ -474,9 +474,9 @@ class cognet:
             self.steps = steps
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
 
-            result=pqdm(range(len(self.samples)), self.compute_DLI, n_jobs)
+            result=pqdm(range(len(self.samples)), self.ideology, n_jobs)
             pd.DataFrame(result,
-                        columns=['ido', 'dL', 'dR', 'Qsd', 'Q']).to_csv(outfile)
+                        columns=['ido']).to_csv(outfile)
 
         elif self.pL is None or self.pR is None:
             raise ValueError("set_poles first!")
