@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>cognet.model API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#666666;background-color:black;//mix-blend-mode:difference;color:#bbbbbb;z-index:3}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#66bb66;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#66FF66}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:transparent;padding:1px 4px;color:#FFA500;overflow-wrap:break-word}h1 code{background:transparent}pre{overflow-wrap:break-word;background:#111111;word-wrap:break-word;border:0;border-top:1px solid #666;border-bottom:1px solid #666;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#333333;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#aaeeaa;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;color:#bbbbbb;background-color:black;overflow-wrap:break-word}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS_CHTML" integrity="sha256-kZafAc6mZvK3W3v1pHOcUix30OHQN6pU/NO2oFkqZVw=" crossorigin></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>cognet.model</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from quasinet.qnet import Qnet, load_qnet, save_qnet
+from quasinet.qnet import export_qnet_tree, export_qnet_graph
+from cognet.util import assert_None
+class model:
+    &#34;&#34;&#34;Facilitate training and constructing Qnet
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Init
+        &#34;&#34;&#34;
+        self.myQnet = None
+        self.features = None
+        self.samples = None
+        self.immutable_vars = None
+        self.mutable_vars = None
+
+    def fit(self,
+            featurenames=None,
+            samples=None,
+            data_obj=None,
+            njobs=4):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+          featurenames ([type]): [description]
+          samples ([type], optional): [description]. Defaults to None.
+          data_obj ([type], optional): [description]. Defaults to None.
+          njobs (int, optional): [description]. Defaults to 2.
+
+        Raises:
+            ValueError: [description]
+            ValueError: [description]
+        &#34;&#34;&#34;
+        num_None = assert_None([featurenames,samples,data_obj], raise_error=False)
+        if num_None == 0:
+            raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
+        elif data_obj is not None:
+            featurenames, samples=data_obj.train() # returns the training data
+            self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
+        elif num_None &gt; 1:
+            raise ValueError(&#34;input both samples and features or data object!&#34;)
+        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+        print(&#34;qnet&#34;)
+        self.myQnet.fit(samples[:4])
+        print(&#34;done&#34;)
+        self.samples = samples
+        self.features = featurenames
+
+    def save(self,
+             file_path=None):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+          file_path ([type], optional): [description]. Defaults to None.
+        &#34;&#34;&#34;
+        assert_None([self.myQnet])
+        if file_path is None:
+            file_path = &#39;tmp_Qnet.joblib&#39;
+        save_qnet(self.myQnet, file_path)
+    
+    def load(self,
+             file_path):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+          file_path ([type]): [description]
+
+        Returns:
+          [type]: [description]
+        &#34;&#34;&#34;
+        ## can also directly use load from joblib, thoughts?
+        self.myQnet = load_qnet(file_path)
+        return self.myQnet
+
+    def export_dot(self,
+                   filename,
+                   index=[3],
+                   path=&#39;&#39;,
+                   generate_trees=False,
+                   threhold=0.2):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+            filename ([type]): [description]
+            index (list, optional): [description]. Defaults to [6].
+            path (str, optional): [description]. Defaults to &#39;&#39;.
+            generate_trees (bool, optional): [description]. Defaults to False.
+            threhold (float, optional): [description]. Defaults to 0.2.
+        &#34;&#34;&#34;
+        if not generate_trees:
+            export_qnet_graph(self.myQnet, 
+                              threshold, path+filename)
+        else:
+            for i in index:
+                export_qnet_tree(self.myQnet,
+                                 i, filename)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="cognet.model.model"><code class="flex name class">
+<span>class <span class="ident">model</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Facilitate training and constructing Qnet</p>
+<p>Init</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class model:
+    &#34;&#34;&#34;Facilitate training and constructing Qnet
+    &#34;&#34;&#34;
+
+    def __init__(self):
+        &#34;&#34;&#34;Init
+        &#34;&#34;&#34;
+        self.myQnet = None
+        self.features = None
+        self.samples = None
+        self.immutable_vars = None
+        self.mutable_vars = None
+
+    def fit(self,
+            featurenames=None,
+            samples=None,
+            data_obj=None,
+            njobs=4):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+          featurenames ([type]): [description]
+          samples ([type], optional): [description]. Defaults to None.
+          data_obj ([type], optional): [description]. Defaults to None.
+          njobs (int, optional): [description]. Defaults to 2.
+
+        Raises:
+            ValueError: [description]
+            ValueError: [description]
+        &#34;&#34;&#34;
+        num_None = assert_None([featurenames,samples,data_obj], raise_error=False)
+        if num_None == 0:
+            raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
+        elif data_obj is not None:
+            featurenames, samples=data_obj.train() # returns the training data
+            self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
+        elif num_None &gt; 1:
+            raise ValueError(&#34;input both samples and features or data object!&#34;)
+        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+        print(&#34;qnet&#34;)
+        self.myQnet.fit(samples[:4])
+        print(&#34;done&#34;)
+        self.samples = samples
+        self.features = featurenames
+
+    def save(self,
+             file_path=None):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+          file_path ([type], optional): [description]. Defaults to None.
+        &#34;&#34;&#34;
+        assert_None([self.myQnet])
+        if file_path is None:
+            file_path = &#39;tmp_Qnet.joblib&#39;
+        save_qnet(self.myQnet, file_path)
+    
+    def load(self,
+             file_path):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+          file_path ([type]): [description]
+
+        Returns:
+          [type]: [description]
+        &#34;&#34;&#34;
+        ## can also directly use load from joblib, thoughts?
+        self.myQnet = load_qnet(file_path)
+        return self.myQnet
+
+    def export_dot(self,
+                   filename,
+                   index=[3],
+                   path=&#39;&#39;,
+                   generate_trees=False,
+                   threhold=0.2):
+        &#34;&#34;&#34;[summary]
+
+        Args:
+            filename ([type]): [description]
+            index (list, optional): [description]. Defaults to [6].
+            path (str, optional): [description]. Defaults to &#39;&#39;.
+            generate_trees (bool, optional): [description]. Defaults to False.
+            threhold (float, optional): [description]. Defaults to 0.2.
+        &#34;&#34;&#34;
+        if not generate_trees:
+            export_qnet_graph(self.myQnet, 
+                              threshold, path+filename)
+        else:
+            for i in index:
+                export_qnet_tree(self.myQnet,
+                                 i, filename)</code></pre>
+</details>
+<h3>Methods</h3>
+<dl>
+<dt id="cognet.model.model.export_dot"><code class="name flex">
+<span>def <span class="ident">export_dot</span></span>(<span>self, filename, index=[3], path='', generate_trees=False, threhold=0.2)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[summary]</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>filename</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>[description]</dd>
+<dt><strong><code>index</code></strong> :&ensp;<code>list</code>, optional</dt>
+<dd>[description]. Defaults to [6].</dd>
+<dt><strong><code>path</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>[description]. Defaults to ''.</dd>
+<dt><strong><code>generate_trees</code></strong> :&ensp;<code>bool</code>, optional</dt>
+<dd>[description]. Defaults to False.</dd>
+<dt><strong><code>threhold</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>[description]. Defaults to 0.2.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def export_dot(self,
+               filename,
+               index=[3],
+               path=&#39;&#39;,
+               generate_trees=False,
+               threhold=0.2):
+    &#34;&#34;&#34;[summary]
+
+    Args:
+        filename ([type]): [description]
+        index (list, optional): [description]. Defaults to [6].
+        path (str, optional): [description]. Defaults to &#39;&#39;.
+        generate_trees (bool, optional): [description]. Defaults to False.
+        threhold (float, optional): [description]. Defaults to 0.2.
+    &#34;&#34;&#34;
+    if not generate_trees:
+        export_qnet_graph(self.myQnet, 
+                          threshold, path+filename)
+    else:
+        for i in index:
+            export_qnet_tree(self.myQnet,
+                             i, filename)</code></pre>
+</details>
+</dd>
+<dt id="cognet.model.model.fit"><code class="name flex">
+<span>def <span class="ident">fit</span></span>(<span>self, featurenames=None, samples=None, data_obj=None, njobs=4)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[summary]</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>featurenames</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>[description]</dd>
+<dt><strong><code>samples</code></strong> :&ensp;<code>[type]</code>, optional</dt>
+<dd>[description]. Defaults to None.</dd>
+<dt><strong><code>data_obj</code></strong> :&ensp;<code>[type]</code>, optional</dt>
+<dd>[description]. Defaults to None.</dd>
+<dt><strong><code>njobs</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>[description]. Defaults to 2.</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>[description]</dd>
+<dt><code>ValueError</code></dt>
+<dd>[description]</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def fit(self,
+        featurenames=None,
+        samples=None,
+        data_obj=None,
+        njobs=4):
+    &#34;&#34;&#34;[summary]
+
+    Args:
+      featurenames ([type]): [description]
+      samples ([type], optional): [description]. Defaults to None.
+      data_obj ([type], optional): [description]. Defaults to None.
+      njobs (int, optional): [description]. Defaults to 2.
+
+    Raises:
+        ValueError: [description]
+        ValueError: [description]
+    &#34;&#34;&#34;
+    num_None = assert_None([featurenames,samples,data_obj], raise_error=False)
+    if num_None == 0:
+        raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
+    elif data_obj is not None:
+        featurenames, samples=data_obj.train() # returns the training data
+        self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
+    elif num_None &gt; 1:
+        raise ValueError(&#34;input both samples and features or data object!&#34;)
+    self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+    print(&#34;qnet&#34;)
+    self.myQnet.fit(samples[:4])
+    print(&#34;done&#34;)
+    self.samples = samples
+    self.features = featurenames</code></pre>
+</details>
+</dd>
+<dt id="cognet.model.model.load"><code class="name flex">
+<span>def <span class="ident">load</span></span>(<span>self, file_path)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[summary]</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>[description]</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>[type]</code></dt>
+<dd>[description]</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load(self,
+         file_path):
+    &#34;&#34;&#34;[summary]
+
+    Args:
+      file_path ([type]): [description]
+
+    Returns:
+      [type]: [description]
+    &#34;&#34;&#34;
+    ## can also directly use load from joblib, thoughts?
+    self.myQnet = load_qnet(file_path)
+    return self.myQnet</code></pre>
+</details>
+</dd>
+<dt id="cognet.model.model.save"><code class="name flex">
+<span>def <span class="ident">save</span></span>(<span>self, file_path=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[summary]</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>[type]</code>, optional</dt>
+<dd>[description]. Defaults to None.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def save(self,
+         file_path=None):
+    &#34;&#34;&#34;[summary]
+
+    Args:
+      file_path ([type], optional): [description]. Defaults to None.
+    &#34;&#34;&#34;
+    assert_None([self.myQnet])
+    if file_path is None:
+        file_path = &#39;tmp_Qnet.joblib&#39;
+    save_qnet(self.myQnet, file_path)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<img src="logozed_nowhite.png" alt="drawing" style="width:400px;"/>
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="cognet" href="index.html">cognet</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="cognet.model.model" href="#cognet.model.model">model</a></code></h4>
+<ul class="">
+<li><code><a title="cognet.model.model.export_dot" href="#cognet.model.model.export_dot">export_dot</a></code></li>
+<li><code><a title="cognet.model.model.fit" href="#cognet.model.model.fit">fit</a></code></li>
+<li><code><a title="cognet.model.model.load" href="#cognet.model.model.load">load</a></code></li>
+<li><code><a title="cognet.model.model.save" href="#cognet.model.model.save">save</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+Author: Lynn Zheng, Jin Li and Ishanu Chattopadhyay <a href="https://zed.uchicago.edu"> Zero Knowledge Discovery, University of Chicago</a>. Email: ishanu@uchicago.edu
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
