@@ -59,7 +59,7 @@ class cognet:
         """
         if model is not None:
             self.qnet = model.myQnet
-            self.cols = model.features
+            self.cols = np.array(model.features)
             self.features = pd.DataFrame(columns=self.cols)
             self.immutable_vars = model.immutable_vars
             self.mutable_vars = model.mutable_vars
@@ -214,9 +214,9 @@ class cognet:
         base_frequency=mutable_x/mutable_x.sum()
 
         # commented out for now for testing using smaller qnet
-        for i in range(len(base_frequency)):
-            if base_frequency[i]>0.0:
-                base_frequency[i]= self.variation_weight[i]*base_frequency[i]
+        # for i in range(len(base_frequency)):
+        #     if base_frequency[i]>0.0:
+        #         base_frequency[i]= self.variation_weight[i]*base_frequency[i]
 
         return base_frequency/base_frequency.sum()
     
@@ -307,16 +307,16 @@ class cognet:
         """
         if self.qnet is None:
             raise ValueError("load qnet first!")
-        sample1 = pd.DataFrame(sample1).fillna('').values.astype(str)[:]
-        sample2 = pd.DataFrame(sample1).fillna('').values.astype(str)[:]
         bp1 = self.__getBaseFrequency_test(sample1)
         bp2 = self.__getBaseFrequency_test(sample2)
         print(sample1)
         print(sample1.shape)
+        print(sample2)
+        print(sample2.shape)
         print(bp1.shape)
-        sample1 = qsample(sample1, self.qnet, nsteps1, baseline_prob=bp1)
-        sample2 = qsample(sample2, self.qnet, nsteps2, baseline_prob=bp2)
-        return qdistance(sample1, sample2)
+        sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
+        sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
+        return qdistance(sample1, sample2, self.qnet, self.qnet)
     
     def __distfunc(self, 
                  x, 
@@ -332,7 +332,7 @@ class cognet:
         return d
     
     def polarDistance(self,
-                      sample):
+                      i):
         """[summary]
 
         Args:
@@ -341,9 +341,12 @@ class cognet:
         Returns:
             [type]: [description]
         """
+        samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+        p = samples_as_strings[i]
         distances = {}
-        for index, row in self.poles.iterrows():
-            distances[index] = distance(sample, row)
+        for index, row in self.polar_features[self.cols].iterrows():
+            row = row.fillna('').values.astype(str)[:]
+            distances[index] = self.distance(p, np.array(row))
         return distances
             
     
@@ -359,7 +362,7 @@ class cognet:
         '''
         if all(x is not None for x in [self.samples, self.features]):
             w = self.samples.index.size
-            p_all = pd.concat([self.samples, self.features], axis=0)[cols].fillna('').values.astype(str)[:]
+            p_all = pd.concat([self.samples, self.features], axis=0)[self.cols].fillna('').values.astype(str)[:]
             line = np.zeros(w)
             y = p_all[row]
             for j in range(w):
@@ -389,6 +392,7 @@ class cognet:
             bp = self.getBaseFrequency(vector)
             sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
             samples_.append(sample)
+        samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
         return self.polar_matrix
         
@@ -421,26 +425,35 @@ class cognet:
             raise ValueError("load_data first!")
     
     def compute_DLI_sample(self,
-                           i,):
+                           i):
         '''
         return ideology index, dL, dR, Qsd (std), Q (max) for one sample
 
         Args:
           i (int): index of sample
         '''
+        self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
         p = self.samples_as_strings[i]
         dR = qdistance(self.pR, p, self.qnet, self.qnet)
         dL = qdistance(self.pL, p, self.qnet, self.qnet)
         ideology_index = (dR-dL)/self.d0
-        
+        return ideology_index
+
+    def dispersion(self,
+                   i):
+        """[summary]
+
+        Args:
+            i ([type]): [description]
+        """
+        p = self.samples_as_strings[i]
         Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
         Qset = np.array(Qset)
 
         matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
         Q = matrix.max()
         Qsd = matrix.std()
-
-        return [ideology_index, dL, dR, Qsd, Q]
+        return Qsd, Q
        
     def compute_DLI_samples(self,
                     num_qsamples,
@@ -625,8 +638,8 @@ class cognet:
 
     def randomMaskReconstruction(self,
                              return_dict,
-                             sample=None,
-                             index=None):
+                             index=None,
+                             sample=None):
         """
         reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
@@ -649,7 +662,7 @@ class cognet:
         elif all(x is not None for x in [sample, index]):
             raise ValueError("Must input either sample or index not both!")
         elif sample is not None:
-            s=pd.DataFrame(sample).fillna('').values.astype(str)[:]
+            s=np.array(pd.DataFrame(sample).fillna('').values.astype(str)[:])
         elif index is not None:
             s=self.samples_as_strings[index]
             

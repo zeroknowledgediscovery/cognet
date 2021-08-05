@@ -46,7 +46,7 @@ class dataFormatter:
         """
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError('Samples must be in numpy array form!')
-        samples = pd.DataFrame(samples)
+        samples = samples
         features = np.array(samples.columns.astype(str)[:])
         samples = samples.values.astype(str)[:]
         # remove columns that are all NaNs
