@@ -1,6 +1,6 @@
 from quasinet.qnet import Qnet, load_qnet, save_qnet
 from quasinet.qnet import export_qnet_tree, export_qnet_graph
-from cognet.util import assert_None
+from cognet_.util import assert_None
 class model:
     """Facilitate training and constructing Qnet
     """
@@ -41,7 +41,7 @@ class model:
             raise ValueError("input both samples and features or data object!")
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
         print("qnet")
-        self.myQnet.fit(samples[:4])
+        self.myQnet.fit(samples)
         print("done")
         self.samples = samples
         self.features = featurenames
@@ -69,7 +69,9 @@ class model:
           [type]: [description]
         """
         ## can also directly use load from joblib, thoughts?
+        print("updating")
         self.myQnet = load_qnet(file_path)
+        self.features = self.myQnet.feature_names
         return self.myQnet
 
     def export_dot(self,

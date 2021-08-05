@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from cognet.util import assert_None, assert_array_dimension
+from cognet_.util import assert_None, assert_array_dimension
 class dataFormatter:
     """Aggregate related Qnet functions
     """
@@ -136,7 +136,7 @@ class dataFormatter:
             print("vars not found:{}".format(invalid_vars))
         return mutable_vars, immutable_vars
 
-    def set_vars(self,
+    def mutable_variables(self,
                 immutable_list=None,
                 IMMUTABLE_FILE=None,
                 mutable_list=None,

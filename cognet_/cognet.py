@@ -35,8 +35,7 @@ class cognet:
         self.poles = None
         self.polar_features = None
         self.polar_indices = None
-        self.pL = None
-        self.pR = None
+        self.poles_dict = {}
         self.d0 = None
         self.qdistance_matrix_file = None
         self.dissonance_file = None
@@ -48,23 +47,37 @@ class cognet:
     
     def load_from_model(self,
                         model,
+                        samples_file=None,
                         im_vars=None,
                         m_vars=None):
-        """[summary]
+        """load parameters from model object
 
         Args:
-            model ([type]): [description]
-            im_vars ([type], optional): [description]. Defaults to None.
-            m_vars ([type], optional): [description]. Defaults to None.
+          model (Class): model obj for loading parameters
+          samples_file (filepath): filepath and name for sample csv
+          im_vars (list[str], optional): Not implemented yet. Defaults to None.
+          m_vars (list[str], optional): Not implemented yet. Defaults to None.
         """
         if model is not None:
             self.qnet = model.myQnet
             self.cols = np.array(model.features)
             self.features = pd.DataFrame(columns=self.cols)
-            self.immutable_vars = model.immutable_vars
-            self.mutable_vars = model.mutable_vars
-            
-            samples = pd.DataFrame(model.samples)
+            if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
+                if model.immutable_vars is not None:
+                    self.immutable_vars = model.immutable_vars
+                    self.mutable_vars = [x for x in self.features if x not in self.immutable_vars]
+                elif model.mutable_vars is not None:
+                    self.mutable_vars = model.mutable_vars
+                    self.immutable_vars = [x for x in self.features if x not in self.mutable_vars]
+            else:
+                self.mutable_vars = self.features
+            if all(x is None for x in [model.samples, samples_file]):
+                raise ValueError("Please input samples if loading model after loading qnet")
+            elif model.samples is not None:
+                samples = pd.DataFrame(model.samples)
+            elif samples_file is not None:
+                samples = pd.read_csv(samples_file)
+                
             self.samples = pd.concat([samples,self.features], axis=0)
             self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
             self.s_null=['']*len(self.samples_as_strings[0])
@@ -191,32 +204,9 @@ class cognet:
         base_frequency=mutable_x/mutable_x.sum()
 
         # commented out for now for testing using smaller qnet
-        # for i in range(len(base_frequency)):
-        #     if base_frequency[i]>0.0:
-        #         base_frequency[i]= self.__variation_weight(i)*base_frequency[i]
-
-        return base_frequency/base_frequency.sum()
-
-    def __getBaseFrequency_test(self, 
-                         sample):
-        '''
-        get frequency of the variables
-        helper func for qsampling
-
-        Args:
-          sample (list[str]): vector of sample, must have the same dimensions as the qnet
-        '''
-        MUTABLE=pd.DataFrame(np.zeros(len(sample)),index=sample).transpose()
-                
-        for m in sample:
-            MUTABLE[m]=1.0
-        mutable_x=MUTABLE.values[0]
-        base_frequency=mutable_x/mutable_x.sum()
-
-        # commented out for now for testing using smaller qnet
-        # for i in range(len(base_frequency)):
-        #     if base_frequency[i]>0.0:
-        #         base_frequency[i]= self.variation_weight[i]*base_frequency[i]
+        for i in range(len(base_frequency)):
+            if base_frequency[i]>0.0:
+                base_frequency[i]= self.variation_weight[i]*base_frequency[i]
 
         return base_frequency/base_frequency.sum()
     
@@ -232,15 +222,13 @@ class cognet:
           steps (int): number of steps to qsample
           immutable (bool): are there variables that are immutable?
         '''
-        if all(x is not None for x in [self.mutable_vars, self.immutable_vars, sample]):
+        if all(x is not None for x in [self.mutable_vars, sample]):
             if immutable == True:
                 return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
             else:
                 return qsample(sample,self.qnet,steps)
         elif self.mutable_vars is None:
             raise ValueError("load_data first!")
-        elif self.immutable_vars is None:
-            raise ValueError("load immutable variables first!")
 
     def set_poles(self,
                   POLEFILE,
@@ -256,12 +244,19 @@ class cognet:
           mutable (boolean): Whether or not to set poles as the only mutable_vars
         '''
         invalid_count = 0
-        if all(x is not None for x in [self.samples]):
+        if all(x is not None for x in [self.samples, self.qnet]):
             poles = pd.read_csv(POLEFILE, index_col=0)
-            L=poles.L.to_dict()
-            R=poles.R.to_dict()
             self.poles=poles.transpose()
-
+            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            poles_dict = {}
+            for column in poles:
+                p_ = self.polar_features.loc[column][self.cols].fillna('').values.astype(str)[:]
+                poles_dict[column] = self.qsampling(p_,steps)
+            self.poles_dict = poles_dict
+            self.pL = list(poles_dict.values())[0]
+            self.pR = list(poles_dict.values())[1]
+            self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
+            
             cols = [x for x in self.poles.columns if x in self.samples.columns]
             self.samples=self.samples[cols]
         
@@ -272,13 +267,7 @@ class cognet:
 
             self.samples = pd.concat([self.samples,self.features], axis=0)
             self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
-
-            self.polar_features = pd.concat([self.poles, self.features], axis=0)
-            pL= self.polar_features.loc['L'][self.cols].fillna('').values.astype(str)[:]
-            pR= self.polar_features.loc['R'][self.cols].fillna('').values.astype(str)[:]
-
-            self.pL=self.qsampling(pL,steps)
-            self.pR=self.qsampling(pR,steps)
+            
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
         elif self.samples is None:
@@ -307,13 +296,8 @@ class cognet:
         """
         if self.qnet is None:
             raise ValueError("load qnet first!")
-        bp1 = self.__getBaseFrequency_test(sample1)
-        bp2 = self.__getBaseFrequency_test(sample2)
-        print(sample1)
-        print(sample1.shape)
-        print(sample2)
-        print(sample2.shape)
-        print(bp1.shape)
+        bp1 = self.getBaseFrequency(sample1)
+        bp2 = self.getBaseFrequency(sample2)
         sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
         sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
         return qdistance(sample1, sample2, self.qnet, self.qnet)
@@ -385,8 +369,6 @@ class cognet:
             [type]: [description]
         """
         polar_arraydata = self.polar_features[self.cols].fillna('').values.astype(str)[:]
-        print("testing polar_separation")
-        print(polar_arraydata)
         samples_ = []
         for vector in polar_arraydata:
             bp = self.getBaseFrequency(vector)
@@ -424,15 +406,36 @@ class cognet:
         elif self.year is None:
             raise ValueError("load_data first!")
     
+    def __calc_d0(self,
+                  pole_1,
+                  pole_2):
+        """[summary]
+
+        Args:
+            pole_1 ([type]): [description]
+            pole_2 ([type]): [description]
+        """
+        self.pL = list(self.poles_dict.values())[pole_1]
+        self.pR = list(self.poles_dict.values())[pole_2]
+        self.d0 = qdistance(pL, pR, self.qnet, self.qnet)
+        
     def ideology(self,
-                i):
-        '''
-        return ideology index, dL, dR, Qsd (std), Q (max) for one sample
+                i,
+                pole_1=0,
+                pole_2=1):
+        """return ideology index for one sample
 
         Args:
           i (int): index of sample
-        '''
-        self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
+          pole_1 (int, optional): index of Pole One to calc as base distance. Defaults to 0.
+          pole_2 (int, optional): index of Pole Two to calc as base distance. Defaults to 1.
+
+        Returns:
+            [type]: [description]
+        """
+        if pole_1 != 0 or pole_2 != 1:
+            self.__calc_d0(pole_1, pole_2)
+            
         p = self.samples_as_strings[i]
         dR = qdistance(self.pR, p, self.qnet, self.qnet)
         dL = qdistance(self.pL, p, self.qnet, self.qnet)
@@ -453,30 +456,48 @@ class cognet:
         matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
         Q = matrix.max()
         Qsd = matrix.std()
-        return Qsd, Q
+        return [Qsd, Q]
        
     def compute_DLI_samples(self,
                     num_qsamples,
                     outfile,
+                    type,
                     steps=5,
-                    n_jobs=28):
-        '''
-        compute and save ideology index, dL, dR, Qsd (std), Q (max) for all samples
+                    n_jobs=28,
+                    pole_1=0,
+                    pole_2=1):
+        """compute and save ideology index for all samples
 
         Args:
           num_qsamples (int): number of qsamples to compute
-          steps (int): number of steps to qsample
           outfile (str): output file for results
-        '''
+          type (str): whether to calc dispersion or ideology
+          steps (int): number of steps to qsample
+          n_jobs (int, optional): sets the number of jobs for parallelization. Defaults to 28.
+          pole_1 (int, optional): index of Pole One to calc as base distance. Defaults to 0.
+          pole_2 (int, optional): index of Pole Two to calc as base distance. Defaults to 1.
+
+        Raises:
+            ValueError: set poles if poles are not set
+            ValueError: load data if samples or features are not present
+        """
         if all(x is not None for x in [self.samples, self.features,
                                     self.pL, self.pR]):
             self.num_qsamples = num_qsamples
             self.steps = steps
-            self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
-
-            result=pqdm(range(len(self.samples)), self.ideology, n_jobs)
-            pd.DataFrame(result,
-                        columns=['ido']).to_csv(outfile)
+            if pole_1 != 0 or pole_2 != 1:
+                self.__calc_d0(pole_1, pole_2)
+                
+            if type == 'ideology':
+                result=pqdm(range(len(self.samples)), self.ideology, n_jobs)
+                pd.DataFrame(result,
+                            columns=['ideology']).to_csv(outfile)
+            elif type == 'dispersion':
+                result=pqdm(range(len(self.samples)), self.dispersion, n_jobs)
+                pd.DataFrame(result,
+                            columns=['Qsd', 'Qmax']).to_csv(outfile)
+            else:
+                raise ValueError("Type must be either dispersion or ideology!")
 
         elif self.pL is None or self.pR is None:
             raise ValueError("set_poles first!")
