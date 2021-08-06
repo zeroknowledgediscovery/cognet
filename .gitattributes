@@ -8,3 +8,12 @@ examples/examples_data/immutable.csv filter=lfs diff=lfs merge=lfs -text
 examples/examples_data/polar_vectors.csv filter=lfs diff=lfs merge=lfs -text
 examples/examples_data/tmp_dot_modelclass.dot filter=lfs diff=lfs merge=lfs -text
 examples/examples_data/tmp_nodelclass.joblib filter=lfs diff=lfs merge=lfs -text
+examples/example_results/dispersion_test.csv filter=lfs diff=lfs merge=lfs -text
+examples/example_results/DISSONANCE_matrix.csv filter=lfs diff=lfs merge=lfs -text
+examples/example_results/distfunc_multiples_testing.csv filter=lfs diff=lfs merge=lfs -text
+examples/example_results/ideology.csv filter=lfs diff=lfs merge=lfs -text
+examples/example_results/polarDistance_multiple_test.csv filter=lfs diff=lfs merge=lfs -text
+examples/example_results/randomMaskRecon_test.csv filter=lfs diff=lfs merge=lfs -text
+examples/example_results/tmp_dot_modelclass.dot filter=lfs diff=lfs merge=lfs -text
+examples/example_results/tmp_nodelclass.joblib filter=lfs diff=lfs merge=lfs -text
+examples/example_data/* filter=lfs diff=lfs merge=lfs -text
