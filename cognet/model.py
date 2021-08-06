@@ -1,6 +1,6 @@
 from quasinet.qnet import Qnet, load_qnet, save_qnet
 from quasinet.qnet import export_qnet_tree, export_qnet_graph
-from cognet_.util import assert_None
+from util import assert_None
 class model:
     """Facilitate training and constructing Qnet
     """
