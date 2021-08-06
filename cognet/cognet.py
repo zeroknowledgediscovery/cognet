@@ -366,29 +366,51 @@ class cognet:
             raise ValueError("load data first!")
         
     def distfunc_line(self,
-                   row):
+                      i,
+                      return_dict=None):
         '''
         compute the dist for a row, or vector of samples
 
         Args:
-          k (int): row
+          i (int): row
         return:
           numpy.ndarray(float)
         '''
         if all(x is not None for x in [self.samples, self.features]):
             w = self.samples.index.size
-            p_all = pd.concat([self.samples, self.features], axis=0)[self.cols].fillna('').values.astype(str)[:]
             line = np.zeros(w)
-            y = p_all[row]
+            y = self.samples_as_strings[i]
             for j in range(w):
                 # only compute half of the distance matrix
-                if j > row:
-                    x = p_all[j]
+                if j > i:
+                    x = self.samples_as_strings[j]
                     line[j] = self.__distfunc(x, y)
         else:
             raise ValueError("load_data first!")
+        if return_dict is not None:
+            return_dict[i] = line
         return line
     
+    def distfunc_multiples(self,
+                           outfile):
+        
+        if all(x is not None for x in [self.samples, self.features]):
+            manager = mp.Manager()
+            return_dict = manager.dict()
+            processes = []
+
+            for i in range(len(self.samples)):
+                p = mp.Process(target=self.distfunc_line, args=(i, return_dict))
+                processes.append(p)
+            
+            [x.start() for x in processes]
+            [x.join() for x in processes]
+            result=[x for x in return_dict.values()]
+            columns = [i for i in range(len(self.samples))]
+            result=pd.DataFrame(result,columns=columns).to_csv(outfile)
+        else:
+            raise ValueError("load data first!")
+        
     def polar_separation(self,
                          nsteps=0):
         """[summary]
@@ -538,12 +560,12 @@ class cognet:
                 for i in range(len(self.samples)):
                     p = mp.Process(target=self.ideology, args=(i, return_dict))
                     processes.append(p)
-                    columns=['ideology']
+                columns=['ideology']
             elif type == 'dispersion':
                 for i in range(len(self.samples)):
                     p = mp.Process(target=self.dispersion, args=(i, return_dict))
                     processes.append(p)
-                    columns=['Qsd', 'Qmax']
+                columns=['Qsd', 'Qmax']
             else:
                 raise ValueError("Type must be either dispersion or ideology!")
             
