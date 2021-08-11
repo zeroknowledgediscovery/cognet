@@ -12,12 +12,12 @@ fi
 T=12
 
 
-LAUNCH='../../../../LAUNCH_UTILITY/launcher_s.sh'
+LAUNCH='../../../LAUNCH_UTILITY/launcher_s.sh'
 for yr in `echo $YEARS`
 do
     echo $yr
     ./mpi_dcal_setup.sh $yr $NODES $NUM tmp_"$yr"
-    $LAUNCH -P tmp_"$yr" -F -T $T -N "$NODES" -C 28 -p broadwl -J ACRD_"$yr" -M 56
+    $LAUNCH -P tmp_"$yr" -F -T $T -N "$NODES" -C 28 -p broadwl -J /examples_results/ACRD_"$yr" -M 56
 
 done
 rm tmp*

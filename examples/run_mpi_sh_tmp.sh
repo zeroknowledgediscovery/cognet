@@ -12,7 +12,7 @@ fi
 T=127
 
 
-LAUNCH='../../../../LAUNCH_UTILITY/launcher_s.sh'
+LAUNCH='../../../LAUNCH_UTILITY/launcher_s.sh'
 for yr in `echo $YEARS`
 do
     echo $yr

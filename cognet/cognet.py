@@ -412,7 +412,7 @@ class cognet:
             [x.join() for x in processes]
             result=[x for x in return_dict.values()]
             columns = [i for i in range(len(self.samples))]
-            result=pd.DataFrame(result,columns=columns).transpose().to_csv(outfile)
+            result=pd.DataFrame(result,columns=columns, index=columns).sort_index(ascending=False).to_csv(outfile)
         else:
             raise ValueError("load data first!")
         return return_dict
