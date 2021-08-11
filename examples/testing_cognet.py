@@ -36,7 +36,7 @@ if test_dataFormatter:
         # make checks to ensure we will not bark at qnet construction 
         # data.train() returns traininh data
         # data.test() returns test data
-        
+
         features,samples = data.train()
         features,samples = data.train()
         # we can set mutable and immutable vars from list or file
@@ -48,25 +48,25 @@ if test_dataFormatter:
 
         testing = False
         # can either input features and samples directly, or infer from data obj
-        
+
         model_ = model()
         model_.fit(data_obj=data)
         # qnet construction parameters 
         # infer qnet
-        
+
         if test_model:
                 model_.export_dot("tmp_dot_modelclass.dot",
                                 generate_trees=True)
                 model_.save("tmp_nodelclass.joblib")
                 model_.load("tmp_nodelclass.joblib")
-        
+
         # set some paramaters in instantiating cognet class 
         # also setup Dnull, and nullbaseFreq
         # if loading from model obj, no need to load_data, otherwise, load_data
-         
+                
         Cg = cognet()
         Cg.load_from_model(model_)
-        
+
         # distance calculation for individual samples    
         # we have a nsteps parameter (for sample 1 and sample2)
         # which qsamples the sample1 and sample2 if set before
