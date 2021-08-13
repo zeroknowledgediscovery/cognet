@@ -664,7 +664,7 @@ class cognet:
         n_jobs (int): number of jobs for pdqm
         '''
         if output_file is None:
-            output_file = './DISSONANCE_matrix.csv'
+            output_file = '/example_results/DISSONANCE_matrix.csv'
             
         manager = mp.Manager()
         return_dict = manager.dict()
@@ -678,7 +678,12 @@ class cognet:
         [x.join() for x in processes]
 
         result=[x for x in return_dict.values()]
-        result=pd.DataFrame(result,columns=self.cols).to_csv('DISSONANCE_matrix.csv')
+        if self.polar_indices is not None:
+            polar_features = pd.concat([self.poles, self.features], axis=0)
+            cols = polar_features[self.cols].dropna(axis=1).columns
+        else:
+            cols = self.cols
+        result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
         self.dissonance_file = output_file
         return return_dict
