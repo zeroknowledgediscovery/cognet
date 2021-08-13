@@ -167,7 +167,9 @@ class cognet:
                     'is equal to the number of samples ({})!'
                 string = string.format(num_samples, len(self.samples.index))
                 print(string)
-            self.samples = self.samples.sample(num_samples)
+            print("updated test case to take first 10 samples instead of random")
+            # self.samples = self.samples.sample(num_samples)
+            self.samples = self.samples[:num_samples]
             self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
 
         elif self.samples is None:
