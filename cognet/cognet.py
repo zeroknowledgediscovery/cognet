@@ -257,8 +257,8 @@ class cognet:
                 p_ = self.polar_features.loc[column][self.cols].fillna('').values.astype(str)[:]
                 poles_dict[column] = self.qsampling(p_,steps)
             self.poles_dict = poles_dict
-            self.pL = list(poles_dict.values())[0]
-            self.pR = list(poles_dict.values())[1]
+            self.pL = list(poles_dict.values())[1]
+            self.pR = list(poles_dict.values())[0]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
             cols = [x for x in self.poles.columns if x in self.samples.columns]
@@ -478,7 +478,7 @@ class cognet:
         """
         self.pL = list(self.poles_dict.values())[pole_1]
         self.pR = list(self.poles_dict.values())[pole_2]
-        self.d0 = qdistance(pL, pR, self.qnet, self.qnet)
+        self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
         
     def ideology(self,
                 i,
@@ -504,8 +504,8 @@ class cognet:
         dL = qdistance(self.pL, p, self.qnet, self.qnet)
         ideology_index = (dR-dL)/self.d0
         if return_dict is not None:
-            return_dict[i] = ideology_index
-        return ideology_index
+            return_dict[i] = [ideology_index, dR, dL, self.d0]
+        return [ideology_index, dR, dL, self.d0]
 
     def dispersion(self,
                 i,
@@ -533,8 +533,8 @@ class cognet:
     def compute_DLI_samples(self,
                         type,
                         outfile,
-                        num_qsamples=5,
-                        steps=5,
+                        num_qsamples=40,
+                        steps=120,
                         n_jobs=28,
                         pole_1=0,
                         pole_2=1):
@@ -560,6 +560,9 @@ class cognet:
             if pole_1 != 0 or pole_2 != 1:
                 self.__calc_d0(pole_1, pole_2)
             
+            # testing
+            # pd.DataFrame(self.samples_as_strings).to_csv('examples_results/class_allsamples_2018.csv')
+            
             manager = mp.Manager()
             return_dict = manager.dict()
             processes = []
@@ -568,7 +571,7 @@ class cognet:
                 for i in range(len(self.samples)):
                     p = mp.Process(target=self.ideology, args=(i, return_dict))
                     processes.append(p)
-                columns=['ideology']
+                columns=['ideology', 'dR', 'dL', 'd0']
             elif type == 'dispersion':
                 for i in range(len(self.samples)):
                     p = mp.Process(target=self.dispersion, args=(i, return_dict))
@@ -580,6 +583,7 @@ class cognet:
             [x.start() for x in processes]
             [x.join() for x in processes]
             result=[x for x in return_dict.values()]
+            print(result)
             result=pd.DataFrame(result,columns=columns).to_csv(outfile)
 
         elif self.pL is None or self.pR is None:

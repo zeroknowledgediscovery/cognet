@@ -3,13 +3,10 @@
 YEARS='2018'
 # nodes requested
 NODES=4
-# number of samples (u can set it toa number like 10)
+# number of samples (u can set it to a number like 10)
 NUM='all'
-if [ $# -gt 0 ] ; then
-    NUM=$1
-fi
 # time requested
-T=12
+T=8
 
 
 LAUNCH='../../../LAUNCH_UTILITY/launcher_s.sh'
@@ -17,7 +14,7 @@ for yr in `echo $YEARS`
 do
     echo $yr
     ./mpi_dcal_setup.sh $yr $NODES $NUM tmp_"$yr"
-    $LAUNCH -P tmp_"$yr" -F -T $T -N "$NODES" -C 28 -p broadwl -J /examples_results/ACRD_"$yr" -M 56
+    $LAUNCH -P tmp_"$yr" -F -T $T -N "$NODES" -C 28 -p broadwl -J /examples_results/ACRD1_"$yr" -M 56
 
 done
 rm tmp*

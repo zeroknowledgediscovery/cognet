@@ -43,11 +43,11 @@ Cg.load_from_model(model_, samples_file='examples_data/gss_2018.csv')
 stats = Cg.set_poles(POLEFILE,steps=2)
 Cg.num_qsamples = 5
 
-#distance_matrix=Cg.distfunc_multiples("distfunc_multiples_testing.csv")
+distance_matrix=Cg.distfunc_multiples("distfunc_multiples_testing.csv")
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    with MPIPoolExecutor() as executor:
-        result = executor.map(Cg.distfunc_line, range(len(Cg.samples)))
-        print(result)
-        pd.DataFrame(result).to_csv('distfunc_test.csv',index=None,header=None)
+#     with MPIPoolExecutor() as executor:
+#         result = executor.map(Cg.distfunc_line, range(len(Cg.samples)))
+#         print(result)
+#         pd.DataFrame(result).to_csv('distfunc_test.csv',index=None,header=None)
