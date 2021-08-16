@@ -1,1 +1,3 @@
-/tmp/slurmd/job12702575/slurm_script: line 16: mpiexec: command not found
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd-midway2-0085: error: *** STEP 12705515.0 ON midway2-0085 CANCELLED AT 2021-08-16T06:13:51 DUE TO TIME LIMIT ***
+slurmstepd-midway2-0085: error: *** JOB 12705515 ON midway2-0085 CANCELLED AT 2021-08-16T06:13:51 DUE TO TIME LIMIT ***

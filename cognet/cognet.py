@@ -590,7 +590,7 @@ class cognet:
             raise ValueError("set_poles first!")
         else:
             raise ValueError("load_data first!")
-        return return_dict
+        return result
 
     def compute_polar_indices(self,
                             num_samples = None,

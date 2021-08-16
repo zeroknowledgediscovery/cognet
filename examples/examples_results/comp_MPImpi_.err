@@ -1,0 +1,3 @@
+srun: Job step aborted: Waiting up to 32 seconds for job step to finish.
+slurmstepd-midway2-0062: error: *** STEP 12705537.0 ON midway2-0062 CANCELLED AT 2021-08-16T07:00:01 DUE TO TIME LIMIT ***
+slurmstepd-midway2-0062: error: *** JOB 12705537 ON midway2-0062 CANCELLED AT 2021-08-16T07:00:01 DUE TO TIME LIMIT ***
