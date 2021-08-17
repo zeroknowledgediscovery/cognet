@@ -6,7 +6,7 @@ NODES=4
 # number of samples (u can set it to a number like 10)
 NUM='all'
 # time requested
-T=8
+T=12
 
 
 LAUNCH='../../../LAUNCH_UTILITY/launcher_s.sh'

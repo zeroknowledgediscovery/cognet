@@ -3,14 +3,10 @@ import pandas as pd
 import random
 from quasinet.qnet import Qnet, qdistance, load_qnet, qdistance_matrix
 from quasinet.qsampling import qsample, targeted_qsample
-import os
-os.system("module unload openmpi")
 #from mpi4py.futures import MPIPoolExecutor
 import sys
 import subprocess
-from pqdm.processes import pqdm
 from scipy.stats import entropy
-
 import multiprocessing as mp
 import time
 
@@ -387,6 +383,7 @@ class cognet:
             w = self.samples.index.size
             line = np.zeros(w)
             y = self.samples_as_strings[i]
+            print(i)
             for j in range(w):
                 # only compute half of the distance matrix
                 if j > i:

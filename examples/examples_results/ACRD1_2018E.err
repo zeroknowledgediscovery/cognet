@@ -1,0 +1,27 @@
+Traceback (most recent call last):
+  File "/software/python-anaconda-2020.02-el7-x86_64/envs/mpi4py-3.0.3/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/software/python-anaconda-2020.02-el7-x86_64/envs/mpi4py-3.0.3/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/home/davidyangnyc/.local/lib/python3.7/site-packages/mpi4py/futures/__main__.py", line 72, in <module>
+    main()
+  File "/home/davidyangnyc/.local/lib/python3.7/site-packages/mpi4py/futures/__main__.py", line 60, in main
+    run_command_line()
+  File "/home/davidyangnyc/.local/lib/python3.7/site-packages/mpi4py/run.py", line 47, in run_command_line
+    run_path(sys.argv[0], run_name='__main__')
+  File "/software/python-anaconda-2020.02-el7-x86_64/envs/mpi4py-3.0.3/lib/python3.7/runpy.py", line 263, in run_path
+    pkg_name=pkg_name, script_name=fname)
+  File "/software/python-anaconda-2020.02-el7-x86_64/envs/mpi4py-3.0.3/lib/python3.7/runpy.py", line 96, in _run_module_code
+    mod_name, mod_spec, pkg_name, script_name)
+  File "/software/python-anaconda-2020.02-el7-x86_64/envs/mpi4py-3.0.3/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "compute_distmatrix_mpi.py", line 13, in <module>
+    from cognet import cognet
+  File "../cognet/cognet.py", line 11, in <module>
+    from pqdm.processes import pqdm
+  File "/home/davidyangnyc/.local/lib/python3.7/site-packages/pqdm/processes.py", line 7, in <module>
+    from pqdm._base import _parallel_process
+  File "/home/davidyangnyc/.local/lib/python3.7/site-packages/pqdm/_base.py", line 5, in <module>
+    from tqdm import tqdm as tqdm_cli
+ModuleNotFoundError: No module named 'tqdm'
+application called MPI_Abort(MPI_COMM_WORLD, 1) - process 0

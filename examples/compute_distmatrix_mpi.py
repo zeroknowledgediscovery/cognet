@@ -23,6 +23,7 @@ QPATH='examples_data/gss_'+yr+'.joblib'
 IMMUTABLE_FILE='examples_data/immutable.csv'
 GSSDATA = 'examples_data/gss_'+yr+'.csv'
 
+commandline_test = True
 #train data object
 data = dataFormatter(samples=GSSDATA,
                 test_size=0.5)
@@ -43,11 +44,14 @@ Cg.load_from_model(model_, samples_file='examples_data/gss_2018.csv')
 stats = Cg.set_poles(POLEFILE,steps=2)
 Cg.num_qsamples = 5
 
-distance_matrix=Cg.distfunc_multiples("distfunc_multiples_testing.csv")
+if commandline_test:
+    print("testing mpiexex print error")
+    Cg.set_nsamples(10)
+#distance_matrix=Cg.distfunc_multiples("distfunc_multiples_testing.csv")
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
 
-#     with MPIPoolExecutor() as executor:
-#         result = executor.map(Cg.distfunc_line, range(len(Cg.samples)))
-#         print(result)
-#         pd.DataFrame(result).to_csv('distfunc_test.csv',index=None,header=None)
+    with MPIPoolExecutor() as executor:
+        result = executor.map(Cg.distfunc_line, range(len(Cg.samples)))
+        print(result)
+        pd.DataFrame(result).to_csv('examples_results/distfunc_test.csv',index=None,header=None)
