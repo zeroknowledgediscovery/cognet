@@ -1,2 +1,21 @@
-Mon Aug 16 19:48:18 CDT 2021
-Mon Aug 16 19:48:51 CDT 2021
+Wed Aug 18 18:43:18 CDT 2021
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   PID 41004 RUNNING AT midway2-0055
+=   EXIT CODE: 9
+=   CLEANING UP REMAINING PROCESSES
+=   YOU CAN IGNORE THE BELOW CLEANUP MESSAGES
+===================================================================================
+
+===================================================================================
+=   BAD TERMINATION OF ONE OF YOUR APPLICATION PROCESSES
+=   PID 41004 RUNNING AT midway2-0055
+=   EXIT CODE: 9
+=   CLEANING UP REMAINING PROCESSES
+=   YOU CAN IGNORE THE BELOW CLEANUP MESSAGES
+===================================================================================
+   Intel(R) MPI Library troubleshooting guide:
+      https://software.intel.com/node/561764
+===================================================================================
+Wed Aug 18 18:52:14 CDT 2021

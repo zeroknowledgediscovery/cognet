@@ -46,7 +46,7 @@ Cg.num_qsamples = 5
 
 if commandline_test:
     print("testing mpiexex print error")
-    Cg.set_nsamples(10)
+    Cg.set_nsamples(11)
 #distance_matrix=Cg.distfunc_multiples("distfunc_multiples_testing.csv")
 
 if __name__ == '__main__':
@@ -54,4 +54,4 @@ if __name__ == '__main__':
     with MPIPoolExecutor() as executor:
         result = executor.map(Cg.distfunc_line, range(len(Cg.samples)))
         print(result)
-        pd.DataFrame(result).to_csv('examples_results/distfunc_test.csv',index=None,header=None)
+        pd.DataFrame(result).to_csv('examples_results/distfunc_mpitest.csv',index=None,header=None)
