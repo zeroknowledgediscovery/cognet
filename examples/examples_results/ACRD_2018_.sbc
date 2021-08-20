@@ -1,16 +1,3 @@
-#!/bin/bash
-#SBATCH --job-name=/examples_results/ACRD_2018
-#SBATCH --output=/project2/ishanu/NLS_DATA/cognet/examples//examples_results/ACRD_2018O.out
-#SBATCH --error=/project2/ishanu/NLS_DATA/cognet/examples//examples_results/ACRD_2018E.err
-#SBATCH --time=8:00:00
-#SBATCH --qos=normal
-#SBATCH --mem=56000
-#SBATCH --nodes=4
-#SBATCH --ntasks-per-node=28
-#SBATCH --partition=broadwl
-module load midway2
-module unload python
-module load python/anaconda-2020.02
-module unload python
-module load python/cpython-3.7.0
-date; mpiexec -n 112 python3 -Xy=2018 -XN=all -m mpi4py.futures compute_distmatrix_mpi.py; date
+version https://git-lfs.github.com/spec/v1
+oid sha256:e9cec7fd0aee2d87521c204e1ba63f5506f4bc3fa5180264449a8f585d3a0dcf
+size 548

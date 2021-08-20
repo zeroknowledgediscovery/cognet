@@ -18,9 +18,6 @@ else
 fi
 
 NUMPROC=`expr 28 \* $NODES`
-echo "module load midway2" >> $PROG
-echo "module unload python" >> $PROG
-echo "module unload openmpi" >> $PROG
 echo "module load python/anaconda-2020.02" >> $PROG
 echo "module load mpi4py" >> $PROG
-echo "date; mpiexec -n "$NUMPROC" python3 -Xy="$YEAR" -XN="$NUM" -m mpi4py.futures compute_distmatrix_mpi.py; date"  >> $PROG
+echo "date; mpiexec -n "$NUMPROC" python3 -Xy="$YEAR" -XN="$NUM" -m mpi4py.futures compute_distmatrix_preloadedclass_mpi.py; date"  >> $PROG
