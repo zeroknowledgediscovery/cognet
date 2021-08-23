@@ -6,3 +6,9 @@ examples_results/polarDistance_multiple_test.csv filter=lfs diff=lfs merge=lfs -
 examples_results/randomMaskRecon_test.csv filter=lfs diff=lfs merge=lfs -text
 examples_results/tmp_dot_modelclass.dot filter=lfs diff=lfs merge=lfs -text
 examples_results/tmp_nodelclass.joblib filter=lfs diff=lfs merge=lfs -text
+examples_results/distfunc_forloop_compute_node.csv filter=lfs diff=lfs merge=lfs -text
+examples_results/distfunc_forloop.csv filter=lfs diff=lfs merge=lfs -text
+examples_results/bin filter=lfs diff=lfs merge=lfs -text
+examples_results/data_2018 filter=lfs diff=lfs merge=lfs -text
+examples_results/embed_D_2018 filter=lfs diff=lfs merge=lfs -text
+examples_results/embed_E_2018 filter=lfs diff=lfs merge=lfs -text

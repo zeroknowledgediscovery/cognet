@@ -51,7 +51,7 @@ Cg.load_from_model(model_, samples_file='examples_data/gss_2018.csv')
 #### produce stats on how many column names actually match
 stats = Cg.set_poles(POLEFILE,steps=2)
 Cg.num_qsamples = 5
-Cg.set_nsamples(10)
+#Cg.set_nsamples(500)
 
 with open('examples_results/cgmod.mod', 'wb') as f:
     pickle.dump(Cg,f)

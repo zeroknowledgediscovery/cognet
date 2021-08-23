@@ -455,7 +455,7 @@ class cognet:
             PREF = name_pref
             FILE = infile
 
-            EMBED = '../GSS/bin/embed'
+            EMBED = 'examples_results/bin/embed'
             DATAFILE = 'data_' +yr
             EFILE = out_dir + PREF + '_E_' +yr
             DFILE = out_dir + PREF + '_D_' +yr
