@@ -11,11 +11,11 @@ import pandas as pd
 import numpy as np
 import dill as pickle
 
-yr = '2018'
+yr = '2016'
 POLEFILE='examples_data/polar_vectors.csv'
-QPATH='examples_data/gss_'+yr+'.joblib'
+QPATH='../../creed2_/GSS/Qnets/gss_'+yr+'.joblib'
 IMMUTABLE_FILE='examples_data/immutable.csv'
-GSSDATA = 'examples_data/gss_'+yr+'.csv'
+GSSDATA = 'examples_data/processed_data/gss_'+yr+'.csv'
 
 commandline_test = True
 #train data object
@@ -29,7 +29,7 @@ mutable_vars, immutable_vars = data.mutable_variables(immutable_list=im_vars_lis
 mutable_vars, immutable_vars = data.mutable_variables(IMMUTABLE_FILE=IMMUTABLE_FILE)
 
 model_ = model()
-model_.load("examples_data/gss_2018.joblib")
+model_.load(QPATH)
 
 
 #comm = MPI.COMM_WORLD
@@ -46,14 +46,14 @@ model_.load("examples_data/gss_2018.joblib")
 #Cg = comm.bcast(Cg, root=0)
 
 Cg = cognet()
-Cg.load_from_model(model_, samples_file='examples_data/gss_2018.csv')
+Cg.load_from_model(model_, samples_file=GSSDATA)
 #
 #### produce stats on how many column names actually match
 stats = Cg.set_poles(POLEFILE,steps=2)
 Cg.num_qsamples = 5
-#Cg.set_nsamples(500)
+Cg.set_nsamples(500)
 
-with open('examples_results/cgmod.mod', 'wb') as f:
+with open('examples_results/cgmod' + yr + '.mod', 'wb') as f:
     pickle.dump(Cg,f)
 f.close()
 

@@ -9,7 +9,7 @@ from mpi4py.futures import MPIPoolExecutor
 from mpi4py import MPI
 
 import sys
-sys.path.append("../cognet")
+sys.path.append("../../cognet")
 
 from quasinet.qnet import qdistance
 from cognet import cognet
@@ -20,15 +20,15 @@ import pandas as pd
 import numpy as np
 import dill as pickle
 
-yr = '2018'
-
-with open('../examples_results/cgmod.mod', 'rb') as f:
+yr = '2016'
+with open('../examples_results/cgmod'+yr+'.mod', 'rb') as f:
     Cg = pickle.load(f)
-
+print("loaded")
 
 if __name__ == '__main__':
 
     with MPIPoolExecutor() as executor:
+        print("MPI starting")
         result = executor.map(Cg.distfunc_line, range(len(Cg.samples)))
         print(result)
-        pd.DataFrame(result).to_csv('../examples_results/distfunc_mpitest_preloadedclass_computenode.csv',index=None,header=None)
+        pd.DataFrame(result).to_csv('../examples_results/distfunc_mpitest_preloadedclass_computenode_2016.csv',index=None,header=None)

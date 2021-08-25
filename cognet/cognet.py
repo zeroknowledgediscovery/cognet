@@ -9,6 +9,7 @@ import subprocess
 from scipy.stats import entropy
 import multiprocessing as mp
 import time
+from util import embed_to_pca
 
 class cognet:
     """Aggregate related Qnet functions
@@ -50,10 +51,10 @@ class cognet:
         """load parameters from model object
 
         Args:
-        model (Class): model obj for loading parameters
-        samples_file (filepath): filepath and name for sample csv
-        im_vars (list[str], optional): Not implemented yet. Defaults to None.
-        m_vars (list[str], optional): Not implemented yet. Defaults to None.
+          model (Class): model obj for loading parameters
+          samples_file (filepath): filepath and name for sample csv
+          im_vars (list[str], optional): Not implemented yet. Defaults to None.
+          m_vars (list[str], optional): Not implemented yet. Defaults to None.
         """
         if model is not None:
             self.qnet = model.myQnet
@@ -96,10 +97,10 @@ class cognet:
         '''load cols, features, samples, and qnet.
 
         Args:
-        year (str): to identify cols/features.
-        features_by_year (str): file containing all features by year of the dataset.
-        samples (str): file of samples for that year.
-        Qnet (str): Qnet file location.
+          year (str): to identify cols/features.
+          features_by_year (str): file containing all features by year of the dataset.
+          samples (str): file of samples for that year.
+          Qnet (str): Qnet file location.
         '''
         self.qnet = load_qnet(qnet)
         self.year = year
@@ -128,12 +129,11 @@ class cognet:
 
     def set_immutable_vars(self,
                         IMMUTABLE_FILE):
-        '''
-        set vars to immutable and mutable, 
+        '''set vars to immutable and mutable, 
         can prob combine this with the load_data func: only set the immutable vars if necessary
 
         Args:
-        IMMUTABLE_FILE (str): file containing the immutable features/vars
+          IMMUTABLE_FILE (str): file containing the immutable features/vars
         '''
         if self.cols is None:
             raise ValueError("load_data first!")
@@ -144,11 +144,10 @@ class cognet:
     
     def set_nsamples(self,
                     num_samples):
-        '''
-        select a subset of the samples
+        '''select a subset of the samples
 
         Args:
-        num_samples (int): Set num of samples to subset
+          num_samples (int): Set num of samples to subset
         '''
         self.samples = self.all_samples
         if all(x is not None for x in [num_samples, self.samples]):
@@ -176,10 +175,10 @@ class cognet:
         """[summary]
 
         Args:
-            index ([type]): [description]
+          index ([type]): [description]
 
         Returns:
-            [type]: [description]
+          [type]: [description]
         """
         d_=self.D_null[index]
         v=[]
@@ -189,12 +188,11 @@ class cognet:
     
     def getBaseFrequency(self, 
                         sample):
-        '''
-        get frequency of the variables
+        '''get frequency of the variables
         helper func for qsampling
 
         Args:
-        sample (list[str]): vector of sample, must have the same dimensions as the qnet
+          sample (list[str]): vector of sample, must have the same dimensions as the qnet
         '''
         MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
                 
@@ -214,13 +212,12 @@ class cognet:
                 sample,
                 steps,
                 immutable=False):
-        '''
-        perturb the sample based on thet qnet distributions and number of steps
+        '''perturb the sample based on thet qnet distributions and number of steps
 
         Args:
-        sample (1d array-like): vector of sample, must have the same dimensions as the qnet
-        steps (int): number of steps to qsample
-        immutable (bool): are there variables that are immutable?
+          sample (1d array-like): vector of sample, must have the same dimensions as the qnet
+          steps (int): number of steps to qsample
+          immutable (bool): are there variables that are immutable?
         '''
         if all(x is not None for x in [self.mutable_vars, sample]):
             if immutable == True:
@@ -234,14 +231,13 @@ class cognet:
                 POLEFILE,
                 steps=0,
                 mutable=False):
-        '''
-        set the poles and samples such that the samples contain features in poles
+        '''set the poles and samples such that the samples contain features in poles
 
 
         Args:
-        steps (int): number of steps to qsample
-        POLEFILE (str): file containing poles samples and features
-        mutable (boolean): Whether or not to set poles as the only mutable_vars
+          steps (int): number of steps to qsample
+          POLEFILE (str): file containing poles samples and features
+          mutable (boolean): Whether or not to set poles as the only mutable_vars
         '''
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
@@ -281,19 +277,19 @@ class cognet:
                 sample2,
                 nsteps1=0,
                 nsteps2=0):
-        """[summary]
+        """qsamples each sample set num of steps, then takes qdistance
 
         Args:
-            sample1 ([type]): [description]
-            sample2 ([type]): [description]
-            nsteps1 (int, optional): [description]. Defaults to 0.
-            nsteps2 (int, optional): [description]. Defaults to 0.
+          sample1 ([type]): [description]
+          sample2 ([type]): [description]
+          nsteps1 (int, optional): [description]. Defaults to 0.
+          nsteps2 (int, optional): [description]. Defaults to 0.
 
         Raises:
-            ValueError: [description]
+          ValueError: [description]
 
         Returns:
-            [type]: [description]
+          [type]: [description]
         """
         if self.qnet is None:
             raise ValueError("load qnet first!")
@@ -319,7 +315,7 @@ class cognet:
     def polarDistance(self,
                     i,
                     return_dict=None):
-        """[summary]
+        """return the distance from a sample to the poles
 
         Args:
             i ([type]): [description]
@@ -340,10 +336,10 @@ class cognet:
             
     def polarDistance_multiple(self,
                             outfile):
-        """[summary]
+        """return the distance from all samples to the poles
 
         Args:
-            outfile ([type]): [description]
+          outfile ([type]): [description]
         """
         if all(x is not None for x in [self.samples, self.cols,
                                     self.polar_features]):
@@ -371,13 +367,12 @@ class cognet:
     def distfunc_line(self,
                     i,
                     return_dict=None):
-        '''
-        compute the dist for a row, or vector of samples
+        '''compute the dist for a row, or vector of samples
 
         Args:
-        i (int): row
-        return:
-        numpy.ndarray(float)
+          i (int): row
+          return:
+          numpy.ndarray(float)
         '''
         if all(x is not None for x in [self.samples, self.features]):
             w = self.samples.index.size
@@ -420,13 +415,13 @@ class cognet:
     
     def polar_separation(self,
                         nsteps=0):
-        """[summary]
+        """returns the distance between poles as a qdistance matrix
 
         Args:
-            nsteps (int, optional): [description]. Defaults to 0.
+          nsteps (int, optional): [description]. Defaults to 0.
 
         Returns:
-            [type]: [description]
+          [type]: [description]
         """
         polar_arraydata = self.polar_features[self.cols].fillna('').values.astype(str)[:]
         samples_ = []
@@ -441,14 +436,16 @@ class cognet:
     def embed(self,
             infile,
             name_pref,
-            out_dir):
+            out_dir,
+            pca_model=False):
         '''
         embed data
 
         Args:
-        infile (str): input file to be embedded
-        name_pref (str): preferred name for output file
-        out_dir (str): output dir for results
+          infile (str): input file to be embedded
+          name_pref (str): preferred name for output file
+          out_dir (str): output dir for results
+          pca_model (bool): whether or not to generate PCA model
         '''
         if all(x is not None for x in [self.year]):
             yr = self.year
@@ -456,13 +453,15 @@ class cognet:
             FILE = infile
 
             EMBED = 'examples_results/bin/embed'
-            DATAFILE = 'data_' +yr
+            DATAFILE = out_dir + 'data_' +yr
             EFILE = out_dir + PREF + '_E_' +yr
             DFILE = out_dir + PREF + '_D_' +yr
 
-            pd.read_csv(infile,header=None).to_csv(out_dir + DATAFILE,sep=' ',header=None,index=None)
-            STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+' -D '+DFILE
+            pd.read_csv(FILE,header=None).to_csv(DATAFILE,sep=' ',header=None,index=None)
+            STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+'-D'+DFILE
             subprocess.call(STR,shell=True)
+            if pca_model:
+                embed_to_pca(EFILE, 'PCA_'+EFILE)
         elif self.year is None:
             raise ValueError("load_data first!")
     
