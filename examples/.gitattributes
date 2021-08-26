@@ -21,3 +21,4 @@ examples_results/ACRDALL_2018_.sbc filter=lfs diff=lfs merge=lfs -text
 examples_results/cgmod2016.mod filter=lfs diff=lfs merge=lfs -text
 examples_results/distfunc_mpitest_allpreloadedclass_computenode.csv filter=lfs diff=lfs merge=lfs -text
 examples_results/distfunc_mpitest_preloadedclass_computenode_2016.csv filter=lfs diff=lfs merge=lfs -text
+examples_results/embed_E_2018_PCA filter=lfs diff=lfs merge=lfs -text
