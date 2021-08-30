@@ -22,3 +22,9 @@ examples_results/cgmod2016.mod filter=lfs diff=lfs merge=lfs -text
 examples_results/distfunc_mpitest_allpreloadedclass_computenode.csv filter=lfs diff=lfs merge=lfs -text
 examples_results/distfunc_mpitest_preloadedclass_computenode_2016.csv filter=lfs diff=lfs merge=lfs -text
 examples_results/embed_E_2018_PCA filter=lfs diff=lfs merge=lfs -text
+examples_data/2018_features.csv filter=lfs diff=lfs merge=lfs -text
+examples_data/codebook_vars.txt filter=lfs diff=lfs merge=lfs -text
+examples_data/DMAT_2018.csv filter=lfs diff=lfs merge=lfs -text
+examples_data/features_by_year_GSS.csv filter=lfs diff=lfs merge=lfs -text
+examples_data/GSS_descripvars_2018.csv filter=lfs diff=lfs merge=lfs -text
+examples_data/processed_data filter=lfs diff=lfs merge=lfs -text

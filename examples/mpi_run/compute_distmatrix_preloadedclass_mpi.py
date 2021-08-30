@@ -20,10 +20,19 @@ import pandas as pd
 import numpy as np
 import dill as pickle
 
-yr = '2016'
-with open('../examples_results/cgmod'+yr+'.mod', 'rb') as f:
-    Cg = pickle.load(f)
-print("loaded")
+comm = MPI.COMM_WORLD
+size = comm.Get_size()
+rank = comm.Get_rank()
+
+if rank == 0:
+    yr = '2016'
+    with open('../examples_results/cgmod'+yr+'.mod', 'rb') as f:
+        Cg = pickle.load(f)
+    print("loaded")
+    data = Cg
+else:
+    data = None
+data = comm.scatter(data, root=0)
 
 if __name__ == '__main__':
 
