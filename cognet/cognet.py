@@ -793,7 +793,7 @@ class cognet:
         return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
 
     def randomMaskReconstruction_multiple(self,
-                                        out_file):
+                                          out_file):
         '''runs and saves the results of the predicted masked sample
 
         Args:
@@ -813,13 +813,12 @@ class cognet:
         result=pd.DataFrame(return_dict.items())[1]#, columns=['sample','rederr','r_prob','rand_err','s','q','r'])
         #result=[x for x in return_dict.values() if isinstance(x, tuple)]
         result=pd.DataFrame(result.tolist())
-        print(result)
         cmprdf=result[[3,4,5]]
-        print(cmprdf)
-        mask_=result.iloc[:,6]
+        mask_=result[[6]]
         cmprdf.columns=['s','q','r']#[mask_].transpose()
+        cmprdf.to_csv("examples_results/CMPF_"+"tmp"+".csv")
         print(cmprdf)
-        result=result.iloc[:,:3]
+        result=result[[0,1,2]]
         result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
         result.rederr=result.rederr.astype(float)
 
