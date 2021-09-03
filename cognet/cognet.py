@@ -221,10 +221,10 @@ class cognet:
 
     def set_poles(self,
                 POLEFILE,
-                steps=0,
-                mutable=False,
                 COL1,
-                COL2):
+                COL2,
+                steps=0,
+                mutable=False):
         '''set the poles and samples such that the samples contain features in poles
 
         Args:
