@@ -475,8 +475,8 @@ class cognet:
         
     def ideology(self,
                 i,
-                pole_1,
-                pole_2,
+                pole_1=None,
+                pole_2=None,
                 return_dict =None):
         """return ideology index (left-leaning or right-leaning) for a singular sample
 
@@ -486,7 +486,7 @@ class cognet:
           pole_2 (int): index of Pole Two to calc as base distance. Defaults to 1.
           return_dict (dict, optional): dict containing results
         """
-        if pole_1 != 0 or pole_2 != 1:
+        if pole_1 is not None or pole_2 is not None:
             self.__calc_d0(pole_1, pole_2)
             
         p = self.samples_as_strings[i]
@@ -809,12 +809,17 @@ class cognet:
 
         [x.start() for x in processes]
         [x.join() for x in processes]
-
-        result=[x for x in return_dict.values() if isinstance(x, tuple)]
-        cmprdf=result[3:6]
-        mask_=result[6]
-        cmpf=pd.DataFrame(cmprdf,columns=self.cols,index=['s','q','r'])[mask_].transpose()
-        result=result[:3]
+        
+        result=pd.DataFrame(return_dict.items())[1]#, columns=['sample','rederr','r_prob','rand_err','s','q','r'])
+        #result=[x for x in return_dict.values() if isinstance(x, tuple)]
+        result=pd.DataFrame(result.tolist())
+        print(result)
+        cmprdf=result[[3,4,5]]
+        print(cmprdf)
+        mask_=result.iloc[:,6]
+        cmprdf.columns=['s','q','r']#[mask_].transpose()
+        print(cmprdf)
+        result=result.iloc[:,:3]
         result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
         result.rederr=result.rederr.astype(float)
 
