@@ -222,13 +222,17 @@ class cognet:
     def set_poles(self,
                 POLEFILE,
                 steps=0,
-                mutable=False):
+                mutable=False,
+                COL1,
+                COL2):
         '''set the poles and samples such that the samples contain features in poles
 
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
           mutable (boolean): Whether or not to set poles as the only mutable_vars
+          COL1 (str): column name for first pole to use
+          COL2 (str): column name for second pole to use
         '''
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
@@ -240,8 +244,8 @@ class cognet:
                 p_ = self.polar_features.loc[column][self.cols].fillna('').values.astype(str)[:]
                 poles_dict[column] = self.qsampling(p_,steps)
             self.poles_dict = poles_dict
-            self.pL = list(poles_dict.values())[1]
-            self.pR = list(poles_dict.values())[0]
+            self.pL = list(poles_dict.values())[0]
+            self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
             cols = [x for x in self.poles.columns if x in self.samples.columns]
@@ -463,22 +467,22 @@ class cognet:
             pole_1 (list[str]): a polar vector, must have same number of features as qnet
             pole_2 (list[str]): a polar vector, must have same number of features as qnet
         """
-        self.pL = list(self.poles_dict.values())[pole_1]
-        self.pR = list(self.poles_dict.values())[pole_2]
+        self.pL = list(self.poles_dict[pole_1])
+        self.pR = list(self.poles_dict[pole_2])
         self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
         
     def ideology(self,
                 i,
-                return_dict =None,
-                pole_1=0,
-                pole_2=1):
+                pole_1,
+                pole_2,
+                return_dict =None):
         """return ideology index (left-leaning or right-leaning) for a singular sample
 
         Args:
           i (int): index of sample
-          pole_1 (int, optional): index of Pole One to calc as base distance. Defaults to 0.
-          pole_2 (int, optional): index of Pole Two to calc as base distance. Defaults to 1.
-          return_dict (dict): dict containing results
+          pole_1 (int): index of Pole One to calc as base distance. Defaults to 0.
+          pole_2 (int): index of Pole Two to calc as base distance. Defaults to 1.
+          return_dict (dict, optional): dict containing results
         """
         if pole_1 != 0 or pole_2 != 1:
             self.__calc_d0(pole_1, pole_2)
@@ -783,8 +787,8 @@ class cognet:
         dactual=qdistance(s,s1,self.qnet,self.qnet)
         qdistance_time_end = time.time()
 
-        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
-        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch
+        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
+        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
 
     def randomMaskReconstruction_multiple(self,
                                         out_file):
@@ -805,6 +809,10 @@ class cognet:
         [x.join() for x in processes]
 
         result=[x for x in return_dict.values() if isinstance(x, tuple)]
+        cmprdf=result[3:6]
+        mask_=result[6]
+        cmpf=pd.DataFrame(cmprdf,columns=self.cols,index=['s','q','r'])[mask_].transpose()
+        result=result[:3]
         result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
         result.rederr=result.rederr.astype(float)
 
