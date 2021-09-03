@@ -221,8 +221,8 @@ class cognet:
 
     def set_poles(self,
                 POLEFILE,
-                COL1,
-                COL2,
+                pole_1,
+                pole_2,
                 steps=0,
                 mutable=False):
         '''set the poles and samples such that the samples contain features in poles
@@ -231,8 +231,8 @@ class cognet:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
           mutable (boolean): Whether or not to set poles as the only mutable_vars
-          COL1 (str): column name for first pole to use
-          COL2 (str): column name for second pole to use
+          pole_1 (str): column name for first pole to use
+          pole_2 (str): column name for second pole to use
         '''
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
@@ -244,8 +244,10 @@ class cognet:
                 p_ = self.polar_features.loc[column][self.cols].fillna('').values.astype(str)[:]
                 poles_dict[column] = self.qsampling(p_,steps)
             self.poles_dict = poles_dict
-            self.pL = list(poles_dict.values())[0]
-            self.pR = list(poles_dict.values())[1]
+            self.pL = self.poles_dict[pole_1]
+            self.pR = self.poles_dict[pole_2]
+            # self.pL = list(poles_dict.values())[0]
+            # self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
             cols = [x for x in self.poles.columns if x in self.samples.columns]
@@ -467,8 +469,8 @@ class cognet:
             pole_1 (list[str]): a polar vector, must have same number of features as qnet
             pole_2 (list[str]): a polar vector, must have same number of features as qnet
         """
-        self.pL = list(self.poles_dict[pole_1])
-        self.pR = list(self.poles_dict[pole_2])
+        self.pL = self.poles_dict[pole_1]
+        self.pR = self.poles_dict[pole_2]
         self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
         
     def ideology(self,
