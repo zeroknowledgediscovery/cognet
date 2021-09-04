@@ -475,9 +475,9 @@ class cognet:
         
     def ideology(self,
                 i,
+                return_dict=None,
                 pole_1=None,
-                pole_2=None,
-                return_dict =None):
+                pole_2=None):
         """return ideology index (left-leaning or right-leaning) for a singular sample
 
         Args:
