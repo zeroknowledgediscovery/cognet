@@ -1,0 +1,13 @@
+gssvar,s,q,r
+spkcom,allowed,allowed,allowed
+colcom,not fired,not fired,not fired
+libcom,not remove,not remove,remove
+spkmil,allowed,not allowed,not allowed
+libmil,not remove,not remove,not remove
+libmslm,not remove,remove,remove
+reliten,no religion,strong,no religion
+prayer,approve,approve,approve
+abrape,yes,no,no
+owngun,no,no,refused
+religcon,strongly agree,strongly agree,disagree
+comfort,agree,agree,agree

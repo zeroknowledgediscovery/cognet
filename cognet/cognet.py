@@ -789,7 +789,10 @@ class cognet:
         dactual=qdistance(s,s1,self.qnet,self.qnet)
         qdistance_time_end = time.time()
 
-        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
+        cmpf=pd.DataFrame([s,qs,s_rand],columns=self.cols,index=['s','q','r'])[mask_].transpose()
+        cmpf.index.name='gssvar'
+        cmpf.to_csv('examples_results/CMPF_2018/CMPF-'+str(index)+'.csv')
+        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
         return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
 
     def randomMaskReconstruction_multiple(self,
@@ -810,15 +813,16 @@ class cognet:
         [x.start() for x in processes]
         [x.join() for x in processes]
         
-        result=pd.DataFrame(return_dict.items())[1]#, columns=['sample','rederr','r_prob','rand_err','s','q','r'])
-        #result=[x for x in return_dict.values() if isinstance(x, tuple)]
-        result=pd.DataFrame(result.tolist())
-        cmprdf=result[[3,4,5]]
-        mask_=result[[6]]
-        cmprdf.columns=['s','q','r']#[mask_].transpose()
-        cmprdf.to_csv("examples_results/CMPF_"+"tmp"+".csv")
-        print(cmprdf)
-        result=result[[0,1,2]]
+        #result=pd.DataFrame(return_dict.items())[1]#, columns=['sample','rederr','r_prob','rand_err','s','q','r'])
+        result=[x for x in return_dict.values() if isinstance(x, tuple)]
+        # #result=pd.DataFrame(result.tolist())
+        # print(result)
+        # cmprdf=result[[3,4,5]]
+        # mask_=result[[6]]
+        # cmprdf.columns=['s','q','r']#[mask_].transpose()
+        # cmprdf.to_csv("examples_results/CMPF_"+"tmp"+".csv")
+        # print(cmprdf)
+        # result=result[[0,1,2]]
         result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
         result.rederr=result.rederr.astype(float)
 

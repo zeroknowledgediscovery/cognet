@@ -1,0 +1,11 @@
+gssvar,s,q,r
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,not remove
+colmil,not allowed,not allowed,not allowed
+libmslm,not remove,not remove,remove
+conlabor,hardly any,only some,hardly any
+abhlth,yes,yes,yes
+abpoor,no,no,yes
+absingle,no,no,yes
+abany,no,no,no
+owngun,yes,refused,refused

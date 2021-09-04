@@ -1,0 +1,15 @@
+gssvar,s,q,r
+libcom,not remove,not remove,not remove
+spkmil,allowed,allowed,allowed
+colmil,allowed,allowed,not allowed
+libmil,not remove,not remove,remove
+libmslm,not remove,remove,not remove
+pray,lt once a week,several times a day,once a day
+prayer,disapprove,approve,disapprove
+bible,inspired word,book of fables,word of god
+abpoor,yes,yes,yes
+absingle,yes,yes,yes
+owngun,no,no,refused
+shotgun,no,no,no
+intmil,moderately interested,moderately interested,not at all interested
+religcon,not agree/dsagre,not agree/dsagre,strong disagree

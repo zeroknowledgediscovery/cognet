@@ -1,0 +1,16 @@
+gssvar,s,q,r
+spkcom,not allowed,allowed,allowed
+colcom,not fired,not fired,not fired
+libcom,not remove,not remove,remove
+spkmil,not allowed,not allowed,not allowed
+colmil,not allowed,not allowed,allowed
+libmil,remove,not remove,remove
+libmslm,remove,remove,remove
+abhlth,yes,yes,yes
+abpoor,no,no,no
+absingle,no,no,no
+abany,no,no,yes
+shotgun,no,yes,refused
+abpoorw,always wrong,always wrong,not wrong at all
+religcon,agree,agree,strong disagree
+comfort,agree,agree,neither agree nor disagree

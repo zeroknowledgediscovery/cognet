@@ -1,0 +1,17 @@
+gssvar,s,q,r
+spkcom,allowed,allowed,allowed
+colcom,not fired,not fired,not fired
+libcom,not remove,not remove,remove
+spkmil,allowed,allowed,not allowed
+colmil,allowed,allowed,allowed
+libmil,not remove,not remove,remove
+libhomo,not remove,not remove,remove
+libmslm,not remove,remove,remove
+gunlaw,favor,favor,oppose
+reliten,not very strong,strong,somewhat strong
+bible,book of fables,word of god,book of fables
+abhlth,yes,yes,yes
+abpoor,yes,yes,no
+absingle,yes,yes,yes
+polabuse,yes,no,yes
+shotgun,no,no,refused
