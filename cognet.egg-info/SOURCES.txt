@@ -3,6 +3,12 @@ MANIFEST.in
 README.rst
 setup.py
 version.py
+cognet/__init__.py
+cognet/cognet.py
+cognet/dataFormatter.py
+cognet/model.py
+cognet/util.py
+cognet/viz.py
 cognet.egg-info/PKG-INFO
 cognet.egg-info/SOURCES.txt
 cognet.egg-info/dependency_links.txt
