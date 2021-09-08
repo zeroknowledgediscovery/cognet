@@ -1,11 +1,11 @@
 ===============
-Qbiome
+Cognet
 ===============
 
 
 .. image:: http://zed.uchicago.edu/logo/cognet_logo.png
-   :height: 300px
-   :scale: 30 %
+   :height: 250px
+   :scale: 25%
    :alt: cognet logo
    :align: center
 
