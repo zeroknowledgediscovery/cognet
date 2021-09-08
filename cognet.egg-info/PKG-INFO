@@ -1,0 +1,47 @@
+Metadata-Version: 2.1
+Name: cognet
+Version: 0.0.58
+Summary: Infering Emergent Dependency Structures In Survey Responses
+Home-page: https://github.com/zeroknowledgediscovery/cognet
+Author: zed.uchicago.edu
+Author-email: ishanu@uchicago.edu
+License: LICENSE
+Download-URL: https://github.com/zeroknowledgediscovery/cognet/archive/0.0.58.tar.gz
+Description: ===============
+        Cognet
+        ===============
+        
+        
+        .. image:: http://zed.uchicago.edu/logo/cognet_logo.png
+           :height: 300px
+           :scale: 25 %
+           :alt: cognet logo
+           :align: center
+        
+        .. class:: no-web no-pdf
+        
+        :Info: Draft link will be posted here
+        :Author: ZeD@UChicago <zed.uchicago.edu>
+        :Description: Application of quasinets (https://pypi.org/project/quasinet/) for analysis of emergent structures in survey responses with application in  adversarial contexts. 
+        :Documentation: https://zeroknowledgediscovery.github.io/cognet/
+        
+        
+        **Usage:**
+        
+        .. code-block::
+        
+            import cognet
+        
+        
+Keywords: computational social science,decision trees,machine learning,cognitive dissonance
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Sociology
+Classifier: Topic :: Scientific/Engineering :: Information Analysis
+Classifier: Topic :: Software Development :: Libraries
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.6
+Requires-Python: >=3.6
+Description-Content-Type: text/x-rst

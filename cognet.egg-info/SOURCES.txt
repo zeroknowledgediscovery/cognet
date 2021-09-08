@@ -1,0 +1,10 @@
+LICENSE
+MANIFEST.in
+README.rst
+setup.py
+version.py
+cognet.egg-info/PKG-INFO
+cognet.egg-info/SOURCES.txt
+cognet.egg-info/dependency_links.txt
+cognet.egg-info/requires.txt
+cognet.egg-info/top_level.txt
