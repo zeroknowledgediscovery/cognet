@@ -4,8 +4,8 @@ Cognet
 
 
 .. image:: http://zed.uchicago.edu/logo/cognet_logo.png
-   :height: 150px
-   :scale: 25%
+   :height: 300px
+   :scale: 25 %
    :alt: cognet logo
    :align: center
 
