@@ -1,0 +1,4 @@
+include version.py
+recursive-include cognet/examples *
+recursive-include cognet/bin *
+recursive-include cognet *.ipynb *.joblib *.c *.so *.pyx
