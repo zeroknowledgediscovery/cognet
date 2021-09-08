@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from util import assert_None, assert_array_dimension
+from cognet.util import assert_None, assert_array_dimension
 class dataFormatter:
     """Aggregate related Qnet functions
     """

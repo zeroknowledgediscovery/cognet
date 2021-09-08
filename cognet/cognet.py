@@ -9,7 +9,7 @@ import subprocess
 from scipy.stats import entropy
 import multiprocessing as mp
 import time
-from util import embed_to_pca
+from cognet.util import embed_to_pca
 
 class cognet:
     """Aggregate related Qnet functions
