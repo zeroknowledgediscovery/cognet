@@ -70,7 +70,7 @@ class model:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
         print(&#34;qnet&#34;)
-        self.myQnet.fit(samples[:4])
+        self.myQnet.fit(samples)
         print(&#34;done&#34;)
         self.samples = samples
         self.features = featurenames
@@ -98,7 +98,9 @@ class model:
           [type]: [description]
         &#34;&#34;&#34;
         ## can also directly use load from joblib, thoughts?
+        print(&#34;updating&#34;)
         self.myQnet = load_qnet(file_path)
+        self.features = self.myQnet.feature_names
         return self.myQnet
 
     def export_dot(self,
@@ -184,7 +186,7 @@ class model:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
         print(&#34;qnet&#34;)
-        self.myQnet.fit(samples[:4])
+        self.myQnet.fit(samples)
         print(&#34;done&#34;)
         self.samples = samples
         self.features = featurenames
@@ -212,7 +214,9 @@ class model:
           [type]: [description]
         &#34;&#34;&#34;
         ## can also directly use load from joblib, thoughts?
+        print(&#34;updating&#34;)
         self.myQnet = load_qnet(file_path)
+        self.features = self.myQnet.feature_names
         return self.myQnet
 
     def export_dot(self,
@@ -340,7 +344,7 @@ class model:
         raise ValueError(&#34;input both samples and features or data object!&#34;)
     self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
     print(&#34;qnet&#34;)
-    self.myQnet.fit(samples[:4])
+    self.myQnet.fit(samples)
     print(&#34;done&#34;)
     self.samples = samples
     self.features = featurenames</code></pre>
@@ -376,7 +380,9 @@ class model:
       [type]: [description]
     &#34;&#34;&#34;
     ## can also directly use load from joblib, thoughts?
+    print(&#34;updating&#34;)
     self.myQnet = load_qnet(file_path)
+    self.features = self.myQnet.feature_names
     return self.myQnet</code></pre>
 </details>
 </dd>

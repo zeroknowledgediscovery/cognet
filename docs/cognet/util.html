@@ -27,7 +27,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def assert_None(args,
+<pre><code class="python">from sklearn.decomposition import PCA
+import pandas as pd
+
+def assert_None(args,
                 raise_error=True):
     &#39;&#39;&#39;Make sure args are not None
     &#39;&#39;&#39;
@@ -44,8 +47,23 @@ def assert_array_dimension(array, dimensions):
     &#39;&#39;&#39;
     if len(array.shape) != dimensions:
         raise ValueError(&#39;You must pass in a {}-D array!&#39;.format(dimensions))
-        
-#print(assert_None([None], False))</code></pre>
+    
+def embed_to_pca(EFILE, OUTFILE):
+    &#34;&#34;&#34;[summary]
+
+    Args:
+        EFILE ([type]): [description]
+        OUTFILE ([type]): [description]
+    &#34;&#34;&#34;
+    Ef=pd.read_csv(EFILE,sep=&#39; &#39;,header=None).dropna(axis=1).transpose()
+    Ef.columns=[&#39;x&#39;+str(i) for i in Ef.columns]
+    xf=Ef#.assign(IF=dx.ido)
+
+    pca = PCA(n_components=2).fit(xf)
+    ef=pca.fit_transform(xf)
+    pd.DataFrame(ef).to_csv(OUTFILE,header=None,index=None)
+    return ef
+        </code></pre>
 </details>
 </section>
 <section>
@@ -93,6 +111,39 @@ def assert_array_dimension(array, dimensions):
         raise ValueError(&#39;You must pass in a {}-D array!&#39;.format(dimensions))</code></pre>
 </details>
 </dd>
+<dt id="cognet.util.embed_to_pca"><code class="name flex">
+<span>def <span class="ident">embed_to_pca</span></span>(<span>EFILE, OUTFILE)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>[summary]</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>EFILE</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>[description]</dd>
+<dt><strong><code>OUTFILE</code></strong> :&ensp;<code>[type]</code></dt>
+<dd>[description]</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def embed_to_pca(EFILE, OUTFILE):
+    &#34;&#34;&#34;[summary]
+
+    Args:
+        EFILE ([type]): [description]
+        OUTFILE ([type]): [description]
+    &#34;&#34;&#34;
+    Ef=pd.read_csv(EFILE,sep=&#39; &#39;,header=None).dropna(axis=1).transpose()
+    Ef.columns=[&#39;x&#39;+str(i) for i in Ef.columns]
+    xf=Ef#.assign(IF=dx.ido)
+
+    pca = PCA(n_components=2).fit(xf)
+    ef=pca.fit_transform(xf)
+    pd.DataFrame(ef).to_csv(OUTFILE,header=None,index=None)
+    return ef</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -114,6 +165,7 @@ def assert_array_dimension(array, dimensions):
 <ul class="">
 <li><code><a title="cognet.util.assert_None" href="#cognet.util.assert_None">assert_None</a></code></li>
 <li><code><a title="cognet.util.assert_array_dimension" href="#cognet.util.assert_array_dimension">assert_array_dimension</a></code></li>
+<li><code><a title="cognet.util.embed_to_pca" href="#cognet.util.embed_to_pca">embed_to_pca</a></code></li>
 </ul>
 </li>
 </ul>
