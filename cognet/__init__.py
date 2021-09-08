@@ -2,7 +2,7 @@
 # Cognet
 
 Description:
-    Infering Emergent Structures in Survey Response Data
+    Inferring Emergent Structures in Survey Response Data
 
 ---
 
