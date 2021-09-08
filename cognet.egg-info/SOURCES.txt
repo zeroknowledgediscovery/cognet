@@ -14,3 +14,4 @@ cognet.egg-info/SOURCES.txt
 cognet.egg-info/dependency_links.txt
 cognet.egg-info/requires.txt
 cognet.egg-info/top_level.txt
+cognet/bin/__embed__.so

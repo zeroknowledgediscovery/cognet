@@ -10,6 +10,7 @@ from scipy.stats import entropy
 import multiprocessing as mp
 import time
 from cognet.util import embed_to_pca
+import pkgutil
 
 class cognet:
     """Aggregate related Qnet functions
@@ -432,7 +433,9 @@ class cognet:
             infile,
             name_pref,
             out_dir,
-            pca_model=False):
+            pca_model=False,
+            EMBED_BINARY=None  
+    ):
         '''
         embed data
 
@@ -441,13 +444,17 @@ class cognet:
           name_pref (str): preferred name for output file
           out_dir (str): output dir for results
           pca_model (bool): whether or not to generate PCA model
+          EMBED_BINARY (os.path.abspath): path to embed binary
         '''
         if all(x is not None for x in [self.year]):
             yr = self.year
             PREF = name_pref
             FILE = infile
 
-            EMBED = 'examples_results/bin/embed'
+            if EMBED_BINARY is None:
+                EMBED = pkg.util.get_data("cognet.bin", "__embed__.so") 
+            else:
+                EMBED = EMBED_BINARY
             DATAFILE = out_dir + 'data_' +yr
             EFILE = out_dir + PREF + '_E_' +yr
             DFILE = out_dir + PREF + '_D_' +yr

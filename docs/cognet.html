@@ -461,7 +461,9 @@ class cognet:
             infile,
             name_pref,
             out_dir,
-            pca_model=False):
+            pca_model=False,
+            EMBED_BINARY=None  
+    ):
         &#39;&#39;&#39;
         embed data
 
@@ -470,13 +472,17 @@ class cognet:
           name_pref (str): preferred name for output file
           out_dir (str): output dir for results
           pca_model (bool): whether or not to generate PCA model
+          EMBED_BINARY (os.path.abspath): path to embed binary
         &#39;&#39;&#39;
         if all(x is not None for x in [self.year]):
             yr = self.year
             PREF = name_pref
             FILE = infile
 
-            EMBED = &#39;examples_results/bin/embed&#39;
+            if EMBED_BINARY is None:
+                EMBED = &#39;examples_results/bin/embed&#39;
+            else:
+                EMBED=EMBED_BINARY
             DATAFILE = out_dir + &#39;data_&#39; +yr
             EFILE = out_dir + PREF + &#39;_E_&#39; +yr
             DFILE = out_dir + PREF + &#39;_D_&#39; +yr
@@ -1303,7 +1309,9 @@ class cognet:
             infile,
             name_pref,
             out_dir,
-            pca_model=False):
+            pca_model=False,
+            EMBED_BINARY=None  
+    ):
         &#39;&#39;&#39;
         embed data
 
@@ -1312,13 +1320,17 @@ class cognet:
           name_pref (str): preferred name for output file
           out_dir (str): output dir for results
           pca_model (bool): whether or not to generate PCA model
+          EMBED_BINARY (os.path.abspath): path to embed binary
         &#39;&#39;&#39;
         if all(x is not None for x in [self.year]):
             yr = self.year
             PREF = name_pref
             FILE = infile
 
-            EMBED = &#39;examples_results/bin/embed&#39;
+            if EMBED_BINARY is None:
+                EMBED = &#39;examples_results/bin/embed&#39;
+            else:
+                EMBED=EMBED_BINARY
             DATAFILE = out_dir + &#39;data_&#39; +yr
             EFILE = out_dir + PREF + &#39;_E_&#39; +yr
             DFILE = out_dir + PREF + &#39;_D_&#39; +yr
@@ -2141,7 +2153,7 @@ to determine max and std of distances between qsamples</p>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.embed"><code class="name flex">
-<span>def <span class="ident">embed</span></span>(<span>self, infile, name_pref, out_dir, pca_model=False)</span>
+<span>def <span class="ident">embed</span></span>(<span>self, infile, name_pref, out_dir, pca_model=False, EMBED_BINARY=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>embed data</p>
@@ -2155,6 +2167,8 @@ to determine max and std of distances between qsamples</p>
 <dd>output dir for results</dd>
 <dt><strong><code>pca_model</code></strong> :&ensp;<code>bool</code></dt>
 <dd>whether or not to generate PCA model</dd>
+<dt><strong><code>EMBED_BINARY</code></strong> :&ensp;<code>os.path.abspath</code></dt>
+<dd>path to embed binary</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -2164,7 +2178,9 @@ to determine max and std of distances between qsamples</p>
         infile,
         name_pref,
         out_dir,
-        pca_model=False):
+        pca_model=False,
+        EMBED_BINARY=None  
+):
     &#39;&#39;&#39;
     embed data
 
@@ -2173,13 +2189,17 @@ to determine max and std of distances between qsamples</p>
       name_pref (str): preferred name for output file
       out_dir (str): output dir for results
       pca_model (bool): whether or not to generate PCA model
+      EMBED_BINARY (os.path.abspath): path to embed binary
     &#39;&#39;&#39;
     if all(x is not None for x in [self.year]):
         yr = self.year
         PREF = name_pref
         FILE = infile
 
-        EMBED = &#39;examples_results/bin/embed&#39;
+        if EMBED_BINARY is None:
+            EMBED = &#39;examples_results/bin/embed&#39;
+        else:
+            EMBED=EMBED_BINARY
         DATAFILE = out_dir + &#39;data_&#39; +yr
         EFILE = out_dir + PREF + &#39;_E_&#39; +yr
         DFILE = out_dir + PREF + &#39;_D_&#39; +yr
