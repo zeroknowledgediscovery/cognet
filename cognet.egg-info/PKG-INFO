@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: cognet
-Version: 0.0.69
+Version: 0.0.70
 Summary: Infering Emergent Dependency Structures In Survey Responses
 Home-page: https://github.com/zeroknowledgediscovery/cognet
 Author: zed.uchicago.edu
 Author-email: ishanu@uchicago.edu
 License: LICENSE
-Download-URL: https://github.com/zeroknowledgediscovery/cognet/archive/0.0.69.tar.gz
+Download-URL: https://github.com/zeroknowledgediscovery/cognet/archive/0.0.70.tar.gz
 Description: ===============
         Cognet
         ===============
@@ -30,7 +30,13 @@ Description: ===============
         
         .. code-block::
         
-            import cognet
+            from cognet.cognet import cognet as cg
+            from cognet.dataFormatter import dataFormatter
+            from cognet.model import model 
+        
+        
+            data = dataFormatter(samples=GSSDATA,
+                        test_size=0.5)
         
         
 Keywords: computational social science,decision trees,machine learning,cognitive dissonance
