@@ -39,6 +39,7 @@ from scipy.stats import entropy
 import multiprocessing as mp
 import time
 from cognet.util import embed_to_pca
+import pkgutil
 
 class cognet:
     &#34;&#34;&#34;Aggregate related Qnet functions
@@ -480,9 +481,9 @@ class cognet:
             FILE = infile
 
             if EMBED_BINARY is None:
-                EMBED = &#39;examples_results/bin/embed&#39;
+                EMBED = pkg.util.get_data(&#34;cognet.bin&#34;, &#34;__embed__.so&#34;) 
             else:
-                EMBED=EMBED_BINARY
+                EMBED = EMBED_BINARY
             DATAFILE = out_dir + &#39;data_&#39; +yr
             EFILE = out_dir + PREF + &#39;_E_&#39; +yr
             DFILE = out_dir + PREF + &#39;_D_&#39; +yr
@@ -1328,9 +1329,9 @@ class cognet:
             FILE = infile
 
             if EMBED_BINARY is None:
-                EMBED = &#39;examples_results/bin/embed&#39;
+                EMBED = pkg.util.get_data(&#34;cognet.bin&#34;, &#34;__embed__.so&#34;) 
             else:
-                EMBED=EMBED_BINARY
+                EMBED = EMBED_BINARY
             DATAFILE = out_dir + &#39;data_&#39; +yr
             EFILE = out_dir + PREF + &#39;_E_&#39; +yr
             DFILE = out_dir + PREF + &#39;_D_&#39; +yr
@@ -2197,9 +2198,9 @@ to determine max and std of distances between qsamples</p>
         FILE = infile
 
         if EMBED_BINARY is None:
-            EMBED = &#39;examples_results/bin/embed&#39;
+            EMBED = pkg.util.get_data(&#34;cognet.bin&#34;, &#34;__embed__.so&#34;) 
         else:
-            EMBED=EMBED_BINARY
+            EMBED = EMBED_BINARY
         DATAFILE = out_dir + &#39;data_&#39; +yr
         EFILE = out_dir + PREF + &#39;_E_&#39; +yr
         DFILE = out_dir + PREF + &#39;_D_&#39; +yr
