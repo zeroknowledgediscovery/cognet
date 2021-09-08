@@ -49,7 +49,6 @@ setup(
         'Development Status :: 4 - Beta',
         "Intended Audience :: Developers",
         "Intended Audience :: Science/Research",
-        "Topic :: Sociology",
         "Topic :: Scientific/Engineering :: Information Analysis",
         "Topic :: Software Development :: Libraries",
         "License :: OSI Approved :: MIT License",
