@@ -11,18 +11,19 @@ class dataFormatter:
                  test_size,
                  train_size=None,
                  random_state=None):
-        """[summary]
+        """init
 
         Args:
-            samples ([type]): [description]
-            test_size ([type]): [description]
-            train_size ([type]): [description]
-            random_state ([type], optional): [description]. Defaults to None.
+            samples ([str], optional): 2D array with rows as observations and columns as features.
+            test_size (float): fraction of sample to take as test_size.
+            train_size (float): fraction of sample to take as train_size. Defaults to None, and 1-test_size
+            random_state (int, optional): random seed to split samples dataset . Defaults to None.
         """
         self.samples = pd.read_csv(samples)
         self.test_size = test_size
-        self.train_size = train_size
-        self.random_state = None
+        if train_size is not None:
+            self.train_size = train_size
+        self.random_state = random_state
         self.train_data, self.test_data = train_test_split(self.samples,
                                                            test_size=test_size,
                                                            train_size=train_size,
@@ -35,14 +36,14 @@ class dataFormatter:
     def __Qnet_formatter(self,
                          key,
                          samples):
-        """[summary]
+        """format 
 
         Args:
-            key ([type]): [description]
-            samples ([type]): [description]
+            key (str): Either 'train' or 'test' key, to determine which set of features
+            samples ([str], optional): 2D array with rows as observations and columns as features.
 
         Returns:
-            [type]: [description]
+            features and samples of either the train and test dataset
         """
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError('Samples must be in numpy array form!')
@@ -71,23 +72,27 @@ class dataFormatter:
         return self.__Qnet_formatter('test',self.test_data)
     
     def __set_varcase(self,
-                      vars,
-                      lower):
-        """[summary]
+                      lower,
+                      key='train',
+                      vars=None):
+        """set the features to all upper or lowercase
 
         Args:
-            vars ([type]): [description]
-            lower ([type]): [description]
+          lower (bool): If true, set vars to lowercase, else to uppercase
+          key (str, optional): Whether to set train or test features. Defaults to 'train'.
+          vars ([str]): Mutable and immutable vars/features. Defaults to None.
 
         Returns:
             [type]: [description]
         """
         if lower:
-            features = [x.lower() for x in self.features['train']]
-            vars = [x.lower() for x in vars]
+            features = [x.lower() for x in self.features[key]]
+            if var is not None:
+                vars = [x.lower() for x in vars]
         else:
-            features = [x.upper() for x in self.features['train']]
-            vars = [x.upper() for x in vars]
+            features = [x.upper() for x in self.features[key]]
+            if vars is not None:
+                vars = [x.upper() for x in vars]
         return features, vars
 
     def __interpretvars_fromfile(self,
