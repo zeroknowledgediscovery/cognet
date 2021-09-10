@@ -2,6 +2,9 @@
 Cognet
 ===============
 
+.. image:: https://zenodo.org/badge/388924904.svg
+   :target: https://zenodo.org/badge/latestdoi/388924904
+
 
 .. image:: http://zed.uchicago.edu/logo/cognet_logo.png
    :height: 300px
