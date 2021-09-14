@@ -434,8 +434,7 @@ class cognet:
             name_pref,
             out_dir,
             pca_model=False,
-            EMBED_BINARY=None  
-    ):
+            EMBED_BINARY=None):
         '''
         embed data
 
@@ -452,7 +451,7 @@ class cognet:
             FILE = infile
 
             if EMBED_BINARY is None:
-                EMBED = pkg.util.get_data("cognet.bin", "__embed__.so") 
+                EMBED = pkgutil.get_data("cognet.bin", "__embed__.so") 
             else:
                 EMBED = EMBED_BINARY
             DATAFILE = out_dir + 'data_' +yr
@@ -839,3 +838,95 @@ class cognet:
             result.to_csv(out_file)
         
         return result.rederr.mean(), result.rand_err.mean()
+    
+    def dmat_filewriter(self,
+                        pyfile,
+                        QNETPATH,
+                        MPI_SETUP_FILE="mpi_setup.sh",
+                        MPI_RUN_FILE="mpi_run.sh",
+                        YEAR='2016',
+                        NODE=4,
+                        T=12,
+                        num_samples=None,
+                        OUTFILE='tmp_distmatrix.csv'):
+        if all(x is not None for x in [self.poles_dict,self.features,
+                                       self.qnet, self.cols]):
+            if num_samples is not None:
+                self.set_nsamples(num_samples)
+            pd.DataFrame(self.samples_as_strings).to_csv("tmp_samples_as_strings.csv", header=None, index=None)
+            w = self.samples.index.size
+            
+            with open(pyfile, 'w') as f:
+                f.writelines(["from mpi4py.futures import MPIPoolExecutor\n",
+                              "import numpy as np\n",
+                              "import pandas as pd\n",
+                              "from quasinet.qnet import Qnet, qdistance, load_qnet, qdistance_matrix\n",
+                              "from quasinet.qsampling import qsample, targeted_qsample\n\n",
+                              "qnet=load_qnet(\'{}\')\n".format(QNETPATH)])
+
+                f.writelines(["w = {}\n".format(w),
+                              "h = w\n",
+                              "p_all = pd.read_csv(\"tmp_samples_as_strings.csv\")\n\n"])
+
+                f.writelines(["def distfunc(x,y):\n",
+                              "\td=qdistance(x,y,qnet,qnet)\n",
+                              "\treturn d\n\n"])
+
+                f.writelines(["def dfunc_line(k):\n",
+                              "\tline = np.zeros(w)\n",
+                              "\ty = p_all[k]\n",
+                              "\tfor j in range(w):\n",
+                              "\t\tif j > k:\n",
+                              "\t\t\tx = p_all[j]\n",
+                              "\t\t\tline[j] = distfunc(x, y)\n",
+                              "\treturn line\n\n"])
+
+                f.writelines(["if __name__ == '__main__':\n",
+                              "\twith MPIPoolExecutor() as executor:\n",
+                              "\t\tresult = executor.map(dfunc_line, range(h))\n",
+                              "\t\tpd.DataFrame(result).to_csv(\'{}\',index=None,header=None)".format(OUTFILE)])
+
+            with open(MPI_SETUP_FILE, 'w') as ms:
+                ms.writelines(["#!/bin/bash\n",
+                               "YEAR=$1\n",
+                               "\tNODES=$2\n",
+                               "else\n",
+                               "\tNODES=3\n",
+                               "fi\n",
+                               "if [ $# -gt 2 ] ; then\n",
+                               "\tNUM=$3\n",
+                               "else\n",
+                               "\tNUM='all'\n",
+                               "fi\n",
+                               "if [ $# -gt 3 ] ; then\n",
+                               "\tPROG=$4\n",
+                               "else\n",
+                               "\tPROG=$(tty)\n\n\n",
+                               "fi\n",
+                               "NUMPROC=`expr 28 \* $NODES`\n",
+                               "echo \"module load midway2\" >> $PROG\n",
+                               "echo \"module unload python\" >> $PROG\n",
+                               "echo \"module unload openmpi\" >> $PROG\n",
+                               "echo \"module load python/anaconda-2020.02\" >> $PROG\n",
+                               "echo \"module load mpi4py\" >> $PROG\n",
+                               "echo \"date; mpiexec -n \"$NUMPROC\" python3 -Xy=\"$YEAR\" -XN=\"$NUM\" -m mpi4py.futures {}; date\"  >> $PROG\n".format(pyfile),
+                                ])
+
+            with open(MPI_RUN_FILE, 'w') as mr:
+                mr.writelines(["#!/bin/bash\n",
+                               "YEARS=\'{}\'\n".format(YEARS),
+                               "# nodes requested\n",
+                               "NODES={}\n".format(Nodes),
+                               "# time requested\n",
+                               "T={}\n".format(T),
+                               "LAUNCH=\'../../../../LAUNCH_UTILITY/launcher_s.sh\'\n\n",
+                               "for yr in `echo $YEARS`\n",
+                               "do\n",
+                               "\techo $yr\n",
+                               "\t./{} $yr $NODES $NUM tmp_\"$yr\"\n".format(MPI_SETUP_FILE),
+                               "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J ../examples_results/ACRDALL_\"$yr\" -M 56\n",
+                               "done\n",
+                               "rm tmp*\n"])
+        else:
+            raise ValueError("load data first!")
+        print("running")

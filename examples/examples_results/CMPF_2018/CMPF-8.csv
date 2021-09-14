@@ -1,15 +1,17 @@
 gssvar,s,q,r
+colcom,not fired,fired,not fired
 libcom,not remove,not remove,not remove
-spkmil,allowed,allowed,allowed
-colmil,allowed,allowed,not allowed
+spkmil,allowed,not allowed,not allowed
+colmil,allowed,not allowed,allowed
 libmil,not remove,not remove,remove
-libmslm,not remove,remove,not remove
-pray,lt once a week,several times a day,once a day
-prayer,disapprove,approve,disapprove
-bible,inspired word,book of fables,word of god
-abpoor,yes,yes,yes
-absingle,yes,yes,yes
-owngun,no,no,refused
-shotgun,no,no,no
-intmil,moderately interested,moderately interested,not at all interested
-religcon,not agree/dsagre,not agree/dsagre,strong disagree
+libhomo,not remove,not remove,remove
+libmslm,not remove,remove,remove
+gunlaw,favor,oppose,oppose
+pray,once a day,once a day,several times a week
+conlabor,only some,only some,only some
+abdefect,yes,yes,no
+abhlth,yes,yes,no
+abpoor,yes,no,no
+abrape,yes,yes,yes
+absingle,yes,no,yes
+rowngun,yes,yes,no

@@ -36,7 +36,7 @@ class dataFormatter:
     def __Qnet_formatter(self,
                          key,
                          samples):
-        """format 
+        """format data for Qnet input
 
         Args:
             key (str): Either 'train' or 'test' key, to determine which set of features
@@ -100,15 +100,13 @@ class dataFormatter:
                                  IMMUTABLE,
                                  FILE=None,
                                  LIST=None):
-        """[summary]
+        """read in vars from file and set mutable, immutable
 
         Args:
-            IMMUTABLE ([type]): [description]
-            FILE ([type]): [description]
-            lower ([type]): [description]
-
-        Returns:
-            [type]: [description]
+            lower (bool): Whether to set variables to lowercase (True) or not (False)
+            IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
+            FILE (str, optional): file with vars in singular column. Defaults to None.
+            LIST ([str], optional): 1D array of vars. Defaults to None.
         """
         if IMMUTABLE:
             immutable_vars = np.array(LIST)
@@ -147,19 +145,13 @@ class dataFormatter:
                 mutable_list=None,
                 MUTABLE_FILE=None,
                 lower=False):
-        ## can set arguments to accept any type,
-        ## and add parameters to make sure if list or FILE, immutable or mutable
-        """[summary]
+        """set variables to be mutable or immutable
 
         Args:
-            immutable_list ([type]): [description]
-            IMMUTABLE_FILE (str, optional): [description]. Defaults to ''.
-            mutable_list (list, optional): [description]. Defaults to [].
-            MUTABLE_FILE (str, optional): [description]. Defaults to ''.
-
-        Raises:
-            ValueError: [description]
-            ValueError: [description]
+            immutable_list (list)): 1D array of immutable variables. Defaults to None.
+            IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
+            mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
+            MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
         """
         list_None = assert_None([immutable_list,mutable_list], raise_error=False)
         file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
@@ -189,4 +181,4 @@ class dataFormatter:
                                                                              LIST=mutable_list,
                                                                              lower=lower)
         self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
-        return mutable_vars, immutable_vars
+        return mutable_vars, immutable_vars            

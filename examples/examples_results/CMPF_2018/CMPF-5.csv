@@ -1,6 +1,12 @@
 gssvar,s,q,r
-reliten,no religion,not very strong,somewhat strong
-pray,never,once a day,several times a week
+grass,legal,legal,not legal
+reliten,not very strong,not very strong,strong
+prayer,disapprove,approve,disapprove
+bible,word of god,word of god,word of god
+conlabor,a great deal,only some,a great deal
+pillok,disagree,agree,agree
 polabuse,no,no,yes
-intmil,not at all interested,very interested,moderately interested
-comfort,agree,agree,strongly agree
+viruses,True,False,False
+intmil,moderately interested,very interested,not at all interested
+prayfreq,several times a week,several times a week,2-3 times a month
+religcon,agree,agree,not agree/dsagre

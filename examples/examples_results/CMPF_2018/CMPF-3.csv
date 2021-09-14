@@ -1,7 +1,20 @@
 gssvar,s,q,r
-pray,several times a day,several times a day,never
-prayer,approve,approve,disapprove
-bible,inspired word,inspired word,inspired word
-polabuse,no,yes,yes
-abpoorw,always wrong,not wrong at all,always wrong
-prayfreq,several times a week,nearly every week,about once or twice a year
+spkcom,allowed,not allowed,allowed
+libcom,not remove,not remove,not remove
+spkmil,allowed,allowed,not allowed
+libmil,not remove,not remove,remove
+libhomo,not remove,not remove,remove
+pray,never,once a day,lt once a week
+bible,book of fables,inspired word,word of god
+abdefect,yes,yes,yes
+abnomore,yes,no,no
+abpoor,yes,no,no
+pillok,strongly agree,agree,strongly agree
+owngun,no,no,yes
+shotgun,no,no,refused
+viruses,False,True,False
+intmil,moderately interested,moderately interested,very interested
+abpoorw,not wrong at all,always wrong,almost always wrong
+prayfreq,never,several times a week,2-3 times a month
+religcon,not agree/dsagre,strongly agree,disagree
+comfort,agree,strongly agree,strongly agree

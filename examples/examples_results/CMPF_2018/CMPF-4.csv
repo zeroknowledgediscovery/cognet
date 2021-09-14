@@ -1,11 +1,7 @@
 gssvar,s,q,r
-spkcom,allowed,allowed,allowed
-libcom,not remove,not remove,not remove
-colmil,not allowed,not allowed,not allowed
-libmslm,not remove,not remove,remove
-conlabor,hardly any,only some,hardly any
-abhlth,yes,yes,yes
-abpoor,no,no,yes
-absingle,no,no,yes
-abany,no,no,no
-owngun,yes,refused,refused
+reliten,not very strong,not very strong,no religion
+bible,inspired word,book of fables,book of fables
+viruses,True,True,True
+abpoorw,not wrong at all,almost always wrong,almost always wrong
+religcon,strongly agree,agree,strong disagree
+comfort,agree,strongly agree,strongly disagree

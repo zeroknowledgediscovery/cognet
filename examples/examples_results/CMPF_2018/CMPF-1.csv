@@ -1,11 +1,14 @@
 gssvar,s,q,r
-spkcom,allowed,allowed,allowed
-colcom,not fired,not fired,not fired
-spkmil,allowed,not allowed,not allowed
-pray,several times a day,several times a day,several times a week
-bible,word of god,word of god,word of god
-abdefect,yes,yes,yes
-abhlth,yes,yes,yes
-abrape,yes,yes,yes
-polabuse,yes,no,no
+libcom,remove,not remove,remove
+spkmil,not allowed,allowed,not allowed
+colmil,not allowed,not allowed,not allowed
+gunlaw,favor,favor,oppose
+reliten,not very strong,strong,no religion
+bible,inspired word,word of god,word of god
+abdefect,no,no,yes
+abnomore,no,no,yes
+abrape,yes,yes,no
+absingle,no,no,no
+abany,no,yes,no
+owngun,no,no,yes
 shotgun,no,no,refused
