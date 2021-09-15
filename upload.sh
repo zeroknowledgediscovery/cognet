@@ -16,6 +16,8 @@ rm -rf dist
 python3 setup.py sdist
 python3 setup.py bdist_wheel
 
+git lfs track *.gz
+git lfs track dist/*.gz
 git add * -v
 git commit -m "$COMMENT"
 git push
