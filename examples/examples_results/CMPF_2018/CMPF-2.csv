@@ -1,12 +1,10 @@
 gssvar,s,q,r
-spkcom,allowed,not allowed,allowed
-spkmil,allowed,allowed,not allowed
-colmil,allowed,not allowed,not allowed
-libmil,not remove,not remove,remove
-libhomo,not remove,not remove,remove
-grass,not legal,legal,not legal
-conlabor,only some,only some,hardly any
-abnomore,no,no,yes
+spkmil,not allowed,not allowed,not allowed
+gunlaw,favor,oppose,oppose
+bible,inspired word,inspired word,inspired word
+abhlth,yes,yes,no
 abpoor,no,no,no
-absingle,no,no,no
-polabuse,no,no,no
+intmil,moderately interested,moderately interested,very interested
+religcon,agree,disagree,not agree/dsagre
+religint,agree,agree,strong disagree
+comfort,strongly agree,agree,agree

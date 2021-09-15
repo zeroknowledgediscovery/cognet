@@ -1,12 +1,13 @@
 gssvar,s,q,r
-grass,legal,legal,not legal
-reliten,not very strong,not very strong,strong
-prayer,disapprove,approve,disapprove
-bible,word of god,word of god,word of god
-conlabor,a great deal,only some,a great deal
-pillok,disagree,agree,agree
-polabuse,no,no,yes
-viruses,True,False,False
-intmil,moderately interested,very interested,not at all interested
-prayfreq,several times a week,several times a week,2-3 times a month
-religcon,agree,agree,not agree/dsagre
+spkcom,not allowed,allowed,not allowed
+colcom,not fired,not fired,fired
+spkmil,not allowed,allowed,not allowed
+colmil,not allowed,allowed,not allowed
+libmil,remove,not remove,not remove
+libmslm,remove,remove,not remove
+gunlaw,favor,favor,favor
+pray,once a week,several times a day,lt once a week
+abdefect,yes,yes,yes
+abrape,yes,yes,no
+absingle,no,no,yes
+owngun,no,no,refused

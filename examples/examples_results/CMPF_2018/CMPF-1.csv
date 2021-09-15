@@ -1,14 +1,18 @@
 gssvar,s,q,r
-libcom,remove,not remove,remove
-spkmil,not allowed,allowed,not allowed
-colmil,not allowed,not allowed,not allowed
-gunlaw,favor,favor,oppose
-reliten,not very strong,strong,no religion
-bible,inspired word,word of god,word of god
-abdefect,no,no,yes
-abnomore,no,no,yes
-abrape,yes,yes,no
-absingle,no,no,no
-abany,no,yes,no
-owngun,no,no,yes
-shotgun,no,no,refused
+spkcom,allowed,allowed,not allowed
+libcom,not remove,remove,not remove
+colmil,allowed,allowed,not allowed
+libmil,not remove,not remove,not remove
+libhomo,not remove,not remove,not remove
+libmslm,not remove,remove,not remove
+gunlaw,favor,oppose,favor
+reliten,not very strong,no religion,not very strong
+bible,inspired word,inspired word,word of god
+abdefect,yes,yes,yes
+abhlth,yes,yes,no
+pillok,strongly agree,agree,disagree
+owngun,no,no,refused
+shotgun,no,no,no
+viruses,False,False,True
+abpoorw,not wrong at all,always wrong,wrong only sometimes
+comfort,agree,strongly agree,disagree

@@ -1,20 +1,9 @@
 gssvar,s,q,r
-spkcom,allowed,not allowed,allowed
-libcom,not remove,not remove,not remove
-spkmil,allowed,allowed,not allowed
-libmil,not remove,not remove,remove
-libhomo,not remove,not remove,remove
-pray,never,once a day,lt once a week
-bible,book of fables,inspired word,word of god
-abdefect,yes,yes,yes
-abnomore,yes,no,no
-abpoor,yes,no,no
-pillok,strongly agree,agree,strongly agree
-owngun,no,no,yes
-shotgun,no,no,refused
-viruses,False,True,False
-intmil,moderately interested,moderately interested,very interested
-abpoorw,not wrong at all,always wrong,almost always wrong
-prayfreq,never,several times a week,2-3 times a month
-religcon,not agree/dsagre,strongly agree,disagree
-comfort,agree,strongly agree,strongly agree
+polabuse,no,yes,no
+viruses,True,False,True
+abpoorw,wrong only sometimes,not wrong at all,not wrong at all
+godchnge,"don't believe now, used to","believe now, always have","don't believe now, used to"
+prayfreq,nearly every week,several times a week,less than once a year
+religcon,strongly agree,strongly agree,strong disagree
+religint,agree,strongly agree,not agree/dsagre
+comfort,agree,neither agree nor disagree,neither agree nor disagree

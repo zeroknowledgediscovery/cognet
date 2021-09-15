@@ -11,18 +11,19 @@ class dataFormatter:
                  test_size,
                  train_size=None,
                  random_state=None):
-        """[summary]
+        """init
 
         Args:
-            samples ([type]): [description]
-            test_size ([type]): [description]
-            train_size ([type]): [description]
-            random_state ([type], optional): [description]. Defaults to None.
+            samples ([str], optional): 2D array with rows as observations and columns as features.
+            test_size (float): fraction of sample to take as test_size.
+            train_size (float): fraction of sample to take as train_size. Defaults to None, and 1-test_size
+            random_state (int, optional): random seed to split samples dataset . Defaults to None.
         """
         self.samples = pd.read_csv(samples)
         self.test_size = test_size
-        self.train_size = train_size
-        self.random_state = None
+        if train_size is not None:
+            self.train_size = train_size
+        self.random_state = random_state
         self.train_data, self.test_data = train_test_split(self.samples,
                                                            test_size=test_size,
                                                            train_size=train_size,
@@ -35,14 +36,14 @@ class dataFormatter:
     def __Qnet_formatter(self,
                          key,
                          samples):
-        """[summary]
+        """format data for Qnet input
 
         Args:
-            key ([type]): [description]
-            samples ([type]): [description]
+            key (str): Either 'train' or 'test' key, to determine which set of features
+            samples ([str], optional): 2D array with rows as observations and columns as features.
 
         Returns:
-            [type]: [description]
+            features and samples of either the train and test dataset
         """
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError('Samples must be in numpy array form!')
@@ -71,23 +72,27 @@ class dataFormatter:
         return self.__Qnet_formatter('test',self.test_data)
     
     def __set_varcase(self,
-                      vars,
-                      lower):
-        """[summary]
+                      lower,
+                      key='train',
+                      vars=None):
+        """set the features to all upper or lowercase
 
         Args:
-            vars ([type]): [description]
-            lower ([type]): [description]
+          lower (bool): If true, set vars to lowercase, else to uppercase
+          key (str, optional): Whether to set train or test features. Defaults to 'train'.
+          vars ([str]): Mutable and immutable vars/features. Defaults to None.
 
         Returns:
             [type]: [description]
         """
         if lower:
-            features = [x.lower() for x in self.features['train']]
-            vars = [x.lower() for x in vars]
+            features = [x.lower() for x in self.features[key]]
+            if var is not None:
+                vars = [x.lower() for x in vars]
         else:
-            features = [x.upper() for x in self.features['train']]
-            vars = [x.upper() for x in vars]
+            features = [x.upper() for x in self.features[key]]
+            if vars is not None:
+                vars = [x.upper() for x in vars]
         return features, vars
 
     def __interpretvars_fromfile(self,
@@ -95,15 +100,13 @@ class dataFormatter:
                                  IMMUTABLE,
                                  FILE=None,
                                  LIST=None):
-        """[summary]
+        """read in vars from file and set mutable, immutable
 
         Args:
-            IMMUTABLE ([type]): [description]
-            FILE ([type]): [description]
-            lower ([type]): [description]
-
-        Returns:
-            [type]: [description]
+            lower (bool): Whether to set variables to lowercase (True) or not (False)
+            IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
+            FILE (str, optional): file with vars in singular column. Defaults to None.
+            LIST ([str], optional): 1D array of vars. Defaults to None.
         """
         if IMMUTABLE:
             immutable_vars = np.array(LIST)
@@ -142,19 +145,13 @@ class dataFormatter:
                 mutable_list=None,
                 MUTABLE_FILE=None,
                 lower=False):
-        ## can set arguments to accept any type,
-        ## and add parameters to make sure if list or FILE, immutable or mutable
-        """[summary]
+        """set variables to be mutable or immutable
 
         Args:
-            immutable_list ([type]): [description]
-            IMMUTABLE_FILE (str, optional): [description]. Defaults to ''.
-            mutable_list (list, optional): [description]. Defaults to [].
-            MUTABLE_FILE (str, optional): [description]. Defaults to ''.
-
-        Raises:
-            ValueError: [description]
-            ValueError: [description]
+            immutable_list (list)): 1D array of immutable variables. Defaults to None.
+            IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
+            mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
+            MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
         """
         list_None = assert_None([immutable_list,mutable_list], raise_error=False)
         file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
@@ -184,4 +181,4 @@ class dataFormatter:
                                                                              LIST=mutable_list,
                                                                              lower=lower)
         self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
-        return mutable_vars, immutable_vars
+        return mutable_vars, immutable_vars            

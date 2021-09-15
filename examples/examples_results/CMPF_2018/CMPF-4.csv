@@ -1,7 +1,9 @@
 gssvar,s,q,r
-reliten,not very strong,not very strong,no religion
-bible,inspired word,book of fables,book of fables
-viruses,True,True,True
-abpoorw,not wrong at all,almost always wrong,almost always wrong
-religcon,strongly agree,agree,strong disagree
-comfort,agree,strongly agree,strongly disagree
+grass,not legal,not legal,legal
+reliten,strong,no religion,somewhat strong
+prayer,approve,disapprove,approve
+bible,inspired word,word of god,inspired word
+conlabor,only some,only some,a great deal
+intmil,moderately interested,moderately interested,moderately interested
+abpoorw,wrong only sometimes,wrong only sometimes,always wrong
+comfort,agree,agree,disagree

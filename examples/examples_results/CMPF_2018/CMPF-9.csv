@@ -1,19 +1,9 @@
 gssvar,s,q,r
-spkcom,not allowed,allowed,allowed
-colcom,fired,not fired,fired
-spkmil,not allowed,allowed,not allowed
-libmil,not remove,not remove,remove
-libhomo,not remove,not remove,remove
-libmslm,not remove,remove,remove
-pray,several times a day,several times a day,lt once a week
-bible,word of god,inspired word,inspired word
-abdefect,no,yes,no
-abpoor,no,no,no
-abrape,no,yes,no
-absingle,no,no,no
-owngun,no,no,yes
-abpoorw,always wrong,always wrong,wrong only sometimes
-godchnge,"believe now, always have","believe now, always have","believe now, always have"
-prayfreq,several times a week,several times a week,never
-religint,disagree,agree,strongly agree
-comfort,strongly agree,strongly agree,disagree
+spkcom,allowed,not allowed,not allowed
+libmslm,not remove,not remove,not remove
+pray,several times a week,lt once a week,lt once a week
+abhlth,yes,yes,yes
+absingle,yes,yes,yes
+polabuse,no,no,no
+owngun,refused,refused,refused
+rowngun,refused,no,yes

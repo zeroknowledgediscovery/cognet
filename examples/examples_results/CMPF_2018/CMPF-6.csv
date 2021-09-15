@@ -1,11 +1,14 @@
 gssvar,s,q,r
-libmil,not remove,not remove,remove
-gunlaw,favor,favor,favor
-reliten,not very strong,somewhat strong,strong
-pray,once a week,once a day,lt once a week
-bible,inspired word,word of god,inspired word
-conlabor,only some,only some,hardly any
-abdefect,yes,yes,yes
-abnomore,yes,yes,yes
-polabuse,no,no,no
-owngun,no,no,yes
+spkcom,not allowed,not allowed,not allowed
+colmil,not allowed,not allowed,not allowed
+libmil,remove,remove,not remove
+libhomo,remove,not remove,not remove
+libmslm,remove,remove,not remove
+gunlaw,oppose,favor,oppose
+grass,legal,legal,not legal
+pray,once a day,once a day,lt once a week
+bible,inspired word,inspired word,other
+abnomore,no,yes,no
+abhlth,yes,yes,yes
+abpoor,no,no,yes
+abany,no,no,yes
