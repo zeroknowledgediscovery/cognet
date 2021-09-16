@@ -73,7 +73,7 @@ class dataFormatter:
     
     def __set_varcase(self,
                       lower,
-                      key='train',
+                      key='test',
                       vars=None):
         """set the features to all upper or lowercase
 
@@ -95,11 +95,11 @@ class dataFormatter:
                 vars = [x.upper() for x in vars]
         return features, vars
 
-    def __interpretvars_fromfile(self,
-                                 lower,
-                                 IMMUTABLE,
-                                 FILE=None,
-                                 LIST=None):
+    def __interpretvars(self,
+                        lower,
+                        IMMUTABLE,
+                        FILE=None,
+                        LIST=None):
         """read in vars from file and set mutable, immutable
 
         Args:
