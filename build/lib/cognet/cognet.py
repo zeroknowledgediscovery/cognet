@@ -11,6 +11,7 @@ import multiprocessing as mp
 import time
 from cognet.util import embed_to_pca
 import pkgutil
+import os
 
 class cognet:
     """Aggregate related Qnet functions
@@ -628,8 +629,7 @@ class cognet:
           return_dict (dict): dict containing results
           MISSING_VAL (float): default dissonance value
         '''
-        if all(x is not None for x in [self.samples, self.features, 
-                                    self.poles]):
+        if all(x is not None for x in [self.samples, self.features]):
             s = self.samples_as_strings[sample_index]
             if self.polar_indices is None:
                 self.polar_indices = range(len(s))
@@ -647,14 +647,11 @@ class cognet:
             if return_dict is not None:
                 return_dict[sample_index] = diss[self.polar_indices]
             return diss[self.polar_indices]
-
-        elif self.poles is None:
-            raise ValueError("set_poles first!")
         else:
             raise ValueError("load_data first!")
     
     def dissonance_matrix(self,
-                        output_file=None,
+                        output_file='/example_results/DISSONANCE_matrix.csv',
                         n_jobs=28):
         '''get the dissonance for all samples
 
@@ -662,9 +659,6 @@ class cognet:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
-        if output_file is None:
-            output_file = '/example_results/DISSONANCE_matrix.csv'
-            
         manager = mp.Manager()
         return_dict = manager.dict()
         processes = []
@@ -844,6 +838,7 @@ class cognet:
                         QNETPATH,
                         MPI_SETUP_FILE="mpi_setup.sh",
                         MPI_RUN_FILE="mpi_run.sh",
+                        MPI_LAUNCHER_FILE="mpi_launcher.sh",
                         YEARS='2016',
                         NODES=4,
                         T=12,
@@ -853,10 +848,14 @@ class cognet:
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
+            print(self.samples)
             pd.DataFrame(self.samples_as_strings).to_csv("tmp_samples_as_strings.csv", header=None, index=None)
             w = self.samples.index.size
             
-            with open(pyfile, 'w') as f:
+            tmp_path = "mpi_tmp/"
+            if not os.path.exists(tmp_path):
+                os.makedirs(tmp_path)
+            with open(tmp_path+pyfile, 'w+') as f:
                 f.writelines(["from mpi4py.futures import MPIPoolExecutor\n",
                               "import numpy as np\n",
                               "import pandas as pd\n",
@@ -886,9 +885,27 @@ class cognet:
                               "\t\tresult = executor.map(dfunc_line, range(h))\n",
                               "\t\tpd.DataFrame(result).to_csv(\'{}\',index=None,header=None)".format(OUTFILE)])
 
-            with open(MPI_SETUP_FILE, 'w') as ms:
+            # with open(MPI_LAUNCHER_FILE, 'wx') as ml:
+            #     ml.writelines(["#!/bin/bash\n\n",
+            #                    "PROG=\"\"\n",
+            #                    "RSTR=`cat /dev/urandom | tr -dc \'a-zA-Z0-9\' | fold -w 20  | head -n 1 | cut -c 1-6`\n",
+            #                    "JOBN=IXC\"$RSTR\"\n",
+            #                    "TIME=10\n",
+            #                    "NCOR=28\n",
+            #                    "MEMR=10\n",
+            #                    "NODE=1\n",
+            #                    "EXECUTE=0\n",
+            #                    "DEPEND=""\n",
+            #                    "CDIR=`pwd`\n",
+            #                    "DRY_RUN=0\n",
+            #                    "ANYDEPEND=""\n",
+            #                    "PART='sandyb'\n"
+            #                    ])
+                
+            with open(tmp_path+MPI_SETUP_FILE, 'w+') as ms:
                 ms.writelines(["#!/bin/bash\n",
-                               "YEAR=$1\n",
+                               "YEAR=$1\n\n",
+                               "if [ $# -gt 1 ] ; then\n",
                                "\tNODES=$2\n",
                                "else\n",
                                "\tNODES=3\n",
@@ -901,8 +918,8 @@ class cognet:
                                "if [ $# -gt 3 ] ; then\n",
                                "\tPROG=$4\n",
                                "else\n",
-                               "\tPROG=$(tty)\n\n\n",
-                               "fi\n",
+                               "\tPROG=$(tty)\n",
+                               "fi\n\n",
                                "NUMPROC=`expr 28 \* $NODES`\n",
                                "echo \"module load midway2\" >> $PROG\n",
                                "echo \"module unload python\" >> $PROG\n",
@@ -912,19 +929,19 @@ class cognet:
                                "echo \"date; mpiexec -n \"$NUMPROC\" python3 -Xy=\"$YEAR\" -XN=\"$NUM\" -m mpi4py.futures {}; date\"  >> $PROG\n".format(pyfile),
                                 ])
 
-            with open(MPI_RUN_FILE, 'w') as mr:
+            with open(tmp_path+MPI_RUN_FILE, 'w+') as mr:
                 mr.writelines(["#!/bin/bash\n",
                                "YEARS=\'{}\'\n".format(YEARS),
                                "# nodes requested\n",
                                "NODES={}\n".format(NODES),
                                "# time requested\n",
                                "T={}\n".format(T),
-                               "LAUNCH=\'../../../../LAUNCH_UTILITY/launcher_s.sh\'\n\n",
+                               "LAUNCH=\'../mpi_launcher.sh\'\n\n",
                                "for yr in `echo $YEARS`\n",
                                "do\n",
                                "\techo $yr\n",
                                "\t./{} $yr $NODES $NUM tmp_\"$yr\"\n".format(MPI_SETUP_FILE),
-                               "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J ../examples_results/ACRDALL_\"$yr\" -M 56\n",
+                               "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J ACRDALL_\"$yr\" -M 56\n",
                                "done\n",
                                "rm tmp*\n"])
         else:

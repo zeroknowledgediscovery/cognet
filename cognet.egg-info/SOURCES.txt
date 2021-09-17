@@ -63,13 +63,14 @@ examples/cognet_example.ipynb
 examples/dispersion_test.csv
 examples/distfunc_multiples_testing.csv
 examples/ideology.csv
+examples/mpi_launcher.sh
+examples/mpi_run.sh
+examples/mpi_setup.sh
 examples/outD.txt
 examples/polarDistance_multiple_test.csv
 examples/randomMaskRecon_test.csv
 examples/test_save_cognet.py
 examples/testing_cognet.py
-examples/tmp_dmat.py
-examples/tmp_samples_as_strings.csv
 examples/.ipynb_checkpoints/Untitled-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
 examples/examples_data/2018_features.csv
@@ -124,8 +125,6 @@ examples/examples_results/NoClass_DISSONANCE_2018.csv
 examples/examples_results/No_class_allsamples_2018.csv
 examples/examples_results/No_class_dispersion_2018.csv
 examples/examples_results/No_class_ideology_2018.csv
-examples/examples_results/cgmod.mod
-examples/examples_results/cgmod2016.mod
 examples/examples_results/class_allsamples_2018.csv
 examples/examples_results/class_featurenames_and_vectors
 examples/examples_results/data_2018
@@ -146,7 +145,6 @@ examples/examples_results/polarDistance_multiple_test.csv
 examples/examples_results/randomMaskRecon_test.csv
 examples/examples_results/randomMaskRecon_test1.csv
 examples/examples_results/tmp_dot_modelclass.dot
-examples/examples_results/tmp_nodelclass.joblib
 examples/examples_results/CMPF_2018/CMPF-0.csv
 examples/examples_results/CMPF_2018/CMPF-1.csv
 examples/examples_results/CMPF_2018/CMPF-2.csv
