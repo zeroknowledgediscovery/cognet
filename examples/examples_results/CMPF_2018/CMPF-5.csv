@@ -1,6 +1,13 @@
 gssvar,s,q,r
-reliten,no religion,not very strong,somewhat strong
-pray,never,once a day,several times a week
-polabuse,no,no,yes
-intmil,not at all interested,very interested,moderately interested
-comfort,agree,agree,strongly agree
+spkcom,not allowed,allowed,not allowed
+colcom,not fired,not fired,fired
+spkmil,not allowed,allowed,not allowed
+colmil,not allowed,allowed,not allowed
+libmil,remove,not remove,not remove
+libmslm,remove,remove,not remove
+gunlaw,favor,favor,favor
+pray,once a week,several times a day,lt once a week
+abdefect,yes,yes,yes
+abrape,yes,yes,no
+absingle,no,no,yes
+owngun,no,no,refused

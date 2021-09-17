@@ -1,15 +1,21 @@
 gssvar,s,q,r
+spkcom,allowed,allowed,not allowed
+colcom,not fired,fired,fired
 libcom,not remove,not remove,not remove
-spkmil,allowed,allowed,allowed
-colmil,allowed,allowed,not allowed
-libmil,not remove,not remove,remove
+colmil,allowed,not allowed,not allowed
+libhomo,not remove,not remove,not remove
 libmslm,not remove,remove,not remove
-pray,lt once a week,several times a day,once a day
-prayer,disapprove,approve,disapprove
-bible,inspired word,book of fables,word of god
-abpoor,yes,yes,yes
-absingle,yes,yes,yes
-owngun,no,no,refused
-shotgun,no,no,no
-intmil,moderately interested,moderately interested,not at all interested
-religcon,not agree/dsagre,not agree/dsagre,strong disagree
+pray,never,several times a week,several times a week
+abnomore,yes,no,yes
+abhlth,yes,yes,no
+abpoor,yes,no,yes
+absingle,yes,no,no
+abany,yes,no,yes
+shotgun,no,no,refused
+intmil,moderately interested,not at all interested,not at all interested
+abpoorw,not wrong at all,always wrong,almost always wrong
+godchnge,"believe now, always have","believe now, always have","don't believe now, never have"
+prayfreq,less than once a year,several times a week,every week
+religcon,not agree/dsagre,strong disagree,agree
+religint,disagree,strong disagree,strongly agree
+comfort,strongly agree,neither agree nor disagree,neither agree nor disagree

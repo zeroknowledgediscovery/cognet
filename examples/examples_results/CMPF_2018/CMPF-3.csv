@@ -1,7 +1,9 @@
 gssvar,s,q,r
-pray,several times a day,several times a day,never
-prayer,approve,approve,disapprove
-bible,inspired word,inspired word,inspired word
-polabuse,no,yes,yes
-abpoorw,always wrong,not wrong at all,always wrong
-prayfreq,several times a week,nearly every week,about once or twice a year
+polabuse,no,yes,no
+viruses,True,False,True
+abpoorw,wrong only sometimes,not wrong at all,not wrong at all
+godchnge,"don't believe now, used to","believe now, always have","don't believe now, used to"
+prayfreq,nearly every week,several times a week,less than once a year
+religcon,strongly agree,strongly agree,strong disagree
+religint,agree,strongly agree,not agree/dsagre
+comfort,agree,neither agree nor disagree,neither agree nor disagree

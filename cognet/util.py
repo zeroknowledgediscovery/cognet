@@ -14,17 +14,13 @@ def assert_None(args,
             return num_none
 
 def assert_array_dimension(array, dimensions):
-    '''
+    '''Make sure arrays are the right dimensions
     '''
     if len(array.shape) != dimensions:
         raise ValueError('You must pass in a {}-D array!'.format(dimensions))
     
 def embed_to_pca(EFILE, OUTFILE):
-    """[summary]
-
-    Args:
-        EFILE ([type]): [description]
-        OUTFILE ([type]): [description]
+    """build pca model with embed file
     """
     Ef=pd.read_csv(EFILE,sep=' ',header=None).dropna(axis=1).transpose()
     Ef.columns=['x'+str(i) for i in Ef.columns]

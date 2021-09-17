@@ -1,11 +1,9 @@
 gssvar,s,q,r
-spkcom,allowed,allowed,allowed
-libcom,not remove,not remove,not remove
-colmil,not allowed,not allowed,not allowed
-libmslm,not remove,not remove,remove
-conlabor,hardly any,only some,hardly any
-abhlth,yes,yes,yes
-abpoor,no,no,yes
-absingle,no,no,yes
-abany,no,no,no
-owngun,yes,refused,refused
+grass,not legal,not legal,legal
+reliten,strong,no religion,somewhat strong
+prayer,approve,disapprove,approve
+bible,inspired word,word of god,inspired word
+conlabor,only some,only some,a great deal
+intmil,moderately interested,moderately interested,moderately interested
+abpoorw,wrong only sometimes,wrong only sometimes,always wrong
+comfort,agree,agree,disagree
