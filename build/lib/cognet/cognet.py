@@ -74,7 +74,7 @@ class cognet:
             if all(x is None for x in [model.samples, samples_file]):
                 raise ValueError("Please input samples if loading model after loading qnet")
             elif model.samples is not None:
-                samples = pd.DataFrame(model.samples)
+                samples = pd.DataFrame(model.samples, columns=model.features)
             elif samples_file is not None:
                 samples = pd.read_csv(samples_file)
                 
@@ -848,7 +848,6 @@ class cognet:
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
-            print(self.samples)
             pd.DataFrame(self.samples_as_strings).to_csv("tmp_samples_as_strings.csv", header=None, index=None)
             w = self.samples.index.size
             
@@ -936,6 +935,7 @@ class cognet:
                                "NODES={}\n".format(NODES),
                                "# time requested\n",
                                "T={}\n".format(T),
+                               "NUM=\'all\'\n",
                                "LAUNCH=\'../mpi_launcher.sh\'\n\n",
                                "for yr in `echo $YEARS`\n",
                                "do\n",

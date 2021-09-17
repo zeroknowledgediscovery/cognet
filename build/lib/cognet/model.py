@@ -36,9 +36,7 @@ class model:
         elif num_None > 1:
             raise ValueError("input both samples and features or data object!")
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
-        print("qnet")
         self.myQnet.fit(samples)
-        print("done")
         self.samples = samples
         self.features = featurenames
 

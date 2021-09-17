@@ -19,7 +19,7 @@ class dataFormatter:
             train_size (float): fraction of sample to take as train_size. Defaults to None, and 1-test_size
             random_state (int, optional): random seed to split samples dataset . Defaults to None.
         """
-        self.samples = pd.read_csv(samples,header=None,index_col=False)
+        self.samples = pd.read_csv(samples,index_col=False)
         self.test_size = test_size
         self.random_state = random_state
         self.train_data, self.test_data = train_test_split(self.samples,
@@ -45,7 +45,6 @@ class dataFormatter:
         """
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError('Samples must be in numpy array form!')
-        samples = samples
         features = np.array(samples.columns.astype(str)[:])
         samples = samples.values.astype(str)[:]
         # remove columns that are all NaNs
