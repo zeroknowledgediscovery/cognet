@@ -47,8 +47,7 @@ setup(
         "random",
         "time",
         "scipy",
-        "subprocess",
-        "pkgutil"],
+        "subprocess"],
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 4 - Beta',
