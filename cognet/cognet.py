@@ -865,7 +865,7 @@ class cognet:
 
                 f.writelines(["w = {}\n".format(w),
                               "h = w\n",
-                              "p_all = pd.read_csv(\"{}tmp_samples_as_strings.csv\")\n\n".format(tmp_path)])
+                              "p_all = pd.read_csv(\"tmp_samples_as_strings.csv\")\n\n"])
 
                 f.writelines(["def distfunc(x,y):\n",
                               "\td=qdistance(x,y,qnet,qnet)\n",
@@ -873,10 +873,10 @@ class cognet:
 
                 f.writelines(["def dfunc_line(k):\n",
                               "\tline = np.zeros(w)\n",
-                              "\ty = p_all[k]\n",
+                              "\ty = np.array(p_all.iloc[k])\n",
                               "\tfor j in range(w):\n",
                               "\t\tif j > k:\n",
-                              "\t\t\tx = p_all[j]\n",
+                              "\t\t\tx = np.array(p_all.iloc[j])\n",
                               "\t\t\tline[j] = distfunc(x, y)\n",
                               "\treturn line\n\n"])
 
