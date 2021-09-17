@@ -848,10 +848,11 @@ class cognet:
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
-            pd.DataFrame(self.samples_as_strings).to_csv("tmp_samples_as_strings.csv", header=None, index=None)
-            w = self.samples.index.size
             
             tmp_path = "mpi_tmp/"
+            pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+"tmp_samples_as_strings.csv", header=None, index=None)
+            w = self.samples.index.size
+            
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
             with open(tmp_path+pyfile, 'w+') as f:
@@ -925,7 +926,7 @@ class cognet:
                                "echo \"module unload openmpi\" >> $PROG\n",
                                "echo \"module load python/anaconda-2020.02\" >> $PROG\n",
                                "echo \"module load mpi4py\" >> $PROG\n",
-                               "echo \"date; mpiexec -n \"$NUMPROC\" python3 -Xy=\"$YEAR\" -XN=\"$NUM\" -m mpi4py.futures {}; date\"  >> $PROG\n".format(pyfile),
+                               "echo \"date; mpiexec -n \"$NUMPROC\" python3 -m mpi4py.futures {}; date\"  >> $PROG\n".format(pyfile),
                                 ])
 
             with open(tmp_path+MPI_RUN_FILE, 'w+') as mr:

@@ -93,7 +93,6 @@ examples/examples_results/No_class_dispersion_2018.csv
 examples/examples_results/No_class_ideology_2018.csv
 examples/examples_results/class_allsamples_2018.csv
 examples/examples_results/class_featurenames_and_vectors
-examples/examples_results/data_2018
 examples/examples_results/dispersion_test.csv
 examples/examples_results/distfunc_forloop.csv
 examples/examples_results/distfunc_mpitest.csv
@@ -102,9 +101,6 @@ examples/examples_results/distfunc_mpitest_preloadedclass.csv
 examples/examples_results/distfunc_mpitest_preloadedclass_computenode_2016.csv
 examples/examples_results/distfunc_multiples_testing.csv
 examples/examples_results/distfunc_test.csv
-examples/examples_results/embed_D_2018
-examples/examples_results/embed_E_2018
-examples/examples_results/embed_E_2018_PCA
 examples/examples_results/ideology.csv
 examples/examples_results/no_class_featurenames_and_vectors.csv
 examples/examples_results/polarDistance_multiple_test.csv
