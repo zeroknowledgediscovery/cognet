@@ -44,10 +44,8 @@ setup(
         "pandas",
         "joblib",
         "quasinet",
-        "random",
         "time",
-        "scipy",
-        "subprocess"],
+        "scipy"],
     python_requires='>=3.6',
     classifiers=[
         'Development Status :: 4 - Beta',
