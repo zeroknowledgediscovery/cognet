@@ -6,7 +6,6 @@ joblib
 quasinet
 random
 time
-multiprocessing
 scipy
 subprocess
 sys
