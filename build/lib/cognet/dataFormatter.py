@@ -9,7 +9,7 @@ class dataFormatter:
     def __init__(self,
                  samples,
                  test_size,
-                 train_size=1-test_size,
+                 train_size=None,
                  random_state=None):
         """init
 
