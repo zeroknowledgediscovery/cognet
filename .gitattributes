@@ -34,3 +34,7 @@ examples/examples_results/No_class_dispersion_2018.csv filter=lfs diff=lfs merge
 examples/examples_results/NoClass_DISSONANCE_2018.csv filter=lfs diff=lfs merge=lfs -text
 examples/examples_results/no_class_featurenames_and_vectors.csv filter=lfs diff=lfs merge=lfs -text
 examples/examples_results/No_class_ideology_2018.csv filter=lfs diff=lfs merge=lfs -text
+*.gz filter=lfs diff=lfs merge=lfs -text
+*gz filter=lfs diff=lfs merge=lfs -text
+dist/cognet-0.0.72.tar.gz filter=lfs diff=lfs merge=lfs -text
+dist/cognet-0.0.73.tar.gz filter=lfs diff=lfs merge=lfs -text
