@@ -4,5 +4,4 @@ numpy
 pandas
 joblib
 quasinet
-time
 scipy

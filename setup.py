@@ -44,7 +44,6 @@ setup(
         "pandas",
         "joblib",
         "quasinet",
-        "time",
         "scipy"],
     python_requires='>=3.6',
     classifiers=[
