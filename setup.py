@@ -48,7 +48,6 @@ setup(
         "time",
         "scipy",
         "subprocess",
-        "sys",
         "pkgutil"],
     python_requires='>=3.6',
     classifiers=[
