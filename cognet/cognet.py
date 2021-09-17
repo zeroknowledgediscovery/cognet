@@ -865,7 +865,7 @@ class cognet:
 
                 f.writelines(["w = {}\n".format(w),
                               "h = w\n",
-                              "p_all = pd.read_csv(\"tmp_samples_as_strings.csv\")\n\n"])
+                              "p_all = pd.read_csv(\"{}tmp_samples_as_strings.csv\")\n\n".format(tmp_path)])
 
                 f.writelines(["def distfunc(x,y):\n",
                               "\td=qdistance(x,y,qnet,qnet)\n",
