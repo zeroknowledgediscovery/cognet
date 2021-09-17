@@ -7,8 +7,6 @@ Author: zed.uchicago.edu
 Author-email: ishanu@uchicago.edu
 License: LICENSE
 Download-URL: https://github.com/zeroknowledgediscovery/cognet/archive/0.0.85.tar.gz
-<<<<<<< HEAD
-=======
 Description: ===============
         Cognet
         ===============
@@ -44,7 +42,6 @@ Description: ===============
                         test_size=0.5)
         
         
->>>>>>> 0d68472e2c81c8bed162ebf3ebcc545f36e0db1f
 Keywords: computational social science,decision trees,machine learning,cognitive dissonance
 Platform: UNKNOWN
 Classifier: Development Status :: 4 - Beta
