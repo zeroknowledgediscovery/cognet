@@ -629,8 +629,7 @@ class cognet:
           return_dict (dict): dict containing results
           MISSING_VAL (float): default dissonance value
         '''
-        if all(x is not None for x in [self.samples, self.features, 
-                                    self.poles]):
+        if all(x is not None for x in [self.samples, self.features]):
             s = self.samples_as_strings[sample_index]
             if self.polar_indices is None:
                 self.polar_indices = range(len(s))
@@ -648,14 +647,11 @@ class cognet:
             if return_dict is not None:
                 return_dict[sample_index] = diss[self.polar_indices]
             return diss[self.polar_indices]
-
-        elif self.poles is None:
-            raise ValueError("set_poles first!")
         else:
             raise ValueError("load_data first!")
     
     def dissonance_matrix(self,
-                        output_file=None,
+                        output_file='/example_results/DISSONANCE_matrix.csv',
                         n_jobs=28):
         '''get the dissonance for all samples
 
@@ -663,9 +659,6 @@ class cognet:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
         '''
-        if output_file is None:
-            output_file = '/example_results/DISSONANCE_matrix.csv'
-            
         manager = mp.Manager()
         return_dict = manager.dict()
         processes = []
@@ -855,6 +848,7 @@ class cognet:
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
+            print(self.samples)
             pd.DataFrame(self.samples_as_strings).to_csv("tmp_samples_as_strings.csv", header=None, index=None)
             w = self.samples.index.size
             

@@ -9,7 +9,7 @@ class dataFormatter:
     def __init__(self,
                  samples,
                  test_size,
-                 train_size=None,
+                 train_size=1-test_size,
                  random_state=None):
         """init
 
@@ -19,10 +19,8 @@ class dataFormatter:
             train_size (float): fraction of sample to take as train_size. Defaults to None, and 1-test_size
             random_state (int, optional): random seed to split samples dataset . Defaults to None.
         """
-        self.samples = pd.read_csv(samples)
+        self.samples = pd.read_csv(samples,header=None,index_col=False)
         self.test_size = test_size
-        if train_size is not None:
-            self.train_size = train_size
         self.random_state = random_state
         self.train_data, self.test_data = train_test_split(self.samples,
                                                            test_size=test_size,
@@ -73,7 +71,7 @@ class dataFormatter:
     
     def __set_varcase(self,
                       lower,
-                      key='test',
+                      key='train',
                       vars=None):
         """set the features to all upper or lowercase
 
