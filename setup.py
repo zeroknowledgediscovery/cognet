@@ -46,7 +46,6 @@ setup(
         "quasinet",
         "random",
         "time",
-        "multiprocessing",
         "scipy",
         "subprocess",
         "sys",
