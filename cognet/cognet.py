@@ -90,12 +90,31 @@ class cognet:
                     v=np.append(v,val)
                 variation_weight.append(entropy(v,base=len(v)))
             self.variation_weight = variation_weight
-            
+    
+    def load_from_dataformatter(self, 
+                                data_obj,
+                                train=True):
+        """read in either train or test data, specified by key, from data obj
+
+        Args:
+          data_obj (class): instance of dataformatter class
+          key (bool): get train data if True, test data otherwise
+        """
+        if train:
+            featurenames, samples = data_obj.train()
+        else:
+            featurenames, samples = data_obj.test()
+        if any(x is not None for x in [self.features, self.samples])
+        self.cols = np.array(model.features)
+        self.features = pd.DataFrame(columns=self.cols)
+        self.samples = pd.DataFrame(samples,columns=self.features)
+        self.all_samples = self.samples
+
     def load_data(self,
-                year,
-                features_by_year,
-                samples,
-                qnet):
+                  year,
+                  features_by_year,
+                  samples,
+                  qnet):
         '''load cols, features, samples, and qnet.
 
         Args:
@@ -459,7 +478,7 @@ class cognet:
             EFILE = out_dir + PREF + '_E_' +yr
             DFILE = out_dir + PREF + '_D_' +yr
 
-            pd.read_csv(FILE,header=None).to_csv(DATAFILE,sep=' ',header=None,index=None)
+            pd.read_csv(FILE, index_col=0).to_csv(DATAFILE,sep=' ',header=None,index=None)
             STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+' -D '+DFILE
             subprocess.call(STR,shell=True)
             if pca_model:
