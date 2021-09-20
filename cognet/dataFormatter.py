@@ -18,6 +18,8 @@ class dataFormatter:
         self.nan_cols = []
         self.immutable_vars = None
         self.mutable_vars = None
+        self.train_data = None
+        self.test_data = None
 
     def __train_test_split(self,
                            test_size,
