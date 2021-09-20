@@ -702,7 +702,7 @@ class cognet:
         result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
         self.dissonance_file = output_file
-        return return_dict
+        return return_dict.copy()
     
     def __choose_one(self,
                 X):
