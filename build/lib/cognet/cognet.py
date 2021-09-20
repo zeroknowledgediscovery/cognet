@@ -678,6 +678,9 @@ class cognet:
         Args:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
+
+        Returns:
+          pandas.DataFrame
         '''
         manager = mp.Manager()
         return_dict = manager.dict()
@@ -699,7 +702,7 @@ class cognet:
         result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
         self.dissonance_file = output_file
-        return return_dict
+        return pd.DataFrame(return_dict.copy())
     
     def __choose_one(self,
                 X):
