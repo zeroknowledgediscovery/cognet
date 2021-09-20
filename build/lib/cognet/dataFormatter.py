@@ -7,39 +7,45 @@ class dataFormatter:
     """
 
     def __init__(self,
-                 samples,
-                 test_size,
-                 train_size=None,
-                 random_state=None):
+                 samples):
         """init
 
         Args:
             samples ([str], optional): 2D array with rows as observations and columns as features.
-            test_size (float): fraction of sample to take as test_size.
-            train_size (float): fraction of sample to take as train_size. Defaults to None, and 1-test_size
-            random_state (int, optional): random seed to split samples dataset . Defaults to None.
         """
         self.samples = pd.read_csv(samples,index_col=False)
+        self.features = {}
+        self.nan_cols = []
+        self.immutable_vars = None
+        self.mutable_vars = None
+
+    def __train_test_split(self,
+                           test_size,
+                           train_size=None,
+                           random_state=None):
+        """split the samples into training and testing samples
+
+        Args:
+          test_size (float): fraction of sample to take as test_size.
+          train_size (float): fraction of sample to take as train_size. Defaults to None, and 1-test_size
+          random_state (int, optional): random seed to split samples dataset . Defaults to None.
+        """
         self.test_size = test_size
         self.random_state = random_state
         self.train_data, self.test_data = train_test_split(self.samples,
                                                            test_size=test_size,
                                                            train_size=train_size,
                                                            random_state=random_state)
-        self.features = {}
-        self.nan_cols = []
-        self.immutable_vars = None
-        self.mutable_vars = None
-
+    
     def __Qnet_formatter(self,
-                         key,
-                         samples):
+                         samples,
+                         key=None):
         """format data for Qnet input
 
         Args:
-            key (str): Either 'train' or 'test' key, to determine which set of features
-            samples ([str], optional): 2D array with rows as observations and columns as features.
-
+          samples ([str], optional): 2D array with rows as observations and columns as features.
+          key (str): Either 'train' or 'test' key, to determine which set of features
+        
         Returns:
             features and samples of either the train and test dataset
         """
@@ -55,18 +61,31 @@ class dataFormatter:
         
         features = features[not_all_nan_cols]
         features = list(features)
-        self.features[key] = features
+        if key is not None:
+            self.features[key] = features
         return features, samples
 
-    def train(self):
-        """return train data
+    def samples(self,
+                key):
+        """return samples, either all, train, or test
+        
+        Args:
+          key (str): 'all', 'train', or 'test', corresponding to sample type
         """
-        return self.__Qnet_formatter('train',self.train_data)
-    
-    def test(self):
-        """return test data
-        """
-        return self.__Qnet_formatter('test',self.test_data)
+        if any(x is not None for x in [self.train_data,
+                                       self.test_data,
+                                       self.samples]):
+            raise ValueError("Split samples into test and train datasets first!")
+        if key == 'train':
+            samples = self.train_data
+        elif key == 'test':
+            samples = self.test_data
+        elif key == 'all':
+            samples = self.samples
+        else:
+            raise ValueError("Invalid key, key must be either 'all', 'test', or 'train")
+        
+        return self.__Qnet_formatter(samples, key=key)
     
     def __set_varcase(self,
                       lower,

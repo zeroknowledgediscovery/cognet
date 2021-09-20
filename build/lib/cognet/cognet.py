@@ -93,17 +93,14 @@ class cognet:
     
     def load_from_dataformatter(self, 
                                 data_obj,
-                                train=True):
+                                key):
         """read in either train or test data, specified by key, from data obj
 
         Args:
           data_obj (class): instance of dataformatter class
-          key (bool): get train data if True, test data otherwise
+          key (str): 'all', 'train', or 'test', corresponding to sample type
         """
-        if train:
-            featurenames, samples = data_obj.train()
-        else:
-            featurenames, samples = data_obj.test()
+        featurenames, samples = data_obj.samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print("replacing original features/samples with dataformatter data")
         self.cols = np.array(model.features)
