@@ -13,6 +13,7 @@ class model:
         self.samples = None
         self.immutable_vars = None
         self.mutable_vars = None
+        self.data_obj = None
 
     def fit(self,
             featurenames=None,
