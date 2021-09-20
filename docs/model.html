@@ -48,17 +48,13 @@ class model:
             samples=None,
             data_obj=None,
             njobs=4):
-        &#34;&#34;&#34;[summary]
+        &#34;&#34;&#34;fit Quasinet Qnet model
 
         Args:
-          featurenames ([type]): [description]
-          samples ([type], optional): [description]. Defaults to None.
-          data_obj ([type], optional): [description]. Defaults to None.
-          njobs (int, optional): [description]. Defaults to 2.
-
-        Raises:
-            ValueError: [description]
-            ValueError: [description]
+          featurenames ([str], optional): names of the model features. Defaults to None.
+          samples ([str], optional): 2D array with rows as observations and columns as features. Defaults to None.
+          data_obj (obj, optional): Build Qnet directly from data obj without other inputs. Defaults to None.
+          njobs (int, optional): Number of jobs used to fit Qnet. Defaults to 2.
         &#34;&#34;&#34;
         num_None = assert_None([featurenames,samples,data_obj], raise_error=False)
         if num_None == 0:
@@ -69,18 +65,16 @@ class model:
         elif num_None &gt; 1:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
-        print(&#34;qnet&#34;)
         self.myQnet.fit(samples)
-        print(&#34;done&#34;)
         self.samples = samples
         self.features = featurenames
 
     def save(self,
              file_path=None):
-        &#34;&#34;&#34;[summary]
+        &#34;&#34;&#34;save qnet
 
         Args:
-          file_path ([type], optional): [description]. Defaults to None.
+          file_path (str, optional): Desired Qnet filename. Defaults to None.
         &#34;&#34;&#34;
         assert_None([self.myQnet])
         if file_path is None:
@@ -89,15 +83,14 @@ class model:
     
     def load(self,
              file_path):
-        &#34;&#34;&#34;[summary]
+        &#34;&#34;&#34;load Qnet from file
 
         Args:
-          file_path ([type]): [description]
+          file_path (str): path to Qnet savefile
 
         Returns:
-          [type]: [description]
+          [Qnet]: Qnet object
         &#34;&#34;&#34;
-        ## can also directly use load from joblib, thoughts?
         print(&#34;updating&#34;)
         self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
@@ -108,15 +101,17 @@ class model:
                    index=[3],
                    path=&#39;&#39;,
                    generate_trees=False,
-                   threhold=0.2):
-        &#34;&#34;&#34;[summary]
+                   threshold=0.2):
+        &#34;&#34;&#34;export Qnet trees
 
         Args:
-            filename ([type]): [description]
-            index (list, optional): [description]. Defaults to [6].
-            path (str, optional): [description]. Defaults to &#39;&#39;.
-            generate_trees (bool, optional): [description]. Defaults to False.
-            threhold (float, optional): [description]. Defaults to 0.2.
+            filename (str): Desired tree savefile
+            index (list, optional): list of indices to generate trees. Defaults to [3].
+            path (str, optional): Desired tree savefile path. Defaults to &#39;&#39;.
+            generate_trees (bool, optional): Whether or not to generate individual trees. 
+                                             Defaults to False, or to generate individual trees.
+            threshold (float, optional): Numeric cutoff for edge weights. If the edge weights exceed 
+                                         this cutoff, then we include it into the graph. Defaults to 0.2.
         &#34;&#34;&#34;
         if not generate_trees:
             export_qnet_graph(self.myQnet, 
@@ -164,17 +159,13 @@ class model:
             samples=None,
             data_obj=None,
             njobs=4):
-        &#34;&#34;&#34;[summary]
+        &#34;&#34;&#34;fit Quasinet Qnet model
 
         Args:
-          featurenames ([type]): [description]
-          samples ([type], optional): [description]. Defaults to None.
-          data_obj ([type], optional): [description]. Defaults to None.
-          njobs (int, optional): [description]. Defaults to 2.
-
-        Raises:
-            ValueError: [description]
-            ValueError: [description]
+          featurenames ([str], optional): names of the model features. Defaults to None.
+          samples ([str], optional): 2D array with rows as observations and columns as features. Defaults to None.
+          data_obj (obj, optional): Build Qnet directly from data obj without other inputs. Defaults to None.
+          njobs (int, optional): Number of jobs used to fit Qnet. Defaults to 2.
         &#34;&#34;&#34;
         num_None = assert_None([featurenames,samples,data_obj], raise_error=False)
         if num_None == 0:
@@ -185,18 +176,16 @@ class model:
         elif num_None &gt; 1:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
-        print(&#34;qnet&#34;)
         self.myQnet.fit(samples)
-        print(&#34;done&#34;)
         self.samples = samples
         self.features = featurenames
 
     def save(self,
              file_path=None):
-        &#34;&#34;&#34;[summary]
+        &#34;&#34;&#34;save qnet
 
         Args:
-          file_path ([type], optional): [description]. Defaults to None.
+          file_path (str, optional): Desired Qnet filename. Defaults to None.
         &#34;&#34;&#34;
         assert_None([self.myQnet])
         if file_path is None:
@@ -205,15 +194,14 @@ class model:
     
     def load(self,
              file_path):
-        &#34;&#34;&#34;[summary]
+        &#34;&#34;&#34;load Qnet from file
 
         Args:
-          file_path ([type]): [description]
+          file_path (str): path to Qnet savefile
 
         Returns:
-          [type]: [description]
+          [Qnet]: Qnet object
         &#34;&#34;&#34;
-        ## can also directly use load from joblib, thoughts?
         print(&#34;updating&#34;)
         self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
@@ -224,15 +212,17 @@ class model:
                    index=[3],
                    path=&#39;&#39;,
                    generate_trees=False,
-                   threhold=0.2):
-        &#34;&#34;&#34;[summary]
+                   threshold=0.2):
+        &#34;&#34;&#34;export Qnet trees
 
         Args:
-            filename ([type]): [description]
-            index (list, optional): [description]. Defaults to [6].
-            path (str, optional): [description]. Defaults to &#39;&#39;.
-            generate_trees (bool, optional): [description]. Defaults to False.
-            threhold (float, optional): [description]. Defaults to 0.2.
+            filename (str): Desired tree savefile
+            index (list, optional): list of indices to generate trees. Defaults to [3].
+            path (str, optional): Desired tree savefile path. Defaults to &#39;&#39;.
+            generate_trees (bool, optional): Whether or not to generate individual trees. 
+                                             Defaults to False, or to generate individual trees.
+            threshold (float, optional): Numeric cutoff for edge weights. If the edge weights exceed 
+                                         this cutoff, then we include it into the graph. Defaults to 0.2.
         &#34;&#34;&#34;
         if not generate_trees:
             export_qnet_graph(self.myQnet, 
@@ -245,22 +235,24 @@ class model:
 <h3>Methods</h3>
 <dl>
 <dt id="cognet.model.model.export_dot"><code class="name flex">
-<span>def <span class="ident">export_dot</span></span>(<span>self, filename, index=[3], path='', generate_trees=False, threhold=0.2)</span>
+<span>def <span class="ident">export_dot</span></span>(<span>self, filename, index=[3], path='', generate_trees=False, threshold=0.2)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>[summary]</p>
+<div class="desc"><p>export Qnet trees</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>filename</code></strong> :&ensp;<code>[type]</code></dt>
-<dd>[description]</dd>
+<dt><strong><code>filename</code></strong> :&ensp;<code>str</code></dt>
+<dd>Desired tree savefile</dd>
 <dt><strong><code>index</code></strong> :&ensp;<code>list</code>, optional</dt>
-<dd>[description]. Defaults to [6].</dd>
+<dd>list of indices to generate trees. Defaults to [3].</dd>
 <dt><strong><code>path</code></strong> :&ensp;<code>str</code>, optional</dt>
-<dd>[description]. Defaults to ''.</dd>
+<dd>Desired tree savefile path. Defaults to ''.</dd>
 <dt><strong><code>generate_trees</code></strong> :&ensp;<code>bool</code>, optional</dt>
-<dd>[description]. Defaults to False.</dd>
-<dt><strong><code>threhold</code></strong> :&ensp;<code>float</code>, optional</dt>
-<dd>[description]. Defaults to 0.2.</dd>
+<dd>Whether or not to generate individual trees.
+Defaults to False, or to generate individual trees.</dd>
+<dt><strong><code>threshold</code></strong> :&ensp;<code>float</code>, optional</dt>
+<dd>Numeric cutoff for edge weights. If the edge weights exceed
+this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -271,15 +263,17 @@ class model:
                index=[3],
                path=&#39;&#39;,
                generate_trees=False,
-               threhold=0.2):
-    &#34;&#34;&#34;[summary]
+               threshold=0.2):
+    &#34;&#34;&#34;export Qnet trees
 
     Args:
-        filename ([type]): [description]
-        index (list, optional): [description]. Defaults to [6].
-        path (str, optional): [description]. Defaults to &#39;&#39;.
-        generate_trees (bool, optional): [description]. Defaults to False.
-        threhold (float, optional): [description]. Defaults to 0.2.
+        filename (str): Desired tree savefile
+        index (list, optional): list of indices to generate trees. Defaults to [3].
+        path (str, optional): Desired tree savefile path. Defaults to &#39;&#39;.
+        generate_trees (bool, optional): Whether or not to generate individual trees. 
+                                         Defaults to False, or to generate individual trees.
+        threshold (float, optional): Numeric cutoff for edge weights. If the edge weights exceed 
+                                     this cutoff, then we include it into the graph. Defaults to 0.2.
     &#34;&#34;&#34;
     if not generate_trees:
         export_qnet_graph(self.myQnet, 
@@ -294,24 +288,17 @@ class model:
 <span>def <span class="ident">fit</span></span>(<span>self, featurenames=None, samples=None, data_obj=None, njobs=4)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>[summary]</p>
+<div class="desc"><p>fit Quasinet Qnet model</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>featurenames</code></strong> :&ensp;<code>[type]</code></dt>
-<dd>[description]</dd>
-<dt><strong><code>samples</code></strong> :&ensp;<code>[type]</code>, optional</dt>
-<dd>[description]. Defaults to None.</dd>
-<dt><strong><code>data_obj</code></strong> :&ensp;<code>[type]</code>, optional</dt>
-<dd>[description]. Defaults to None.</dd>
+<dt><strong><code>featurenames</code></strong> :&ensp;<code>[str]</code>, optional</dt>
+<dd>names of the model features. Defaults to None.</dd>
+<dt><strong><code>samples</code></strong> :&ensp;<code>[str]</code>, optional</dt>
+<dd>2D array with rows as observations and columns as features. Defaults to None.</dd>
+<dt><strong><code>data_obj</code></strong> :&ensp;<code>obj</code>, optional</dt>
+<dd>Build Qnet directly from data obj without other inputs. Defaults to None.</dd>
 <dt><strong><code>njobs</code></strong> :&ensp;<code>int</code>, optional</dt>
-<dd>[description]. Defaults to 2.</dd>
-</dl>
-<h2 id="raises">Raises</h2>
-<dl>
-<dt><code>ValueError</code></dt>
-<dd>[description]</dd>
-<dt><code>ValueError</code></dt>
-<dd>[description]</dd>
+<dd>Number of jobs used to fit Qnet. Defaults to 2.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -322,17 +309,13 @@ class model:
         samples=None,
         data_obj=None,
         njobs=4):
-    &#34;&#34;&#34;[summary]
+    &#34;&#34;&#34;fit Quasinet Qnet model
 
     Args:
-      featurenames ([type]): [description]
-      samples ([type], optional): [description]. Defaults to None.
-      data_obj ([type], optional): [description]. Defaults to None.
-      njobs (int, optional): [description]. Defaults to 2.
-
-    Raises:
-        ValueError: [description]
-        ValueError: [description]
+      featurenames ([str], optional): names of the model features. Defaults to None.
+      samples ([str], optional): 2D array with rows as observations and columns as features. Defaults to None.
+      data_obj (obj, optional): Build Qnet directly from data obj without other inputs. Defaults to None.
+      njobs (int, optional): Number of jobs used to fit Qnet. Defaults to 2.
     &#34;&#34;&#34;
     num_None = assert_None([featurenames,samples,data_obj], raise_error=False)
     if num_None == 0:
@@ -343,9 +326,7 @@ class model:
     elif num_None &gt; 1:
         raise ValueError(&#34;input both samples and features or data object!&#34;)
     self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
-    print(&#34;qnet&#34;)
     self.myQnet.fit(samples)
-    print(&#34;done&#34;)
     self.samples = samples
     self.features = featurenames</code></pre>
 </details>
@@ -354,16 +335,16 @@ class model:
 <span>def <span class="ident">load</span></span>(<span>self, file_path)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>[summary]</p>
+<div class="desc"><p>load Qnet from file</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>file_path</code></strong> :&ensp;<code>[type]</code></dt>
-<dd>[description]</dd>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
+<dd>path to Qnet savefile</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>[type]</code></dt>
-<dd>[description]</dd>
+<dt><code>[Qnet]</code></dt>
+<dd>Qnet object</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -371,15 +352,14 @@ class model:
 </summary>
 <pre><code class="python">def load(self,
          file_path):
-    &#34;&#34;&#34;[summary]
+    &#34;&#34;&#34;load Qnet from file
 
     Args:
-      file_path ([type]): [description]
+      file_path (str): path to Qnet savefile
 
     Returns:
-      [type]: [description]
+      [Qnet]: Qnet object
     &#34;&#34;&#34;
-    ## can also directly use load from joblib, thoughts?
     print(&#34;updating&#34;)
     self.myQnet = load_qnet(file_path)
     self.features = self.myQnet.feature_names
@@ -390,11 +370,11 @@ class model:
 <span>def <span class="ident">save</span></span>(<span>self, file_path=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>[summary]</p>
+<div class="desc"><p>save qnet</p>
 <h2 id="args">Args</h2>
 <dl>
-<dt><strong><code>file_path</code></strong> :&ensp;<code>[type]</code>, optional</dt>
-<dd>[description]. Defaults to None.</dd>
+<dt><strong><code>file_path</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Desired Qnet filename. Defaults to None.</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -402,10 +382,10 @@ class model:
 </summary>
 <pre><code class="python">def save(self,
          file_path=None):
-    &#34;&#34;&#34;[summary]
+    &#34;&#34;&#34;save qnet
 
     Args:
-      file_path ([type], optional): [description]. Defaults to None.
+      file_path (str, optional): Desired Qnet filename. Defaults to None.
     &#34;&#34;&#34;
     assert_None([self.myQnet])
     if file_path is None:

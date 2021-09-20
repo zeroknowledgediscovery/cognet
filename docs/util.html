@@ -43,17 +43,13 @@ def assert_None(args,
             return num_none
 
 def assert_array_dimension(array, dimensions):
-    &#39;&#39;&#39;
+    &#39;&#39;&#39;Make sure arrays are the right dimensions
     &#39;&#39;&#39;
     if len(array.shape) != dimensions:
         raise ValueError(&#39;You must pass in a {}-D array!&#39;.format(dimensions))
     
 def embed_to_pca(EFILE, OUTFILE):
-    &#34;&#34;&#34;[summary]
-
-    Args:
-        EFILE ([type]): [description]
-        OUTFILE ([type]): [description]
+    &#34;&#34;&#34;build pca model with embed file
     &#34;&#34;&#34;
     Ef=pd.read_csv(EFILE,sep=&#39; &#39;,header=None).dropna(axis=1).transpose()
     Ef.columns=[&#39;x&#39;+str(i) for i in Ef.columns]
@@ -99,13 +95,13 @@ def embed_to_pca(EFILE, OUTFILE):
 <span>def <span class="ident">assert_array_dimension</span></span>(<span>array, dimensions)</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>Make sure arrays are the right dimensions</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def assert_array_dimension(array, dimensions):
-    &#39;&#39;&#39;
+    &#39;&#39;&#39;Make sure arrays are the right dimensions
     &#39;&#39;&#39;
     if len(array.shape) != dimensions:
         raise ValueError(&#39;You must pass in a {}-D array!&#39;.format(dimensions))</code></pre>
@@ -115,24 +111,13 @@ def embed_to_pca(EFILE, OUTFILE):
 <span>def <span class="ident">embed_to_pca</span></span>(<span>EFILE, OUTFILE)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>[summary]</p>
-<h2 id="args">Args</h2>
-<dl>
-<dt><strong><code>EFILE</code></strong> :&ensp;<code>[type]</code></dt>
-<dd>[description]</dd>
-<dt><strong><code>OUTFILE</code></strong> :&ensp;<code>[type]</code></dt>
-<dd>[description]</dd>
-</dl></div>
+<div class="desc"><p>build pca model with embed file</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def embed_to_pca(EFILE, OUTFILE):
-    &#34;&#34;&#34;[summary]
-
-    Args:
-        EFILE ([type]): [description]
-        OUTFILE ([type]): [description]
+    &#34;&#34;&#34;build pca model with embed file
     &#34;&#34;&#34;
     Ef=pd.read_csv(EFILE,sep=&#39; &#39;,header=None).dropna(axis=1).transpose()
     Ef.columns=[&#39;x&#39;+str(i) for i in Ef.columns]
