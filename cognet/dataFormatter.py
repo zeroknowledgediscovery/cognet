@@ -65,8 +65,8 @@ class dataFormatter:
             self.features[key] = features
         return features, samples
 
-    def samples(self,
-                key):
+    def format_samples(self,
+                       key):
         """return samples, either all, train, or test
         
         Args:
