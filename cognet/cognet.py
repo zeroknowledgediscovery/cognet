@@ -104,11 +104,15 @@ class cognet:
             featurenames, samples = data_obj.train()
         else:
             featurenames, samples = data_obj.test()
-        if any(x is not None for x in [self.features, self.samples])
+        if any(x is not None for x in [self.features, self.samples]):
+            print("replacing original features/samples with dataformatter data")
         self.cols = np.array(model.features)
         self.features = pd.DataFrame(columns=self.cols)
         self.samples = pd.DataFrame(samples,columns=self.features)
         self.all_samples = self.samples
+        self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+        self.s_null=['']*len(self.samples_as_strings[0])
+        return featurenames, samples
 
     def load_data(self,
                   year,
