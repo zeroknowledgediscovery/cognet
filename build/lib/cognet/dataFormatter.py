@@ -13,7 +13,7 @@ class dataFormatter:
         Args:
             samples ([str], optional): 2D array with rows as observations and columns as features.
         """
-        self.samples = pd.read_csv(samples,index_col=False)
+        self.samples = pd.read_csv(samples)
         self.features = {}
         self.nan_cols = []
         self.immutable_vars = None
