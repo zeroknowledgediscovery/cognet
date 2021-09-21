@@ -62,9 +62,11 @@ class cognet:
         """
         if model is not None:
             self.qnet = model.myQnet
-            self.cols = np.array(model.features)
+            # self.cols = np.array(model.features)
             featurenames, samples = data_obj.format_samples(key)
-            self.features = pd.DataFrame(columns=self.cols)
+            samples = pd.DataFrame(samples)
+            self.cols = featurenames
+            self.features = pd.DataFrame(columns=np.array(featurenames))
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
                     self.immutable_vars = model.immutable_vars
@@ -75,9 +77,10 @@ class cognet:
             else:
                 self.mutable_vars = self.features
             
-            self.samples = pd.concat([samples,self.features], axis=0)
+            self.samples = pd.DataFrame(samples)
+            self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+            self.samples_as_strings = self.samples[featurenames].fillna('').values.astype(str)[:]
             self.s_null=['']*len(self.samples_as_strings[0])
             self.D_null=self.qnet.predict_distributions(self.s_null)
             variation_weight = []
@@ -100,7 +103,7 @@ class cognet:
         featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print("replacing original features/samples with dataformatter data")
-        self.cols = np.array(model.features)
+        self.cols = featurenames
         self.features = pd.DataFrame(columns=self.cols)
         self.samples = pd.DataFrame(samples,columns=self.features)
         self.all_samples = self.samples
