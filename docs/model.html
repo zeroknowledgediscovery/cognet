@@ -39,9 +39,9 @@ class model:
         &#34;&#34;&#34;
         self.myQnet = None
         self.features = None
-        self.samples = None
         self.immutable_vars = None
         self.mutable_vars = None
+        self.data_obj = None
 
     def fit(self,
             featurenames=None,
@@ -66,7 +66,6 @@ class model:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
         self.myQnet.fit(samples)
-        self.samples = samples
         self.features = featurenames
 
     def save(self,
@@ -150,9 +149,9 @@ class model:
         &#34;&#34;&#34;
         self.myQnet = None
         self.features = None
-        self.samples = None
         self.immutable_vars = None
         self.mutable_vars = None
+        self.data_obj = None
 
     def fit(self,
             featurenames=None,
@@ -177,7 +176,6 @@ class model:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
         self.myQnet.fit(samples)
-        self.samples = samples
         self.features = featurenames
 
     def save(self,
@@ -327,7 +325,6 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
         raise ValueError(&#34;input both samples and features or data object!&#34;)
     self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
     self.myQnet.fit(samples)
-    self.samples = samples
     self.features = featurenames</code></pre>
 </details>
 </dd>

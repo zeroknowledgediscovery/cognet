@@ -76,21 +76,26 @@ class cognet:
     
     def load_from_model(self,
                         model,
-                        samples_file=None,
+                        data_obj,
+                        key,
                         im_vars=None,
                         m_vars=None):
         &#34;&#34;&#34;load parameters from model object
 
         Args:
           model (Class): model obj for loading parameters
-          samples_file (filepath): filepath and name for sample csv
+          data_obj (class): instance of dataformatter class
+          key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
           im_vars (list[str], optional): Not implemented yet. Defaults to None.
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
         &#34;&#34;&#34;
         if model is not None:
             self.qnet = model.myQnet
-            self.cols = np.array(model.features)
-            self.features = pd.DataFrame(columns=self.cols)
+            # self.cols = np.array(model.features)
+            featurenames, samples = data_obj.format_samples(key)
+            samples = pd.DataFrame(samples)
+            self.cols = featurenames
+            self.features = pd.DataFrame(columns=np.array(featurenames))
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
                     self.immutable_vars = model.immutable_vars
@@ -100,16 +105,11 @@ class cognet:
                     self.immutable_vars = [x for x in self.features if x not in self.mutable_vars]
             else:
                 self.mutable_vars = self.features
-            if all(x is None for x in [model.samples, samples_file]):
-                raise ValueError(&#34;Please input samples if loading model after loading qnet&#34;)
-            elif model.samples is not None:
-                samples = pd.DataFrame(model.samples, columns=model.features)
-            elif samples_file is not None:
-                samples = pd.read_csv(samples_file)
-                
-            self.samples = pd.concat([samples,self.features], axis=0)
+            
+            self.samples = pd.DataFrame(samples)
+            self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            self.samples_as_strings = self.samples[featurenames].fillna(&#39;&#39;).values.astype(str)[:]
             self.s_null=[&#39;&#39;]*len(self.samples_as_strings[0])
             self.D_null=self.qnet.predict_distributions(self.s_null)
             variation_weight = []
@@ -122,20 +122,17 @@ class cognet:
     
     def load_from_dataformatter(self, 
                                 data_obj,
-                                train=True):
+                                key):
         &#34;&#34;&#34;read in either train or test data, specified by key, from data obj
 
         Args:
           data_obj (class): instance of dataformatter class
-          key (bool): get train data if True, test data otherwise
+          key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
         &#34;&#34;&#34;
-        if train:
-            featurenames, samples = data_obj.train()
-        else:
-            featurenames, samples = data_obj.test()
+        featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print(&#34;replacing original features/samples with dataformatter data&#34;)
-        self.cols = np.array(model.features)
+        self.cols = featurenames
         self.features = pd.DataFrame(columns=self.cols)
         self.samples = pd.DataFrame(samples,columns=self.features)
         self.all_samples = self.samples
@@ -710,6 +707,9 @@ class cognet:
         Args:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
+
+        Returns:
+          pandas.DataFrame
         &#39;&#39;&#39;
         manager = mp.Manager()
         return_dict = manager.dict()
@@ -731,7 +731,7 @@ class cognet:
         result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
         self.dissonance_file = output_file
-        return return_dict
+        return pd.DataFrame(return_dict.copy())
     
     def __choose_one(self,
                 X):
@@ -1055,21 +1055,26 @@ class cognet:
     
     def load_from_model(self,
                         model,
-                        samples_file=None,
+                        data_obj,
+                        key,
                         im_vars=None,
                         m_vars=None):
         &#34;&#34;&#34;load parameters from model object
 
         Args:
           model (Class): model obj for loading parameters
-          samples_file (filepath): filepath and name for sample csv
+          data_obj (class): instance of dataformatter class
+          key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
           im_vars (list[str], optional): Not implemented yet. Defaults to None.
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
         &#34;&#34;&#34;
         if model is not None:
             self.qnet = model.myQnet
-            self.cols = np.array(model.features)
-            self.features = pd.DataFrame(columns=self.cols)
+            # self.cols = np.array(model.features)
+            featurenames, samples = data_obj.format_samples(key)
+            samples = pd.DataFrame(samples)
+            self.cols = featurenames
+            self.features = pd.DataFrame(columns=np.array(featurenames))
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
                     self.immutable_vars = model.immutable_vars
@@ -1079,16 +1084,11 @@ class cognet:
                     self.immutable_vars = [x for x in self.features if x not in self.mutable_vars]
             else:
                 self.mutable_vars = self.features
-            if all(x is None for x in [model.samples, samples_file]):
-                raise ValueError(&#34;Please input samples if loading model after loading qnet&#34;)
-            elif model.samples is not None:
-                samples = pd.DataFrame(model.samples, columns=model.features)
-            elif samples_file is not None:
-                samples = pd.read_csv(samples_file)
-                
-            self.samples = pd.concat([samples,self.features], axis=0)
+            
+            self.samples = pd.DataFrame(samples)
+            self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            self.samples_as_strings = self.samples[featurenames].fillna(&#39;&#39;).values.astype(str)[:]
             self.s_null=[&#39;&#39;]*len(self.samples_as_strings[0])
             self.D_null=self.qnet.predict_distributions(self.s_null)
             variation_weight = []
@@ -1101,20 +1101,17 @@ class cognet:
     
     def load_from_dataformatter(self, 
                                 data_obj,
-                                train=True):
+                                key):
         &#34;&#34;&#34;read in either train or test data, specified by key, from data obj
 
         Args:
           data_obj (class): instance of dataformatter class
-          key (bool): get train data if True, test data otherwise
+          key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
         &#34;&#34;&#34;
-        if train:
-            featurenames, samples = data_obj.train()
-        else:
-            featurenames, samples = data_obj.test()
+        featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print(&#34;replacing original features/samples with dataformatter data&#34;)
-        self.cols = np.array(model.features)
+        self.cols = featurenames
         self.features = pd.DataFrame(columns=self.cols)
         self.samples = pd.DataFrame(samples,columns=self.features)
         self.all_samples = self.samples
@@ -1689,6 +1686,9 @@ class cognet:
         Args:
           output_file (str): directory and/or file for output
           n_jobs (int): number of jobs for pdqm
+
+        Returns:
+          pandas.DataFrame
         &#39;&#39;&#39;
         manager = mp.Manager()
         return_dict = manager.dict()
@@ -1710,7 +1710,7 @@ class cognet:
         result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
         self.dissonance_file = output_file
-        return return_dict
+        return pd.DataFrame(return_dict.copy())
     
     def __choose_one(self,
                 X):
@@ -2236,7 +2236,9 @@ to determine max and std of distances between qsamples</p>
 <dd>directory and/or file for output</dd>
 <dt><strong><code>n_jobs</code></strong> :&ensp;<code>int</code></dt>
 <dd>number of jobs for pdqm</dd>
-</dl></div>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>pandas.DataFrame</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2249,6 +2251,9 @@ to determine max and std of distances between qsamples</p>
     Args:
       output_file (str): directory and/or file for output
       n_jobs (int): number of jobs for pdqm
+
+    Returns:
+      pandas.DataFrame
     &#39;&#39;&#39;
     manager = mp.Manager()
     return_dict = manager.dict()
@@ -2270,7 +2275,7 @@ to determine max and std of distances between qsamples</p>
     result=pd.DataFrame(result,columns=cols).to_csv(output_file)
     
     self.dissonance_file = output_file
-    return return_dict</code></pre>
+    return pd.DataFrame(return_dict.copy())</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.distance"><code class="name flex">
@@ -2813,7 +2818,7 @@ helper func for qsampling</p>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.load_from_dataformatter"><code class="name flex">
-<span>def <span class="ident">load_from_dataformatter</span></span>(<span>self, data_obj, train=True)</span>
+<span>def <span class="ident">load_from_dataformatter</span></span>(<span>self, data_obj, key)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>read in either train or test data, specified by key, from data obj</p>
@@ -2821,8 +2826,8 @@ helper func for qsampling</p>
 <dl>
 <dt><strong><code>data_obj</code></strong> :&ensp;<code>class</code></dt>
 <dd>instance of dataformatter class</dd>
-<dt><strong><code>key</code></strong> :&ensp;<code>bool</code></dt>
-<dd>get train data if True, test data otherwise</dd>
+<dt><strong><code>key</code></strong> :&ensp;<code>str</code></dt>
+<dd>'all', 'train', or 'test', corresponding to sample type</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -2830,20 +2835,17 @@ helper func for qsampling</p>
 </summary>
 <pre><code class="python">def load_from_dataformatter(self, 
                             data_obj,
-                            train=True):
+                            key):
     &#34;&#34;&#34;read in either train or test data, specified by key, from data obj
 
     Args:
       data_obj (class): instance of dataformatter class
-      key (bool): get train data if True, test data otherwise
+      key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
     &#34;&#34;&#34;
-    if train:
-        featurenames, samples = data_obj.train()
-    else:
-        featurenames, samples = data_obj.test()
+    featurenames, samples = data_obj.format_samples(key)
     if any(x is not None for x in [self.features, self.samples]):
         print(&#34;replacing original features/samples with dataformatter data&#34;)
-    self.cols = np.array(model.features)
+    self.cols = featurenames
     self.features = pd.DataFrame(columns=self.cols)
     self.samples = pd.DataFrame(samples,columns=self.features)
     self.all_samples = self.samples
@@ -2853,7 +2855,7 @@ helper func for qsampling</p>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.load_from_model"><code class="name flex">
-<span>def <span class="ident">load_from_model</span></span>(<span>self, model, samples_file=None, im_vars=None, m_vars=None)</span>
+<span>def <span class="ident">load_from_model</span></span>(<span>self, model, data_obj, key, im_vars=None, m_vars=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>load parameters from model object</p>
@@ -2861,8 +2863,10 @@ helper func for qsampling</p>
 <dl>
 <dt><strong><code>model</code></strong> :&ensp;<code>Class</code></dt>
 <dd>model obj for loading parameters</dd>
-<dt><strong><code>samples_file</code></strong> :&ensp;<code>filepath</code></dt>
-<dd>filepath and name for sample csv</dd>
+<dt><strong><code>data_obj</code></strong> :&ensp;<code>class</code></dt>
+<dd>instance of dataformatter class</dd>
+<dt><strong><code>key</code></strong> :&ensp;<code>str</code></dt>
+<dd>'all', 'train', or 'test', corresponding to sample type</dd>
 <dt><strong><code>im_vars</code></strong> :&ensp;<code>list[str]</code>, optional</dt>
 <dd>Not implemented yet. Defaults to None.</dd>
 <dt><strong><code>m_vars</code></strong> :&ensp;<code>list[str]</code>, optional</dt>
@@ -2874,21 +2878,26 @@ helper func for qsampling</p>
 </summary>
 <pre><code class="python">def load_from_model(self,
                     model,
-                    samples_file=None,
+                    data_obj,
+                    key,
                     im_vars=None,
                     m_vars=None):
     &#34;&#34;&#34;load parameters from model object
 
     Args:
       model (Class): model obj for loading parameters
-      samples_file (filepath): filepath and name for sample csv
+      data_obj (class): instance of dataformatter class
+      key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
       im_vars (list[str], optional): Not implemented yet. Defaults to None.
       m_vars (list[str], optional): Not implemented yet. Defaults to None.
     &#34;&#34;&#34;
     if model is not None:
         self.qnet = model.myQnet
-        self.cols = np.array(model.features)
-        self.features = pd.DataFrame(columns=self.cols)
+        # self.cols = np.array(model.features)
+        featurenames, samples = data_obj.format_samples(key)
+        samples = pd.DataFrame(samples)
+        self.cols = featurenames
+        self.features = pd.DataFrame(columns=np.array(featurenames))
         if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
             if model.immutable_vars is not None:
                 self.immutable_vars = model.immutable_vars
@@ -2898,16 +2907,11 @@ helper func for qsampling</p>
                 self.immutable_vars = [x for x in self.features if x not in self.mutable_vars]
         else:
             self.mutable_vars = self.features
-        if all(x is None for x in [model.samples, samples_file]):
-            raise ValueError(&#34;Please input samples if loading model after loading qnet&#34;)
-        elif model.samples is not None:
-            samples = pd.DataFrame(model.samples, columns=model.features)
-        elif samples_file is not None:
-            samples = pd.read_csv(samples_file)
-            
-        self.samples = pd.concat([samples,self.features], axis=0)
+        
+        self.samples = pd.DataFrame(samples)
+        self.samples.columns = np.array(featurenames)
         self.all_samples = self.samples
-        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        self.samples_as_strings = self.samples[featurenames].fillna(&#39;&#39;).values.astype(str)[:]
         self.s_null=[&#39;&#39;]*len(self.samples_as_strings[0])
         self.D_null=self.qnet.predict_distributions(self.s_null)
         variation_weight = []
