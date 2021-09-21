@@ -10,7 +10,6 @@ class model:
         """
         self.myQnet = None
         self.features = None
-        self.samples = None
         self.immutable_vars = None
         self.mutable_vars = None
         self.data_obj = None
@@ -38,7 +37,6 @@ class model:
             raise ValueError("input both samples and features or data object!")
         self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
         self.myQnet.fit(samples)
-        self.samples = samples
         self.features = featurenames
 
     def save(self,

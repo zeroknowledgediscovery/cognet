@@ -47,14 +47,14 @@ class cognet:
     
     def load_from_model(self,
                         model,
-                        samples_file=None,
+                        samples,
                         im_vars=None,
                         m_vars=None):
         """load parameters from model object
 
         Args:
           model (Class): model obj for loading parameters
-          samples_file (filepath): filepath and name for sample csv
+          samples (2D array): samples formatted through dataformatter
           im_vars (list[str], optional): Not implemented yet. Defaults to None.
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
         """
@@ -71,12 +71,6 @@ class cognet:
                     self.immutable_vars = [x for x in self.features if x not in self.mutable_vars]
             else:
                 self.mutable_vars = self.features
-            if all(x is None for x in [model.samples, samples_file]):
-                raise ValueError("Please input samples if loading model after loading qnet")
-            elif model.samples is not None:
-                samples = pd.DataFrame(model.samples, columns=model.features)
-            elif samples_file is not None:
-                samples = pd.read_csv(samples_file)
                 
             self.samples = pd.concat([samples,self.features], axis=0)
             self.all_samples = self.samples
