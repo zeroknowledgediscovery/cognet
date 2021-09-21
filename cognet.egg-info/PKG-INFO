@@ -1,12 +1,12 @@
 Metadata-Version: 2.1
 Name: cognet
-Version: 0.0.119
+Version: 0.0.120
 Summary: Infering Emergent Dependency Structures In Survey Responses
 Home-page: https://github.com/zeroknowledgediscovery/cognet
 Author: zed.uchicago.edu
 Author-email: ishanu@uchicago.edu
 License: LICENSE
-Download-URL: https://github.com/zeroknowledgediscovery/cognet/archive/0.0.119.tar.gz
+Download-URL: https://github.com/zeroknowledgediscovery/cognet/archive/0.0.120.tar.gz
 Description: ===============
         Cognet
         ===============
