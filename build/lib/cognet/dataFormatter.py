@@ -18,6 +18,8 @@ class dataFormatter:
         self.nan_cols = []
         self.immutable_vars = None
         self.mutable_vars = None
+        self.test_size = None
+        self.random_state = None
         self.train_data = None
         self.test_data = None
 
@@ -74,10 +76,10 @@ class dataFormatter:
         Args:
           key (str): 'all', 'train', or 'test', corresponding to sample type
         """
-        if any(x is not None for x in [self.train_data,
+        if all(x is not None for x in [self.train_data,
                                        self.test_data,
                                        self.samples]):
-            raise ValueError("Split samples into test and train datasets first!")
+            raise ValueError("Split samples into test and train datasets or input samples first!")
         if key == 'train':
             samples = self.train_data
         elif key == 'test':
