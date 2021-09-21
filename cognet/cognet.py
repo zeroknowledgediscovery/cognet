@@ -47,20 +47,23 @@ class cognet:
     
     def load_from_model(self,
                         model,
-                        samples,
+                        data_obj,
+                        key,
                         im_vars=None,
                         m_vars=None):
         """load parameters from model object
 
         Args:
           model (Class): model obj for loading parameters
-          samples (2D array): samples formatted through dataformatter
+          data_obj (class): instance of dataformatter class
+          key (str): 'all', 'train', or 'test', corresponding to sample type
           im_vars (list[str], optional): Not implemented yet. Defaults to None.
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
         """
         if model is not None:
             self.qnet = model.myQnet
             self.cols = np.array(model.features)
+            featurenames, samples = data_obj.format_samples(key)
             self.features = pd.DataFrame(columns=self.cols)
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
@@ -71,7 +74,7 @@ class cognet:
                     self.immutable_vars = [x for x in self.features if x not in self.mutable_vars]
             else:
                 self.mutable_vars = self.features
-                
+            
             self.samples = pd.concat([samples,self.features], axis=0)
             self.all_samples = self.samples
             self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
@@ -94,7 +97,7 @@ class cognet:
           data_obj (class): instance of dataformatter class
           key (str): 'all', 'train', or 'test', corresponding to sample type
         """
-        featurenames, samples = data_obj.samples(key)
+        featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print("replacing original features/samples with dataformatter data")
         self.cols = np.array(model.features)
