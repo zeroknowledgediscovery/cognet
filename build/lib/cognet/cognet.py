@@ -947,7 +947,7 @@ class cognet:
                                "\t./{} $yr $NODES $NUM tmp_\"$yr\"\n".format(MPI_SETUP_FILE),
                                "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J ACRDALL_\"$yr\" -M 56\n",
                                "done\n",
-                               "rm tmp*\n"])
+                               "rm tmp_\"$yr\"*\n"])
         else:
             raise ValueError("load data first!")
         print("running")
