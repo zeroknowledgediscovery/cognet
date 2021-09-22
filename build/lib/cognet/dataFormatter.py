@@ -70,7 +70,8 @@ class dataFormatter:
         return features, samples
 
     def format_samples(self,
-                       key):
+                       key,
+                       train_size=.5):
         """formats samples and featurenames, either all, train, or test
         
         Args:
@@ -86,6 +87,7 @@ class dataFormatter:
                                        self.samples]):
             raise ValueError("Split samples into test and train datasets or input samples first!")
         if key == 'train':
+            self.__train_test_split(.5)
             samples = self.train_data
         elif key == 'test':
             samples = self.test_data
