@@ -71,11 +71,16 @@ class dataFormatter:
 
     def format_samples(self,
                        key):
-        """return samples, either all, train, or test
+        """formats samples and featurenames, either all, train, or test
         
         Args:
           key (str): 'all', 'train', or 'test', corresponding to sample type
+
+        Returns:
+            samples and featurenames: formatted
         """
+        
+        
         if all(x is not None for x in [self.train_data,
                                        self.test_data,
                                        self.samples]):
@@ -103,7 +108,7 @@ class dataFormatter:
           vars ([str]): Mutable and immutable vars/features. Defaults to None.
 
         Returns:
-            [type]: [description]
+          features, vars: formatted to either upper or lower case
         """
         if lower:
             features = [x.lower() for x in self.features[key]]
@@ -123,10 +128,13 @@ class dataFormatter:
         """read in vars from file and set mutable, immutable
 
         Args:
-            lower (bool): Whether to set variables to lowercase (True) or not (False)
-            IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
-            FILE (str, optional): file with vars in singular column. Defaults to None.
-            LIST ([str], optional): 1D array of vars. Defaults to None.
+          lower (bool): Whether to set variables to lowercase (True) or not (False)
+          IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
+          FILE (str, optional): file with vars in singular column. Defaults to None.
+          LIST ([str], optional): 1D array of vars. Defaults to None.
+          
+        Returns:
+          mutable vars, immutable vars: list
         """
         if IMMUTABLE:
             immutable_vars = np.array(LIST)
@@ -168,10 +176,13 @@ class dataFormatter:
         """set variables to be mutable or immutable
 
         Args:
-            immutable_list (list)): 1D array of immutable variables. Defaults to None.
-            IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
-            mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
-            MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+          immutable_list (list)): 1D array of immutable variables. Defaults to None.
+          IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
+          mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
+          MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+          
+        Returns:
+          mutable_vars, immutable_vars: list
         """
         list_None = assert_None([immutable_list,mutable_list], raise_error=False)
         file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)

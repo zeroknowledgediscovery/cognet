@@ -75,12 +75,12 @@ class model:
         """export Qnet trees
 
         Args:
-            filename (str): Desired tree savefile
-            index (list, optional): list of indices to generate trees. Defaults to [3].
-            path (str, optional): Desired tree savefile path. Defaults to ''.
-            generate_trees (bool, optional): Whether or not to generate individual trees. 
+          filename (str): Desired tree savefile
+          index (list, optional): list of indices to generate trees. Defaults to [3].
+          path (str, optional): Desired tree savefile path. Defaults to ''.
+          generate_trees (bool, optional): Whether or not to generate individual trees. 
                                              Defaults to False, or to generate individual trees.
-            threshold (float, optional): Numeric cutoff for edge weights. If the edge weights exceed 
+          threshold (float, optional): Numeric cutoff for edge weights. If the edge weights exceed 
                                          this cutoff, then we include it into the graph. Defaults to 0.2.
         """
         if not generate_trees:

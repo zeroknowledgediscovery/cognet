@@ -80,7 +80,7 @@ class cognet:
             self.samples = pd.DataFrame(samples)
             self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[featurenames].fillna('').values.astype(str)[:]
+            self.samples_as_strings = self.samples.fillna('').values.astype(str)[:]
             self.s_null=['']*len(self.samples_as_strings[0])
             self.D_null=self.qnet.predict_distributions(self.s_null)
             variation_weight = []
@@ -333,11 +333,11 @@ class cognet:
         """return the distance from a sample to the poles
 
         Args:
-            i (int): index of sample to take
-            return_dict (dict): dict used for multiple sample function
+          i (int): index of sample to take
+          return_dict (dict): dict used for multiple sample function
 
         Returns:
-            [type]: [description]
+          [float]: distance from each pole
         """
         samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
         p = samples_as_strings[i]
@@ -493,8 +493,8 @@ class cognet:
         """calculate distance between two poles
 
         Args:
-            pole_1 (list[str]): a polar vector, must have same number of features as qnet
-            pole_2 (list[str]): a polar vector, must have same number of features as qnet
+          pole_1 (list[str]): a polar vector, must have same number of features as qnet
+          pole_2 (list[str]): a polar vector, must have same number of features as qnet
         """
         self.pL = self.poles_dict[pole_1]
         self.pR = self.poles_dict[pole_2]
@@ -531,11 +531,11 @@ class cognet:
         to determine max and std of distances between qsamples
 
         Args:
-            i (int): index of sample
-            return_dict (dict): dict containing results
+          i (int): index of sample
+          return_dict (dict): dict containing results
 
         Returns:
-            list[float]: std and max of the distances btwn qsamples
+          list[float]: std and max of the distances btwn qsamples
         """
         p = self.samples_as_strings[i]
         Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
@@ -787,9 +787,6 @@ class cognet:
         Raises:
           ValueError: Neither sample or index were given
           ValueError: Both sample and index were given
-
-        Returns:
-          [type]: [description]
         """
         if all(x is None for x in [sample, index]):
             raise ValueError("Must input either sample or index!")
@@ -907,23 +904,6 @@ class cognet:
                               "\twith MPIPoolExecutor() as executor:\n",
                               "\t\tresult = executor.map(dfunc_line, range(h))\n",
                               "\t\tpd.DataFrame(result).to_csv(\'{}\',index=None,header=None)".format(OUTFILE)])
-
-            # with open(MPI_LAUNCHER_FILE, 'wx') as ml:
-            #     ml.writelines(["#!/bin/bash\n\n",
-            #                    "PROG=\"\"\n",
-            #                    "RSTR=`cat /dev/urandom | tr -dc \'a-zA-Z0-9\' | fold -w 20  | head -n 1 | cut -c 1-6`\n",
-            #                    "JOBN=IXC\"$RSTR\"\n",
-            #                    "TIME=10\n",
-            #                    "NCOR=28\n",
-            #                    "MEMR=10\n",
-            #                    "NODE=1\n",
-            #                    "EXECUTE=0\n",
-            #                    "DEPEND=""\n",
-            #                    "CDIR=`pwd`\n",
-            #                    "DRY_RUN=0\n",
-            #                    "ANYDEPEND=""\n",
-            #                    "PART='sandyb'\n"
-            #                    ])
                 
             with open(tmp_path+MPI_SETUP_FILE, 'w+') as ms:
                 ms.writelines(["#!/bin/bash\n",
