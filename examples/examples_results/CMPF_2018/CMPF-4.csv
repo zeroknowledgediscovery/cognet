@@ -1,9 +1,16 @@
 gssvar,s,q,r
-grass,not legal,not legal,legal
-reliten,strong,no religion,somewhat strong
-prayer,approve,disapprove,approve
-bible,inspired word,word of god,inspired word
-conlabor,only some,only some,a great deal
-intmil,moderately interested,moderately interested,moderately interested
-abpoorw,wrong only sometimes,wrong only sometimes,always wrong
-comfort,agree,agree,disagree
+spkcom,not allowed,not allowed,not allowed
+spkmil,not allowed,allowed,not allowed
+colmil,not allowed,not allowed,allowed
+libhomo,not remove,not remove,not remove
+grass,legal,legal,legal
+pray,several times a week,several times a day,once a week
+prayer,nan,disapprove,approve
+bible,word of god,word of god,inspired word
+abrape,yes,yes,yes
+owngun,yes,no,refused
+shotgun,yes,no,yes
+viruses,nan,True,True
+godchnge,nan,"believe now, always have","believe now, didn't used t"
+religcon,nan,agree,not agree/dsagre
+comfort,nan,agree,strongly agree

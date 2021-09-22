@@ -1,10 +1,20 @@
 gssvar,s,q,r
-spkmil,not allowed,not allowed,not allowed
-gunlaw,favor,oppose,oppose
-bible,inspired word,inspired word,inspired word
-abhlth,yes,yes,no
-abpoor,no,no,no
+libcom,not remove,not remove,remove
+libmslm,remove,remove,remove
+grass,nan,legal,legal
+reliten,no religion,not very strong,somewhat strong
+prayer,approve,disapprove,disapprove
+bible,book of fables,inspired word,other
+conlabor,nan,only some,only some
+abdefect,yes,yes,yes
+abhlth,yes,yes,yes
+abpoor,no,no,yes
+abrape,yes,yes,yes
+abany,no,no,no
+pillok,strongly agree,agree,strongly agree
+polabuse,nan,no,yes
+shotgun,no,no,no
 intmil,moderately interested,moderately interested,very interested
-religcon,agree,disagree,not agree/dsagre
-religint,agree,agree,strong disagree
-comfort,strongly agree,agree,agree
+godchnge,"don't believe now, used to","don't believe now, used to","believe now, always have"
+religint,strongly agree,strongly agree,strongly agree
+comfort,neither agree nor disagree,agree,neither agree nor disagree

@@ -65,7 +65,7 @@ class cognet:
             # self.cols = np.array(model.features)
             featurenames, samples = data_obj.format_samples(key)
             samples = pd.DataFrame(samples)
-            self.cols = featurenames
+            self.cols = np.array(featurenames)
             self.features = pd.DataFrame(columns=np.array(featurenames))
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
@@ -99,6 +99,9 @@ class cognet:
         Args:
           data_obj (class): instance of dataformatter class
           key (str): 'all', 'train', or 'test', corresponding to sample type
+          
+        Returns:
+          featurenames, samples: formatted arrays
         """
         featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
@@ -305,7 +308,7 @@ class cognet:
           nsteps2 (int, optional): number of steps to qsample for sample2
 
         Returns:
-          float: qdistance
+          qdistance: float, distance between two samples
         """
         if self.qnet is None:
             raise ValueError("load qnet first!")
@@ -323,6 +326,9 @@ class cognet:
         Args:
           x (list[str]): first sample
           y (list[str]): second sample
+          
+        Returns:
+         d: qdistance
         '''
         d=qdistance(x,y,self.qnet,self.qnet)
         return d
@@ -337,7 +343,7 @@ class cognet:
           return_dict (dict): dict used for multiple sample function
 
         Returns:
-          [float]: distance from each pole
+          distances: float, distance from sample to each pole
         """
         samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
         p = samples_as_strings[i]
@@ -355,6 +361,9 @@ class cognet:
 
         Args:
           outfile (str): desired output filename and path
+          
+        Returns:
+          return_dict: dictionary containing multiprocessing results
         """
         if all(x is not None for x in [self.samples, self.cols,
                                     self.polar_features]):
@@ -388,7 +397,7 @@ class cognet:
           i (int): row
         
         Return:
-          numpy.ndarray(float)
+          line: float, numpy.ndarray
         '''
         if all(x is not None for x in [self.samples, self.features]):
             w = self.samples.index.size
@@ -411,6 +420,9 @@ class cognet:
 
         Args:
           outfile (str): desired output filename and path
+          
+        Returns:
+          return_dict: dictionary containing multiprocessing results
         """
         if all(x is not None for x in [self.samples, self.features]):
             manager = mp.Manager()
@@ -435,10 +447,13 @@ class cognet:
     
     def polar_separation(self,
                         nsteps=0):
-        """returns the distance between poles as a qdistance matrix
+        """calculates the distance between poles as a qdistance matrix
 
         Args:
           nsteps (int, optional): [description]. Defaults to 0.
+          
+        Returns:
+          self.polar_matrix: dictionary containing multiprocessing results
         """
         polar_arraydata = self.polar_features[self.cols].fillna('').values.astype(str)[:]
         samples_ = []
@@ -512,6 +527,12 @@ class cognet:
           pole_1 (int): index of Pole One to calc as base distance. Defaults to 0.
           pole_2 (int): index of Pole Two to calc as base distance. Defaults to 1.
           return_dict (dict, optional): dict containing results
+          
+        Returns:
+          [ideology_index, dR, dL, self.d0]: which way the sample leans,
+                                             distance from the right pole,
+                                             distance from the left pole,
+                                             and distance between poles, respectively
         """
         if pole_1 is not None or pole_2 is not None:
             self.__calc_d0(pole_1, pole_2)
@@ -568,8 +589,11 @@ class cognet:
           pole_2 (int, optional): index of Pole Two to calc as base distance. Defaults to 1.
 
         Raises:
-            ValueError: set poles if poles are not set
-            ValueError: load data if samples or features are not present
+          ValueError: set poles if poles are not set
+          ValueError: load data if samples or features are not present
+            
+        Returns:
+          Result: dictionary containing multiprocessing results
         """
         if all(x is not None for x in [self.samples, self.features,
                                     self.pL, self.pR]):
@@ -648,6 +672,9 @@ class cognet:
           sample_index (int): index of the sample to compute dissonance
           return_dict (dict): dict containing results
           MISSING_VAL (float): default dissonance value
+          
+        Returns: 
+          diss: ndarray containing dissonance for sample
         '''
         if all(x is not None for x in [self.samples, self.features]):
             s = self.samples_as_strings[sample_index]
@@ -710,6 +737,10 @@ class cognet:
 
         Args:
           X (1D array-like): vector from which random element is to be chosen
+        
+        Returns:
+          X: random element of sample
+          None: if X has len 0
         '''
         X=list(X)
         if len(X)>0:
@@ -726,10 +757,19 @@ class cognet:
           s (list[str]): vector of sample, must have the same num of features as the qnet
           mask_prob (float): float btwn 0 and 1, prob to mask element of sample
           allow_all_mutable (bool): whether or not all variables are mutable
+          
+        Returns:
+          s1,base_frequency,MASKrand,
+          np.where(base_frequency)[0],
+          np.mean(rnd_match_prob),
+          np.mean(max_match_prob),
+          s_rand
         '''
-        if self.samples is not None:   
+        if self.samples is not None:
+            s0=s.copy()
+            s0=np.array(s0)   
             MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
-            WITHVAL=[x for x in self.cols[np.where(s)[0]] if x in self.mutable_vars ]
+            WITHVAL=[x for x in self.cols[np.where(s0)[0]] if x in self.mutable_vars ]
             MASKrand=[x for x in WITHVAL if random.random() < mask_prob ]
             for m in MASKrand:
                 MUTABLE[m]=1.0
@@ -821,6 +861,9 @@ class cognet:
 
         Args:
           output_file (str): directory and/or file for output
+          
+        Returmns:
+          result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error
         '''
         manager = mp.Manager()
         return_dict = manager.dict()
@@ -868,13 +911,13 @@ class cognet:
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
-            
-            tmp_path = "mpi_tmp/"
-            pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+"tmp_samples_as_strings.csv", header=None, index=None)
-            w = self.samples.index.size
-            
+                
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
+            tmp_path = "mpi_tmp/"
+            pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+"tmp_samples_as_strings.csv", header=None, index=None)
+            
+            w = self.samples.index.size
             with open(tmp_path+pyfile, 'w+') as f:
                 f.writelines(["from mpi4py.futures import MPIPoolExecutor\n",
                               "import numpy as np\n",
@@ -885,7 +928,7 @@ class cognet:
 
                 f.writelines(["w = {}\n".format(w),
                               "h = w\n",
-                              "p_all = pd.read_csv(\"tmp_samples_as_strings.csv\")\n\n"])
+                              "p_all = pd.read_csv(\"tmp_samples_as_strings.csv\", header=None)\n\n"])
 
                 f.writelines(["def distfunc(x,y):\n",
                               "\td=qdistance(x,y,qnet,qnet)\n",
@@ -950,4 +993,3 @@ class cognet:
                                "rm tmp_\"$yr\"*\n"])
         else:
             raise ValueError("load data first!")
-        print("running")

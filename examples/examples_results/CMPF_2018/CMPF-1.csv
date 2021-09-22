@@ -1,18 +1,19 @@
 gssvar,s,q,r
-spkcom,allowed,allowed,not allowed
-libcom,not remove,remove,not remove
-colmil,allowed,allowed,not allowed
-libmil,not remove,not remove,not remove
-libhomo,not remove,not remove,not remove
-libmslm,not remove,remove,not remove
-gunlaw,favor,oppose,favor
-reliten,not very strong,no religion,not very strong
-bible,inspired word,inspired word,word of god
-abdefect,yes,yes,yes
-abhlth,yes,yes,no
-pillok,strongly agree,agree,disagree
-owngun,no,no,refused
-shotgun,no,no,no
-viruses,False,False,True
-abpoorw,not wrong at all,always wrong,wrong only sometimes
-comfort,agree,strongly agree,disagree
+spkcom,nan,,not allowed
+libcom,nan,not remove,remove
+spkmil,nan,not allowed,allowed
+colmil,nan,not allowed,allowed
+libmil,nan,not remove,not remove
+prayer,disapprove,approve,approve
+bible,word of god,inspired word,inspired word
+conlabor,only some,only some,only some
+abdefect,nan,no,yes
+abhlth,nan,yes,yes
+absingle,nan,no,yes
+shotgun,nan,no,refused
+rowngun,nan,yes,yes
+viruses,True,True,True
+abpoorw,always wrong,almost always wrong,wrong only sometimes
+prayfreq,several times a week,several times a week,never
+religint,disagree,agree,strongly agree
+comfort,agree,agree,strongly agree

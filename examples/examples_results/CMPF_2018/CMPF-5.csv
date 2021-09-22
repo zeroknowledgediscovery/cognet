@@ -1,13 +1,21 @@
 gssvar,s,q,r
-spkcom,not allowed,allowed,not allowed
-colcom,not fired,not fired,fired
-spkmil,not allowed,allowed,not allowed
-colmil,not allowed,allowed,not allowed
-libmil,remove,not remove,not remove
-libmslm,remove,remove,not remove
-gunlaw,favor,favor,favor
-pray,once a week,several times a day,lt once a week
+colcom,nan,not fired,fired
+spkmil,allowed,allowed,not allowed
+colmil,nan,allowed,allowed
+libmil,not remove,not remove,not remove
+libhomo,not remove,not remove,not remove
+libmslm,not remove,not remove,remove
+grass,nan,legal,legal
+reliten,not very strong,no religion,not very strong
+bible,word of god,other,inspired word
 abdefect,yes,yes,yes
-abrape,yes,yes,no
-absingle,no,no,yes
-owngun,no,no,refused
+abnomore,yes,yes,yes
+abrape,yes,yes,yes
+abany,yes,yes,no
+pillok,nan,agree,strongly agree
+owngun,refused,yes,refused
+rowngun,refused,yes,no
+intmil,very interested,moderately interested,very interested
+godchnge,"believe now, always have","believe now, always have","believe now, always have"
+prayfreq,several times a week,several times a week,nearly every week
+comfort,strongly agree,agree,neither agree nor disagree

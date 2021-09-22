@@ -1,15 +1,14 @@
 gssvar,s,q,r
-spkcom,not allowed,not allowed,not allowed
-colcom,not fired,not fired,fired
-libcom,not remove,not remove,not remove
-spkmil,allowed,allowed,not allowed
-libmslm,remove,not remove,not remove
-gunlaw,oppose,favor,oppose
-absingle,yes,yes,yes
-abany,yes,yes,yes
-owngun,yes,yes,yes
-shotgun,yes,no,refused
-abpoorw,not wrong at all,not wrong at all,almost always wrong
-godchnge,"believe now, always have","believe now, always have","believe now, didn't used to"
-prayfreq,several times a week,several times a week,less than once a year
-comfort,strongly agree,neither agree nor disagree,disagree
+libcom,not remove,not remove,remove
+spkmil,allowed,not allowed,not allowed
+colmil,allowed,not allowed,allowed
+libhomo,not remove,not remove,not remove
+abdefect,yes,yes,yes
+polabuse,no,no,no
+rowngun,nan,no,no
+intmil,nan,moderately interested,not at all interested
+abpoorw,nan,always wrong,almost always wrong
+godchnge,nan,"don't believe now, used to","believe now, didn't used t"
+prayfreq,nan,never,never
+religint,nan,disagree,strongly agree
+comfort,nan,agree,strongly agree

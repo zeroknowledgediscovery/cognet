@@ -1,9 +1,24 @@
 gssvar,s,q,r
-spkcom,allowed,not allowed,not allowed
+colcom,not fired,not fired,fired
+spkmil,allowed,allowed,not allowed
+colmil,not allowed,allowed,allowed
 libmslm,not remove,not remove,not remove
-pray,several times a week,lt once a week,lt once a week
+gunlaw,oppose,oppose,favor
+grass,nan,legal,not legal
+reliten,not very strong,not very strong,somewhat strong
+pray,several times a week,lt once a week,several times a week
+prayer,disapprove,disapprove,disapprove
+bible,inspired word,other,inspired word
+conlabor,nan,only some,hardly any
+abnomore,no,yes,no
 abhlth,yes,yes,yes
-absingle,yes,yes,yes
-polabuse,no,no,no
-owngun,refused,refused,refused
-rowngun,refused,no,yes
+abpoor,no,no,yes
+abrape,yes,yes,no
+absingle,no,no,yes
+abany,no,no,yes
+polabuse,nan,no,no
+rowngun,yes,yes,yes
+intmil,very interested,very interested,very interested
+prayfreq,several times a week,several times a week,about once or twice a year
+religcon,agree,agree,strongly agree
+comfort,agree,agree,strongly agree
