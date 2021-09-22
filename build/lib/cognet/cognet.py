@@ -911,10 +911,11 @@ class cognet:
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
-                
+            
+            tmp_path = "mpi_tmp/"
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
-            tmp_path = "mpi_tmp/"
+            
             pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+"tmp_samples_as_strings.csv", header=None, index=None)
             
             w = self.samples.index.size
