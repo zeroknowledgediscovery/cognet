@@ -168,30 +168,37 @@ class cognet:
                             if x.upper() not in self.immutable_vars.columns]
     
     def set_nsamples(self,
-                    num_samples):
+                    num_samples=None,
+                    random=True):
         '''select a subset of the samples
 
         Args:
-          num_samples (int): Set num of samples to subset
+          num_samples (int): Set num of samples to subset, default to None, resets to all samples
+          random (bool): take random sample if true, ordered sample if false
         '''
         self.samples = self.all_samples
-        if all(x is not None for x in [num_samples, self.samples]):
-            if num_samples > len(self.samples.index):
-                string = 'The number of selected samples ({}) ' + \
-                    'is greater than the number of samples ({})!'
-                string = string.format(num_samples, len(self.samples.index))
-                raise ValueError(string)
+        if num_samples is not None:
+            if all(x is not None for x in [num_samples, self.samples]):
+                if num_samples > len(self.samples.index):
+                    string = 'The number of selected samples ({}) ' + \
+                        'is greater than the number of samples ({})!'
+                    string = string.format(num_samples, len(self.samples.index))
+                    raise ValueError(string)
 
-            if num_samples == len(self.samples.index):
-                string = 'The number of selected samples ({}) ' + \
-                    'is equal to the number of samples ({})!'
-                string = string.format(num_samples, len(self.samples.index))
-                print(string)
-            self.samples = self.samples.sample(num_samples)
-            self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
-
-        elif self.samples is None:
-            raise ValueError("load_data first!")
+                if num_samples == len(self.samples.index):
+                    string = 'The number of selected samples ({}) ' + \
+                        'is equal to the number of samples ({})!'
+                    string = string.format(num_samples, len(self.samples.index))
+                    print(string)
+                if random:
+                    self.samples = self.samples.sample(num_samples)
+                   
+                else:
+                    self.samples = self.samples.iloc[:num_samples]
+                self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+                
+            elif self.samples is None:
+                raise ValueError("load_data first!")
 
     def __variation_weight(self,
                         index):
@@ -443,7 +450,8 @@ class cognet:
             result.to_csv(outfile)
         else:
             raise ValueError("load data first!")
-        return return_dict
+        
+        return pd.DataFrame(return_dict.copy())
     
     def polar_separation(self,
                         nsteps=0):
@@ -631,7 +639,7 @@ class cognet:
             raise ValueError("set_poles first!")
         else:
             raise ValueError("load_data first!")
-        return result
+        return pd.DataFrame(return_dict.copy())
 
     def compute_polar_indices(self,
                             num_samples = None,
@@ -894,7 +902,7 @@ class cognet:
         else:
             result.to_csv(out_file)
         
-        return result.rederr.mean(), result.rand_err.mean()
+        return pd.DataFrame(return_dict.copy())
     
     def dmat_filewriter(self,
                         pyfile,
