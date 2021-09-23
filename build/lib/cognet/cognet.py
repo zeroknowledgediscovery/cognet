@@ -955,7 +955,9 @@ class cognet:
                 f.writelines(["if __name__ == '__main__':\n",
                               "\twith MPIPoolExecutor() as executor:\n",
                               "\t\tresult = executor.map(dfunc_line, range(h))\n",
-                              "\t\tpd.DataFrame(result).to_csv(\'{}\',index=None,header=None)".format(OUTFILE)])
+                              "\t\tresult = np.array(result)\n",
+                              "\t\tresult = pd.DataFrame(np.maximum(result, result.transpose()))\n"
+                              "\t\tresult.to_csv(\'{}\',index=None,header=None)".format(OUTFILE)])
                 
             with open(tmp_path+MPI_SETUP_FILE, 'w+') as ms:
                 ms.writelines(["#!/bin/bash\n",
