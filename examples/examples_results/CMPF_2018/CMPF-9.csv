@@ -1,24 +1,16 @@
 gssvar,s,q,r
-colcom,not fired,not fired,fired
-spkmil,allowed,allowed,not allowed
-colmil,not allowed,allowed,allowed
-libmslm,not remove,not remove,not remove
-gunlaw,oppose,oppose,favor
-grass,nan,legal,not legal
-reliten,not very strong,not very strong,somewhat strong
-pray,several times a week,lt once a week,several times a week
-prayer,disapprove,disapprove,disapprove
-bible,inspired word,other,inspired word
-conlabor,nan,only some,hardly any
-abnomore,no,yes,no
+colcom,fired,not fired,fired
+libcom,not remove,not remove,remove
+libmil,not remove,not remove,not remove
+gunlaw,favor,oppose,oppose
+pray,several times a day,lt once a week,once a day
+bible,inspired word,inspired word,other
+abdefect,yes,yes,yes
 abhlth,yes,yes,yes
-abpoor,no,no,yes
-abrape,yes,yes,no
-absingle,no,no,yes
-abany,no,no,yes
-polabuse,nan,no,no
-rowngun,yes,yes,yes
-intmil,very interested,very interested,very interested
-prayfreq,several times a week,several times a week,about once or twice a year
-religcon,agree,agree,strongly agree
-comfort,agree,agree,strongly agree
+abrape,yes,yes,yes
+abany,yes,yes,no
+intmil,moderately interested,moderately interested,very interested
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+religcon,not agree/dsagre,agree,not agree/dsagre
+religint,agree,not agree/dsagre,strong disagree
+comfort,strongly agree,agree,agree

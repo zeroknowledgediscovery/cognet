@@ -1,16 +1,17 @@
 gssvar,s,q,r
-spkcom,not allowed,not allowed,not allowed
-spkmil,not allowed,allowed,not allowed
-colmil,not allowed,not allowed,allowed
-libhomo,not remove,not remove,not remove
-grass,legal,legal,legal
-pray,several times a week,several times a day,once a week
-prayer,nan,disapprove,approve
-bible,word of god,word of god,inspired word
-abrape,yes,yes,yes
-owngun,yes,no,refused
-shotgun,yes,no,yes
-viruses,nan,True,True
-godchnge,nan,"believe now, always have","believe now, didn't used t"
-religcon,nan,agree,not agree/dsagre
-comfort,nan,agree,strongly agree
+colcom,not fired,not fired,fired
+libcom,not remove,not remove,remove
+spkmil,allowed,allowed,allowed
+gunlaw,oppose,favor,oppose
+reliten,strong,strong,no religion
+pray,several times a day,several times a day,once a day
+prayer,nan,approve,disapprove
+abhlth,yes,yes,yes
+abpoor,no,no,yes
+abrape,no,no,no
+absingle,no,no,yes
+abany,no,no,no
+owngun,no,no,yes
+abpoorw,nan,always wrong,always wrong
+prayfreq,nan,several times a week,about once a month
+religint,nan,not agree/dsagre,strong disagree

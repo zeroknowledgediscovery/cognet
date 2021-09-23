@@ -1,20 +1,17 @@
 gssvar,s,q,r
-colcom,not fired,not fired,fired
-colmil,allowed,allowed,not allowed
-libmil,not remove,not remove,not remove
-gunlaw,favor,oppose,favor
-grass,nan,legal,legal
-reliten,not very strong,strong,no religion
-prayer,approve,disapprove,disapprove
-bible,book of fables,inspired word,book of fables
+spkcom,not allowed,not allowed,allowed
+colcom,fired,not fired,not fired
+colmil,not allowed,not allowed,allowed
+libmslm,remove,remove,remove
+gunlaw,favor,favor,oppose
+pray,once a week,lt once a week,once a day
+prayer,nan,approve,disapprove
 abdefect,yes,yes,yes
-abnomore,yes,no,yes
-abhlth,yes,yes,yes
-absingle,no,no,yes
-abany,yes,yes,no
-pillok,strongly agree,agree,strongly agree
-polabuse,nan,no,yes
-rowngun,no,no,no
-abpoorw,wrong only sometimes,always wrong,not wrong at all
-godchnge,"believe now, always have","believe now, always have","believe now, always have"
-comfort,strongly agree,agree,strongly agree
+abnomore,no,no,yes
+absingle,no,no,no
+pillok,nan,agree,strongly disagree
+owngun,no,no,yes
+rowngun,nan,no,yes
+intmil,nan,very interested,very interested
+abpoorw,nan,always wrong,not wrong at all
+religint,nan,agree,agree

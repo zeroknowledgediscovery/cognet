@@ -1,16 +1,16 @@
 gssvar,s,q,r
-colcom,nan,fired,fired
-libcom,nan,remove,remove
+colmil,nan,not allowed,allowed
+libmil,nan,remove,remove
 libhomo,nan,not remove,not remove
-gunlaw,nan,oppose,favor
-pray,never,never,once a day
-conlabor,only some,only some,a great deal
-abdefect,nan,no,yes
-abnomore,nan,no,no
-abhlth,nan,yes,yes
-abpoor,nan,no,yes
-absingle,nan,no,yes
+libmslm,nan,remove,remove
+reliten,no religion,strong,no religion
+pray,never,several times a day,once a day
+abhlth,nan,no,yes
+abrape,nan,no,yes
 polabuse,no,no,yes
-viruses,False,True,False
-godchnge,"don't believe now, used to","believe now, always have","believe now, didn't used t"
-prayfreq,never,several times a week,never
+owngun,nan,no,yes
+viruses,nan,True,False
+godchnge,nan,"believe now, always have","don't believe now, used to"
+prayfreq,nan,several times a week,several times a year
+religcon,nan,not agree/dsagre,not agree/dsagre
+comfort,nan,strongly agree,strongly disagree

@@ -1,18 +1,16 @@
 gssvar,s,q,r
-spkcom,allowed,allowed,not allowed
-colcom,not fired,not fired,fired
-libmslm,not remove,remove,not remove
-gunlaw,favor,favor,favor
-reliten,strong,strong,strong
-pray,several times a day,once a day,once a week
+libcom,not remove,not remove,not remove
+prayer,nan,approve,disapprove
 conlabor,only some,only some,only some
 abdefect,yes,yes,yes
-abnomore,yes,yes,yes
+abhlth,yes,yes,yes
 abrape,yes,yes,yes
-abany,yes,no,yes
-pillok,nan,agree,disagree
+absingle,no,no,yes
 polabuse,no,no,yes
-intmil,nan,not at all interested,not at all interested
-abpoorw,nan,wrong only sometimes,always wrong
-religcon,nan,agree,strongly agree
-religint,nan,agree,strongly agree
+owngun,yes,no,yes
+intmil,nan,very interested,very interested
+abpoorw,nan,almost always wrong,wrong only sometimes
+prayfreq,nan,several times a year,about once a month
+religcon,nan,strongly agree,strong disagree
+religint,nan,strongly agree,agree
+comfort,nan,strongly agree,agree

@@ -1,14 +1,25 @@
 gssvar,s,q,r
-libcom,not remove,not remove,remove
-spkmil,allowed,not allowed,not allowed
-colmil,allowed,not allowed,allowed
-libhomo,not remove,not remove,not remove
-abdefect,yes,yes,yes
-polabuse,no,no,no
-rowngun,nan,no,no
-intmil,nan,moderately interested,not at all interested
-abpoorw,nan,always wrong,almost always wrong
-godchnge,nan,"don't believe now, used to","believe now, didn't used t"
-prayfreq,nan,never,never
-religint,nan,disagree,strongly agree
-comfort,nan,agree,strongly agree
+spkcom,not allowed,not allowed,allowed
+spkmil,allowed,allowed,not allowed
+colmil,not allowed,not allowed,allowed
+libhomo,remove,remove,remove
+libmslm,remove,remove,remove
+gunlaw,favor,favor,oppose
+pray,once a day,several times a day,several times a day
+prayer,disapprove,approve,disapprove
+bible,word of god,word of god,book of fables
+conlabor,nan,only some,hardly any
+abdefect,no,no,no
+abnomore,no,no,yes
+abpoor,no,no,no
+abrape,yes,no,yes
+absingle,no,no,yes
+pillok,strongly agree,disagree,strongly disagree
+owngun,no,no,refused
+shotgun,no,no,no
+viruses,True,False,False
+abpoorw,always wrong,always wrong,almost always wrong
+godchnge,"believe now, always have","believe now, always have","believe now, didn't used t"
+prayfreq,several times a week,about once a month,every week
+religcon,strong disagree,agree,not agree/dsagre
+religint,agree,agree,not agree/dsagre

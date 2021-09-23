@@ -1,18 +1,18 @@
 gssvar,s,q,r
-spkcom,allowed,allowed,not allowed
-colcom,fired,not fired,fired
+colcom,not fired,fired,fired
+libcom,not remove,not remove,remove
 spkmil,allowed,allowed,allowed
-colmil,allowed,allowed,allowed
-libmslm,not remove,remove,not remove
-prayer,nan,disapprove,approve
-bible,inspired word,book of fables,inspired word
-conlabor,only some,only some,only some
-abdefect,yes,yes,yes
-absingle,yes,yes,yes
-pillok,nan,strongly disagree,agree
-shotgun,no,no,refused
-rowngun,nan,yes,yes
-intmil,nan,not at all interested,not at all interested
-prayfreq,nan,several times a week,never
-religcon,nan,agree,strongly agree
-religint,nan,agree,strongly agree
+libmil,not remove,not remove,remove
+grass,legal,legal,not legal
+reliten,not very strong,not very strong,no religion
+prayer,nan,disapprove,disapprove
+bible,inspired word,word of god,inspired word
+abdefect,yes,no,yes
+abhlth,yes,yes,no
+abpoor,yes,yes,yes
+shotgun,no,no,yes
+rowngun,nan,no,yes
+abpoorw,nan,wrong only sometimes,always wrong
+godchnge,nan,"believe now, always have","don't believe now, used to"
+prayfreq,nan,several times a week,less than once a year
+comfort,nan,strongly agree,agree

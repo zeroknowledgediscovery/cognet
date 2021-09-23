@@ -1,19 +1,18 @@
 gssvar,s,q,r
-spkcom,nan,,not allowed
-libcom,nan,not remove,remove
-spkmil,nan,not allowed,allowed
-colmil,nan,not allowed,allowed
-libmil,nan,not remove,not remove
-prayer,disapprove,approve,approve
-bible,word of god,inspired word,inspired word
-conlabor,only some,only some,only some
-abdefect,nan,no,yes
-abhlth,nan,yes,yes
-absingle,nan,no,yes
-shotgun,nan,no,refused
-rowngun,nan,yes,yes
-viruses,True,True,True
-abpoorw,always wrong,almost always wrong,wrong only sometimes
-prayfreq,several times a week,several times a week,never
-religint,disagree,agree,strongly agree
-comfort,agree,agree,strongly agree
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,remove
+colmil,not allowed,not allowed,allowed
+libmslm,not remove,not remove,remove
+gunlaw,oppose,favor,oppose
+grass,legal,legal,not legal
+pray,once a day,lt once a week,several times a day
+conlabor,hardly any,only some,hardly any
+abnomore,yes,yes,yes
+abhlth,yes,yes,no
+pillok,nan,disagree,disagree
+owngun,no,no,yes
+rowngun,nan,no,no
+viruses,nan,False,False
+prayfreq,nan,every week,less than once a year
+religint,nan,agree,agree
+comfort,nan,agree,disagree
