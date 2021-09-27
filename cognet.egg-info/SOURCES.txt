@@ -59,10 +59,6 @@ docs/dark_templates/search.mako
 docs/dark_templates/text.mako
 examples/.gitattributes
 examples/cognet_example.ipynb
-examples/distfunc_multiples_testing.csv
-examples/test_save_cognet.py
-examples/tripole.ipynb
-examples/.ipynb_checkpoints/Untitled-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
 examples/examples_data/2018_features.csv
 examples/examples_data/GSS_descripvars_2018.csv
