@@ -99,19 +99,27 @@ class dataFormatter:
         return features, samples
 
     def format_samples(self,
-                       key):
-        &#34;&#34;&#34;return samples, either all, train, or test
+                       key,
+                       test_size=.5):
+        &#34;&#34;&#34;formats samples and featurenames, either all, train, or test
         
         Args:
           key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
+
+        Returns:
+            samples and featurenames: formatted
         &#34;&#34;&#34;
-        if all(x is not None for x in [self.train_data,
+        
+        
+        if all(x is None for x in [self.train_data,
                                        self.test_data,
                                        self.samples]):
             raise ValueError(&#34;Split samples into test and train datasets or input samples first!&#34;)
         if key == &#39;train&#39;:
+            self.__train_test_split(1-test_size)
             samples = self.train_data
         elif key == &#39;test&#39;:
+            self.__train_test_split(test_size)
             samples = self.test_data
         elif key == &#39;all&#39;:
             samples = self.samples
@@ -132,7 +140,7 @@ class dataFormatter:
           vars ([str]): Mutable and immutable vars/features. Defaults to None.
 
         Returns:
-            [type]: [description]
+          features, vars: formatted to either upper or lower case
         &#34;&#34;&#34;
         if lower:
             features = [x.lower() for x in self.features[key]]
@@ -152,18 +160,21 @@ class dataFormatter:
         &#34;&#34;&#34;read in vars from file and set mutable, immutable
 
         Args:
-            lower (bool): Whether to set variables to lowercase (True) or not (False)
-            IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
-            FILE (str, optional): file with vars in singular column. Defaults to None.
-            LIST ([str], optional): 1D array of vars. Defaults to None.
+          lower (bool): Whether to set variables to lowercase (True) or not (False)
+          IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
+          FILE (str, optional): file with vars in singular column. Defaults to None.
+          LIST ([str], optional): 1D array of vars. Defaults to None.
+          
+        Returns:
+          mutable vars, immutable vars: list
         &#34;&#34;&#34;
         if IMMUTABLE:
             immutable_vars = np.array(LIST)
             if FILE is not None:
                 immutable_vars = pd.read_csv(FILE,index_col=0).transpose()
             #assert_array_dimension(immutable_vars, 1)
-            features, immutable_vars = self.__set_varcase(immutable_vars,
-                                                          lower)
+            features, immutable_vars = self.__set_varcase(lower,
+                                                          vars=immutable_vars)
             mutable_vars = [x for x in features
                             if x not in immutable_vars]
             immutable_vars = [x for x in immutable_vars
@@ -175,8 +186,8 @@ class dataFormatter:
             if FILE is not None:
                 mutable_vars = pd.read_csv(FILE,index_col=0).transpose()
             #assert_array_dimension(mutable_vars, 1)
-            features, mutable_vars = self.__set_varcase(mutable_vars,
-                                                        lower)
+            features, mutable_vars = self.__set_varcase(lower,
+                                                        vars=mutable_vars)
             immutable_vars = [x for x in features
                               if x not in mutable_vars]
             mutable_vars = [x for x in mutable_vars
@@ -197,10 +208,13 @@ class dataFormatter:
         &#34;&#34;&#34;set variables to be mutable or immutable
 
         Args:
-            immutable_list (list)): 1D array of immutable variables. Defaults to None.
-            IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
-            mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
-            MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+          immutable_list (list)): 1D array of immutable variables. Defaults to None.
+          IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
+          mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
+          MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+          
+        Returns:
+          mutable_vars, immutable_vars: list
         &#34;&#34;&#34;
         list_None = assert_None([immutable_list,mutable_list], raise_error=False)
         file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
@@ -214,21 +228,21 @@ class dataFormatter:
             raise ValueError(&#34;Too many inputs! Only one argument needed&#34;)
         else:
             if IMMUTABLE_FILE is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=True,
-                                                                             FILE=IMMUTABLE_FILE,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=True,
+                                                                    FILE=IMMUTABLE_FILE)
             elif MUTABLE_FILE is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
-                                                                             FILE=MUTABLE_FILE,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=False,
+                                                                    FILE=MUTABLE_FILE)
             elif immutable_list is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=True,
-                                                                             LIST=immutable_list,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=True,
+                                                                    LIST=immutable_list)
             elif mutable_list is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
-                                                                             LIST=mutable_list,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=False,
+                                                                    LIST=mutable_list)
         self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
         return mutable_vars, immutable_vars            </code></pre>
 </details>
@@ -326,19 +340,27 @@ class dataFormatter:
         return features, samples
 
     def format_samples(self,
-                       key):
-        &#34;&#34;&#34;return samples, either all, train, or test
+                       key,
+                       test_size=.5):
+        &#34;&#34;&#34;formats samples and featurenames, either all, train, or test
         
         Args:
           key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
+
+        Returns:
+            samples and featurenames: formatted
         &#34;&#34;&#34;
-        if all(x is not None for x in [self.train_data,
+        
+        
+        if all(x is None for x in [self.train_data,
                                        self.test_data,
                                        self.samples]):
             raise ValueError(&#34;Split samples into test and train datasets or input samples first!&#34;)
         if key == &#39;train&#39;:
+            self.__train_test_split(1-test_size)
             samples = self.train_data
         elif key == &#39;test&#39;:
+            self.__train_test_split(test_size)
             samples = self.test_data
         elif key == &#39;all&#39;:
             samples = self.samples
@@ -359,7 +381,7 @@ class dataFormatter:
           vars ([str]): Mutable and immutable vars/features. Defaults to None.
 
         Returns:
-            [type]: [description]
+          features, vars: formatted to either upper or lower case
         &#34;&#34;&#34;
         if lower:
             features = [x.lower() for x in self.features[key]]
@@ -379,18 +401,21 @@ class dataFormatter:
         &#34;&#34;&#34;read in vars from file and set mutable, immutable
 
         Args:
-            lower (bool): Whether to set variables to lowercase (True) or not (False)
-            IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
-            FILE (str, optional): file with vars in singular column. Defaults to None.
-            LIST ([str], optional): 1D array of vars. Defaults to None.
+          lower (bool): Whether to set variables to lowercase (True) or not (False)
+          IMMUTABLE (book): IMMUTABLE if True, MUTABLE otherwise
+          FILE (str, optional): file with vars in singular column. Defaults to None.
+          LIST ([str], optional): 1D array of vars. Defaults to None.
+          
+        Returns:
+          mutable vars, immutable vars: list
         &#34;&#34;&#34;
         if IMMUTABLE:
             immutable_vars = np.array(LIST)
             if FILE is not None:
                 immutable_vars = pd.read_csv(FILE,index_col=0).transpose()
             #assert_array_dimension(immutable_vars, 1)
-            features, immutable_vars = self.__set_varcase(immutable_vars,
-                                                          lower)
+            features, immutable_vars = self.__set_varcase(lower,
+                                                          vars=immutable_vars)
             mutable_vars = [x for x in features
                             if x not in immutable_vars]
             immutable_vars = [x for x in immutable_vars
@@ -402,8 +427,8 @@ class dataFormatter:
             if FILE is not None:
                 mutable_vars = pd.read_csv(FILE,index_col=0).transpose()
             #assert_array_dimension(mutable_vars, 1)
-            features, mutable_vars = self.__set_varcase(mutable_vars,
-                                                        lower)
+            features, mutable_vars = self.__set_varcase(lower,
+                                                        vars=mutable_vars)
             immutable_vars = [x for x in features
                               if x not in mutable_vars]
             mutable_vars = [x for x in mutable_vars
@@ -424,10 +449,13 @@ class dataFormatter:
         &#34;&#34;&#34;set variables to be mutable or immutable
 
         Args:
-            immutable_list (list)): 1D array of immutable variables. Defaults to None.
-            IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
-            mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
-            MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+          immutable_list (list)): 1D array of immutable variables. Defaults to None.
+          IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
+          mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
+          MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+          
+        Returns:
+          mutable_vars, immutable_vars: list
         &#34;&#34;&#34;
         list_None = assert_None([immutable_list,mutable_list], raise_error=False)
         file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
@@ -441,54 +469,67 @@ class dataFormatter:
             raise ValueError(&#34;Too many inputs! Only one argument needed&#34;)
         else:
             if IMMUTABLE_FILE is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=True,
-                                                                             FILE=IMMUTABLE_FILE,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=True,
+                                                                    FILE=IMMUTABLE_FILE)
             elif MUTABLE_FILE is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
-                                                                             FILE=MUTABLE_FILE,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=False,
+                                                                    FILE=MUTABLE_FILE)
             elif immutable_list is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=True,
-                                                                             LIST=immutable_list,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=True,
+                                                                    LIST=immutable_list)
             elif mutable_list is not None:
-                mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
-                                                                             LIST=mutable_list,
-                                                                             lower=lower)
+                mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                    IMMUTABLE=False,
+                                                                    LIST=mutable_list)
         self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
         return mutable_vars, immutable_vars            </code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="cognet.dataFormatter.dataFormatter.format_samples"><code class="name flex">
-<span>def <span class="ident">format_samples</span></span>(<span>self, key)</span>
+<span>def <span class="ident">format_samples</span></span>(<span>self, key, test_size=0.5)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>return samples, either all, train, or test</p>
+<div class="desc"><p>formats samples and featurenames, either all, train, or test</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>key</code></strong> :&ensp;<code>str</code></dt>
 <dd>'all', 'train', or 'test', corresponding to sample type</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>samples and featurenames</code></dt>
+<dd>formatted</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def format_samples(self,
-                   key):
-    &#34;&#34;&#34;return samples, either all, train, or test
+                   key,
+                   test_size=.5):
+    &#34;&#34;&#34;formats samples and featurenames, either all, train, or test
     
     Args:
       key (str): &#39;all&#39;, &#39;train&#39;, or &#39;test&#39;, corresponding to sample type
+
+    Returns:
+        samples and featurenames: formatted
     &#34;&#34;&#34;
-    if all(x is not None for x in [self.train_data,
+    
+    
+    if all(x is None for x in [self.train_data,
                                    self.test_data,
                                    self.samples]):
         raise ValueError(&#34;Split samples into test and train datasets or input samples first!&#34;)
     if key == &#39;train&#39;:
+        self.__train_test_split(1-test_size)
         samples = self.train_data
     elif key == &#39;test&#39;:
+        self.__train_test_split(test_size)
         samples = self.test_data
     elif key == &#39;all&#39;:
         samples = self.samples
@@ -512,6 +553,11 @@ class dataFormatter:
 <dd>1D array of immutable variables. Defaults to None.</dd>
 <dt><strong><code>MUTABLE_FILE</code></strong> :&ensp;<code>str</code>, optional</dt>
 <dd>file with mutable vars in singular column. Defaults to None.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>mutable_vars, immutable_vars</code></dt>
+<dd>list</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -526,10 +572,13 @@ class dataFormatter:
     &#34;&#34;&#34;set variables to be mutable or immutable
 
     Args:
-        immutable_list (list)): 1D array of immutable variables. Defaults to None.
-        IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
-        mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
-        MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+      immutable_list (list)): 1D array of immutable variables. Defaults to None.
+      IMMUTABLE_FILE (str, optional): file with immutable vars in singular column. Defaults to None.
+      mutable_list (list, optional): 1D array of immutable variables. Defaults to None.
+      MUTABLE_FILE (str, optional): file with mutable vars in singular column. Defaults to None.
+      
+    Returns:
+      mutable_vars, immutable_vars: list
     &#34;&#34;&#34;
     list_None = assert_None([immutable_list,mutable_list], raise_error=False)
     file_None = assert_None([IMMUTABLE_FILE,MUTABLE_FILE], raise_error=False)
@@ -543,21 +592,21 @@ class dataFormatter:
         raise ValueError(&#34;Too many inputs! Only one argument needed&#34;)
     else:
         if IMMUTABLE_FILE is not None:
-            mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=True,
-                                                                         FILE=IMMUTABLE_FILE,
-                                                                         lower=lower)
+            mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                IMMUTABLE=True,
+                                                                FILE=IMMUTABLE_FILE)
         elif MUTABLE_FILE is not None:
-            mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
-                                                                         FILE=MUTABLE_FILE,
-                                                                         lower=lower)
+            mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                IMMUTABLE=False,
+                                                                FILE=MUTABLE_FILE)
         elif immutable_list is not None:
-            mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=True,
-                                                                         LIST=immutable_list,
-                                                                         lower=lower)
+            mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                IMMUTABLE=True,
+                                                                LIST=immutable_list)
         elif mutable_list is not None:
-            mutable_vars, immutable_vars = self.__interpretvars_fromfile(IMMUTABLE=False,
-                                                                         LIST=mutable_list,
-                                                                         lower=lower)
+            mutable_vars, immutable_vars = self.__interpretvars(lower,
+                                                                IMMUTABLE=False,
+                                                                LIST=mutable_list)
     self.mutable_vars, self.immutable_vars = mutable_vars, immutable_vars
     return mutable_vars, immutable_vars            </code></pre>
 </details>
