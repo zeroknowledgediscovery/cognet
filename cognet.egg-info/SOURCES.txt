@@ -58,6 +58,7 @@ docs/dark_templates/pdf.mako
 docs/dark_templates/search.mako
 docs/dark_templates/text.mako
 examples/.gitattributes
+examples/README.md
 examples/cognet_example.ipynb
 examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
