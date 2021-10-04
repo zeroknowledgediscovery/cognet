@@ -914,7 +914,8 @@ class cognet:
                         NODES=4,
                         T=12,
                         num_samples=None,
-                        OUTFILE='tmp_distmatrix.csv'):
+                        OUTFILE='tmp_distmatrix.csv',
+                        tmp_samplesfile="tmp_samples_as_strings.csv"):
         if all(x is not None for x in [self.poles_dict,self.features,
                                        self.qnet, self.cols]):
             if num_samples is not None:
@@ -924,7 +925,7 @@ class cognet:
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
             
-            pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+"tmp_samples_as_strings.csv", header=None, index=None)
+            pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+tmp_samplesfile, header=None, index=None)
             
             w = self.samples.index.size
             with open(tmp_path+pyfile, 'w+') as f:
