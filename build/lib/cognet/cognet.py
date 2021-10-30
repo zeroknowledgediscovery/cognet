@@ -252,11 +252,13 @@ class cognet:
             raise ValueError("load_data first!")
 
     def set_poles(self,
-                POLEFILE,
-                pole_1,
-                pole_2,
-                steps=0,
-                mutable=False):
+                  POLEFILE,
+                  pole_1,
+                  pole_2,
+                  steps=0,
+                  mutable=False,
+                  VERBOSE=False
+                  ):
         '''set the poles and samples such that the samples contain features in poles
 
         Args:
@@ -265,6 +267,7 @@ class cognet:
           mutable (boolean): Whether or not to set poles as the only mutable_vars
           pole_1 (str): column name for first pole to use
           pole_2 (str): column name for second pole to use
+          VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
         '''
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
@@ -298,8 +301,9 @@ class cognet:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
         elif self.samples is None:
             raise ValueError("load_data first!")
-        
-        print("{} pole features not found in sample features".format(invalid_count))
+
+        if VERBOSE:
+            print("{} pole features not found in sample features".format(invalid_count))
 
     def distance(self,
                 sample1,

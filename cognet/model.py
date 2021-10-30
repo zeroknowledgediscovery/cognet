@@ -52,18 +52,23 @@ class model:
         save_qnet(self.myQnet, file_path)
     
     def load(self,
-             file_path):
+             file_path,
+             VERBOSE=False):
         """load Qnet from file
 
         Args:
           file_path (str): path to Qnet savefile
+          VERBOSE (bool): boolean to turn on verbose
 
         Returns:
           [Qnet]: Qnet object
         """
-        print("updating")
+        if VERBOSE:
+            print("loading..")
         self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
+        if VERBOSE:
+            print("done")
         return self.myQnet
 
     def export_dot(self,

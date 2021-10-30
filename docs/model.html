@@ -81,18 +81,23 @@ class model:
         save_qnet(self.myQnet, file_path)
     
     def load(self,
-             file_path):
+             file_path,
+             VERBOSE=False):
         &#34;&#34;&#34;load Qnet from file
 
         Args:
           file_path (str): path to Qnet savefile
+          VERBOSE (bool): boolean to turn on verbose
 
         Returns:
           [Qnet]: Qnet object
         &#34;&#34;&#34;
-        print(&#34;updating&#34;)
+        if VERBOSE:
+            print(&#34;loading..&#34;)
         self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
+        if VERBOSE:
+            print(&#34;done&#34;)
         return self.myQnet
 
     def export_dot(self,
@@ -191,18 +196,23 @@ class model:
         save_qnet(self.myQnet, file_path)
     
     def load(self,
-             file_path):
+             file_path,
+             VERBOSE=False):
         &#34;&#34;&#34;load Qnet from file
 
         Args:
           file_path (str): path to Qnet savefile
+          VERBOSE (bool): boolean to turn on verbose
 
         Returns:
           [Qnet]: Qnet object
         &#34;&#34;&#34;
-        print(&#34;updating&#34;)
+        if VERBOSE:
+            print(&#34;loading..&#34;)
         self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
+        if VERBOSE:
+            print(&#34;done&#34;)
         return self.myQnet
 
     def export_dot(self,
@@ -329,7 +339,7 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 </details>
 </dd>
 <dt id="cognet.model.model.load"><code class="name flex">
-<span>def <span class="ident">load</span></span>(<span>self, file_path)</span>
+<span>def <span class="ident">load</span></span>(<span>self, file_path, VERBOSE=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>load Qnet from file</p>
@@ -337,6 +347,8 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 <dl>
 <dt><strong><code>file_path</code></strong> :&ensp;<code>str</code></dt>
 <dd>path to Qnet savefile</dd>
+<dt><strong><code>VERBOSE</code></strong> :&ensp;<code>bool</code></dt>
+<dd>boolean to turn on verbose</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -348,18 +360,23 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def load(self,
-         file_path):
+         file_path,
+         VERBOSE=False):
     &#34;&#34;&#34;load Qnet from file
 
     Args:
       file_path (str): path to Qnet savefile
+      VERBOSE (bool): boolean to turn on verbose
 
     Returns:
       [Qnet]: Qnet object
     &#34;&#34;&#34;
-    print(&#34;updating&#34;)
+    if VERBOSE:
+        print(&#34;loading..&#34;)
     self.myQnet = load_qnet(file_path)
     self.features = self.myQnet.feature_names
+    if VERBOSE:
+        print(&#34;done&#34;)
     return self.myQnet</code></pre>
 </details>
 </dd>
