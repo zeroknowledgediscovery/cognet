@@ -31,7 +31,7 @@ class model:
         if num_None == 0:
             raise ValueError("input either samples and features or data object, not both!")
         elif data_obj is not None:
-            featurenames, samples=data_obj.train() # returns the training data
+            featurenames, samples=data_obj.samples() # returns the training data
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None > 1:
             raise ValueError("input both samples and features or data object!")
