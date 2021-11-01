@@ -291,7 +291,7 @@ class cognet:
             for x in self.poles.columns:
                 if x not in self.samples.columns:
                     invalid_count += 1
-                    self.samples[x]=np.nan
+                    self.samples[x]=''
 
             self.samples = pd.concat([self.samples,self.features], axis=0)
             self.all_samples = self.samples
