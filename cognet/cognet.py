@@ -506,7 +506,7 @@ class cognet:
             EFILE = out_dir + PREF + '_E_' +yr
             DFILE = out_dir + PREF + '_D_' +yr
 
-            pd.read_csv(FILE, index_col=0).to_csv(DATAFILE,sep=' ',header=None,index=None)
+            pd.read_csv(FILE, header=None,index_col=0).to_csv(DATAFILE,sep=' ',header=None,index=None)
             STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+' -D '+DFILE
             subprocess.call(STR,shell=True)
             if pca_model:
