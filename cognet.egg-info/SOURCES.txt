@@ -69,20 +69,30 @@ examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
 examples/.ipynb_checkpoints/Yearly_polarseparation-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
 examples/examples_data/2018_features.csv
+examples/examples_data/2021 XSEC R1 Methodological Primer.pdf
 examples/examples_data/2021_sas.zip
+examples/examples_data/GSS 2021 Codebook R1.pdf
 examples/examples_data/GSS_descripvars_2018.csv
+examples/examples_data/ReadMe.txt
 examples/examples_data/codebook_vars.txt
 examples/examples_data/features_by_year_GSS.csv
+examples/examples_data/gss2021.sas7bdat
 examples/examples_data/gss_2018.csv
 examples/examples_data/gss_2018.joblib
 examples/examples_data/immutable.csv
 examples/examples_data/polar_vectors.csv
+examples/examples_data/polar_vectors_2021.csv
+examples/examples_data/polar_vectors_2021.csv~
 examples/examples_data/quad_polar_vectors.csv
 examples/examples_results/CMPF_tmp.csv
 examples/examples_results/DISSONANCE_matrix.csv
+examples/examples_results/No_class_allsamples_2018.csv
+examples/examples_results/No_class_dispersion_2018.csv
+examples/examples_results/No_class_ideology_2018.csv
 examples/examples_results/data_2018
 examples/examples_results/dispersion_test.csv
 examples/examples_results/ideology.csv
+examples/examples_results/no_class_featurenames_and_vectors.csv
 examples/examples_results/polarDistance_multiple_test.csv
 examples/examples_results/randomMaskRecon_test.csv
 examples/examples_results/randomMaskRecon_test1.csv

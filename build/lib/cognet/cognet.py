@@ -470,8 +470,8 @@ class cognet:
         polar_arraydata = self.polar_features[self.cols].fillna('').values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
-            bp = self.getBaseFrequency(vector)
-            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
+            #bp = self.getBaseFrequency(vector)
+            sample = qsampling(vector, nsteps)#, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
