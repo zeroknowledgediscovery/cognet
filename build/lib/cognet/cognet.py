@@ -471,7 +471,7 @@ class cognet:
         samples_ = []
         for vector in polar_arraydata:
             #bp = self.getBaseFrequency(vector)
-            sample = qsampling(vector, nsteps)#, baseline_prob=bp)
+            sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
