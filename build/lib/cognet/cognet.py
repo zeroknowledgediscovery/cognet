@@ -295,7 +295,7 @@ class cognet:
 
             self.samples = pd.concat([self.samples,self.features], axis=0)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+            self.samples_as_strings = self.samples[self.cols].replace('nan',np.nan).fillna('').values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -506,7 +506,7 @@ class cognet:
             EFILE = out_dir + PREF + '_E_' +yr
             DFILE = out_dir + PREF + '_D_' +yr
 
-            pd.read_csv(FILE, header=None,index_col=0).to_csv(DATAFILE,sep=' ',header=None,index=None)
+            pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=' ',header=None,index=None)
             STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+' -D '+DFILE
             subprocess.call(STR,shell=True)
             if pca_model:

@@ -69,6 +69,7 @@ examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
 examples/.ipynb_checkpoints/Yearly_polarseparation-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
 examples/examples_data/2018_features.csv
+examples/examples_data/2021_sas.zip
 examples/examples_data/GSS_descripvars_2018.csv
 examples/examples_data/codebook_vars.txt
 examples/examples_data/features_by_year_GSS.csv
