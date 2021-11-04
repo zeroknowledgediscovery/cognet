@@ -60,7 +60,7 @@ class model:
         if num_None == 0:
             raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
         elif data_obj is not None:
-            featurenames, samples=data_obj.train() # returns the training data
+            featurenames, samples=data_obj.samples() # returns the training data
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None &gt; 1:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
@@ -175,7 +175,7 @@ class model:
         if num_None == 0:
             raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
         elif data_obj is not None:
-            featurenames, samples=data_obj.train() # returns the training data
+            featurenames, samples=data_obj.samples() # returns the training data
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None &gt; 1:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
@@ -329,7 +329,7 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
     if num_None == 0:
         raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
     elif data_obj is not None:
-        featurenames, samples=data_obj.train() # returns the training data
+        featurenames, samples=data_obj.samples() # returns the training data
         self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
     elif num_None &gt; 1:
         raise ValueError(&#34;input both samples and features or data object!&#34;)
