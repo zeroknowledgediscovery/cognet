@@ -273,7 +273,7 @@ class cognet:
         if all(x is not None for x in [self.samples, self.qnet]):
             poles = pd.read_csv(POLEFILE, index_col=0)
             self.poles=poles.transpose()
-            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            self.polar_features = pd.concat([self.poles, self.features], axis=0).fillna('')
             poles_dict = {}
             for column in poles:
                 p_ = self.polar_features.loc[column][self.cols].fillna('').values.astype(str)[:]

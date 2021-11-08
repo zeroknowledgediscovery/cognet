@@ -30,4 +30,9 @@ def embed_to_pca(EFILE, OUTFILE):
     ef=pca.fit_transform(xf)
     pd.DataFrame(ef).to_csv(OUTFILE,header=None,index=None)
     return ef
-        
+
+def replace_nan(df):
+    """replace nans in a df and fill with empty string
+    """
+    df = df.replace('nan',np.nan).fillna('')
+    return df
