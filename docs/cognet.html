@@ -118,6 +118,7 @@ class cognet:
                 for val in d.values():
                     v=np.append(v,val)
                 variation_weight.append(entropy(v,base=len(v)))
+            variation_weight = np.nan_to_num(variation_weight) # remove nans
             self.variation_weight = variation_weight
     
     def load_from_dataformatter(self, 
@@ -320,11 +321,11 @@ class cognet:
             for x in self.poles.columns:
                 if x not in self.samples.columns:
                     invalid_count += 1
-                    self.samples[x]=np.nan
+                    self.samples[x]=&#39;&#39;
 
             self.samples = pd.concat([self.samples,self.features], axis=0)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            self.samples_as_strings = self.samples[self.cols].replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;).values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -499,8 +500,8 @@ class cognet:
         polar_arraydata = self.polar_features[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
-            bp = self.getBaseFrequency(vector)
-            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
+            #bp = self.getBaseFrequency(vector)
+            sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -535,7 +536,7 @@ class cognet:
             EFILE = out_dir + PREF + &#39;_E_&#39; +yr
             DFILE = out_dir + PREF + &#39;_D_&#39; +yr
 
-            pd.read_csv(FILE, index_col=0).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
+            pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
             STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
             subprocess.call(STR,shell=True)
             if pca_model:
@@ -1136,6 +1137,7 @@ class cognet:
                 for val in d.values():
                     v=np.append(v,val)
                 variation_weight.append(entropy(v,base=len(v)))
+            variation_weight = np.nan_to_num(variation_weight) # remove nans
             self.variation_weight = variation_weight
     
     def load_from_dataformatter(self, 
@@ -1338,11 +1340,11 @@ class cognet:
             for x in self.poles.columns:
                 if x not in self.samples.columns:
                     invalid_count += 1
-                    self.samples[x]=np.nan
+                    self.samples[x]=&#39;&#39;
 
             self.samples = pd.concat([self.samples,self.features], axis=0)
             self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            self.samples_as_strings = self.samples[self.cols].replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;).values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -1517,8 +1519,8 @@ class cognet:
         polar_arraydata = self.polar_features[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
-            bp = self.getBaseFrequency(vector)
-            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
+            #bp = self.getBaseFrequency(vector)
+            sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -1553,7 +1555,7 @@ class cognet:
             EFILE = out_dir + PREF + &#39;_E_&#39; +yr
             DFILE = out_dir + PREF + &#39;_D_&#39; +yr
 
-            pd.read_csv(FILE, index_col=0).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
+            pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
             STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
             subprocess.call(STR,shell=True)
             if pca_model:
@@ -2678,7 +2680,7 @@ diss: ndarray containing dissonance for sample</p></div>
         EFILE = out_dir + PREF + &#39;_E_&#39; +yr
         DFILE = out_dir + PREF + &#39;_D_&#39; +yr
 
-        pd.read_csv(FILE, index_col=0).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
+        pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
         STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
         subprocess.call(STR,shell=True)
         if pca_model:
@@ -3044,6 +3046,7 @@ and distance between poles, respectively</dd>
             for val in d.values():
                 v=np.append(v,val)
             variation_weight.append(entropy(v,base=len(v)))
+        variation_weight = np.nan_to_num(variation_weight) # remove nans
         self.variation_weight = variation_weight</code></pre>
 </details>
 </dd>
@@ -3176,8 +3179,8 @@ and distance between poles, respectively</dd>
     polar_arraydata = self.polar_features[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
     samples_ = []
     for vector in polar_arraydata:
-        bp = self.getBaseFrequency(vector)
-        sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
+        #bp = self.getBaseFrequency(vector)
+        sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
         samples_.append(sample)
     samples_ = np.array(samples_)
     self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -3495,11 +3498,11 @@ can prob combine this with the load_data func: only set the immutable vars if ne
         for x in self.poles.columns:
             if x not in self.samples.columns:
                 invalid_count += 1
-                self.samples[x]=np.nan
+                self.samples[x]=&#39;&#39;
 
         self.samples = pd.concat([self.samples,self.features], axis=0)
         self.all_samples = self.samples
-        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        self.samples_as_strings = self.samples[self.cols].replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;).values.astype(str)[:]
         
         if mutable:
             self.mutable_vars=[x for x in self.cols if x in self.poles.columns]

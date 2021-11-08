@@ -89,6 +89,7 @@ class cognet:
                 for val in d.values():
                     v=np.append(v,val)
                 variation_weight.append(entropy(v,base=len(v)))
+            variation_weight = np.nan_to_num(variation_weight) # remove nans
             self.variation_weight = variation_weight
     
     def load_from_dataformatter(self, 
