@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from cognet.util import assert_None, assert_array_dimension
 class dataFormatter:
-    """Aggregate related Qnet functions
+    """format data to be suitable for Qnet training and testing
     """
 
     def __init__(self,
@@ -41,8 +41,8 @@ class dataFormatter:
                                                            train_size=train_size,
                                                            random_state=random_state)
     
-    def __Qnet_formatter(self,
-                         samples,
+    def Qnet_formatter(self,
+                         samples=None,
                          key=None):
         """format data for Qnet input
 
@@ -55,6 +55,8 @@ class dataFormatter:
         """
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError('Samples must be in numpy array form!')
+        if samples is None:
+            samples = self.samples
         features = np.array(samples.columns.astype(str)[:])
         samples = samples.values.astype(str)[:]
         # remove columns that are all NaNs
@@ -97,7 +99,7 @@ class dataFormatter:
         else:
             raise ValueError("Invalid key, key must be either 'all', 'test', or 'train")
         
-        return self.__Qnet_formatter(samples, key=key)
+        return self.Qnet_formatter(samples, key=key)
     
     def __set_varcase(self,
                       lower,
