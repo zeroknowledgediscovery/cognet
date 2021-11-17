@@ -73,6 +73,8 @@ class cognet:
         self.mask_prob = 0.5
         self.variation_weight = None
         self.polar_matrix = None
+        self.nsamples = None
+        self.restricted = False
     
     def load_from_model(self,
                         model,
@@ -106,7 +108,7 @@ class cognet:
             else:
                 self.mutable_vars = self.features
             
-            self.samples = pd.DataFrame(samples)
+            self.samples = pd.DataFrame(samples).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#34;&#34;)
             self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
             self.samples_as_strings = self.samples.fillna(&#39;&#39;).values.astype(str)[:]
@@ -198,8 +200,8 @@ class cognet:
                             if x.upper() not in self.immutable_vars.columns]
     
     def set_nsamples(self,
-                    num_samples=None,
-                    random=True):
+                    num_samples,
+                    random=False):
         &#39;&#39;&#39;select a subset of the samples
 
         Args:
@@ -222,9 +224,9 @@ class cognet:
                     print(string)
                 if random:
                     self.samples = self.samples.sample(num_samples)
-                   
                 else:
                     self.samples = self.samples.iloc[:num_samples]
+                self.nsamples = num_samples
                 self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
                 
             elif self.samples is None:
@@ -287,23 +289,27 @@ class cognet:
                   pole_2,
                   steps=0,
                   mutable=False,
-                  VERBOSE=False
-                  ):
+                  VERBOSE=False,
+                  restrict=True,
+                  nsamples = False,
+                  random=False):
         &#39;&#39;&#39;set the poles and samples such that the samples contain features in poles
 
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
-          mutable (boolean): Whether or not to set poles as the only mutable_vars
           pole_1 (str): column name for first pole to use
           pole_2 (str): column name for second pole to use
+          mutable (bool): Whether or not to set poles as the only mutable_vars
           VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
+          restrict (bool): boolean flag restricts the sample features to polar features if True
+          random (bool): boolean flag takes random sample of all_samples
         &#39;&#39;&#39;
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
             poles = pd.read_csv(POLEFILE, index_col=0)
             self.poles=poles.transpose()
-            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna(&#39;&#39;)
             poles_dict = {}
             for column in poles:
                 p_ = self.polar_features.loc[column][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
@@ -315,17 +321,27 @@ class cognet:
             # self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
-            cols = [x for x in self.poles.columns if x in self.samples.columns]
-            self.samples=self.samples[cols]
-        
+            if restrict:
+                # restrict sample columns to polar columns
+                cols = [x for x in self.poles.columns if x in self.samples.columns]
+                self.samples=self.samples[cols]
+                self.restricted = True
+                
+            elif self.restricted:
+                # if poles had been restricted before, unrestrict it
+                self.restricted = False
+                self.samples = self.all_samples
+                if self.nsamples is not None:
+                    self.set_nsamples(nsamples, random)
+
             for x in self.poles.columns:
                 if x not in self.samples.columns:
                     invalid_count += 1
                     self.samples[x]=&#39;&#39;
 
-            self.samples = pd.concat([self.samples,self.features], axis=0)
-            self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;).values.astype(str)[:]
+            self.samples = pd.concat([self.features,self.samples], axis=0).fillna(&#39;&#39;)
+            #self.all_samples = self.samples
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -497,11 +513,11 @@ class cognet:
         Returns:
           self.polar_matrix: dictionary containing multiprocessing results
         &#34;&#34;&#34;
-        polar_arraydata = self.polar_features[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
-            #bp = self.getBaseFrequency(vector)
-            sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
+            bp = self.getBaseFrequency(vector)
+            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -696,7 +712,7 @@ class cognet:
             if polar_comp:
                 self.set_poles(self.qnet, steps, POLEFILE)
             
-            polar_features = pd.concat([self.poles, self.features], axis=0)
+            polar_features = pd.concat([self.features, self.poles], axis=0)
             self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
         
         elif self.poles is None:
@@ -764,7 +780,7 @@ class cognet:
 
         result=[x for x in return_dict.values()]
         if self.polar_indices is not None:
-            polar_features = pd.concat([self.poles, self.features], axis=0)
+            polar_features = pd.concat([self.features, self.poles], axis=0)
             cols = polar_features[self.cols].dropna(axis=1).columns
         else:
             cols = self.cols
@@ -1092,6 +1108,8 @@ class cognet:
         self.mask_prob = 0.5
         self.variation_weight = None
         self.polar_matrix = None
+        self.nsamples = None
+        self.restricted = False
     
     def load_from_model(self,
                         model,
@@ -1125,7 +1143,7 @@ class cognet:
             else:
                 self.mutable_vars = self.features
             
-            self.samples = pd.DataFrame(samples)
+            self.samples = pd.DataFrame(samples).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#34;&#34;)
             self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
             self.samples_as_strings = self.samples.fillna(&#39;&#39;).values.astype(str)[:]
@@ -1217,8 +1235,8 @@ class cognet:
                             if x.upper() not in self.immutable_vars.columns]
     
     def set_nsamples(self,
-                    num_samples=None,
-                    random=True):
+                    num_samples,
+                    random=False):
         &#39;&#39;&#39;select a subset of the samples
 
         Args:
@@ -1241,9 +1259,9 @@ class cognet:
                     print(string)
                 if random:
                     self.samples = self.samples.sample(num_samples)
-                   
                 else:
                     self.samples = self.samples.iloc[:num_samples]
+                self.nsamples = num_samples
                 self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
                 
             elif self.samples is None:
@@ -1306,23 +1324,27 @@ class cognet:
                   pole_2,
                   steps=0,
                   mutable=False,
-                  VERBOSE=False
-                  ):
+                  VERBOSE=False,
+                  restrict=True,
+                  nsamples = False,
+                  random=False):
         &#39;&#39;&#39;set the poles and samples such that the samples contain features in poles
 
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
-          mutable (boolean): Whether or not to set poles as the only mutable_vars
           pole_1 (str): column name for first pole to use
           pole_2 (str): column name for second pole to use
+          mutable (bool): Whether or not to set poles as the only mutable_vars
           VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
+          restrict (bool): boolean flag restricts the sample features to polar features if True
+          random (bool): boolean flag takes random sample of all_samples
         &#39;&#39;&#39;
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
             poles = pd.read_csv(POLEFILE, index_col=0)
             self.poles=poles.transpose()
-            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna(&#39;&#39;)
             poles_dict = {}
             for column in poles:
                 p_ = self.polar_features.loc[column][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
@@ -1334,17 +1356,27 @@ class cognet:
             # self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
-            cols = [x for x in self.poles.columns if x in self.samples.columns]
-            self.samples=self.samples[cols]
-        
+            if restrict:
+                # restrict sample columns to polar columns
+                cols = [x for x in self.poles.columns if x in self.samples.columns]
+                self.samples=self.samples[cols]
+                self.restricted = True
+                
+            elif self.restricted:
+                # if poles had been restricted before, unrestrict it
+                self.restricted = False
+                self.samples = self.all_samples
+                if self.nsamples is not None:
+                    self.set_nsamples(nsamples, random)
+
             for x in self.poles.columns:
                 if x not in self.samples.columns:
                     invalid_count += 1
                     self.samples[x]=&#39;&#39;
 
-            self.samples = pd.concat([self.samples,self.features], axis=0)
-            self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;).values.astype(str)[:]
+            self.samples = pd.concat([self.features,self.samples], axis=0).fillna(&#39;&#39;)
+            #self.all_samples = self.samples
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -1516,11 +1548,11 @@ class cognet:
         Returns:
           self.polar_matrix: dictionary containing multiprocessing results
         &#34;&#34;&#34;
-        polar_arraydata = self.polar_features[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
-            #bp = self.getBaseFrequency(vector)
-            sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
+            bp = self.getBaseFrequency(vector)
+            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -1715,7 +1747,7 @@ class cognet:
             if polar_comp:
                 self.set_poles(self.qnet, steps, POLEFILE)
             
-            polar_features = pd.concat([self.poles, self.features], axis=0)
+            polar_features = pd.concat([self.features, self.poles], axis=0)
             self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
         
         elif self.poles is None:
@@ -1783,7 +1815,7 @@ class cognet:
 
         result=[x for x in return_dict.values()]
         if self.polar_indices is not None:
-            polar_features = pd.concat([self.poles, self.features], axis=0)
+            polar_features = pd.concat([self.features, self.poles], axis=0)
             cols = polar_features[self.cols].dropna(axis=1).columns
         else:
             cols = self.cols
@@ -2206,7 +2238,7 @@ class cognet:
         if polar_comp:
             self.set_poles(self.qnet, steps, POLEFILE)
         
-        polar_features = pd.concat([self.poles, self.features], axis=0)
+        polar_features = pd.concat([self.features, self.poles], axis=0)
         self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
     
     elif self.poles is None:
@@ -2361,7 +2393,7 @@ diss: ndarray containing dissonance for sample</p></div>
 
     result=[x for x in return_dict.values()]
     if self.polar_indices is not None:
-        polar_features = pd.concat([self.poles, self.features], axis=0)
+        polar_features = pd.concat([self.features, self.poles], axis=0)
         cols = polar_features[self.cols].dropna(axis=1).columns
     else:
         cols = self.cols
@@ -3034,7 +3066,7 @@ and distance between poles, respectively</dd>
         else:
             self.mutable_vars = self.features
         
-        self.samples = pd.DataFrame(samples)
+        self.samples = pd.DataFrame(samples).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#34;&#34;)
         self.samples.columns = np.array(featurenames)
         self.all_samples = self.samples
         self.samples_as_strings = self.samples.fillna(&#39;&#39;).values.astype(str)[:]
@@ -3176,11 +3208,11 @@ and distance between poles, respectively</dd>
     Returns:
       self.polar_matrix: dictionary containing multiprocessing results
     &#34;&#34;&#34;
-    polar_arraydata = self.polar_features[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+    polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
     samples_ = []
     for vector in polar_arraydata:
-        #bp = self.getBaseFrequency(vector)
-        sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
+        bp = self.getBaseFrequency(vector)
+        sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
         samples_.append(sample)
     samples_ = np.array(samples_)
     self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -3385,7 +3417,7 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.set_nsamples"><code class="name flex">
-<span>def <span class="ident">set_nsamples</span></span>(<span>self, num_samples=None, random=True)</span>
+<span>def <span class="ident">set_nsamples</span></span>(<span>self, num_samples, random=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>select a subset of the samples</p>
@@ -3401,8 +3433,8 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def set_nsamples(self,
-                num_samples=None,
-                random=True):
+                num_samples,
+                random=False):
     &#39;&#39;&#39;select a subset of the samples
 
     Args:
@@ -3425,9 +3457,9 @@ can prob combine this with the load_data func: only set the immutable vars if ne
                 print(string)
             if random:
                 self.samples = self.samples.sample(num_samples)
-               
             else:
                 self.samples = self.samples.iloc[:num_samples]
+            self.nsamples = num_samples
             self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
             
         elif self.samples is None:
@@ -3435,7 +3467,7 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.set_poles"><code class="name flex">
-<span>def <span class="ident">set_poles</span></span>(<span>self, POLEFILE, pole_1, pole_2, steps=0, mutable=False, VERBOSE=False)</span>
+<span>def <span class="ident">set_poles</span></span>(<span>self, POLEFILE, pole_1, pole_2, steps=0, mutable=False, VERBOSE=False, restrict=True, nsamples=False, random=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>set the poles and samples such that the samples contain features in poles</p>
@@ -3445,14 +3477,18 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 <dd>number of steps to qsample</dd>
 <dt><strong><code>POLEFILE</code></strong> :&ensp;<code>str</code></dt>
 <dd>file containing poles samples and features</dd>
-<dt><strong><code>mutable</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>Whether or not to set poles as the only mutable_vars</dd>
 <dt><strong><code>pole_1</code></strong> :&ensp;<code>str</code></dt>
 <dd>column name for first pole to use</dd>
 <dt><strong><code>pole_2</code></strong> :&ensp;<code>str</code></dt>
 <dd>column name for second pole to use</dd>
+<dt><strong><code>mutable</code></strong> :&ensp;<code>bool</code></dt>
+<dd>Whether or not to set poles as the only mutable_vars</dd>
 <dt><strong><code>VERBOSE</code></strong> :&ensp;<code>bool</code></dt>
 <dd>boolean flag prints number of pole features not found in sample features if True</dd>
+<dt><strong><code>restrict</code></strong> :&ensp;<code>bool</code></dt>
+<dd>boolean flag restricts the sample features to polar features if True</dd>
+<dt><strong><code>random</code></strong> :&ensp;<code>bool</code></dt>
+<dd>boolean flag takes random sample of all_samples</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -3464,23 +3500,27 @@ can prob combine this with the load_data func: only set the immutable vars if ne
               pole_2,
               steps=0,
               mutable=False,
-              VERBOSE=False
-              ):
+              VERBOSE=False,
+              restrict=True,
+              nsamples = False,
+              random=False):
     &#39;&#39;&#39;set the poles and samples such that the samples contain features in poles
 
     Args:
       steps (int): number of steps to qsample
       POLEFILE (str): file containing poles samples and features
-      mutable (boolean): Whether or not to set poles as the only mutable_vars
       pole_1 (str): column name for first pole to use
       pole_2 (str): column name for second pole to use
+      mutable (bool): Whether or not to set poles as the only mutable_vars
       VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
+      restrict (bool): boolean flag restricts the sample features to polar features if True
+      random (bool): boolean flag takes random sample of all_samples
     &#39;&#39;&#39;
     invalid_count = 0
     if all(x is not None for x in [self.samples, self.qnet]):
         poles = pd.read_csv(POLEFILE, index_col=0)
         self.poles=poles.transpose()
-        self.polar_features = pd.concat([self.poles, self.features], axis=0)
+        self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna(&#39;&#39;)
         poles_dict = {}
         for column in poles:
             p_ = self.polar_features.loc[column][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
@@ -3492,17 +3532,27 @@ can prob combine this with the load_data func: only set the immutable vars if ne
         # self.pR = list(poles_dict.values())[1]
         self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
         
-        cols = [x for x in self.poles.columns if x in self.samples.columns]
-        self.samples=self.samples[cols]
-    
+        if restrict:
+            # restrict sample columns to polar columns
+            cols = [x for x in self.poles.columns if x in self.samples.columns]
+            self.samples=self.samples[cols]
+            self.restricted = True
+            
+        elif self.restricted:
+            # if poles had been restricted before, unrestrict it
+            self.restricted = False
+            self.samples = self.all_samples
+            if self.nsamples is not None:
+                self.set_nsamples(nsamples, random)
+
         for x in self.poles.columns:
             if x not in self.samples.columns:
                 invalid_count += 1
                 self.samples[x]=&#39;&#39;
 
-        self.samples = pd.concat([self.samples,self.features], axis=0)
-        self.all_samples = self.samples
-        self.samples_as_strings = self.samples[self.cols].replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;).values.astype(str)[:]
+        self.samples = pd.concat([self.features,self.samples], axis=0).fillna(&#39;&#39;)
+        #self.all_samples = self.samples
+        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
         
         if mutable:
             self.mutable_vars=[x for x in self.cols if x in self.poles.columns]

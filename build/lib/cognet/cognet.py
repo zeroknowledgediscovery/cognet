@@ -44,6 +44,8 @@ class cognet:
         self.mask_prob = 0.5
         self.variation_weight = None
         self.polar_matrix = None
+        self.nsamples = None
+        self.restricted = False
     
     def load_from_model(self,
                         model,
@@ -77,7 +79,7 @@ class cognet:
             else:
                 self.mutable_vars = self.features
             
-            self.samples = pd.DataFrame(samples)
+            self.samples = pd.DataFrame(samples).replace("nan","").fillna("")
             self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
             self.samples_as_strings = self.samples.fillna('').values.astype(str)[:]
@@ -169,8 +171,8 @@ class cognet:
                             if x.upper() not in self.immutable_vars.columns]
     
     def set_nsamples(self,
-                    num_samples=None,
-                    random=True):
+                    num_samples,
+                    random=False):
         '''select a subset of the samples
 
         Args:
@@ -193,9 +195,9 @@ class cognet:
                     print(string)
                 if random:
                     self.samples = self.samples.sample(num_samples)
-                   
                 else:
                     self.samples = self.samples.iloc[:num_samples]
+                self.nsamples = num_samples
                 self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
                 
             elif self.samples is None:
@@ -258,23 +260,27 @@ class cognet:
                   pole_2,
                   steps=0,
                   mutable=False,
-                  VERBOSE=False
-                  ):
+                  VERBOSE=False,
+                  restrict=True,
+                  nsamples = False,
+                  random=False):
         '''set the poles and samples such that the samples contain features in poles
 
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
-          mutable (boolean): Whether or not to set poles as the only mutable_vars
           pole_1 (str): column name for first pole to use
           pole_2 (str): column name for second pole to use
+          mutable (bool): Whether or not to set poles as the only mutable_vars
           VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
+          restrict (bool): boolean flag restricts the sample features to polar features if True
+          random (bool): boolean flag takes random sample of all_samples
         '''
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
             poles = pd.read_csv(POLEFILE, index_col=0)
             self.poles=poles.transpose()
-            self.polar_features = pd.concat([self.poles, self.features], axis=0)
+            self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna('')
             poles_dict = {}
             for column in poles:
                 p_ = self.polar_features.loc[column][self.cols].fillna('').values.astype(str)[:]
@@ -286,17 +292,27 @@ class cognet:
             # self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
-            cols = [x for x in self.poles.columns if x in self.samples.columns]
-            self.samples=self.samples[cols]
-        
+            if restrict:
+                # restrict sample columns to polar columns
+                cols = [x for x in self.poles.columns if x in self.samples.columns]
+                self.samples=self.samples[cols]
+                self.restricted = True
+                
+            elif self.restricted:
+                # if poles had been restricted before, unrestrict it
+                self.restricted = False
+                self.samples = self.all_samples
+                if self.nsamples is not None:
+                    self.set_nsamples(nsamples, random)
+
             for x in self.poles.columns:
                 if x not in self.samples.columns:
                     invalid_count += 1
                     self.samples[x]=''
 
-            self.samples = pd.concat([self.samples,self.features], axis=0)
-            self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].replace('nan',np.nan).fillna('').values.astype(str)[:]
+            self.samples = pd.concat([self.features,self.samples], axis=0).fillna('')
+            #self.all_samples = self.samples
+            self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -468,11 +484,11 @@ class cognet:
         Returns:
           self.polar_matrix: dictionary containing multiprocessing results
         """
-        polar_arraydata = self.polar_features[self.cols].fillna('').values.astype(str)[:]
+        polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
-            #bp = self.getBaseFrequency(vector)
-            sample = self.qsampling(vector, nsteps)#, baseline_prob=bp)
+            bp = self.getBaseFrequency(vector)
+            sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
@@ -667,7 +683,7 @@ class cognet:
             if polar_comp:
                 self.set_poles(self.qnet, steps, POLEFILE)
             
-            polar_features = pd.concat([self.poles, self.features], axis=0)
+            polar_features = pd.concat([self.features, self.poles], axis=0)
             self.polar_indices=np.where(polar_features[self.cols].fillna('XXXX').values[0]!='XXXX')[0]
         
         elif self.poles is None:
@@ -735,7 +751,7 @@ class cognet:
 
         result=[x for x in return_dict.values()]
         if self.polar_indices is not None:
-            polar_features = pd.concat([self.poles, self.features], axis=0)
+            polar_features = pd.concat([self.features, self.poles], axis=0)
             cols = polar_features[self.cols].dropna(axis=1).columns
         else:
             cols = self.cols

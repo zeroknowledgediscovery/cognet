@@ -32,7 +32,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from cognet.util import assert_None, assert_array_dimension
 class dataFormatter:
-    &#34;&#34;&#34;Aggregate related Qnet functions
+    &#34;&#34;&#34;format data to be suitable for Qnet training and testing
     &#34;&#34;&#34;
 
     def __init__(self,
@@ -70,8 +70,8 @@ class dataFormatter:
                                                            train_size=train_size,
                                                            random_state=random_state)
     
-    def __Qnet_formatter(self,
-                         samples,
+    def Qnet_formatter(self,
+                         samples=None,
                          key=None):
         &#34;&#34;&#34;format data for Qnet input
 
@@ -84,6 +84,8 @@ class dataFormatter:
         &#34;&#34;&#34;
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError(&#39;Samples must be in numpy array form!&#39;)
+        if samples is None:
+            samples = self.samples
         features = np.array(samples.columns.astype(str)[:])
         samples = samples.values.astype(str)[:]
         # remove columns that are all NaNs
@@ -126,7 +128,7 @@ class dataFormatter:
         else:
             raise ValueError(&#34;Invalid key, key must be either &#39;all&#39;, &#39;test&#39;, or &#39;train&#34;)
         
-        return self.__Qnet_formatter(samples, key=key)
+        return self.Qnet_formatter(samples, key=key)
     
     def __set_varcase(self,
                       lower,
@@ -261,7 +263,7 @@ class dataFormatter:
 <span>(</span><span>samples)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Aggregate related Qnet functions</p>
+<div class="desc"><p>format data to be suitable for Qnet training and testing</p>
 <p>init</p>
 <h2 id="args">Args</h2>
 <dl>
@@ -273,7 +275,7 @@ class dataFormatter:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class dataFormatter:
-    &#34;&#34;&#34;Aggregate related Qnet functions
+    &#34;&#34;&#34;format data to be suitable for Qnet training and testing
     &#34;&#34;&#34;
 
     def __init__(self,
@@ -311,8 +313,8 @@ class dataFormatter:
                                                            train_size=train_size,
                                                            random_state=random_state)
     
-    def __Qnet_formatter(self,
-                         samples,
+    def Qnet_formatter(self,
+                         samples=None,
                          key=None):
         &#34;&#34;&#34;format data for Qnet input
 
@@ -325,6 +327,8 @@ class dataFormatter:
         &#34;&#34;&#34;
         # if not isinstance(samples, np.ndarray):
         #     raise ValueError(&#39;Samples must be in numpy array form!&#39;)
+        if samples is None:
+            samples = self.samples
         features = np.array(samples.columns.astype(str)[:])
         samples = samples.values.astype(str)[:]
         # remove columns that are all NaNs
@@ -367,7 +371,7 @@ class dataFormatter:
         else:
             raise ValueError(&#34;Invalid key, key must be either &#39;all&#39;, &#39;test&#39;, or &#39;train&#34;)
         
-        return self.__Qnet_formatter(samples, key=key)
+        return self.Qnet_formatter(samples, key=key)
     
     def __set_varcase(self,
                       lower,
@@ -489,6 +493,55 @@ class dataFormatter:
 </details>
 <h3>Methods</h3>
 <dl>
+<dt id="cognet.dataFormatter.dataFormatter.Qnet_formatter"><code class="name flex">
+<span>def <span class="ident">Qnet_formatter</span></span>(<span>self, samples=None, key=None)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>format data for Qnet input</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>samples</code></strong> :&ensp;<code>[str]</code>, optional</dt>
+<dd>2D array with rows as observations and columns as features.</dd>
+<dt><strong><code>key</code></strong> :&ensp;<code>str</code></dt>
+<dd>Either 'train' or 'test' key, to determine which set of features</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>features and samples of either the train and test dataset</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def Qnet_formatter(self,
+                     samples=None,
+                     key=None):
+    &#34;&#34;&#34;format data for Qnet input
+
+    Args:
+      samples ([str], optional): 2D array with rows as observations and columns as features.
+      key (str): Either &#39;train&#39; or &#39;test&#39; key, to determine which set of features
+    
+    Returns:
+        features and samples of either the train and test dataset
+    &#34;&#34;&#34;
+    # if not isinstance(samples, np.ndarray):
+    #     raise ValueError(&#39;Samples must be in numpy array form!&#39;)
+    if samples is None:
+        samples = self.samples
+    features = np.array(samples.columns.astype(str)[:])
+    samples = samples.values.astype(str)[:]
+    # remove columns that are all NaNs
+    not_all_nan_cols = ~np.all(samples == &#39;&#39;, axis=0)
+    self.nan_cols = np.all(samples == &#39;&#39;, axis=0)
+
+    samples = samples[:, not_all_nan_cols]
+    
+    features = features[not_all_nan_cols]
+    features = list(features)
+    if key is not None:
+        self.features[key] = features
+    return features, samples</code></pre>
+</details>
+</dd>
 <dt id="cognet.dataFormatter.dataFormatter.format_samples"><code class="name flex">
 <span>def <span class="ident">format_samples</span></span>(<span>self, key, test_size=0.5)</span>
 </code></dt>
@@ -536,7 +589,7 @@ class dataFormatter:
     else:
         raise ValueError(&#34;Invalid key, key must be either &#39;all&#39;, &#39;test&#39;, or &#39;train&#34;)
     
-    return self.__Qnet_formatter(samples, key=key)</code></pre>
+    return self.Qnet_formatter(samples, key=key)</code></pre>
 </details>
 </dd>
 <dt id="cognet.dataFormatter.dataFormatter.mutable_variables"><code class="name flex">
@@ -633,6 +686,7 @@ class dataFormatter:
 <li>
 <h4><code><a title="cognet.dataFormatter.dataFormatter" href="#cognet.dataFormatter.dataFormatter">dataFormatter</a></code></h4>
 <ul class="">
+<li><code><a title="cognet.dataFormatter.dataFormatter.Qnet_formatter" href="#cognet.dataFormatter.dataFormatter.Qnet_formatter">Qnet_formatter</a></code></li>
 <li><code><a title="cognet.dataFormatter.dataFormatter.format_samples" href="#cognet.dataFormatter.dataFormatter.format_samples">format_samples</a></code></li>
 <li><code><a title="cognet.dataFormatter.dataFormatter.mutable_variables" href="#cognet.dataFormatter.dataFormatter.mutable_variables">mutable_variables</a></code></li>
 </ul>
