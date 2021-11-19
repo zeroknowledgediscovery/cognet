@@ -34,7 +34,7 @@ cognet/__pycache__/util.cpython-39.pyc
 cognet/__pycache__/viz.cpython-37.pyc
 cognet/__pycache__/viz.cpython-39.pyc
 cognet/bin/__embed__.so
-dist/cognet-0.0.153.tar.gz
+dist/cognet-0.0.154.tar.gz
 docs/cognet.html
 docs/dataFormatter.html
 docs/index.html
@@ -64,8 +64,6 @@ examples/PTSD_cognet.ipynb
 examples/README.md
 examples/Yearly_polarseparation.ipynb
 examples/cognet_example.ipynb
-examples/tmp_dot_modelclass.dot
-examples/tmp_nodelclass.joblib
 examples/.ipynb_checkpoints/GSS_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
