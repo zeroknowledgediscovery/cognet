@@ -305,10 +305,10 @@ class cognet:
                 if self.nsamples is not None:
                     self.set_nsamples(nsamples, random)
 
-            for x in self.poles.columns:
-                if x not in self.samples.columns:
-                    invalid_count += 1
-                    self.samples[x]=''
+            # for x in self.poles.columns:
+            #     if x not in self.samples.columns:
+            #         invalid_count += 1
+            #         self.samples[x]=''
 
             self.samples = pd.concat([self.features,self.samples], axis=0).fillna('')
             #self.all_samples = self.samples

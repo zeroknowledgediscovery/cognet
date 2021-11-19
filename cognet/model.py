@@ -1,6 +1,7 @@
 from quasinet.qnet import Qnet, load_qnet, save_qnet
 from quasinet.qnet import export_qnet_tree, export_qnet_graph
 from cognet.util import assert_None
+
 class model:
     """Facilitate training and constructing Qnet
     """
@@ -18,6 +19,13 @@ class model:
             featurenames=None,
             samples=None,
             data_obj=None,
+            min_samples_split=2,
+            alpha=0.05,
+            max_depth=-1,
+            max_feats=-1,
+            early_stopping=False,
+            verbose=0,
+            random_state=None,
             njobs=4):
         """fit Quasinet Qnet model
 
@@ -32,11 +40,18 @@ class model:
             raise ValueError("input either samples and features or data object, not both!")
         elif data_obj is not None:
             featurenames, samples=data_obj.Qnet_formatter() # returns the training data
+            print(len(samples))
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None > 1:
             raise ValueError("input both samples and features or data object!")
-        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+        print("training Qnet -------------")
+        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames,
+                           min_samples_split=min_samples_split, alpha=alpha,
+                           max_depth=max_depth, max_feats=max_feats,
+                           early_stopping=early_stopping,
+                           verbose=verbose, random_state=random_state)
         self.myQnet.fit(samples)
+        print("Qnet trained --------------")
         self.features = featurenames
 
     def save(self,
