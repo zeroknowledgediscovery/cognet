@@ -59,7 +59,12 @@ def embed_to_pca(EFILE, OUTFILE):
     ef=pca.fit_transform(xf)
     pd.DataFrame(ef).to_csv(OUTFILE,header=None,index=None)
     return ef
-        </code></pre>
+
+def replace_nan(df):
+    &#34;&#34;&#34;replace nans in a df and fill with empty string
+    &#34;&#34;&#34;
+    df = df.replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;)
+    return df</code></pre>
 </details>
 </section>
 <section>
@@ -129,6 +134,22 @@ def embed_to_pca(EFILE, OUTFILE):
     return ef</code></pre>
 </details>
 </dd>
+<dt id="cognet.util.replace_nan"><code class="name flex">
+<span>def <span class="ident">replace_nan</span></span>(<span>df)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>replace nans in a df and fill with empty string</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def replace_nan(df):
+    &#34;&#34;&#34;replace nans in a df and fill with empty string
+    &#34;&#34;&#34;
+    df = df.replace(&#39;nan&#39;,np.nan).fillna(&#39;&#39;)
+    return df</code></pre>
+</details>
+</dd>
 </dl>
 </section>
 <section>
@@ -151,6 +172,7 @@ def embed_to_pca(EFILE, OUTFILE):
 <li><code><a title="cognet.util.assert_None" href="#cognet.util.assert_None">assert_None</a></code></li>
 <li><code><a title="cognet.util.assert_array_dimension" href="#cognet.util.assert_array_dimension">assert_array_dimension</a></code></li>
 <li><code><a title="cognet.util.embed_to_pca" href="#cognet.util.embed_to_pca">embed_to_pca</a></code></li>
+<li><code><a title="cognet.util.replace_nan" href="#cognet.util.replace_nan">replace_nan</a></code></li>
 </ul>
 </li>
 </ul>

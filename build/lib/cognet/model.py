@@ -40,7 +40,6 @@ class model:
             raise ValueError("input either samples and features or data object, not both!")
         elif data_obj is not None:
             featurenames, samples=data_obj.Qnet_formatter() # returns the training data
-            print(len(samples))
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None > 1:
             raise ValueError("input both samples and features or data object!")
