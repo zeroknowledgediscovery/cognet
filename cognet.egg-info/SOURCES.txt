@@ -20,6 +20,10 @@ cognet.egg-info/SOURCES.txt
 cognet.egg-info/dependency_links.txt
 cognet.egg-info/requires.txt
 cognet.egg-info/top_level.txt
+cognet/.ipynb_checkpoints/__init__-checkpoint.py
+cognet/.ipynb_checkpoints/cognet-checkpoint.py
+cognet/.ipynb_checkpoints/dataFormatter-checkpoint.py
+cognet/.ipynb_checkpoints/model-checkpoint.py
 cognet/__pycache__/__init__.cpython-37.pyc
 cognet/__pycache__/__init__.cpython-39.pyc
 cognet/__pycache__/cognet.cpython-37.pyc
@@ -92,6 +96,7 @@ examples/examples_results/No_class_dispersion_2018.csv
 examples/examples_results/No_class_ideology_2018.csv
 examples/examples_results/data_2018
 examples/examples_results/dispersion_test.csv
+examples/examples_results/distfunc_multiples_testing.csv
 examples/examples_results/ideology.csv
 examples/examples_results/no_class_featurenames_and_vectors.csv
 examples/examples_results/polarDistance_multiple_test.csv
