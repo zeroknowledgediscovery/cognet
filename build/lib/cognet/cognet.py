@@ -930,7 +930,7 @@ class cognet:
                         QNETPATH,
                         MPI_SETUP_FILE="mpi_setup.sh",
                         MPI_RUN_FILE="mpi_run.sh",
-                        MPI_LAUNCHER_FILE="mpi_launcher.sh",
+                        MPI_LAUNCHER_FILE="/project2/ishanu/LAUNCH_UTILITY/launcher_s.sh",
                         YEARS='2016',
                         NODES=4,
                         T=12,
@@ -1017,7 +1017,7 @@ class cognet:
                                "# time requested\n",
                                "T={}\n".format(T),
                                "NUM=\'all\'\n",
-                               "LAUNCH=\'../mpi_launcher.sh\'\n\n",
+                               "LAUNCH=\'{}\'\n\n".format(MPI_LAUNCHER_FILE),
                                "for yr in `echo $YEARS`\n",
                                "do\n",
                                "\techo $yr\n",
@@ -1025,5 +1025,7 @@ class cognet:
                                "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J ACRDALL_\"$yr\" -M 56\n",
                                "done\n",
                                "rm tmp_\"$yr\"*\n"])
+            os.system("cp {} {}".format(MPI_LAUNCHER_FILE,tmp_path+'mpi_launcher.sh'))
+        
         else:
             raise ValueError("load data first!")

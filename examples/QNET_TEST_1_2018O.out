@@ -1,0 +1,23 @@
+Sat Dec  4 23:15:40 CST 2021
+            wrkstat HRS1 HRS2 evwork  ... wtssnr wtssall vstrat vpsu
+0  temp not working    e    c    NaN  ...      e       e   3301    1
+1  working fulltime    c    e    NaN  ...      c       c   3301    1
+
+[2 rows x 1034 columns]
+(1784, 1034)
+fitting
+training Qnet -------------
+Qnet trained --------------
+cognet time:  3257.4757313728333
+fitted
+28
+fitting
+samples:  [['retired' 'e' 'e' ... 'c' '3359' '2']
+ ['working fulltime' 'c' 'e' ... 'c' '3350' '2']
+ ['working fulltime' 'c' 'e' ... 'c' '3302' '1']
+ ...
+ ['retired' 'e' 'e' ... 'c' '3368' '1']
+ ['working fulltime' 'd' 'e' ... 'c' '3310' '2']
+ ['temp not working' 'e' 'c' ... 'c' '3330' '1']]
+Native Qnet fitting time:  2644.1439924240112
+Sun Dec  5 00:59:13 CST 2021

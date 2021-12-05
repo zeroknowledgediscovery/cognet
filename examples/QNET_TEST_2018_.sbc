@@ -1,0 +1,17 @@
+#!/bin/bash
+#SBATCH --job-name=QNET_TEST_2018
+#SBATCH --output=/project2/ishanu/NLS_DATA/cognet/examples/QNET_TEST_2018O.out
+#SBATCH --error=/project2/ishanu/NLS_DATA/cognet/examples/QNET_TEST_2018E.err
+#SBATCH --time=5:00:00
+#SBATCH --qos=normal
+#SBATCH --mem=56000
+#SBATCH --nodes=2
+#SBATCH --ntasks-per-node=28
+#SBATCH --partition=broadwl
+module load midway2
+module unload python
+module load python/anaconda-2020.02
+conda activate qnet-dev
+module unload python
+module load python/cpython-3.7.0
+date; python3 cognet_example.py; date

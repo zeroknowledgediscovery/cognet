@@ -28,3 +28,5 @@ examples_data/DMAT_2018.csv filter=lfs diff=lfs merge=lfs -text
 examples_data/features_by_year_GSS.csv filter=lfs diff=lfs merge=lfs -text
 examples_data/GSS_descripvars_2018.csv filter=lfs diff=lfs merge=lfs -text
 examples_data/processed_data filter=lfs diff=lfs merge=lfs -text
+examples_results/PTSD_cognet_test.joblib filter=lfs diff=lfs merge=lfs -text
+examples_data/PTSD_cognet_test_processed.csv filter=lfs diff=lfs merge=lfs -text
