@@ -1,0 +1,11 @@
+feature_names,sample,qsampled,random_sample
+spkcom,not allowed,not allowed,allowed
+libmil,remove,remove,remove
+libmslm,remove,remove,remove
+reliten,no religion,not very strong,not very strong
+bible,inspired word,book of fables,inspired word
+abnomore,yes,no,no
+abpoor,yes,no,yes
+owngun,refused,refused,refused
+viruses,False,True,False
+religcon,not agree/dsagre,agree,strongly agree

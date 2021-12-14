@@ -1,0 +1,18 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+colcom,fired,fired,fired
+libcom,remove,not remove,remove
+libhomo,not remove,not remove,remove
+gunlaw,favor,favor,oppose
+reliten,strong,not very strong,strong
+abdefect,yes,yes,yes
+abpoor,yes,no,yes
+abrape,yes,yes,no
+pillok,strongly agree,strongly agree,strongly disagree
+owngun,no,no,yes
+shotgun,no,no,no
+viruses,True,True,False
+intmil,moderately interested,very interested,moderately interested
+abpoorw,not wrong at all,always wrong,wrong only sometimes
+godchnge,"believe now, always have","don't believe now, never have","don't believe now, used to"
+prayfreq,every week,several times a week,about once a month

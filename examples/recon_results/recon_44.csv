@@ -1,0 +1,10 @@
+feature_names,sample,qsampled,random_sample
+reliten,not very strong,not very strong,somewhat strong
+pray,several times a day,several times a week,several times a day
+prayer,disapprove,approve,approve
+polabuse,no,no,yes
+viruses,True,True,False
+abpoorw,not wrong at all,not wrong at all,not wrong at all
+prayfreq,several times a week,several times a week,about once or twice a year
+religcon,disagree,agree,not agree/dsagre
+comfort,strongly agree,agree,strongly disagree

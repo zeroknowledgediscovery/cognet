@@ -1,0 +1,15 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+spkmil,allowed,allowed,allowed
+libhomo,not remove,not remove,remove
+gunlaw,favor,favor,oppose
+grass,legal,legal,legal
+pray,once a day,several times a day,once a day
+abdefect,yes,yes,yes
+abnomore,yes,no,yes
+abpoor,yes,no,no
+absingle,yes,no,yes
+abany,yes,no,yes
+polabuse,no,no,no
+owngun,no,no,yes
+shotgun,no,no,no

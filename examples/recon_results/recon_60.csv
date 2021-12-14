@@ -1,0 +1,14 @@
+feature_names,sample,qsampled,random_sample
+colmil,not allowed,allowed,allowed
+libhomo,not remove,not remove,remove
+gunlaw,favor,favor,oppose
+prayer,approve,disapprove,approve
+abdefect,yes,yes,yes
+abnomore,yes,yes,no
+abpoor,yes,yes,yes
+abrape,yes,yes,yes
+pillok,agree,disagree,disagree
+owngun,no,no,yes
+intmil,not at all interested,very interested,not at all interested
+abpoorw,not wrong at all,not wrong at all,almost always wrong
+prayfreq,several times a week,2-3 times a month,about once a month

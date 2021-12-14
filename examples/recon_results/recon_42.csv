@@ -1,0 +1,14 @@
+feature_names,sample,qsampled,random_sample
+libcom,remove,not remove,remove
+colmil,not allowed,not allowed,allowed
+pray,once a day,once a day,several times a week
+bible,inspired word,word of god,inspired word
+abnomore,yes,yes,no
+abhlth,yes,yes,yes
+abpoor,yes,yes,yes
+abrape,yes,yes,no
+absingle,yes,yes,yes
+abpoorw,not wrong at all,almost always wrong,wrong only sometimes
+godchnge,"believe now, always have","believe now, always have","believe now, didn't used to"
+prayfreq,several times a week,several times a week,about once a month
+religcon,strongly agree,agree,agree

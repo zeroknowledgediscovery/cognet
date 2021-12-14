@@ -1,0 +1,19 @@
+feature_names,sample,qsampled,random_sample
+colcom,fired,not fired,fired
+libcom,remove,not remove,remove
+colmil,not allowed,not allowed,allowed
+libmil,remove,remove,remove
+libhomo,remove,not remove,remove
+libmslm,remove,remove,not remove
+gunlaw,favor,favor,oppose
+grass,legal,legal,legal
+reliten,not very strong,strong,strong
+pray,several times a day,several times a day,never
+bible,inspired word,word of god,other
+conlabor,a great deal,only some,only some
+abnomore,yes,no,yes
+abpoor,no,no,no
+abrape,yes,yes,yes
+absingle,no,no,yes
+abany,no,no,yes
+shotgun,no,no,refused

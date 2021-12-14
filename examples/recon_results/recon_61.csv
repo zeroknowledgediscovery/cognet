@@ -1,0 +1,14 @@
+feature_names,sample,qsampled,random_sample
+colcom,fired,not fired,fired
+libcom,remove,not remove,remove
+spkmil,allowed,allowed,allowed
+colmil,allowed,not allowed,allowed
+gunlaw,favor,oppose,oppose
+grass,legal,legal,not legal
+reliten,not very strong,not very strong,not very strong
+conlabor,only some,a great deal,hardly any
+abpoor,yes,yes,yes
+abrape,yes,yes,yes
+abany,yes,yes,no
+polabuse,no,no,yes
+shotgun,yes,yes,no

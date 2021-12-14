@@ -1,0 +1,17 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,not fired,fired
+spkmil,allowed,allowed,allowed
+colmil,allowed,not allowed,allowed
+libmil,remove,not remove,remove
+bible,book of fables,word of god,inspired word
+abdefect,no,yes,no
+abnomore,yes,yes,yes
+abrape,yes,yes,yes
+abany,yes,yes,no
+pillok,disagree,agree,strongly disagree
+shotgun,no,no,yes
+viruses,True,True,True
+abpoorw,not wrong at all,not wrong at all,wrong only sometimes
+godchnge,"believe now, didn't used to","believe now, always have","believe now, didn't used to"
+religcon,not agree/dsagre,not agree/dsagre,strongly agree
+comfort,agree,agree,neither agree nor disagree

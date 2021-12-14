@@ -1,0 +1,10 @@
+feature_names,sample,qsampled,random_sample
+libmil,remove,remove,remove
+libmslm,remove,remove,remove
+gunlaw,favor,favor,oppose
+reliten,not very strong,not very strong,not very strong
+prayer,disapprove,approve,approve
+abdefect,yes,yes,no
+abnomore,no,no,yes
+godchnge,"believe now, didn't used to","believe now, always have","believe now, always have"
+religcon,strong disagree,not agree/dsagre,not agree/dsagre

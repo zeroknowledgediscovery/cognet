@@ -1,0 +1,17 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,remove
+spkmil,allowed,not allowed,allowed
+colmil,allowed,not allowed,allowed
+libmil,not remove,not remove,remove
+libhomo,not remove,remove,not remove
+libmslm,not remove,not remove,remove
+reliten,not very strong,not very strong,not very strong
+prayer,disapprove,approve,disapprove
+abhlth,yes,yes,yes
+abpoor,no,no,yes
+absingle,yes,no,no
+viruses,False,True,False
+intmil,moderately interested,moderately interested,moderately interested
+religcon,agree,not agree/dsagre,strongly agree
+comfort,strongly agree,agree,neither agree nor disagree

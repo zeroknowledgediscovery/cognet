@@ -1,0 +1,265 @@
+feature_names,sample,qsampled,random_sample
+wrkstat,keeping house,"unempl, laid off",retired
+HRS1,e,a,d
+wrkgovt,private,private,government
+PRESTG105PLUS,b,c,b
+INDUS10,c,c,b
+marital,never married,,never married
+COHRS1,e,,a
+COHRS2,e,,c
+SPPRES10,e,,a
+SPPRES105PLUS,e,,b
+COOCC10,e,,b
+PAPRES105PLUS,c,,c
+PAIND10,c,,c
+mawrkslf,someone else,,self-employed
+MAOCC10,c,c,d
+MAPRES105PLUS,c,,d
+age,c,,d
+paeduc,c,,d
+speduc,e,,a
+padeg,high school,,lt high school
+madeg,bachelor,lt high school,junior college
+dipged,high school diploma,,high school diploma
+race,black,white,other
+FAMILY16,mother & father,,mother & father
+mawrkgrw,yes,,yes
+hompop,3,2,10
+babies,c,c,e
+preteen,c,c,c
+teens,c,,c
+unrelat,c,,d
+earnrs,c,,b
+INCOME16,$1 000 to 2 999,$40000 to 49999,$60000 to 74999
+region,middle atlantic,south atlantic,w. sou. central
+xnorcsiz,"suburb, lrg city",,"city,50-250000"
+size,125,,111
+PRES12,obama,,obama
+PRES16,iap,,no answer
+natspac,about right,,too much
+natenvir,too little,,too little
+natcity,too little,,too much
+natcrime,too much,,about right
+natarms,about right,,about right
+natmass,too little,,about right
+natpark,too little,,too much
+grass,legal,,not legal
+pray,once a day,,once a day
+RELIG16,catholic,,christian
+prayer,disapprove,disapprove,disapprove
+helpful,helpful,,depends
+trust,can't be too careful,can't be too careful,can't be too careful
+confinan,only some,,only some
+conclerg,hardly any,,hardly any
+confed,only some,,a great deal
+conjudge,hardly any,a great deal,hardly any
+thnkself,3rd important,3rd important,least important
+workhard,2nd important,most important,most important
+socbar,never,sev times a mnth,sev times a year
+aged,depends,,a good idea
+satjob,a little dissat,,very dissatisfied
+class,lower class,middle class,working class
+rank,c,,b
+satfin,not at all sat,,more or less
+finalter,worse,better,better
+finrela,below average,,above average
+union,neither belongs,neither belongs,neither belongs
+divlaw,more difficult,more difficult,stay same
+premarsx,not wrong at all,not wrong at all,always wrong
+spanking,disagree,,strongly agree
+LETDIE1,yes,,yes
+SUICIDE1,yes,no,no
+SUICIDE2,no,no,yes
+SUICIDE3,no,,yes
+polhitok,no,,no
+polescap,yes,,no
+polattak,yes,,no
+news,never,,once a week
+tvhours,d,,c
+phone,cellphone,,phone elsewhere
+coop,"friendly,interested",,hostile
+comprend,fair,,fair
+random,c,,c
+fefam,strongly disagree,strongly agree,agree
+RACDIF1,yes,,no
+RACDIF3,yes,yes,no
+helpnot,b,,e
+helpsick,c,,c
+reborn,yes,,yes
+savesoul,yes,no,yes
+numcong,e,,e
+wlthhsps,c,c,c
+workblks,c,,e
+intlwhts,c,,e
+vigversn,e,,e
+CLOSETO4,e,e,c
+CLOSETO5,e,e,c
+SEETALK1,e,c,b
+SEETALK2,e,,e
+MYPROBS1,e,,d
+MYPROBS2,e,,e
+MYPROBS3,e,,d
+SEVERE3,e,,b
+SEVERE4,e,,e
+DANGOTH1,e,,d
+DANGOTH2,e,,d
+DANGOTH3,e,,d
+DANGSLF1,e,,d
+othlang,no,,yes
+webmob,yes,no,no
+emailmin,c,c,d
+emailhr,c,,d
+huclean,not very clean,,dirty
+hrsrelax,e,e,e
+mntlhlth,e,,c
+usetech,e,e,d
+misswork,e,e,e
+lifenow,e,e,c
+quallife,fair,good,excellent
+hlthmntl,fair,very good,good
+satsoc,very good,,good
+actssoc,very good,,very good
+physacts,a little,completely,completely
+emoprobs,c,,b
+fatigue,severe,,mild
+abfelegl,should,should,should not
+ABSTATE2,stay the same as now,,make it easier
+ABHELP3,yes,yes,yes
+ABMEDGOV1,a woman and her medical professional should decide,,the government should decide
+numpets,e,,d
+stockval,e,,e
+extrayr,e,e,a
+numemps,e,e,d
+seeksci,tv,,library
+advfront,strongly agree,strongly agree,disagree
+astrolgy,no,,yes
+astrosci,sort of scientific,,sort of scientific
+scibnfts,benefits greater,,benefits greater
+balpos,slightly in favor,,slightly in favor
+scitext,classification,,measurement
+expdesgn,all 1000 get the drug,,all 1000 get the drug
+ODDS1,no,no,yes
+ODDS2,yes,,yes
+hotcore,True,,False
+viruses,True,,True
+colsci,no,,yes
+colscinm,e,c,d
+hsbio,no,,yes
+hsphys,no,no,no
+intfarm,very interested,very interested,not at all interested
+intsci,very interested,,moderately interested
+intecon,not at all interested,moderately interested,moderately interested
+inttech,very interested,,moderately interested
+intspace,very interested,very interested,not at all interested
+scientod,strongly agree,agree,disagree
+scientbe,strongly agree,,strongly agree
+buyvalue,e,,c
+compwage,e,,e
+numorg,e,,e
+ratetone,d,,c
+posslq,no steady partner,,married with partner
+marcohab,"not married, no cohabitating partner",,na
+trcourts,e,c,b
+goodlife,disagree,agree,strongly agree
+hubbywrk,strongly disagree,agree,strongly disagree
+meovrwrk,disagree,,neither agree nor disagree
+HOMOSEX1,not wrong at all,wrong only sometimes,almost always wrong
+conbiz,some confidence,a great deal of confidence,a great deal of confidence
+churhpow,too little power,right amount pwr,far too much pwr
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+heaven,"yes, definitely",,"yes, definitely"
+hell,"yes, definitely",,"yes, definitely"
+miracles,"yes, definitely",,"yes, probably"
+theism,strongly agree,agree,strongly disagree
+fatalism,agree,strongly disagree,strongly disagree
+godmeans,strongly agree,agree,disagree
+egomeans,strongly agree,,strongly disagree
+marelkid,catholic,,buddhism
+relscrpt,yes,no,no
+feelrel,very religious,,somwhat relgious
+religint,disagree,,strongly agree
+RELEXT1,definitely not,definitely,definitely not
+ancestrs,"no, definitely not","yes, probably","no, definitely not"
+relobjct,no,,no
+makefrnd,neither agree nor disagree,strongly agree,neither agree nor disagree
+relrlvnt,agree,disagree,strongly disagree
+christns,neither positive nor negative,,very negative
+muslims,neither positive nor negative,somewhat positive,very negative
+hindus,neither positive nor negative,,very positive
+jews,neither positive nor negative,,somewhat negative
+LETIN1A,remain the same as it is,,increased a little
+sexfreq,not at all,,weekly
+numwomen,c,c,d
+nummen,c,,c
+PARTNRS5,2 partners,2 partners,3 partners
+SEXSEX5,exclusively male,,both male and female
+condom,used last time,,not used
+evidu,no,no,yes
+HIVTEST1,c,c,c
+HIVTEST2,hospital,,private doctor or hmo office
+sexbirth,female,,male
+sexnow,women,,man
+realinc,b,,b
+conrinc,e,,c
+ethnum,cannot name any,chooses 1 of 2+,names 1
+hispanic,not hispanic,,puerto rican
+RACECEN1,black or african american,,asian indian
+RACECEN2,american indian or alaska native,,japanese
+yearsusa,e,e,c
+mnthsusa,e,,c
+dwelling,apartment house,,apartment-4 stories
+wordb,incorrect,,incorrect
+wordc,incorrect,correct,incorrect
+wordf,incorrect,,incorrect
+wordi,incorrect,,incorrect
+wordj,incorrect,incorrect,incorrect
+GENDER1,female,,female
+OLD1,c,,e
+MAR1,never married,,married
+RELATE2,child,,parent or parent-in-law
+RELATE3,child,,grand or great-grandchild
+MAR3,never married,separated,widowed
+OLD4,e,,d
+OLD9,e,,d
+OLD11,e,c,e
+OLD12,e,e,d
+RELHHD3,"child,natural or adopted,stepchild","child,natural or adopted,stepchild",cousin
+respnum,1st person,3rd person,11th person
+hhtype,"3adlts,0mar,rel,0kids",,"2adlts,ntmar,rel,0kids"
+famgen,"2 gens, children",1 gen,"2 gens, children"
+rvisitor,r. is household member,,r. is visitor
+visitors,no visitors,,no visitors
+RELHH3,biological child,,"roommate, housemate"
+ISCO88,c,,c
+SPISCO88,e,,b
+ISCO08,cashiers and ticket clerks,,applications programmers
+MAISCO08,protective services workers not elsewhere classified,,human resource managers
+SEI10,b,,e
+SEI10EDUC,c,,e
+SEI10INC,b,,c
+PASEI10INC,c,,d
+MASEI10INC,c,,b
+SPSEI10INC,e,e,b
+COSEI10,e,,e
+COSEI10EDUC,e,,d
+COPRES105PLUS,e,,e
+inthisp,not hispanic,not hispanic,puerto rican
+WHOELSE4,yes,no,yes
+WHOELSE5,no,,no
+intid,43,76,46
+feeused,"yes, money","yes, money","yes, money"
+lngthinv,79,,110
+intage,60,,39
+intyrs,0,5,10
+consent,r consents to recording interview,,r consents to recording interview
+issp,did issp,,didnt do issp
+huadd,yes,yes,no
+dwellpre,"apartment house (5 or more units, 3 stories or less)",,apartment in a partly commercial structure
+kidsinhh,yes,no,no
+respond,low,,high
+incuspop,lower than average,,average
+rlooks,attractive,attractive,about average
+rgroomed,about average,,very poorly groomed
+rhlthend,fair,good,excellent
+vstrat,3301,,3336
+vpsu,2,,2

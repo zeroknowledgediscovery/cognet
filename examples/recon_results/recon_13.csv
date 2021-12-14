@@ -1,0 +1,20 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,not allowed,allowed
+colcom,not fired,not fired,fired
+spkmil,not allowed,not allowed,allowed
+colmil,not allowed,not allowed,allowed
+libhomo,not remove,not remove,remove
+gunlaw,favor,oppose,favor
+reliten,not very strong,strong,not very strong
+bible,inspired word,inspired word,inspired word
+abdefect,no,yes,no
+abnomore,no,no,yes
+abhlth,yes,yes,yes
+pillok,strongly agree,strongly agree,strongly agree
+owngun,no,no,yes
+shotgun,no,no,no
+abpoorw,almost always wrong,always wrong,wrong only sometimes
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+prayfreq,several times a week,several times a week,about once a month
+religcon,disagree,strongly agree,disagree
+comfort,agree,agree,disagree

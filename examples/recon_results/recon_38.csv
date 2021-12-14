@@ -1,0 +1,10 @@
+feature_names,sample,qsampled,random_sample
+reliten,not very strong,no religion,somewhat strong
+pray,once a day,several times a day,several times a day
+bible,other,inspired word,inspired word
+conlabor,only some,only some,hardly any
+polabuse,no,no,yes
+prayfreq,several times a week,several times a week,about once or twice a year
+religcon,disagree,agree,not agree/dsagre
+religint,not agree/dsagre,not agree/dsagre,strongly agree
+comfort,agree,agree,agree

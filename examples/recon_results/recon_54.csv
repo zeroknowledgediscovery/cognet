@@ -1,0 +1,10 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,fired,fired
+libcom,not remove,remove,remove
+colmil,not allowed,not allowed,allowed
+reliten,not very strong,not very strong,not very strong
+bible,inspired word,inspired word,inspired word
+abhlth,yes,yes,no
+abpoor,yes,yes,yes
+polabuse,no,no,yes
+owngun,no,no,refused

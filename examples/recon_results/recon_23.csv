@@ -1,0 +1,8 @@
+feature_names,sample,qsampled,random_sample
+grass,legal,legal,legal
+reliten,not very strong,strong,somewhat strong
+prayer,disapprove,approve,approve
+bible,inspired word,inspired word,inspired word
+intmil,not at all interested,not at all interested,very interested
+religcon,agree,agree,disagree
+religint,disagree,agree,not agree/dsagre

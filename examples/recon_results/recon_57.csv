@@ -1,0 +1,18 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,not fired,fired
+libcom,not remove,not remove,remove
+libmslm,not remove,remove,remove
+gunlaw,favor,favor,oppose
+reliten,not very strong,no religion,not very strong
+pray,once a day,never,once a day
+prayer,approve,disapprove,approve
+bible,book of fables,word of god,inspired word
+abdefect,yes,yes,no
+abhlth,yes,yes,yes
+abrape,yes,yes,yes
+abany,yes,yes,no
+pillok,agree,strongly agree,strongly disagree
+shotgun,no,no,no
+abpoorw,not wrong at all,not wrong at all,wrong only sometimes
+prayfreq,several times a week,never,every week
+religcon,agree,agree,disagree

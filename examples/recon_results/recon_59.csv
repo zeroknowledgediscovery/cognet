@@ -1,0 +1,10 @@
+feature_names,sample,qsampled,random_sample
+grass,legal,legal,legal
+reliten,not very strong,not very strong,somewhat strong
+bible,inspired word,word of god,inspired word
+polabuse,no,yes,yes
+viruses,False,False,False
+intmil,very interested,not at all interested,very interested
+abpoorw,always wrong,always wrong,always wrong
+godchnge,"believe now, always have","believe now, always have","believe now, always have"
+comfort,agree,strongly agree,disagree

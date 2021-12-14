@@ -1,0 +1,16 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,remove
+libmil,not remove,not remove,remove
+reliten,no religion,no religion,not very strong
+prayer,approve,disapprove,approve
+bible,book of fables,inspired word,book of fables
+abhlth,yes,yes,yes
+abpoor,no,yes,yes
+absingle,no,yes,no
+abany,yes,yes,yes
+pillok,strongly agree,strongly agree,strongly disagree
+viruses,True,True,True
+religcon,strongly agree,not agree/dsagre,agree
+religint,strongly agree,not agree/dsagre,strongly agree
+comfort,agree,agree,neither agree nor disagree

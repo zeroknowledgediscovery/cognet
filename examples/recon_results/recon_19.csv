@@ -1,0 +1,9 @@
+feature_names,sample,qsampled,random_sample
+grass,not legal,legal,legal
+conlabor,only some,hardly any,a great deal
+pillok,disagree,agree,agree
+polabuse,yes,no,yes
+abpoorw,almost always wrong,not wrong at all,always wrong
+prayfreq,several times a week,several times a week,about once or twice a year
+religint,disagree,agree,not agree/dsagre
+comfort,strongly agree,agree,strongly disagree

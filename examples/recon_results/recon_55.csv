@@ -1,0 +1,10 @@
+feature_names,sample,qsampled,random_sample
+spkcom,not allowed,not allowed,allowed
+colmil,allowed,allowed,allowed
+conlabor,hardly any,hardly any,hardly any
+abnomore,yes,yes,yes
+abpoor,yes,yes,yes
+abrape,yes,yes,no
+polabuse,yes,no,yes
+shotgun,refused,yes,yes
+rowngun,refused,yes,no

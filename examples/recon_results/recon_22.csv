@@ -1,0 +1,11 @@
+feature_names,sample,qsampled,random_sample
+libcom,not remove,remove,remove
+libmil,not remove,not remove,remove
+gunlaw,favor,favor,oppose
+grass,not legal,legal,legal
+pray,several times a day,once a day,once a day
+conlabor,a great deal,a great deal,hardly any
+abpoor,no,no,yes
+abrape,no,yes,yes
+abany,no,no,no
+owngun,no,no,yes

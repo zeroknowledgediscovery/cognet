@@ -1,0 +1,16 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,not fired,fired
+libcom,not remove,not remove,remove
+spkmil,allowed,allowed,allowed
+libhomo,not remove,not remove,remove
+libmslm,not remove,remove,remove
+reliten,strong,not very strong,strong
+pray,several times a day,once a day,several times a week
+bible,inspired word,inspired word,inspired word
+conlabor,hardly any,only some,hardly any
+abhlth,yes,yes,yes
+abpoor,yes,yes,yes
+abrape,yes,yes,no
+abany,yes,yes,yes
+polabuse,no,no,no
+owngun,no,no,yes

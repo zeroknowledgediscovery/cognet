@@ -1,0 +1,12 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+colmil,allowed,not allowed,allowed
+libmil,not remove,not remove,remove
+libhomo,not remove,not remove,remove
+gunlaw,favor,favor,oppose
+reliten,not very strong,not very strong,strong
+conlabor,only some,only some,hardly any
+abpoor,yes,yes,yes
+abrape,yes,yes,yes
+abany,yes,yes,no
+shotgun,no,no,yes

@@ -1,0 +1,15 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,not fired,fired
+libmil,not remove,not remove,remove
+reliten,strong,strong,not very strong
+bible,word of god,word of god,inspired word
+abnomore,no,no,yes
+abhlth,yes,yes,no
+abpoor,no,no,yes
+absingle,no,no,yes
+pillok,agree,agree,disagree
+owngun,no,no,yes
+shotgun,no,no,yes
+abpoorw,always wrong,always wrong,almost always wrong
+religcon,strong disagree,not agree/dsagre,agree
+religint,strong disagree,agree,strongly agree

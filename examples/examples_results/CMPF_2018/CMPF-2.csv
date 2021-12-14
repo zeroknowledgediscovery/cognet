@@ -1,109 +1,372 @@
 gssvar,s,q,r
-ptsd1,2,4,3
-ptsd2,2,2,3
-ptsd7,3,2,3
-ptsd8,2,2,2
-ptsd11,4,1,1
-ptsd12,3,,1
-ptsd14,3,,1
-ptsd15,3,3,4
-ptsd17,5,3,1
-ptsd18,4,3,3
-ptsd20,1,,1
-ptsd21,4,1,3
-ptsd22,1,,3
-ptsd27,3,1,1
-ptsd31,1,,5
-ptsd32,3,1,5
-ptsd33,3,4,2
-ptsd35,2,4,5
-ptsd41,4,,4
-ptsd42,3,4,2
-ptsd44,4,,3
-ptsd45,2,3,5
-ptsd53,3,2,4
-ptsd55,4,1,4
-ptsd56,4,3,1
-ptsd57,3,3,2
-ptsd58,4,3,4
-ptsd59,3,,3
-ptsd61,5,5,3
-ptsd63,1,1,3
-ptsd70,2,2,3
-ptsd71,3,4,1
-ptsd73,4,4,1
-ptsd74,4,2,1
-ptsd81,2,4,5
-ptsd82,2,4,4
-ptsd83,4,3,1
-ptsd84,2,2,4
-ptsd86,4,,4
-ptsd88,1,,2
-ptsd89,4,,4
-ptsd92,2,4,3
-ptsd93,4,2,3
-ptsd95,1,2,2
-ptsd97,4,3,4
-ptsd98,4,2,3
-ptsd100,2,4,1
-ptsd101,3,1,1
-ptsd102,3,4,4
-ptsd103,5,,1
-ptsd107,2,2,1
-ptsd108,4,2,1
-ptsd112,4,2,2
-ptsd116,1,,2
-ptsd117,4,4,3
-ptsd119,2,,2
-ptsd120,3,,1
-ptsd123,4,,2
-ptsd124,4,4,4
-ptsd125,4,,2
-ptsd127,4,,3
-ptsd128,1,,3
-ptsd130,4,4,3
-ptsd131,3,3,4
-ptsd132,3,,3
-ptsd134,2,,1
-ptsd135,2,,3
-ptsd136,3,2,3
-ptsd137,2,,3
-ptsd139,3,1,3
-ptsd140,4,,5
-ptsd142,3,5,2
-ptsd144,3,,1
-ptsd149,2,,5
-ptsd150,2,4,3
-ptsd151,4,1,4
-ptsd152,2,1,2
-ptsd154,3,3,2
-ptsd155,3,4,3
-ptsd156,3,3,2
-ptsd158,3,5,3
-ptsd161,1,,5
-ptsd162,3,1,3
-ptsd163,1,3,5
-ptsd169,3,4,2
-ptsd170,2,3,3
-ptsd171,1,,2
-ptsd172,2,1,3
-ptsd174,2,4,2
-ptsd175,3,,2
-ptsd177,2,,1
-ptsd180,3,4,3
-ptsd183,1,,4
-ptsd185,2,2,2
-ptsd187,1,,1
-ptsd188,4,1,1
-ptsd189,2,,2
-ptsd190,1,1,2
-ptsd192,2,1,3
-ptsd195,2,3,3
-ptsd196,2,,4
-ptsd197,3,,5
-ptsd198,2,,4
-ptsd206,4,,4
-ptsd208,3,,2
-ptsd209,2,4,1
-ptsd210,2,2,5
-ptsd211,5,,4
+HRS2,e,e,e
+wrkslf,someone else,,self-employed
+PRESTG10,d,,b
+INDUS10,c,c,a
+marital,married,,married
+divorce,no,yes,no
+spwrksta,working fulltime,,retired
+SPHRS1,c,d,e
+COHRS1,e,,a
+COHRS2,e,,e
+SPPRES10,d,,e
+SPIND10,hospitals,industrial and miscellaneous chemicals,animal production
+COOCC10,e,,d
+pawrkslf,someone else,someone else,self-employed
+PAOCC10,b,b,d
+PAPRES10,c,,e
+MAOCC10,e,c,a
+MAPRES10,e,c,e
+age,c,,b
+paeduc,c,,c
+maeduc,c,,b
+degree,bachelor,,graduate
+spdeg,junior college,,junior college
+MAJOR1,business administration,,medicine
+MAJOR2,computer science,education,accounting/bookkeeping
+dipged,high school diploma,,hs diploma after post hs classes
+sex,female,,male
+race,white,,black
+RES16,town lt 50000,50000 to 250000,50000 to 250000
+MOBILE16,different state,different state,"same st,dif city"
+FAMILY16,mother & father,,mother & father
+mawrkgrw,no,,yes
+INCOM16,above average,,above average
+born,yes,,no
+parborn,both in u.s,,mother; fa. dk
+granborn,c,,e
+babies,c,c,e
+preteen,c,,d
+adults,2,,5
+unrelat,c,,d
+RINCOM16,$110000 to $129999,,$110000 to $129999
+srcbelt,"suburb, 13-100",other rural,"suburb, 12 lrgst"
+size,14,30,3793
+partyid,"ind,near dem",,not str democrat
+PRES12,romney,,didn't vote for president
+natroad,too little,,too much
+natmass,about right,,too much
+natsci,too little,,too little
+natenrgy,too little,about right,about right
+natenviy,too little,,about right
+natcityy,about right,,about right
+natdrugy,too little,too little,too little
+nataidy,too much,too much,too much
+eqwlth,c,,d
+cappun,oppose,,favor
+relig,protestant,,native american
+fund,liberal,,moderate
+attend,nrly every week,2-3x a month,once a month
+reliten,strong,not very strong,strong
+postlife,yes,yes,no
+pray,several times a day,,several times a week
+RELIG16,catholic,,other
+sprel,protestant,protestant,protestant
+prayer,approve,,disapprove
+bible,inspired word,,other
+happy,very happy,,not too happy
+trust,can trust,,can trust
+confinan,only some,only some,hardly any
+conbus,only some,a great deal,a great deal
+coneduc,hardly any,a great deal,only some
+conlabor,only some,only some,hardly any
+conlegis,hardly any,,hardly any
+obey,least important,,4th important
+socrel,almost daily,,sev times a week
+socommun,never,,sev times a week
+aged,a good idea,,a good idea
+joblose,not likely,,fairly likely
+jobfind,not easy,,not easy
+class,middle class,,middle class
+finalter,better,,worse
+finrela,above average,,above average
+wksub,yes,yes,no
+WKSUBS1,yes,,yes
+wksups,no,,no
+WKSUPS1,no,,no
+unemp,no,,yes
+union,spouse belongs,,neither belongs
+UNION1,spouse or partner belongs,,r belongs
+parsol,somewhat better,,somewhat worse
+kidssol,about the same,,somewhat better
+fepol,disagree,,agree
+premarsx,sometimes wrong,,sometimes wrong
+spanking,disagree,,agree
+LETDIE1,no,,yes
+SUICIDE1,yes,,no
+SUICIDE3,no,,no
+SUICIDE4,no,no,no
+polhitok,yes,,no
+polmurdr,no,,yes
+news,everyday,,once a week
+tvhours,c,c,d
+phone,phone in home,,cellphone
+coop,"friendly,interested",,"friendly,interested"
+form,alternate <y>,,standard <x>
+random,e,,c
+fepresch,disagree,,strongly disagree
+RACDIF1,yes,,no
+RACDIF2,no,,no
+RACDIF3,yes,,no
+RACDIF4,no,,yes
+helpsick,c,,b
+god,know god exists,,dont believe
+reborn,no,no,yes
+numcong,c,,e
+wlthwhts,c,,c
+wlthblks,c,c,e
+wlthhsps,e,,e
+workwhts,c,c,c
+workhsps,c,,e
+intlhsps,c,,c
+liveblks,neither favor nor oppose,neither favor nor oppose,strongly favor
+MARAsian,neither favor nor oppose,,strongly oppose
+marhisp,neither favor nor oppose,,oppose
+spwksup,no,yes,yes
+discaffw,somewhat unlikely,,very unlikely
+fehire,agree,disagree,disagree
+vigversn,c,,d
+seriousp,very serious,somewhat serious,very serious
+stresses,somewhat likely,somewhat likely,very likely
+breakdwn,not very likely,not at all likely,not at all likely
+viglabel,somewhat likely,,not at all likely
+dectreat,not very able,,very able
+imprvtrt,very likely,,not likely at all
+vigsoc,probably willing,,probably willing
+vigfrnd,probably willing,,probably unwilling
+viggrp,probably willing,,probably unwilling
+vigmar,probably unwilling,,definitely willing
+hurtoth,not very likely,,somewhat likely
+hurtself,somewhat likely,not likely at all,not likely at all
+tlkfam,yes,,no
+meddoc,yes,yes,no
+mentldoc,yes,yes,no
+sphealer,no,yes,no
+musthosp,no,,no
+dangrslf,yes,,no
+KNWMW1,male,,transgender ftm
+KNWMW2,male,,transgender ftm
+KNWMW3,female,male,male
+MHP1R1,child,,spouse/partner (current/ex)
+MHP3R1,other family,,student/classmate
+MHP4R1,friend,friend,spouse/partner (current/ex)
+CLOSETO1,c,,d
+CLOSETO4,c,e,c
+SEETALK2,c,,c
+SEETALK3,c,,d
+SEETALK4,c,,c
+MHTREAT1,no,,unsure
+MHTREAT2,unsure,,yes
+MHTREAT3,no,,yes
+MHTREAT4,no,,unsure
+MYPROBS1,c,c,c
+MYPROBS2,c,,d
+MYPROBS5,c,,c
+SEVERE1,a,,e
+SEVERE3,b,c,b
+SEVERE5,d,,c
+DANGOTH1,c,,c
+DANGOTH2,d,,e
+DANGOTH3,c,e,d
+DANGOTH4,c,,c
+DANGSLF3,c,,d
+DANGSLF4,c,,c
+DANGSLF5,e,,d
+fammhneg,not very much,,not very much
+othmhneg,somewhat,,not at all
+diagnosd,yes,,yes
+MCSDS2,True,,False
+MCSDS3,True,,True
+MCSDS4,False,,True
+othlang,no,,yes
+emailmin,c,,d
+emailhr,c,,e
+wwwmin,c,,d
+waypaid,c,,c
+wrksched,day shift,,rotating shifts
+moredays,c,,d
+mustwork,yes,,yes
+wrkhome,never,,more than once a week
+famwkoff,not too hard,not too hard,not at all hard
+famvswk,rarely,,never
+hrsrelax,d,,d
+learnnew,strongly agree,,disagree
+workdiff,strongly agree,strongly agree,strongly disagree
+myskills,strongly agree,,strongly agree
+trustman,agree,,agree
+safefrst,strongly agree,,strongly agree
+teamsafe,strongly agree,,disagree
+safehlth,strongly agree,,agree
+wksmooth,strongly agree,,disagree
+trdunion,disagree,,disagree
+partteam,"yes, i work as part of a team",,"yes, i work as part of a team"
+toofewwk,sometimes,,often
+promteok,not at all true,very true,not too true
+opdevel,somewhat true,,not too true
+wkfreedm,very true,,very true
+fringeok,not too true,,not too true
+supcares,very true,,not at all true
+promtefr,not too true,,not at all true
+wrktime,very true,,not at all true
+cowrkhlp,very true,,not at all true
+manvsemp,quite good,,quite good
+hvylift,yes,,no
+wkpraise,yes,yes,yes
+laidoff,no,,no
+JOBFIND1,not easy at all to find similar job,,very easy to find similar job
+wksexism,yes,,yes
+wkharoth,no,,no
+HEALTH1,excellent,,poor
+physhlth,c,,d
+usedup,sometimes,,never
+backpain,yes,,yes
+hurtatwk,c,,e
+slpprblm,sometimes,,never
+SATJOB1,very satisfied,,very satisfied
+knowschd,between 3 and 4 weeks,,one week or less
+usetech,c,,b
+hyperten,yes,,no
+diabetes,no,,yes
+weight,c,,c
+height,c,,c
+misswork,c,,c
+quallife,excellent,,fair
+hlthmntl,excellent,,excellent
+satsoc,good,,poor
+physacts,completely,,moderately
+ratepain,c,,c
+abfelegl,should,should,should
+abmoral,it depends,,morally opposed
+ABSTATE1,easy,,hard
+ABSTATE2,stay the same as now,,make it easier
+ABHELP3,yes,,no
+abinspay,people should be able,,people should not be able
+natnotice,strongly agree,strongly agree,somewhat disagree
+natsat,strongly agree,,strongly disagree
+natactive,strongly agree,strongly agree,strongly agree
+natmeet,strongly agree,somewhat agree,strongly agree
+natlack,strongly disagree,strongly agree,strongly disagree
+whynopet,too much time or work to care for pet,,no interest
+CATB4,did not have,,did not have
+SMAMMALB4,did not have,,did not have
+BIRDB4,did not have,,had
+FISHB4,did not have,,had
+HORSEB4,did not have,,did not have
+OTHPETB4,did not have,did not have,did not have
+PETB4CMFRT,often,,often
+PETB4FAM,almost always,,sometimes
+stockval,e,e,e
+extraval,e,,c
+extrayr,e,,b
+colscinm,e,e,c
+visnhist,e,c,c
+slfmangd,yes,,no
+wealth,$1 million to $2 million,,$2 million to $3 million
+buyesop,i would be less likely to buy from an employee-owned company,,i would be less likely to buy from an employee-owned company
+esopnot,i would probably take the job with the esop (employee stock ownership plan) or cash profit sharing,i would probably take the job with the esop (employee stock ownership plan) or cash profit sharing,i would definitely take the job without the esop (employee stock ownership plan) or cash profit sharing
+mhunsure,"disagree, or",strongly agree,strongly disagree?
+mhdiagno,yes,no,yes
+prvdhlth,private companies/for-profit organizations,,non-profit organizations/charities/cooperatives
+POLEFF11,agree,neither agree nor disagree,strongly agree
+posslqy,i am married and living in the same household as my husband or wife.,,"i have a steady partner, and we live in the same household."
+demands,"no, never",,"no, never"
+knwcuttr,family or relative,,someone else i know
+knwlawyr,family or relative,close friend,family or relative
+smallgap,disagree,,strongly agree
+govlazy,disagree,,strongly disagree
+partpart,never,,once in the past year
+hlphome,close family member,,more distant family member
+hlppaper,private companies,other persons,family members or close friends
+LONELY2,rarely,,very often
+LONELY3,rarely,,very often
+trbigbus,c,,a
+dinefrds,several times a year,once a month,two to three times a month
+newfrds,rarely,,rarely
+conwkday,20-49 people,5-9 people,100 or more people
+cntctpar,my parents are no longer alive,,the parent i have contact with most frequently lives with me
+cntctfam,several times a week,,i do not have other family members
+cntctfrd,several times a week,,the close friend i have contact with the most frequently lives with me
+healthissp,excellent,,poor
+pilingup,rarely,never,rarely
+mygoals,mostly true,,mostly untrue
+satlife,mostly satisfied,,mostly satisfied
+numlangs,one language,,four or more languages
+goodlife,neither,,neither
+meovrwrk,neither agree nor disagree,neither agree nor disagree,neither agree nor disagree
+localnum,"1,000-1,999",,10-49
+relactiv,nearly every week,,nearly every week
+cantrust,always trusted,,usually trusted
+LETIN1A,increased a little,,remain the same as it is
+partners,no partners,,"1 or more, # unknown"
+numwomen,c,,d
+PARTNRS5,no partners,,more than 100 partners
+evpaidsx,no,,no
+condom,used last time,,used last time
+relatsex,"yes, in relationship",,"no, no relationship"
+HIVTEST1,e,,c
+sexornt,heterosexual or straight,heterosexual or straight,"gay, lesbian, or homosexual"
+sexnow,women,women,transgender
+realinc,e,,c
+realrinc,c,,e
+coninc,e,,b
+conrinc,d,c,c
+ethnic,ireland,other spanish,sweden
+ETH3,ireland,,spain
+hispanic,not hispanic,,costa rican
+vetyears,none,,less than 2 yrs
+dwelown,own or is buying,own or is buying,pays rent
+DWELOWN16,owned or was buying,,paid rent
+wordf,correct,,incorrect
+wordi,correct,,incorrect
+GENDER1,male,,female
+OLD1,c,c,b
+MAR1,married,,married
+RELATE2,spouse,spouse,parent or parent-in-law
+OLD2,d,,c
+OLD4,e,,c
+OLD5,e,,d
+OLD9,e,e,d
+respnum,2nd person,,6th person
+famgen,1 gen,1 gen,"2 gens, grandchldrn"
+rplace,spouse,spouse,other relative
+rvisitor,r. is household member,,r. is household member
+visitors,no visitors,no visitors,no visitors
+RELHH2,spouse,"child, unsp",other non-rlative
+ISCO88,c,,e
+MAISCO88,e,c,c
+SPISCO88,c,b,d
+ISCO08,medical imaging and therapeutic equipment technicians,nursing professionals,journalists
+PAISCO08,business services and administration managers not elsewhere classified,restaurant managers,"crane, hoist and related plant operators"
+SPISCO08,medical imaging and therapeutic equipment technicians,,health associate professionals not elsewhere classified
+SEI10,c,,b
+SEI10EDUC,d,c,e
+MASEI10,e,,d
+MASEI10EDUC,e,,b
+MASEI10INC,e,e,c
+SPSEI10INC,c,,b
+COSEI10EDUC,e,,e
+COSEI10INC,e,,c
+COPRES10,e,,c
+COPRES105PLUS,e,,c
+zodiac,aries,cancer,libra
+inthisp,not hispanic,not hispanic,puerto rican
+WHOELSE2,no,,yes
+feeused,"yes, money",,"yes, money"
+lngthinv,192,134,148
+intage,62,,27
+intethn,white,white,hispanic
+intsex,female,,male
+intyrs,21,,21
+ballot,ballot b,ballot b,ballot a
+version,2,1,2
+sampcode,601,,601
+huadd,yes,yes,no
+dwellpre,detached single family house,,"2-family house, 2 units one above the other"
+kidsinhh,yes,no,no
+incuspop,average,average,average
+rgroomed,about average,,very well groomed
+rweight,about the right weight,,very overweight
+wtss,c,,e
+wtssnr,c,,d
+vstrat,3301,3301,3373
+vpsu,1,1,2

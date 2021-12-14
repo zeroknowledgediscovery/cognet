@@ -1,0 +1,16 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,remove
+colmil,allowed,allowed,allowed
+libmil,not remove,not remove,remove
+libmslm,not remove,not remove,remove
+gunlaw,favor,oppose,favor
+abdefect,yes,yes,yes
+abhlth,yes,yes,yes
+pillok,agree,agree,disagree
+intmil,not at all interested,not at all interested,not at all interested
+abpoorw,almost always wrong,not wrong at all,wrong only sometimes
+godchnge,"believe now, always have","believe now, always have","believe now, didn't used to"
+religcon,disagree,not agree/dsagre,agree
+religint,strong disagree,not agree/dsagre,strongly agree
+comfort,agree,agree,neither agree nor disagree

@@ -1,0 +1,20 @@
+feature_names,sample,qsampled,random_sample
+libcom,not remove,not remove,remove
+spkmil,allowed,allowed,allowed
+colmil,allowed,allowed,allowed
+libmil,not remove,,remove
+libmslm,not remove,remove,remove
+gunlaw,favor,favor,favor
+reliten,strong,not very strong,not very strong
+pray,once a week,lt once a week,once a day
+prayer,approve,disapprove,approve
+bible,inspired word,inspired word,other
+abnomore,yes,yes,no
+abhlth,yes,yes,yes
+pillok,agree,strongly agree,strongly agree
+shotgun,no,no,yes
+viruses,False,False,False
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+religcon,agree,not agree/dsagre,disagree
+religint,strongly agree,disagree,not agree/dsagre
+comfort,strongly agree,agree,strongly disagree

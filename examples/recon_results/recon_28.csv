@@ -1,0 +1,8 @@
+feature_names,sample,qsampled,random_sample
+reliten,strong,not very strong,somewhat strong
+bible,inspired word,word of god,other
+polabuse,no,no,yes
+viruses,True,False,False
+intmil,very interested,not at all interested,very interested
+abpoorw,always wrong,always wrong,always wrong
+comfort,agree,agree,disagree

@@ -1,0 +1,16 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,remove
+spkmil,allowed,allowed,allowed
+libhomo,not remove,not remove,remove
+libmslm,not remove,remove,remove
+pray,several times a day,once a day,once a day
+abdefect,yes,yes,yes
+abpoor,yes,yes,yes
+abany,yes,yes,no
+pillok,agree,agree,strongly disagree
+owngun,no,no,yes
+shotgun,no,no,no
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+prayfreq,several times a week,about once a month,2-3 times a month
+comfort,strongly agree,agree,strongly disagree

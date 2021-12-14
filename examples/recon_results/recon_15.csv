@@ -1,0 +1,16 @@
+feature_names,sample,qsampled,random_sample
+libcom,not remove,not remove,remove
+colmil,allowed,not allowed,allowed
+libhomo,not remove,not remove,remove
+bible,book of fables,word of god,inspired word
+abdefect,yes,yes,yes
+abnomore,yes,yes,no
+abpoor,yes,yes,yes
+abrape,yes,yes,yes
+absingle,yes,yes,no
+pillok,strongly agree,agree,strongly disagree
+rowngun,yes,yes,yes
+viruses,False,False,True
+godchnge,"believe now, didn't used to","believe now, always have","don't believe now, used to"
+religint,strong disagree,not agree/dsagre,agree
+comfort,agree,agree,strongly disagree

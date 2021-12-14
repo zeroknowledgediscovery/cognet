@@ -1,0 +1,16 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,fired,fired
+spkmil,not allowed,not allowed,allowed
+libmil,remove,not remove,remove
+libmslm,remove,not remove,remove
+reliten,somewhat strong,not very strong,not very strong
+prayer,approve,approve,disapprove
+abdefect,yes,yes,yes
+abrape,yes,yes,yes
+abany,yes,yes,no
+pillok,strongly agree,agree,strongly disagree
+intmil,very interested,moderately interested,not at all interested
+abpoorw,not wrong at all,not wrong at all,almost always wrong
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+religcon,not agree/dsagre,not agree/dsagre,agree
+comfort,agree,agree,strongly disagree

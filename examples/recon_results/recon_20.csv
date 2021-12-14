@@ -1,0 +1,13 @@
+feature_names,sample,qsampled,random_sample
+colcom,fired,fired,fired
+libcom,remove,not remove,remove
+libmslm,remove,not remove,remove
+reliten,not very strong,strong,not very strong
+conlabor,a great deal,hardly any,hardly any
+abdefect,yes,yes,yes
+abnomore,no,no,yes
+abhlth,yes,yes,no
+abany,no,no,yes
+polabuse,yes,no,yes
+owngun,no,no,no
+shotgun,no,no,yes

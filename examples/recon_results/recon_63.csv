@@ -1,0 +1,12 @@
+feature_names,sample,qsampled,random_sample
+spkcom,allowed,allowed,allowed
+libcom,not remove,not remove,remove
+libmil,not remove,not remove,remove
+libhomo,not remove,not remove,remove
+bible,book of fables,inspired word,inspired word
+conlabor,only some,hardly any,hardly any
+abnomore,yes,yes,yes
+abpoor,yes,yes,yes
+absingle,yes,yes,no
+polabuse,no,no,yes
+owngun,no,no,yes

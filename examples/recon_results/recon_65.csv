@@ -1,0 +1,11 @@
+feature_names,sample,qsampled,random_sample
+bible,inspired word,book of fables,other
+conlabor,only some,only some,a great deal
+pillok,agree,strongly disagree,agree
+viruses,True,False,False
+intmil,very interested,moderately interested,very interested
+abpoorw,not wrong at all,always wrong,always wrong
+godchnge,"believe now, always have","believe now, always have","believe now, always have"
+prayfreq,several times a week,several times a week,several times a year
+religcon,not agree/dsagre,strongly agree,strongly agree
+comfort,strongly agree,agree,agree

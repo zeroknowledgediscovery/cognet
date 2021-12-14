@@ -1,0 +1,8 @@
+feature_names,sample,qsampled,random_sample
+grass,legal,legal,legal
+reliten,strong,strong,somewhat strong
+pray,once a day,several times a week,several times a week
+prayer,disapprove,approve,approve
+conlabor,only some,only some,hardly any
+viruses,True,False,False
+intmil,very interested,not at all interested,very interested

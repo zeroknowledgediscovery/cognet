@@ -1,0 +1,17 @@
+feature_names,sample,qsampled,random_sample
+colmil,allowed,allowed,allowed
+libmil,not remove,remove,remove
+libhomo,not remove,not remove,remove
+libmslm,not remove,not remove,remove
+gunlaw,favor,favor,oppose
+grass,legal,legal,not legal
+bible,inspired word,word of god,inspired word
+conlabor,only some,only some,hardly any
+abnomore,no,no,yes
+abhlth,yes,yes,yes
+abrape,yes,yes,no
+absingle,no,no,yes
+abany,yes,no,no
+polabuse,no,no,yes
+owngun,no,no,yes
+shotgun,no,no,yes

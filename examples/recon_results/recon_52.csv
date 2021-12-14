@@ -1,0 +1,13 @@
+feature_names,sample,qsampled,random_sample
+spkmil,allowed,not allowed,allowed
+colmil,allowed,not allowed,allowed
+libmil,not remove,not remove,remove
+libmslm,not remove,remove,remove
+gunlaw,favor,favor,oppose
+grass,legal,legal,not legal
+abnomore,yes,yes,yes
+abrape,yes,yes,yes
+absingle,yes,yes,no
+abany,yes,yes,yes
+polabuse,no,no,yes
+owngun,no,no,no

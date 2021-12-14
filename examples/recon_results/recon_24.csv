@@ -1,0 +1,17 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,not fired,fired
+colmil,allowed,allowed,allowed
+libmslm,not remove,not remove,remove
+gunlaw,oppose,favor,oppose
+pray,never,several times a day,once a day
+prayer,approve,disapprove,approve
+abdefect,yes,yes,yes
+abnomore,yes,yes,no
+abpoor,yes,yes,yes
+pillok,strongly agree,agree,strongly disagree
+owngun,no,no,no
+shotgun,no,no,yes
+viruses,False,True,True
+intmil,moderately interested,moderately interested,not at all interested
+godchnge,"don't believe now, never have","don't believe now, used to","don't believe now, used to"
+religcon,agree,disagree,disagree

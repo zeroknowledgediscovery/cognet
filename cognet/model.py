@@ -55,7 +55,8 @@ class model:
         self.features = featurenames
 
     def save(self,
-             file_path=None):
+             file_path=None,
+             low_mem = False):
         """save qnet
 
         Args:
@@ -64,7 +65,7 @@ class model:
         assert_None([self.myQnet])
         if file_path is None:
             file_path = 'tmp_Qnet.joblib'
-        save_qnet(self.myQnet, file_path)
+        save_qnet(self.myQnet, file_path, low_mem=low_mem)
     
     def load(self,
              file_path,

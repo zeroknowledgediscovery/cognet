@@ -1,0 +1,14 @@
+feature_names,sample,qsampled,random_sample
+colcom,not fired,not fired,fired
+spkmil,not allowed,allowed,allowed
+pray,several times a day,once a day,several times a week
+bible,inspired word,word of god,inspired word
+abnomore,no,yes,no
+abpoor,no,no,yes
+abany,no,yes,yes
+owngun,no,no,refused
+viruses,False,False,False
+intmil,not at all interested,moderately interested,not at all interested
+abpoorw,always wrong,always wrong,almost always wrong
+godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
+prayfreq,several times a week,several times a week,2-3 times a month

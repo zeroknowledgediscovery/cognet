@@ -1,0 +1,8 @@
+feature_names,sample,qsampled,random_sample
+reliten,not very strong,not very strong,somewhat strong
+pray,lt once a week,several times a day,several times a day
+prayer,approve,approve,approve
+conlabor,only some,only some,hardly any
+viruses,False,False,False
+godchnge,"believe now, always have","believe now, always have","believe now, always have"
+prayfreq,about once a month,several times a week,several times a year
