@@ -40,6 +40,7 @@ class model:
             raise ValueError("input either samples and features or data object, not both!")
         elif data_obj is not None:
             featurenames, samples=data_obj.Qnet_formatter() # returns the training data
+            print(len(samples))
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None > 1:
             raise ValueError("input both samples and features or data object!")
@@ -54,7 +55,8 @@ class model:
         self.features = featurenames
 
     def save(self,
-             file_path=None):
+             file_path=None,
+             low_mem = False):
         """save qnet
 
         Args:
@@ -63,7 +65,7 @@ class model:
         assert_None([self.myQnet])
         if file_path is None:
             file_path = 'tmp_Qnet.joblib'
-        save_qnet(self.myQnet, file_path)
+        save_qnet(self.myQnet, file_path, low_mem=low_mem)
     
     def load(self,
              file_path,

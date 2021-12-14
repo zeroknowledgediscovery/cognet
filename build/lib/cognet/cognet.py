@@ -792,7 +792,7 @@ class cognet:
           np.where(base_frequency)[0],
           np.mean(rnd_match_prob),
           np.mean(max_match_prob),
-          s_rand
+          random_sample
         '''
         if self.samples is not None:
             s0=s.copy()
@@ -815,12 +815,12 @@ class cognet:
                 if base_frequency[i]>0.0001:
                     s1[i]=''
                     
-            s_rand=np.copy(s)
+            random_sample=np.copy(s)
             rnd_match_prob=[]        
             max_match_prob=[]        
             D=self.qnet.predict_distributions(s)
             for i in MASKrand:
-                s_rand[np.where(
+                random_sample[np.where(
                     self.cols==i)[0][0]]=self.__choose_one(
                         self.D_null[np.where(self.cols==i)[0][0]].keys())
                 rnd_match_prob=np.append(rnd_match_prob,1/len(
@@ -837,14 +837,17 @@ class cognet:
                 base_frequency=mutable_x/mutable_x.sum()
 
             return s1,base_frequency,MASKrand,np.where(
-                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),random_sample
         else:
             raise ValueError("load_data first!")
 
     def randomMaskReconstruction(self,
                                 index=None,
                                 return_dict=None,
-                                sample=None):
+                                sample=None,
+                                feature_names="feature_names",
+                                output_dir="recon_results/",
+                                file_name="recon_tmp.csv"):
         """reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
@@ -866,23 +869,25 @@ class cognet:
         elif index is not None:
             s=self.samples_as_strings[index]
             
-        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s, 
+        s1,bp,mask_,maskindex,rmatch_u,rmatch,random_sample=self.getMaskedSample(s, 
                                                                         mask_prob=self.mask_prob)
         if np.isnan(bp).any():
             return_dict[index] = np.nan,np.nan,np.nan
             return np.nan,np.nan,np.nan
+        
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
 
         qs=qsample(s1,self.qnet,self.steps,bp)
-
         dqestim=qdistance(s,qs,self.qnet,self.qnet)
         dactual=qdistance(s,s1,self.qnet,self.qnet)
-        qdistance_time_end = time.time()
-
-        cmpf=pd.DataFrame([s,qs,s_rand],columns=self.cols,index=['s','q','r'])[mask_].transpose()
-        cmpf.index.name='gssvar'
-        cmpf.to_csv('examples_results/CMPF_2018/CMPF-'+str(index)+'.csv')
-        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
-        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
+        
+        cmpf=pd.DataFrame([s,qs,random_sample],columns=self.cols,index=['sample','qsampled','random_sample'])[mask_].transpose()
+        cmpf.index.name= feature_names
+        file_name = file_name.replace("tmp", str(index))
+        cmpf.to_csv(output_dir+file_name)
+        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,random_sample,mask_
+        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,random_sample,mask_
 
     def randomMaskReconstruction_multiple(self,
                                           out_file):
@@ -915,7 +920,7 @@ class cognet:
         # cmprdf.to_csv("examples_results/CMPF_"+"tmp"+".csv")
         # print(cmprdf)
         # result=result[[0,1,2]]
-        result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err'])
+        result=pd.DataFrame(result,columns=['rederr','r_prob','rand_err','sample','qsampled','random_sample','mask_'])
         result.rederr=result.rederr.astype(float)
 
         if self.poles is not None:
