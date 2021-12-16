@@ -2,6 +2,9 @@ from quasinet.qnet import Qnet, load_qnet, save_qnet
 from quasinet.qnet import export_qnet_tree, export_qnet_graph
 from cognet.util import assert_None
 
+from io import BytesIO, StringIO
+import requests
+
 class model:
     """Facilitate training and constructing Qnet
     """
@@ -81,7 +84,12 @@ class model:
         """
         if VERBOSE:
             print("loading..")
-        self.myQnet = load_qnet(file_path)
+        # check if reading from url or local directory
+        if "https" in file_path or "www." in file_path:
+            url_file = BytesIO(requests.get(file_path).content)
+            self.myQnet = load_qnet(url_file)
+        else:
+            self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
         if VERBOSE:
             print("done")
