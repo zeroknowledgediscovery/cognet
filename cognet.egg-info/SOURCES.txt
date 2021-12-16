@@ -74,6 +74,7 @@ examples/cognet_example.ipynb
 examples/cognet_example.py
 examples/cognet_example_run.sh
 examples/cognet_example_setup.sh
+examples/launcher.sh
 examples/.ipynb_checkpoints/GSS_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
