@@ -24,6 +24,6 @@ git tag $VERSION -m "$COMMENT"
 git push --tags
 
 twine check dist/*
-twine upload dist/*
+twine upload dist/* --verbose
 
 echo __version__ = \'$NEW_VERSION\' > version.py
