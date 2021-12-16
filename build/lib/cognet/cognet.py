@@ -997,18 +997,36 @@ class cognet:
         return pd.DataFrame(return_dict.copy())
     
     def dmat_filewriter(self,
-                        pyfile,
                         QNETPATH,
+                        pyfile="cognet_qdistmatrix.py",
                         MPI_SETUP_FILE="mpi_setup.sh",
                         MPI_RUN_FILE="mpi_run.sh",
-                        MPI_LAUNCHER_FILE="/project2/ishanu/LAUNCH_UTILITY/launcher_s.sh",
+                        MPI_LAUNCHER_FILE="launcher.sh",
                         YEARS='2016',
                         NODES=4,
                         T=12,
                         num_samples=None,
                         OUTFILE='tmp_distmatrix.csv',
                         tmp_samplesfile="tmp_samples_as_strings.csv"):
-        if all(x is not None for x in [self.poles_dict,self.features,
+        """generate files to compute qdistance matrix using mpi parallelization
+
+        Args:
+          QNETPATH (str): Qnet filepath
+          pyfile (str, optional): Name of generated python file. Defaults to "cognet_qdistmatrix.py".
+          MPI_SETUP_FILE (str, optional): Name of mpi setup script. Defaults to "mpi_setup.sh".
+          MPI_RUN_FILE (str, optional): Name of mpi run script. Defaults to "mpi_run.sh".
+          MPI_LAUNCHER_FILE (str, optional): Launcher script filepath. Defaults to "launcher.sh".
+          YEARS (str, optional): If looping by year, not currently implemented. Defaults to '2016'.
+          NODES (int, optional): Number of nodes to use. Defaults to 4.
+          T (int, optional): Number of hours to reserve nodes for. Defaults to 12.
+          num_samples ([type], optional): How many samples to take. Defaults to None.
+          OUTFILE (str, optional): CSV File to write computed qdist matrix. Defaults to 'tmp_distmatrix.csv'.
+          tmp_samplesfile (str, optional): CSV File to write samples as strings. Defaults to "tmp_samples_as_strings.csv".
+
+        Raises:
+            ValueError: load data if qnet, features, or samples are not present]
+        """
+        if all(x is not None for x in [self.samples,self.features,
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
@@ -1022,7 +1040,7 @@ class cognet:
             
             w = self.samples.index.size
             
-            # write files for DMAT, .py file and run, setup scripts
+            # writing python file
             with open(tmp_path+pyfile, 'w+') as f:
                 f.writelines(["from mpi4py.futures import MPIPoolExecutor\n",
                               "import numpy as np\n",
@@ -1055,7 +1073,8 @@ class cognet:
 	                          "\tresult = result.to_numpy()\n",
                               "\tresult = pd.DataFrame(np.maximum(result, result.transpose()))\n"
                               "\tresult.to_csv(\'{}\',index=None,header=None)".format(OUTFILE)])
-                
+            
+            # writing MPI setup file
             with open(tmp_path+MPI_SETUP_FILE, 'w+') as ms:
                 ms.writelines(["#!/bin/bash\n",
                                "YEAR=$1\n\n",
@@ -1083,6 +1102,7 @@ class cognet:
                                "echo \"date; mpiexec -n \"$NUMPROC\" python3 -m mpi4py.futures {}; date\"  >> $PROG\n".format(pyfile),
                                 ])
 
+            # writing MPI run file
             with open(tmp_path+MPI_RUN_FILE, 'w+') as mr:
                 mr.writelines(["#!/bin/bash\n",
                                "YEARS=\'{}\'\n".format(YEARS),
