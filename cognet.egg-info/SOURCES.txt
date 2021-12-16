@@ -67,6 +67,7 @@ examples/PTSD_cognet.ipynb
 examples/QNET_TEST_1_2018_.sbc
 examples/QNET_TEST_2018_.sbc
 examples/README.md
+examples/URL_to_Qnet.ipynb
 examples/Yearly_polarseparation.ipynb
 examples/cognet_example-Copy1.ipynb
 examples/cognet_example.ipynb
@@ -76,9 +77,13 @@ examples/cognet_example_setup.sh
 examples/.ipynb_checkpoints/GSS_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
+examples/.ipynb_checkpoints/URL_to_Qnet-checkpoint.ipynb
 examples/.ipynb_checkpoints/Yearly_polarseparation-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-Copy1-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
+examples/.ipynb_checkpoints/cognet_example-checkpoint.py
+examples/.ipynb_checkpoints/cognet_example_run-checkpoint.sh
+examples/.ipynb_checkpoints/cognet_example_setup-checkpoint.sh
 examples/examples_data/.gitattributes
 examples/examples_data/2018_features.csv
 examples/examples_data/2021 XSEC R1 Methodological Primer.pdf

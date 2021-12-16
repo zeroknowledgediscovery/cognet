@@ -357,8 +357,8 @@ class cognet:
         """
         if self.qnet is None:
             raise ValueError("load qnet first!")
-        bp1 = self.getBaseFrequency(sample1)
-        bp2 = self.getBaseFrequency(sample2)
+        #bp1 = self.getBaseFrequency(sample1)
+        #bp2 = self.getBaseFrequency(sample2)
         # qsample samples
         sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
         sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
