@@ -3,9 +3,9 @@ YEARS='2016'
 # nodes requested
 NODES=4
 # time requested
-T=3
+T=2
 NUM='all'
-LAUNCH='/project2/ishanu/LAUNCH_UTILITY/launcher_s.sh'
+LAUNCH='launcher.sh'
 
 for yr in `echo $YEARS`
 do

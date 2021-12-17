@@ -1001,7 +1001,7 @@ class cognet:
                         pyfile="cognet_qdistmatrix.py",
                         MPI_SETUP_FILE="mpi_setup.sh",
                         MPI_RUN_FILE="mpi_run.sh",
-                        MPI_LAUNCHER_FILE="launcher.sh",
+                        MPI_LAUNCHER_FILE="../launcher.sh",
                         YEARS='2016',
                         NODES=4,
                         T=12,
