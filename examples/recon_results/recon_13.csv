@@ -1,20 +1,101 @@
 feature_names,sample,qsampled,random_sample
-spkcom,allowed,not allowed,allowed
-colcom,not fired,not fired,fired
-spkmil,not allowed,not allowed,allowed
-colmil,not allowed,not allowed,allowed
-libhomo,not remove,not remove,remove
-gunlaw,favor,oppose,favor
-reliten,not very strong,strong,not very strong
-bible,inspired word,inspired word,inspired word
-abdefect,no,yes,no
-abnomore,no,no,yes
-abhlth,yes,yes,yes
-pillok,strongly agree,strongly agree,strongly agree
-owngun,no,no,yes
-shotgun,no,no,no
-abpoorw,almost always wrong,always wrong,wrong only sometimes
-godchnge,"believe now, always have","believe now, always have","don't believe now, used to"
-prayfreq,several times a week,several times a week,about once a month
-religcon,disagree,strongly agree,disagree
-comfort,agree,agree,disagree
+ptsd2,1,1,4
+ptsd5,1,1,3
+ptsd6,2,3,1
+ptsd9,3,1,5
+ptsd16,2,2,5
+ptsd19,4,,2
+ptsd21,2,1,5
+ptsd23,2,2,4
+ptsd26,3,2,4
+ptsd27,3,3,2
+ptsd31,4,3,1
+ptsd35,2,,5
+ptsd40,3,2,1
+ptsd42,1,2,1
+ptsd43,2,2,4
+ptsd45,1,3,4
+ptsd52,3,4,1
+ptsd55,3,2,3
+ptsd57,2,2,3
+ptsd61,2,2,4
+ptsd62,1,1,1
+ptsd66,2,,1
+ptsd67,1,,3
+ptsd68,2,2,5
+ptsd69,2,1,3
+ptsd71,3,5,4
+ptsd72,3,,2
+ptsd73,2,,1
+ptsd75,2,1,2
+ptsd77,2,2,2
+ptsd78,4,4,2
+ptsd79,1,2,2
+ptsd80,3,,5
+ptsd82,2,3,1
+ptsd83,2,2,4
+ptsd84,1,3,5
+ptsd85,1,5,2
+ptsd89,1,1,5
+ptsd90,4,2,3
+ptsd93,2,,3
+ptsd96,1,4,1
+ptsd97,3,,3
+ptsd99,2,3,3
+ptsd100,2,,3
+ptsd101,1,5,3
+ptsd103,2,2,2
+ptsd105,2,2,3
+ptsd106,2,,1
+ptsd107,3,2,3
+ptsd108,1,,2
+ptsd114,1,,5
+ptsd116,4,1,2
+ptsd117,2,,4
+ptsd118,1,1,4
+ptsd120,2,1,2
+ptsd121,2,3,3
+ptsd122,3,1,3
+ptsd124,2,,1
+ptsd125,3,4,4
+ptsd126,2,,2
+ptsd128,1,2,3
+ptsd130,1,1,3
+ptsd132,2,1,1
+ptsd133,3,,1
+ptsd136,3,,4
+ptsd137,2,4,1
+ptsd141,1,4,2
+ptsd144,1,2,2
+ptsd145,1,1,2
+ptsd146,3,,3
+ptsd147,2,,2
+ptsd149,2,,5
+ptsd153,1,,1
+ptsd155,2,4,5
+ptsd159,5,5,3
+ptsd160,2,2,1
+ptsd163,2,4,5
+ptsd164,2,2,4
+ptsd165,2,3,1
+ptsd169,2,3,5
+ptsd171,1,,3
+ptsd173,2,1,1
+ptsd174,4,2,3
+ptsd175,2,3,3
+ptsd178,2,1,1
+ptsd180,2,2,4
+ptsd185,3,,1
+ptsd186,3,3,3
+ptsd189,2,,3
+ptsd191,2,1,4
+ptsd193,2,3,5
+ptsd194,3,,4
+ptsd195,4,2,2
+ptsd198,2,1,3
+ptsd199,3,2,2
+ptsd201,1,,3
+ptsd202,2,2,3
+ptsd203,2,4,3
+ptsd205,2,4,4
+ptsd209,2,,4

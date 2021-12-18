@@ -1051,7 +1051,7 @@ class cognet:
 
                 f.writelines(["w = {}\n".format(w),
                               "h = w\n",
-                              "p_all = pd.read_csv(\"{}\", header=None)\n\n".format(tmp_samplesfile)])
+                              "p_all = pd.read_csv(\"{}\", header=None).values.astype(str)[:]\n\n".format(tmp_samplesfile)])
 
                 f.writelines(["def distfunc(x,y):\n",
                               "\td=qdistance(x,y,qnet,qnet)\n",
@@ -1059,10 +1059,10 @@ class cognet:
 
                 f.writelines(["def dfunc_line(k):\n",
                               "\tline = np.zeros(w)\n",
-                              "\ty = np.array(p_all.iloc[k])\n",
+                              "\ty = p_all[k]\n",
                               "\tfor j in range(w):\n",
                               "\t\tif j > k:\n",
-                              "\t\t\tx = np.array(p_all.iloc[j])\n",
+                              "\t\t\tx = p_all[j]\n",
                               "\t\t\tline[j] = distfunc(x, y)\n",
                               "\treturn line\n\n"])
 
@@ -1116,7 +1116,7 @@ class cognet:
                                "do\n",
                                "\techo $yr\n",
                                "\t./{} $yr $NODES $NUM tmp_\"$yr\"\n".format(MPI_SETUP_FILE),
-                               "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J ACRDALL_\"$yr\" -M 56\n",
+                               "\t$LAUNCH -P tmp_\"$yr\" -F -T $T -N \"$NODES\" -C 28 -p broadwl -J MPI_TMP_\"$yr\" -M 56\n",
                                "done\n",
                                "rm tmp_\"$yr\"*\n"])
             os.system("cp {} {}".format(MPI_LAUNCHER_FILE,tmp_path+'mpi_launcher.sh'))

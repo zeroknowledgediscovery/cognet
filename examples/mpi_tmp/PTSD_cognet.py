@@ -7,7 +7,7 @@ from quasinet.qsampling import qsample, targeted_qsample
 qnet=load_qnet('../examples_results/PTSD_cognet_test.joblib')
 w = 304
 h = w
-p_all = pd.read_csv("tmp_samples_as_strings.csv", header=None)
+p_all = pd.read_csv("tmp_samples_as_strings.csv", header=None).values.astype(str)[:]
 
 def distfunc(x,y):
 	d=qdistance(x,y,qnet,qnet)
@@ -15,10 +15,10 @@ def distfunc(x,y):
 
 def dfunc_line(k):
 	line = np.zeros(w)
-	y = np.array(p_all.iloc[k])
+	y = p_all[k]
 	for j in range(w):
 		if j > k:
-			x = np.array(p_all.iloc[j])
+			x = p_all[j]
 			line[j] = distfunc(x, y)
 	return line
 

@@ -5,12 +5,12 @@ NODES=4
 # time requested
 T=2
 NUM='all'
-LAUNCH='launcher.sh'
+LAUNCH='../launcher.sh'
 
 for yr in `echo $YEARS`
 do
 	echo $yr
 	./mpi_setup.sh $yr $NODES $NUM tmp_"$yr"
-	$LAUNCH -P tmp_"$yr" -F -T $T -N "$NODES" -C 28 -p broadwl -J ACRDALL_"$yr" -M 56
+	$LAUNCH -P tmp_"$yr" -F -T $T -N "$NODES" -C 28 -p broadwl -J MPI_TMP_1"$yr" -M 56
 done
 rm tmp_"$yr"*

@@ -2,7 +2,7 @@
 #SBATCH --job-name=ACRDALL_2016
 #SBATCH --output=/project2/ishanu/NLS_DATA/cognet/examples/mpi_tmp/ACRDALL_2016O.out
 #SBATCH --error=/project2/ishanu/NLS_DATA/cognet/examples/mpi_tmp/ACRDALL_2016E.err
-#SBATCH --time=3:00:00
+#SBATCH --time=2:00:00
 #SBATCH --qos=normal
 #SBATCH --mem=56000
 #SBATCH --nodes=4
