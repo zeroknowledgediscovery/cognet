@@ -1,131 +1,240 @@
 feature_names,sample,qsampled,random_sample
-ptsd1,3,,4
-ptsd2,2,,4
-ptsd3,5,,1
-ptsd4,4,1,3
-ptsd5,1,,1
-ptsd6,3,,5
-ptsd10,2,2,4
-ptsd12,1,,4
-ptsd14,2,,5
-ptsd15,1,,4
-ptsd17,1,4,1
-ptsd18,1,2,5
-ptsd19,1,1,5
-ptsd20,2,,1
-ptsd23,1,4,4
-ptsd24,2,1,3
-ptsd25,1,2,1
-ptsd26,2,3,2
-ptsd29,1,3,3
-ptsd31,2,1,3
-ptsd33,1,2,4
-ptsd34,1,5,1
-ptsd36,1,,1
-ptsd37,1,3,2
-ptsd39,1,1,1
-ptsd40,1,4,3
-ptsd41,1,,3
-ptsd42,1,1,3
-ptsd44,2,,2
-ptsd45,3,,1
-ptsd46,1,1,2
-ptsd47,1,,2
-ptsd49,1,1,4
-ptsd50,2,,4
-ptsd51,1,1,1
-ptsd52,1,3,3
-ptsd53,1,,1
-ptsd55,2,1,4
-ptsd57,3,4,5
-ptsd60,2,3,2
-ptsd62,1,1,1
-ptsd65,2,,3
-ptsd72,2,1,4
-ptsd73,2,,1
-ptsd76,1,5,3
-ptsd77,2,,3
-ptsd80,2,4,3
-ptsd83,1,1,3
-ptsd85,1,,2
-ptsd87,2,1,1
-ptsd88,2,2,5
-ptsd89,2,2,2
-ptsd92,2,2,3
-ptsd93,2,2,4
-ptsd96,1,,4
-ptsd102,2,,3
-ptsd103,2,1,5
-ptsd104,2,,4
-ptsd106,1,,2
-ptsd108,2,2,2
-ptsd109,3,2,3
-ptsd113,4,5,3
-ptsd114,2,2,1
-ptsd115,1,1,1
-ptsd116,1,,4
-ptsd119,2,2,3
-ptsd121,2,,1
-ptsd123,3,,3
-ptsd124,2,1,3
-ptsd125,2,,3
-ptsd126,2,2,3
-ptsd129,1,1,3
-ptsd130,1,1,2
-ptsd132,1,,5
-ptsd134,1,3,1
-ptsd135,1,4,5
-ptsd137,1,,3
-ptsd138,1,,2
-ptsd142,1,1,1
-ptsd144,1,2,4
-ptsd146,1,1,5
-ptsd147,1,3,5
-ptsd148,1,,5
-ptsd149,2,2,1
-ptsd152,1,,3
-ptsd156,1,1,3
-ptsd157,1,,5
-ptsd159,1,,1
-ptsd160,1,1,3
-ptsd161,1,2,4
-ptsd162,1,1,2
-ptsd163,1,,5
-ptsd164,2,,3
-ptsd165,2,,2
-ptsd166,2,1,3
-ptsd168,1,,2
-ptsd169,1,,3
-ptsd170,1,,2
-ptsd171,2,,2
-ptsd172,1,1,3
-ptsd174,1,2,3
-ptsd176,1,2,4
-ptsd177,1,1,3
-ptsd178,1,1,2
-ptsd179,1,3,4
-ptsd180,1,1,1
-ptsd181,2,3,4
-ptsd185,2,1,3
-ptsd186,2,,1
-ptsd187,1,,1
-ptsd188,2,1,2
-ptsd189,1,2,3
-ptsd190,1,1,1
-ptsd191,1,1,2
-ptsd193,2,,1
-ptsd194,1,5,3
-ptsd195,1,,3
-ptsd197,1,4,1
-ptsd198,1,5,2
-ptsd199,1,5,2
-ptsd200,2,1,4
-ptsd201,1,,5
-ptsd202,1,2,5
-ptsd203,1,,2
-ptsd204,1,,3
-ptsd205,1,3,2
-ptsd207,1,1,4
-ptsd208,1,2,2
-ptsd210,2,2,5
-ptsd211,3,2,2
+HRS2,e,e,b
+PRESTG105PLUS,e,d,d
+SPHRS1,e,,d
+SPHRS2,e,e,b
+SPOCC10,e,,b
+SPPRES105PLUS,e,e,c
+PAPRES10,e,,e
+MAOCC10,e,b,e
+childs,e,,c
+educ,c,,b
+paeduc,e,d,c
+maeduc,e,c,e
+speduc,e,,e
+degree,high school,,junior college
+dipged,high school diploma,,high school diploma
+race,black,white,black
+RES16,city gt 250000,,"country,nonfarm"
+INCOM16,average,below average,far below average
+granborn,e,,e
+babies,c,c,e
+preteen,c,c,d
+region,middle atlantic,,pacific
+srcbelt,"suburb, 12 lrgst",,other urban
+size,14,117,40
+polviews,moderate,,moderate
+natchld,too little,about right,about right
+natsci,too little,about right,too little
+natenrgy,too little,,about right
+natcrimy,about right,,too little
+nateducy,too little,,about right
+natfarey,too little,,too much
+tax,too high,about right,too low
+libath,not remove,,remove
+colrac,not allowed,,not allowed
+librac,remove,remove,remove
+colcom,fired,fired,not fired
+libcom,remove,,remove
+libmil,remove,,remove
+spkhomo,allowed,,allowed
+spkmslm,not allowed,,not allowed
+colmslm,not allowed,not allowed,"yes, allowed"
+cappun,favor,favor,favor
+gunlaw,favor,,favor
+courts,too harsh,not harsh enough,about right
+fund,liberal,fundamentalist,moderate
+bible,inspired word,inspired word,book of fables
+racopen,cant discriminate,cant discriminate,owner decides
+happy,pretty happy,,not too happy
+health,good,,fair
+socrel,sev times a mnth,sev times a week,once a month
+socfrend,sev times a year,,almost daily
+socbar,once a year,,once a month
+rank,c,,e
+finalter,stayed same,,better
+fepol,disagree,disagree,agree
+abdefect,yes,,yes
+abnomore,yes,no,no
+abhlth,yes,,no
+abpoor,yes,,no
+pillok,agree,disagree,agree
+premarsx,not wrong at all,,almst always wrg
+homosex,not wrong at all,,always wrong
+LETDIE1,yes,,yes
+SUICIDE3,no,,yes
+SUICIDE4,no,,no
+pistol,refused,,yes
+rifle,refused,,no
+HUNT1,neither hunts,neither hunts,respondent hunts
+tvhours,c,,b
+comprend,good,,poor
+form,alternate <y>,alternate <y>,standard <x>
+fepresch,disagree,disagree,disagree
+RACDIF1,yes,yes,no
+RACDIF4,no,no,no
+reborn,no,no,yes
+wlthwhts,e,c,e
+wlthblks,e,,e
+workhsps,c,,e
+intlwhts,c,c,e
+intlblks,c,,c
+intlhsps,c,c,e
+liveblks,strongly favor,,oppose
+MARAsian,neither favor nor oppose,,strongly oppose
+marwht,neither favor nor oppose,,favor
+fehire,agree,,disagree
+CLOSETO1,e,,c
+CLOSETO2,e,,b
+SEETALK4,e,,c
+SEETALK5,e,,e
+MYPROBS2,e,,e
+MYPROBS5,e,,c
+SEVERE1,e,,b
+SEVERE2,e,,d
+SEVERE4,e,e,d
+SEVERE5,e,e,d
+DANGOTH1,e,,e
+DANGOTH2,e,,e
+DANGOTH4,e,e,d
+DANGOTH5,e,e,e
+DANGSLF1,e,,b
+DANGSLF3,e,e,c
+DANGSLF4,e,,e
+DANGSLF5,e,e,e
+relpersn,modrte religious,,modrte religious
+compuse,yes,,no
+emailhr,e,,c
+wwwhr,e,,d
+hlthdays,e,c,c
+hurtatwk,e,,e
+ntwkhard,e,,c
+misswork,e,,c
+LIFEIN5,e,e,c
+poorserv,a few times a year,never,less than once a year
+notsmart,a few times a year,,almost every day
+afraidof,never,,a few times a year
+hlthmntl,good,,excellent
+actssoc,very good,,poor
+physacts,completely,,completely
+ratepain,b,,e
+ABSTATE1,neither easy nor hard,easy,very easy
+ABSTATE2,stay the same as now,,make it easier
+ABHELP2,no,,yes
+ABHELP3,yes,,yes
+ABHELP4,yes,,yes
+abinspay,people should be able,,people should not be able
+numpets,e,,d
+extraval,e,e,e
+yearval,e,,e
+numemps,c,,d
+newsfrom,friends colleagues,,family
+nextgen,agree,strongly agree,strongly agree
+toofast,agree,,disagree
+advfront,agree,agree,strongly agree
+astrolgy,no,,yes
+scibnfts,benefits greater,,harmful results greater
+balpos,slightly in favor,slightly in favor,strongly in favor
+scistudy,little understanding,general sense,clear understanding
+boyorgrl,True,True,False
+electron,True,,False
+condrift,True,,True
+earthsun,earth around sun,,earth around sun
+solarrev,one year,,other time period if volunteered
+colsci,no,no,no
+colscinm,e,,d
+hsbio,no,,yes
+hschem,no,no,yes
+intecon,moderately interested,,not at all interested
+intspace,moderately interested,,not at all interested
+vissci,c,c,d
+scienthe,agree,,strongly disagree
+scientbe,agree,agree,disagree
+buyvalue,e,e,d
+numorg,e,e,d
+ratetone,e,e,c
+marcohab,na,married,"not married, no cohabitating partner"
+trcourts,e,,c
+intcntct,e,,e
+HOMOSEX1,not wrong at all,,not wrong at all
+conbiz,some confidence,a great deal of confidence,very little confidence
+concourt,some confidence,,a great deal of confidence
+clergvte,neither agree nor disagree,agree,disagree
+theism,neither agree nor disagree,agree,agree
+fatalism,disagree,strongly agree,strongly agree
+godmeans,disagree,,disagree
+nihilism,strongly disagree,,strongly disagree
+egomeans,agree,,agree
+trustsci,not agree/dsagre,not agree/dsagre,not agree/dsagre
+religcon,not agree/dsagre,,strongly agree
+RELEXT1,probably not,probably,probably not
+mywaygod,neither agree nor disagree,agree,agree
+relobjct,no,,no
+vistholy,never,,several times a year
+makefrnd,neither agree nor disagree,,strongly disagree
+relgenbar,neither agree nor disagree,disagree,agree
+govvsrel,agree,,strongly agree
+difrel,disagree,,strongly agree
+relpast,neither agree nor disagree,,strongly disagree
+christns,neither positive nor negative,neither positive nor negative,very negative
+muslims,neither positive nor negative,,somewhat positive
+hindus,neither positive nor negative,,very negative
+buddhsts,neither positive nor negative,neither positive nor negative,somewhat positive
+numwomen,e,c,d
+nummen,e,,e
+GENETST1,nothing at all,,a great deal
+realinc,e,c,d
+realrinc,e,,c
+coninc,e,,d
+RACECEN1,black or african american,,black or african american
+yearsusa,e,,e
+mnthsusa,e,,e
+dwelling,detached 1-fam house,,other
+wordc,correct,,incorrect
+wordf,correct,correct,correct
+wordh,incorrect,,incorrect
+wordi,correct,,correct
+wordj,correct,incorrect,correct
+wordsum,d,,d
+OLD1,c,,e
+OLD4,e,e,b
+OLD5,e,e,e
+OLD7,e,,c
+OLD10,e,e,b
+OLD12,e,,e
+hhtype,"1adlt,0kids","1adlt,0kids","4+adlts,0mar,0kids"
+famgen,1 gen,,"3 gens, grandchldrn"
+rplace,head of household,,grand or great-grandchild
+rvisitor,r. is household member,r. is household member,r. is visitor
+visitors,no visitors,,no visitors
+dateintv,628,508,1002
+SPISCO88,e,,e
+SEI10,e,b,d
+SEI10INC,e,,c
+MASEI10,e,,b
+MASEI10INC,e,e,d
+SPSEI10,e,c,e
+COSEI10EDUC,e,,b
+COSEI10INC,e,e,b
+COPRES10,e,,d
+cohort,c,,b
+inthisp,not hispanic,,"other, not specified"
+INTRACE1,white,,asian indian
+WHOELSE1,no,no,no
+WHOELSE2,no,,yes
+WHOELSE4,no,,no
+WHOELSE5,no,no,yes
+WHOELSE6,yes,,yes
+intid,43,,5
+lngthinv,56,,100
+intage,60,,57
+intethn,white,,hispanic
+intsex,female,male,female
+issp,did issp,,didnt do issp
+sampcode,601,,612
+spaneng,english,english,spanish
+dwellpre,detached single family house,,trailer
+respond,low,low,high
+incuspop,average,average,average
+wtss,c,c,d
+vpsu,2,,1

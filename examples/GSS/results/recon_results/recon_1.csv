@@ -1,0 +1,8 @@
+feature_names,sample,qsampled,random_sample
+grass,legal,not legal,not legal
+pray,lt once a week,lt once a week,several times a day
+prayer,approve,disapprove,disapprove
+bible,inspired word,book of fables,book of fables
+prayfreq,2-3 times a month,several times a week,less than once a year
+religint,agree,agree,strongly agree
+comfort,agree,strongly agree,strongly agree

@@ -1,117 +1,287 @@
 feature_names,sample,qsampled,random_sample
-ptsd2,2,2,4
-ptsd8,2,4,4
-ptsd9,2,5,1
-ptsd10,1,2,3
-ptsd11,3,,1
-ptsd14,4,,5
-ptsd18,3,3,2
-ptsd21,1,,5
-ptsd22,5,,4
-ptsd23,5,2,1
-ptsd24,3,2,2
-ptsd26,2,3,1
-ptsd28,4,,1
-ptsd32,4,3,1
-ptsd33,4,,4
-ptsd34,1,1,4
-ptsd35,1,,1
-ptsd36,4,1,4
-ptsd37,4,,2
-ptsd38,1,1,4
-ptsd41,2,2,3
-ptsd42,3,,3
-ptsd44,1,2,4
-ptsd47,2,1,1
-ptsd49,4,4,1
-ptsd53,4,4,3
-ptsd54,3,1,1
-ptsd56,1,3,3
-ptsd59,2,3,3
-ptsd60,2,4,4
-ptsd61,2,2,2
-ptsd64,1,1,1
-ptsd68,2,3,2
-ptsd69,3,3,2
-ptsd73,2,4,2
-ptsd75,2,2,2
-ptsd80,2,3,5
-ptsd84,2,,1
-ptsd85,3,3,4
-ptsd87,2,3,5
-ptsd88,2,2,2
-ptsd89,2,4,5
-ptsd94,3,,4
-ptsd95,3,2,4
-ptsd96,2,3,1
-ptsd97,2,,3
-ptsd98,2,3,3
-ptsd99,3,2,3
-ptsd100,2,3,3
-ptsd101,2,,3
-ptsd102,2,1,2
-ptsd103,2,,1
-ptsd104,2,2,5
-ptsd105,3,,4
-ptsd107,2,1,3
-ptsd108,3,,4
-ptsd113,3,2,4
-ptsd114,2,,3
-ptsd115,3,3,5
-ptsd117,2,1,4
-ptsd120,2,3,2
-ptsd121,2,3,2
-ptsd122,2,3,3
-ptsd123,2,2,3
-ptsd124,2,3,2
-ptsd125,2,,1
-ptsd126,2,3,1
-ptsd127,2,4,3
-ptsd130,2,,1
-ptsd131,5,4,3
-ptsd133,2,,3
-ptsd135,2,3,2
-ptsd136,4,,5
-ptsd137,3,1,1
-ptsd138,3,,3
-ptsd143,2,,5
-ptsd144,2,,2
-ptsd145,2,3,2
-ptsd146,2,2,1
-ptsd147,2,,5
-ptsd149,2,,5
-ptsd150,2,2,5
-ptsd151,1,,4
-ptsd152,1,,1
-ptsd153,2,2,3
-ptsd154,2,3,3
-ptsd156,2,,5
-ptsd158,2,,1
-ptsd159,2,,3
-ptsd161,2,,4
-ptsd162,1,,2
-ptsd163,1,,5
-ptsd166,2,2,3
-ptsd167,2,,3
-ptsd170,2,2,4
-ptsd171,2,3,4
-ptsd173,2,3,3
-ptsd175,2,2,2
-ptsd177,2,,3
-ptsd179,3,4,3
-ptsd180,3,,2
-ptsd182,1,1,3
-ptsd185,2,4,4
-ptsd188,2,1,2
-ptsd189,3,3,4
-ptsd190,1,,3
-ptsd191,3,1,1
-ptsd192,2,1,4
-ptsd193,2,4,1
-ptsd195,2,,5
-ptsd197,3,3,1
-ptsd198,2,3,3
-ptsd199,2,2,1
-ptsd202,2,,3
-ptsd204,2,,3
-ptsd210,2,,1
+HRS2,e,e,b
+wrkslf,someone else,someone else,self-employed
+OCC10,d,b,d
+PRESTG10,c,,b
+PRESTG105PLUS,c,d,b
+divorce,no,,no
+COHRS2,e,e,b
+SPPRES10,e,,e
+COOCC10,e,,b
+pawrkslf,someone else,self-employed,self-employed
+PAOCC10,c,,c
+PAPRES10,b,,b
+PAPRES105PLUS,b,c,b
+mawrkslf,someone else,someone else,self-employed
+MAPRES10,c,,c
+MAPRES105PLUS,b,,c
+MAIND10,footwear manufacturing,,footwear manufacturing
+childs,c,,b
+age,c,c,d
+agekdbrn,c,,b
+educ,a,,d
+paeduc,e,c,c
+maeduc,e,c,c
+speduc,e,,a
+padeg,lt high school,,lt high school
+sex,female,female,female
+race,white,,white
+RES16,big-city suburb,,50000 to 250000
+REG16,foreign,south atlantic,mountain
+FAMILY16,mother & father,,m and f relatives
+mawrkgrw,yes,no,no
+hompop,1,1,9
+babies,c,c,e
+teens,c,,c
+adults,1,,6
+unrelat,e,,d
+region,middle atlantic,,e. sou. central
+IF12WHO,other,obama,other
+VOTE16,did not vote,,ineligible
+IF16WHO,trump,,other
+natspac,about right,,too little
+natenvir,about right,about right,too much
+natcrime,about right,too much,about right
+natdrug,too little,,about right
+nateduc,too little,,too much
+natarms,about right,,too much
+natroad,about right,,about right
+natsoc,too little,,about right
+natsci,too much,about right,too much
+tax,too high,too high,about right
+spkath,not allowed,,allowed
+libath,not remove,remove,not remove
+spkrac,not allowed,,allowed
+colrac,not allowed,allowed,not allowed
+spkcom,not allowed,not allowed,allowed
+colcom,fired,not fired,fired
+spkmil,not allowed,,not allowed
+libmil,remove,,not remove
+spkhomo,allowed,,allowed
+colhomo,allowed,allowed,allowed
+libhomo,remove,,not remove
+libmslm,remove,,not remove
+cappun,favor,oppose,favor
+gunlaw,favor,,favor
+courts,not harsh enough,,not harsh enough
+RELIG16,orthodox-christian,jewish,protestant
+FUND16,liberal,,fundamentalist
+bible,book of fables,book of fables,inspired word
+racopen,cant discriminate,cant discriminate,owner decides
+happy,very happy,,very happy
+fair,fair,,fair
+trust,can't be too careful,can't be too careful,depends
+coneduc,only some,,a great deal
+conmedic,only some,,only some
+conarmy,a great deal,only some,hardly any
+obey,4th important,,2nd important
+thnkself,2nd important,,most important
+workhard,3rd important,,3rd important
+helpoth,most important,,least important
+aged,a bad idea,,a bad idea
+weekswrk,c,,b
+partfull,full-time,full-time,full-time
+satjob,very satisfied,,a little dissat
+rank,c,,e
+finalter,stayed same,better,stayed same
+union,neither belongs,neither belongs,r and spouse belong
+UNION1,neither belongs,,r and spouse or partner belong
+abdefect,yes,yes,yes
+abhlth,yes,yes,yes
+abany,yes,yes,no
+chldidel,e,c,d
+xmarsex,always wrong,,sometimes wrong
+pornlaw,illegal under 18,,illegal under 18
+xmovie,no,,no
+polabuse,yes,yes,yes
+polattak,yes,,no
+owngun,no,no,yes
+pistol,no,,refused
+hunt,neither,,resp
+random,b,,b
+helpsick,b,,d
+reborn,yes,,no
+wlthwhts,e,,c
+workhsps,e,,c
+intlwhts,e,,e
+intlhsps,e,,e
+vigversn,b,,e
+charactr,very likely,,not at all likely
+stresses,not at all likely,,not very likely
+genetics,not at all likely,,very likely
+upsdowns,not very likely,,somewhat likely
+breakdwn,not very likely,not at all likely,not at all likely
+viglabel,very likely,,very likely
+dectreat,very able,somewhat able,not very able
+decmoney,not able at all,,very able
+imprvown,not likely at all,,somewhat unlikely
+imprvtrt,very likely,,very likely
+vignei,definitely unwilling,probably unwilling,probably willing
+vigsoc,definitely unwilling,,probably unwilling
+vigfrnd,definitely unwilling,,definitely unwilling
+vigwork,definitely unwilling,probably willing,definitely unwilling
+viggrp,definitely unwilling,,probably unwilling
+hurtself,very likely,very likely,very likely
+tlkfam,yes,,no
+tlkclrgy,yes,,yes
+mentloth,yes,,no
+rxmed,yes,,no
+dofirst,talk to family and friends about it,,"talk to a minister, priest, rabbi or other religious leader"
+mustdoc,yes,yes,yes
+dangrslf,yes,,yes
+dangroth,yes,,no
+CLOSETO2,e,,e
+CLOSETO3,e,,e
+SEETALK2,e,e,b
+SEETALK3,e,e,e
+SEETALK5,e,,d
+MYPROBS1,e,,e
+MYPROBS2,e,,c
+SEVERE2,e,,b
+DANGOTH2,e,,c
+DANGSLF1,e,,c
+DANGSLF5,e,,d
+fammhneg,not very much,not very much,not very much
+MCSDS1,True,,True
+MCSDS2,True,,True
+MCSDS3,True,,True
+MCSDS4,False,,True
+MCSDS7,False,,True
+sprtprsn,modeate spirtual,,slight spiritual
+othlang,yes,,no
+OTHLANG2,serbian,,kannada
+emailmin,e,e,c
+emailhr,e,,c
+wwwmin,e,,c
+huclean,very clean,,interviewer never saw the interior of the respondent's hu
+waypaid,e,e,c
+physhlth,e,,c
+mntlhlth,e,,d
+hlthdays,e,e,d
+usetech,e,,c
+weight,e,,c
+height,e,,c
+LIFEIN5,e,e,b
+notsmart,never,at least once a week,never
+afraidof,never,never,a few times a year
+hlthphys,fair,,poor
+satsoc,good,,poor
+actssoc,good,,poor
+physacts,a little,,mostly
+emoprobs,b,,d
+fatigue,mild,moderate,very severe
+ratepain,c,,e
+abfelegl,it depends,,should
+abmoral,it depends,morally opposed,it depends
+ABHELP1,yes,no,yes
+ABHELP3,no,,no
+natnotice,strongly agree,,somewhat agree
+nattime,strongly agree,strongly disagree,strongly disagree
+natsat,strongly agree,,strongly disagree
+natmeet,strongly agree,,somewhat agree
+nattimeok,strongly agree,strongly agree,somewhat disagree
+natlack,strongly agree,somewhat disagree,strongly disagree
+numpets,c,e,c
+whynopet,other,other,allergies (own or another household member)
+CATB4,had,did not have,did not have
+HORSEB4,did not have,did not have,did not have
+OTHPETB4,did not have,,had
+PETB4CMFRT,never,,sometimes
+PETB4FAM,never,,sometimes
+extraval,e,e,e
+numemps,e,,d
+colscinm,e,c,d
+visnhist,e,c,e
+viszoo,e,,c
+buyvalue,e,e,e
+numorg,e,,c
+mhunsure,strongly agree,,strongly disagree?
+mhdiagno,no,,yes
+ratetone,c,,d
+prvdhlth,"family, relatives or friends",government,government
+POLEFF11,strongly disagree,,disagree
+posslq,no steady partner,no steady partner,no steady partner
+helpfrds,agree,agree,agree
+demands,"no, never",,"yes, but seldom"
+knwbus,no one,,no one
+knwclenr,no one,,no one
+knwcop,no one,,family or relative
+knwtcher,no one,no one,no one
+smallgap,strongly disagree,,neither agree nor disagree
+partpart,never,,once a week or more
+hlphome,no one,,neighbor
+hlpdown,close family member,,more distant family member
+hlppaper,no person or organization,family members or close friends,private companies
+hlpsickr,family members or close friends,,private companies
+LONELY2,never,,rarely
+LONELY3,never,often,sometimes
+upset,never,never,very often
+newfrds,never,sometimes,sometimes
+conwkday,0-4 people,,20-49 people
+CONF2F,none or almost none of them,,most of them
+healthissp,good,good,very good
+numlangs,one language,two languages,one language
+cantrust,usual not trsted,,alwys not trsted
+numwomen,c,,c
+evpaidsx,no,,yes
+condom,not used,,used last time
+relatsex,"yes, in relationship",,"yes, in relationship"
+HIVTEST2,somewhere else,,clinic
+sexornt,heterosexual or straight,,bisexual
+sexbirth,female,,male
+sexnow,women,women,women
+GENEGOO2,e,,c
+realinc,b,,d
+realrinc,e,,e
+coninc,b,,b
+ethnic,rumania,,hungary
+ETH1,rumania,,other european
+ethnum,names 1,chooses 1 of 2+,cannot name any
+RACECEN1,white,,some other race
+uscitzn,a u.s. citizen,,not a u.s. citizen
+yearsusa,c,,d
+mnthsusa,e,e,c
+vetyears,none,,less than 2 yrs
+OLD1,e,c,e
+OLD3,e,,d
+OLD5,e,,d
+OLD7,e,e,c
+OLD9,e,,e
+OLD12,e,,b
+respnum,1st person,,2nd person
+HHTYPE1,single adult,,"unsure, no children"
+rvisitor,r. is household member,r. is household member,r. is household member
+ISCO88,c,b,d
+MAISCO88,d,,e
+SPISCO88,e,,d
+ISCO08,product graders and testers (excluding foods and beverages),administrative and executive secretaries,ships' engineers
+PAISCO08,crop farm labourers,motor vehicle mechanics and repairers,commissioned armed forces officers
+SEI10,c,d,c
+SEI10EDUC,c,,e
+PASEI10EDUC,b,c,c
+MASEI10,b,,d
+MASEI10EDUC,b,,d
+MASEI10INC,b,,c
+SPSEI10,e,,b
+SPSEI10EDUC,e,e,e
+SPSEI10INC,e,e,d
+COSEI10,e,,e
+COSEI10INC,e,,e
+COPRES105PLUS,e,e,e
+cohort,c,,b
+zodiac,aquarius,,gemini
+INTRACE1,black or african,,other pacific islander
+WHOELSE3,no,,no
+feeused,no,,no
+lngthinv,108,,48
+intage,39,81,48
+consent,r consents to recording interview,,r consents to recording interview
+ballot,ballot c,,ballot b
+sampcode,601,643,660
+dwellpre,"apartment house (5 or more units, 3 stories or less)",,"apartment house (5 or more units, 4 stories or more)"
+neisafe,somewhat safe,,somewhat safe
+rlooks,about average,,about average
+rhlthend,excellent,,fair
+wtssnr,c,c,d
+wtssall,c,c,c
+vpsu,1,,2

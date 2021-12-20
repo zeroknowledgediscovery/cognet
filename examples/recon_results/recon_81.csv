@@ -1,0 +1,239 @@
+feature_names,sample,qsampled,random_sample
+HRS2,e,e,b
+OCC10,c,c,d
+PRESTG10,b,,d
+PRESTG105PLUS,b,c,e
+INDUS10,c,c,c
+COHRS1,e,,e
+SPOCC10,e,,b
+SPPRES105PLUS,e,,c
+COOCC10,e,e,b
+PAOCC10,d,,c
+PAPRES10,c,,e
+PAIND10,c,c,c
+mawrkslf,someone else,someone else,self-employed
+MAOCC10,d,,b
+childs,c,,b
+agekdbrn,c,,e
+educ,c,,e
+maeduc,c,c,d
+coeduc,e,,b
+degree,high school,bachelor,junior college
+padeg,high school,lt high school,high school
+madeg,high school,,high school
+dipged,high school diploma,,high school diploma
+sex,female,,male
+REG16,foreign,,w. nor. central
+FAMILY16,mother & father,,father
+mawrkgrw,yes,no,no
+born,no,,no
+earnrs,b,,e
+income,$10000 - 14999,,$15000 - 19999
+xnorcsiz,"city,50-250000","uninc,lrg city","uninc,med city"
+srcbelt,12 lrgst smsa's,,smsa's 13-100
+size,57,,12
+PRES12,obama,obama,romney
+VOTE16,voted,,did not vote
+PRES16,clinton,,didn't vote for president
+natdrug,too little,too little,about right
+nateduc,too little,too little,too much
+natrace,too little,,too much
+natarms,too much,too much,too little
+natmass,too little,about right,too little
+natchld,too little,,too much
+natsci,too little,about right,too much
+eqwlth,b,c,e
+courts,not harsh enough,,not harsh enough
+fund,moderate,,moderate
+attend,never,,never
+reliten,not very strong,,strong
+RELIG16,catholic,,protestant
+raclive,yes,yes,yes
+affrmact,oppose pref,,strongly support pref
+wrkwayup,agree somewhat,,disagree somewhat
+happy,not too happy,,not too happy
+trust,can't be too careful,can trust,depends
+confinan,only some,,a great deal
+coneduc,hardly any,a great deal,a great deal
+conmedic,only some,,a great deal
+obey,4th important,,2nd important
+popular,least important,,3rd important
+workhard,3rd important,2nd important,least important
+socrel,never,almost daily,sev times a week
+socommun,sev times a mnth,,sev times a week
+socbar,never,once a year,never
+aged,a good idea,a good idea,depends
+rank,c,,d
+satfin,not at all sat,satisfied,more or less
+finrela,far below average,,above average
+unemp,no,,yes
+union,neither belongs,,spouse belongs
+UNION1,neither belongs,,r and spouse or partner belong
+kidssol,somewhat better,,about the same
+chldidel,e,e,d
+premarsx,almst always wrg,,almst always wrg
+pornlaw,illegal to all,illegal to all,illegal under 18
+spanking,agree,,strongly agree
+SUICIDE2,no,no,yes
+SUICIDE4,yes,no,no
+polhitok,yes,,no
+polmurdr,no,,no
+news,few times a week,,everyday
+comprend,good,,good
+form,standard <x>,,standard <x>
+RACDIF2,no,no,yes
+RACDIF3,yes,,yes
+RACDIF4,no,no,yes
+helpnot,b,c,b
+helpblk,c,,c
+reborn,yes,no,yes
+savesoul,yes,no,yes
+wlthblks,e,,e
+workhsps,c,,e
+intlwhts,c,c,c
+intlblks,c,,e
+intlhsps,c,,c
+yousup,e,,c
+discaffm,somewhat unlikely,very likely,somewhat unlikely
+vigversn,e,c,e
+CLOSETO2,e,,c
+CLOSETO3,e,,d
+SEETALK1,e,,e
+SEETALK2,e,e,d
+SEETALK4,e,e,d
+MYPROBS1,e,,c
+MYPROBS3,e,e,e
+DANGOTH1,e,e,e
+DANGOTH2,e,,c
+DANGSLF1,e,,b
+DANGSLF2,e,e,e
+DANGSLF4,e,,c
+DANGSLF5,e,e,e
+sprtprsn,modeate spirtual,,modeate spirtual
+othlang,yes,,no
+OTHLANG2,hungarian,,serbian
+compuse,no,yes,yes
+webmob,no,,no
+wwwhr,e,,d
+wwwmin,e,e,c
+waypaid,e,,e
+moredays,e,c,c
+physhlth,e,,c
+hlthdays,e,,c
+hurtatwk,e,,c
+weight,e,,a
+height,e,,b
+ntwkhard,e,e,e
+lifenow,e,,d
+hlthphys,poor,,fair
+hlthmntl,good,very good,very good
+satsoc,fair,,poor
+emoprobs,c,,c
+fatigue,moderate,,none
+abfelegl,should,,should
+ABHELP4,yes,yes,yes
+ABMEDGOV1,a woman and her medical professional should decide,a woman and her medical professional should decide,a woman and her medical professional should decide
+stockval,e,,e
+extrayr,e,,e
+numemps,e,,d
+newsfrom,radio,,family
+scifrom,radio,,books other printed material
+nextgen,agree,,disagree
+astrosci,sort of scientific,,not at all scientific
+scistudy,little understanding,clear understanding,general sense
+hotcore,True,True,True
+viruses,False,,True
+earthsun,earth around sun,sun around earth,earth around sun
+hsmath,two years of algebra,,two years of algebra
+hschem,yes,,no
+intsci,very interested,moderately interested,moderately interested
+intmil,not at all interested,,not at all interested
+visnhist,c,,d
+vissci,c,,d
+scientgo,agree,,strongly disagree
+scienthe,strongly agree,agree,strongly disagree
+scientod,agree,disagree,disagree
+scientbe,agree,agree,strongly disagree
+ratetone,e,c,d
+posslq,no steady partner,"partner, not together",living as married
+trbigbus,e,e,b
+intcntct,e,,c
+healthissp,fair,fair,fair
+hapunhap,very happy,fairly happy,not at all happy
+abpoorw,not wrong at all,,always wrong
+concong,very little confidence,,very little confidence
+conschls,some confidence,,a great deal of confidence
+godchnge,"believe now, always have","believe now, always have","believe now, always have"
+hell,"yes, probably","no, probably not","yes, probably"
+fatalism,agree,,agree
+godmeans,agree,,strongly agree
+nihilism,disagree,strongly disagree,disagree
+marelkid,catholic,protestant,orthodox-christian
+religkid,catholic,catholic,native american
+ATTEND12,every week,,several times a yr
+prayfreq,several times a week,,less than once a year
+relactiv,never,never,nearly every week
+feelrel,somwhat relgious,,somwhat relgious
+religcon,agree,,not agree/dsagre
+religint,agree,not agree/dsagre,strongly agree
+RELEXT1,probably not,,probably
+vistholy,never,about once a month or more,about once a month or more
+relsprt,"i dont follow a religion, but consider myself to be a spiritual person interested in the sacred and",i follow a religion and consider myself to be a spiritual person interested in the sacred and the sup,i dont follow a religion and dont consider myself to be a spiritual person interested in the sacred
+govvsrel,strongly agree,,strongly agree
+difrel,agree,,strongly agree
+jews,somewhat positive,,somewhat positive
+partners,no partners,1 partner,5-10 partners
+sexfreq,not at all,,once or twice
+nummen,c,c,e
+PARTNRS5,no partners,,no partners
+evstray,no,no,never married
+relatsex,"yes, in relationship",,"yes, in relationship"
+evidu,no,,yes
+HIVTEST1,e,e,e
+GENEGOO2,e,,e
+realrinc,e,,c
+ETH1,czechoslovakia,ireland,czechoslovakia
+ETH2,hungary,france,sweden
+ethnum,cannot choose 1,,chooses 1 of 2+
+yearsusa,d,,e
+vetyears,none,,none
+dwelown,pays rent,,other
+worde,correct,correct,incorrect
+wordg,incorrect,incorrect,correct
+wordj,incorrect,incorrect,incorrect
+OLD8,e,,d
+OLD9,e,e,b
+OLD10,e,e,e
+OLD11,e,,b
+hefinfo,1st person,,1st person
+hhrace,"other, mixed",white,amer indian
+famgen,1 gen,,"2 gens, grandchldrn"
+rplace,head of household,head of household,non-relative
+rvisitor,r. is household member,r. is household member,r. is household member
+dateintv,928,,901
+PAISCO88,d,,c
+SEI10,c,b,e
+PASEI10EDUC,c,,b
+MASEI10,b,,d
+MASEI10EDUC,b,,c
+SPSEI10EDUC,e,,d
+SPSEI10INC,e,e,e
+COSEI10,e,,e
+COPRES10,e,,e
+cohort,b,b,e
+zodiac,aries,scorpio,cancer
+WHOELSE2,no,,yes
+WHOELSE4,no,,no
+WHOELSE5,no,,yes
+WHOELSE6,yes,no,yes
+intage,68,,52
+mode,over the phone,,in-person
+consent,r consents to recording interview,,r consents to recording interview
+ballot,ballot b,,ballot b
+sampcode,601,,676
+phase,phase one - initial cases,phase one - initial cases,phase two - sub sampled cases
+spaneng,english,english,spanish
+neisafe,very safe,,somewhat safe
+wtssnr,c,,d
+wtssall,c,,e
+vpsu,1,,1

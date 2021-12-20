@@ -1,0 +1,292 @@
+feature_names,sample,qsampled,random_sample
+HRS1,c,c,d
+HRS2,e,,a
+wrkslf,someone else,someone else,someone else
+wrkgovt,private,,private
+PRESTG10,c,c,e
+PRESTG105PLUS,c,c,b
+INDUS10,a,,e
+widowed,no,,yes
+spwrksta,working fulltime,,working parttime
+SPHRS2,e,,e
+SPPRES105PLUS,d,c,c
+PAOCC10,c,,b
+age,c,,c
+paeduc,c,,b
+maeduc,c,c,c
+madeg,high school,high school,graduate
+spdeg,graduate,,graduate
+sex,female,,female
+race,white,,black
+RES16,town lt 50000,"country,nonfarm",town lt 50000
+REG16,middle atlantic,,w. nor. central
+MOBILE16,same city,different state,"same st,dif city"
+FAMILY16,mother & stpfather,,female relative
+parborn,neither in u.s,,both in u.s
+teens,c,e,e
+earnrs,c,b,d
+rincome,$10000 - 14999,,$6000 to 6999
+INCOME16,$150000 to $169999,,$15000 to 17499
+RINCOM16,$12500 to 14999,,$75000 to $89999
+xnorcsiz,"suburb, lrg city",,city gt 250000
+size,28,,40
+VOTE12,did not vote,,did not vote
+IF16WHO,clinton,clinton,clinton
+polviews,conservative,,slightly liberal
+natenvir,too little,,about right
+natdrug,about right,too little,too little
+nateduc,too little,,about right
+natarms,too little,too much,too little
+nataid,about right,,too little
+natroad,about right,,too much
+natmass,too little,too little,too little
+natpark,about right,too much,too little
+eqwlth,c,,c
+cappun,favor,,favor
+reliten,strong,,strong
+RELIG16,catholic,,none
+FUND16,moderate,,liberal
+spfund,moderate,,fundamentalist
+raclive,no,yes,no
+affrmact,strongly oppose pref,strongly oppose pref,strongly oppose pref
+happy,very happy,,very happy
+hapmar,very happy,,not too happy
+helpful,helpful,lookout for self,depends
+conclerg,only some,,a great deal
+coneduc,a great deal,,hardly any
+conmedic,only some,only some,only some
+conjudge,only some,,only some
+consci,a great deal,,a great deal
+conarmy,only some,,hardly any
+workhard,2nd important,,3rd important
+helpoth,most important,3rd important,least important
+socommun,once a year,,sev times a week
+aged,a bad idea,,a bad idea
+satjob,very satisfied,,a little dissat
+class,middle class,,upper class
+rank,b,,d
+satfin,more or less,,more or less
+finalter,stayed same,stayed same,worse
+wksub,no,,yes
+WKSUB1,no,,no
+wksup,no,,yes
+WKSUP1,no,,yes
+UNION1,neither belongs,neither belongs,r belongs
+chldidel,c,c,e
+sexeduc,favor,,favor
+divlaw,stay same,more difficult,stay same
+xmovie,no,,yes
+spanking,agree,agree,disagree
+SUICIDE1,yes,,no
+SUICIDE3,no,no,no
+polabuse,no,,no
+polmurdr,no,,yes
+polattak,yes,,no
+news,never,,never
+phone,refused,,no phone
+comprend,good,good,good
+random,b,b,c
+fepresch,agree,disagree,agree
+RACDIF1,yes,,no
+RACDIF4,yes,,no
+helpnot,c,,c
+helpsick,c,,c
+helpblk,c,c,b
+savesoul,no,no,no
+wlthwhts,c,,e
+workwhts,c,,e
+workblks,c,,e
+workhsps,c,,c
+intlblks,c,,e
+MARAsian,neither favor nor oppose,,strongly oppose
+marwht,strongly favor,neither favor nor oppose,neither favor nor oppose
+yousup,e,c,e
+vigversn,e,e,d
+CLOSETO2,e,,b
+CLOSETO4,e,e,b
+MYPROBS4,e,,e
+MYPROBS5,e,,c
+SEVERE2,e,e,b
+SEVERE3,e,,e
+SEVERE5,e,e,e
+DANGOTH1,e,,c
+DANGOTH2,e,e,d
+DANGOTH3,e,,e
+DANGSLF3,e,,d
+DANGSLF5,e,,c
+othlang,yes,,no
+emailmin,c,,c
+emailhr,c,c,d
+wwwhr,c,c,c
+wwwmin,c,,c
+yearsjob,e,,e
+waypaid,c,,e
+moredays,c,c,e
+famwkoff,not at all hard,,not at all hard
+famvswk,rarely,rarely,never
+secondwk,no,,no
+learnnew,disagree,agree,strongly agree
+workfast,agree,agree,agree
+knowwhat,agree,agree,strongly disagree
+myskills,agree,,strongly agree
+safehlth,strongly agree,,agree
+wkdecide,rarely,,sometimes
+toofewwk,sometimes,,never
+opdevel,not at all true,,somewhat true
+fringeok,not at all true,somewhat true,very true
+supcares,somewhat true,,not at all true
+promtefr,not at all true,,not too true
+cowrkint,not too true,,not too true
+jobsecok,very true,,very true
+cowrkhlp,very true,,somewhat true
+manvsemp,neither good nor bad,,quite good
+wkpraise,no,,yes
+rincblls,no,no,no
+laidoff,no,,no
+JOBFIND1,very easy to find similar job,somewhat easy to find similar job,not easy at all to find similar job
+trynewjb,not at all likely,very likely,not at all likely
+wkageism,no,,yes
+wksexism,no,,no
+wkharoth,no,,no
+HEALTH1,excellent,,poor
+physhlth,c,,c
+mntlhlth,c,,e
+painarms,no,no,no
+spvtrfair,somewhat true,,not at all true
+SATJOB1,very satisfied,,not too satisfied
+usetech,d,c,e
+weight,b,,d
+height,c,,d
+lifenow,c,,a
+LIFEIN5,c,,d
+hlthmntl,excellent,,good
+satsoc,excellent,very good,excellent
+emoprobs,b,c,c
+fatigue,mild,,none
+abmoral,not morally opposed,,it depends
+numpets,e,,d
+ownstock,"no, i work for a company that does not have stock",,i do not know if i own stock in my company
+yearval,e,,e
+advfront,agree,,strongly disagree
+astrolgy,yes,,yes
+astrosci,not at all scientific,,sort of scientific
+scibnfts,benefits greater,,about equal if volunteered
+scitext,measurement,classification,classification
+expdesgn,500 get the drug 500 dont,500 get the drug 500 dont,all 1000 get the drug
+exptext,correct control group,,correct don t know
+ODDS1,no,,no
+ODDS2,yes,yes,yes
+lasers,True,,True
+earthsun,earth around sun,,earth around sun
+colsci,no,,no
+colscinm,e,e,c
+hsbio,yes,,yes
+hschem,yes,,no
+intintl,not at all interested,,very interested
+intfarm,moderately interested,,moderately interested
+inteduc,very interested,very interested,very interested
+intsci,moderately interested,,moderately interested
+intmed,very interested,very interested,very interested
+intspace,not at all interested,,not at all interested
+intmil,moderately interested,moderately interested,moderately interested
+visnhist,c,,d
+scienthe,agree,strongly agree,disagree
+scientbe,agree,agree,disagree
+empinput,no,,no
+slfmangd,no,no,yes
+emptrain,no,,no
+buyesop,i would be more likely to buy from an employee-owned company,i would be neither more nor less likely to buy from an employee-owned company,i would be less likely to buy from an employee-owned company
+esopnot,i would definitely take the job with the esop (employee stock ownership plan) or cash profit sharing,,i would be neutral
+company,a company whose stock is owned by the employees who appoint the management to run the company's operations,,a company whose stock is owned by the employees who appoint the management to run the company's operations
+posslq,married with partner,,no steady partner
+marcohab,married,married,na
+healthissp,excellent,good,excellent
+hubbywrk,neither agree nor disagree,,neither agree nor disagree
+SATFAM7,very satisfied,,very satisfied
+stress,often,,never
+XMARSEX1,always wrong,always wrong,wrong only sometimes
+HOMOSEX1,not wrong at all,not wrong at all,not wrong at all
+concong,some confidence,,no confidence at all
+conbiz,a great deal of confidence,some confidence,a great deal of confidence
+concourt,some confidence,,complete confidence
+churhpow,too much power,,right amount pwr
+afterlif,"yes, definitely","yes, probably","no, probably not"
+heaven,"yes, probably","yes, definitely","no, probably not"
+miracles,"no, probably not",,"yes, definitely"
+theism,neither agree nor disagree,,agree
+fatalism,strongly disagree,,neither agree nor disagree
+marelkid,catholic,catholic,other eastern
+relscrpt,no,,yes
+trustsci,agree,agree,strong disagree
+religcon,agree,agree,strongly agree
+religint,disagree,,disagree
+RELEXT3,probably not,,probably not
+relobjct,no,,yes
+relgenbar,neither agree nor disagree,,strongly agree
+relpast,neither agree nor disagree,disagree,disagree
+relrlvnt,disagree,strongly disagree,agree
+christns,neither positive nor negative,somewhat positive,somewhat negative
+hindus,neither positive nor negative,very negative,somewhat positive
+buddhsts,neither positive nor negative,neither positive nor negative,very negative
+jews,neither positive nor negative,,very positive
+atheists,neither positive nor negative,,somewhat negative
+LETIN1A,reduced a little,,increased a little
+matesex,yes,,yes
+sexsex,exclusively male,,both male and female
+sexfreq,2-3 times a month,,once a month
+nummen,c,,c
+PARTNRS5,1 partner,2 partners,no partners
+evpaidsx,no,no,yes
+condom,not used,,used last time
+relatsex,"yes, in relationship",,"no, no relationship"
+HIVTEST1,c,,e
+realinc,d,,c
+realrinc,c,,d
+coninc,d,c,d
+conrinc,c,c,e
+ethnum,names 1,,chooses 1 of 2+
+yearsusa,e,e,d
+mnthsusa,e,,e
+vetyears,none,none,none
+dwelling,detached 1-fam house,apartment house,detached 1-fam house
+dwelown,own or is buying,pays rent,other
+OLD2,c,,e
+OLD5,e,,c
+OLD9,e,,e
+OLD10,e,e,b
+OLD12,e,,c
+RELHHD2,spouse,spouse,"son-in-law,daughter-in-law"
+rplace,spouse,,grand or great-grandchild
+visitors,no visitors,,no visitors
+RELSP1,spouse,,"partner, fiance, boyfriend, girlfriend, etc"
+ISCO88,c,c,e
+PAISCO88,c,,e
+MAISCO08,administrative and executive secretaries,,health professionals not elsewhere classified
+SPISCO08,special needs teachers,building and related electricians,dentists
+SEI10,c,,d
+PASEI10EDUC,c,,e
+MASEI10EDUC,c,,e
+MASEI10INC,c,d,c
+SPSEI10,c,,b
+SPSEI10INC,c,,e
+COSEI10EDUC,e,e,c
+COPRES10,e,,b
+COPRES105PLUS,e,e,e
+cohort,c,,e
+zodiac,gemini,,libra
+inthisp,not hispanic,,cuban
+WHOELSE1,no,no,yes
+intid,61,,82
+intage,43,,59
+intethn,white,,asian
+intsex,female,,male
+version,2,,1
+sampcode,601,,633
+spaneng,english,,spanish
+huadd,yes,yes,yes
+dwellpre,detached single family house,"apartment house (5 or more units, 3 stories or less)",other (specify on next page)
+incuspop,average,,lower than average
+neisafe,very safe,,somewhat safe
+rgroomed,very well groomed,,very poorly groomed
+rhlthend,excellent,,fair
+wtssnr,c,,c

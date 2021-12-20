@@ -1,105 +1,285 @@
 feature_names,sample,qsampled,random_sample
-ptsd1,1,3,4
-ptsd4,2,3,4
-ptsd5,1,,1
-ptsd6,2,3,5
-ptsd8,1,2,5
-ptsd11,1,,3
-ptsd14,1,,2
-ptsd19,1,2,5
-ptsd20,1,2,4
-ptsd24,2,3,3
-ptsd28,1,,3
-ptsd29,1,2,1
-ptsd32,2,4,5
-ptsd33,1,2,5
-ptsd34,1,1,1
-ptsd41,1,3,4
-ptsd43,2,2,4
-ptsd44,1,5,1
-ptsd45,1,5,3
-ptsd46,1,1,3
-ptsd48,1,2,3
-ptsd54,1,1,3
-ptsd55,1,,4
-ptsd57,3,,1
-ptsd58,3,2,5
-ptsd59,3,1,5
-ptsd60,1,5,3
-ptsd62,1,,3
-ptsd63,1,,2
-ptsd66,1,1,4
-ptsd68,1,2,1
-ptsd69,1,1,2
-ptsd74,1,3,2
-ptsd75,1,,2
-ptsd76,1,2,2
-ptsd77,1,2,5
-ptsd79,1,2,1
-ptsd80,1,5,4
-ptsd83,1,1,5
-ptsd87,1,4,2
-ptsd89,1,3,5
-ptsd92,1,1,3
-ptsd93,1,3,3
-ptsd95,1,,1
-ptsd96,1,4,3
-ptsd97,1,,3
-ptsd98,1,5,3
-ptsd99,2,2,3
-ptsd101,1,3,2
-ptsd103,1,,1
-ptsd104,1,3,5
-ptsd106,1,,4
-ptsd107,3,,3
-ptsd108,1,1,4
-ptsd109,4,,4
-ptsd112,1,1,3
-ptsd115,1,1,5
-ptsd116,1,1,4
-ptsd120,1,,2
-ptsd121,1,2,2
-ptsd124,1,1,3
-ptsd126,1,,2
-ptsd127,1,3,4
-ptsd128,1,1,1
-ptsd132,1,,1
-ptsd133,1,1,4
-ptsd134,1,,1
-ptsd137,1,,3
-ptsd138,1,3,2
-ptsd140,1,3,3
-ptsd143,1,3,2
-ptsd147,1,1,5
-ptsd148,1,,1
-ptsd149,1,,5
-ptsd151,1,,3
-ptsd152,1,,1
-ptsd154,1,1,5
-ptsd155,1,5,5
-ptsd159,2,2,5
-ptsd160,1,1,1
-ptsd164,1,2,2
-ptsd165,1,1,2
-ptsd168,1,,3
-ptsd169,1,1,5
-ptsd170,1,1,1
-ptsd171,1,1,2
-ptsd174,1,3,4
-ptsd176,1,1,2
-ptsd179,1,,4
-ptsd181,1,3,1
-ptsd182,1,1,4
-ptsd183,1,,2
-ptsd184,1,1,3
-ptsd191,1,1,4
-ptsd193,1,,3
-ptsd197,1,,3
-ptsd198,1,2,3
-ptsd199,1,,4
-ptsd200,1,2,4
-ptsd201,1,,5
-ptsd202,1,2,4
-ptsd208,1,4,1
-ptsd209,1,1,5
-ptsd210,1,,1
+wrkslf,someone else,someone else,self-employed
+PRESTG10,c,,d
+PRESTG105PLUS,c,,d
+marital,married,,never married
+spwrksta,working fulltime,,"unempl, laid off"
+COHRS2,e,,b
+SPPRES10,d,c,e
+PAPRES10,c,,e
+MAOCC10,e,,b
+MAPRES10,e,,b
+MAPRES105PLUS,e,e,d
+agekdbrn,d,,e
+coeduc,e,,e
+degree,bachelor,graduate,junior college
+padeg,lt high school,,lt high school
+spdeg,bachelor,,junior college
+dipged,high school diploma,,ged
+RES16,city gt 250000,town lt 50000,big-city suburb
+born,yes,,yes
+parborn,neither in u.s,,both in u.s
+babies,c,d,e
+earnrs,c,,d
+INCOME16,$110000 to $129999,$170000 or over,$20000 to 22499
+xnorcsiz,"suburb, lrg city",,open country
+srcbelt,"suburb, 12 lrgst",,other urban
+size,14,,40
+partyid,independent,not str republican,"ind,near rep"
+VOTE12,voted,,did not vote
+PRES16,clinton,,trump
+natspac,too little,,about right
+natenvir,too little,,too little
+natcity,about right,,about right
+natcrime,about right,,too much
+nateduc,too little,,too much
+natfare,about right,about right,too much
+natroad,too little,,too little
+natmass,too little,about right,too much
+natpark,too little,,too little
+cappun,oppose,,favor
+grass,legal,,not legal
+relig,catholic,catholic,none
+fund,moderate,,fundamentalist
+attend,once a month,2-3x a month,sevrl times a yr
+reliten,strong,,not very strong
+pray,once a day,,several times a day
+popespks,probably true,uncertain true or false,probably true
+prayer,disapprove,disapprove,disapprove
+bible,inspired word,word of god,word of god
+affrmact,strongly support pref,,strongly oppose pref
+wrkwayup,disagree strongly,agree strongly,neither agree nor disagree
+happy,pretty happy,,not too happy
+hapmar,pretty happy,,very happy
+helpful,lookout for self,,helpful
+conclerg,only some,,a great deal
+coneduc,only some,only some,only some
+confed,hardly any,,only some
+conlabor,only some,,only some
+conmedic,only some,,hardly any
+contv,hardly any,,hardly any
+conjudge,only some,,only some
+conarmy,only some,only some,a great deal
+popular,least important,,most important
+helpoth,3rd important,3rd important,most important
+socommun,sev times a week,,once a year
+socfrend,sev times a mnth,almost daily,sev times a year
+socbar,once a year,,sev times a week
+aged,a bad idea,,a bad idea
+weekswrk,b,,b
+rank,a,c,c
+wksub,yes,,no
+WKSUBS1,yes,,no
+wksup,no,no,no
+WKSUP1,no,,no
+UNION1,neither belongs,neither belongs,r and spouse or partner belong
+parsol,somewhat better,,somewhat better
+kidssol,about the same,,somewhat worse
+fepol,disagree,,agree
+chldidel,b,,b
+pillok,strongly disagree,,strongly disagree
+divlaw,easier,,stay same
+premarsx,not wrong at all,not wrong at all,not wrong at all
+teensex,always wrong,,sometimes wrong
+SUICIDE2,no,,no
+SUICIDE3,no,,no
+polabuse,no,,yes
+polmurdr,no,,no
+news,few times a week,never,never
+tvhours,c,c,c
+phone,phone in home,,cellphone
+comprend,good,good,fair
+form,standard <x>,,alternate <y>
+fechld,strongly agree,agree,strongly disagree
+fefam,disagree,,disagree
+RACDIF2,no,,yes
+RACDIF3,yes,,yes
+helppoor,c,,c
+helpnot,c,c,e
+helpblk,b,,e
+numcong,e,e,d
+wlthwhts,c,,c
+wlthblks,c,e,c
+workwhts,c,,e
+workhsps,c,c,c
+intlblks,c,,e
+intlhsps,c,,c
+marblk,strongly favor,neither favor nor oppose,favor
+marwht,strongly favor,,favor
+yousup,e,,c
+fejobaff,strongly for,,strongly for
+vigversn,e,,b
+CLOSETO2,e,,e
+CLOSETO3,e,,d
+SEETALK4,e,,b
+SEETALK5,e,,c
+MYPROBS3,e,,c
+MYPROBS5,e,e,c
+SEVERE1,e,e,e
+DANGSLF3,e,,c
+DANGSLF4,e,e,c
+DANGSLF5,e,,e
+relpersn,modrte religious,slight religious,not religious
+OTHLANG1,spanish,german,arabic
+compuse,yes,,no
+wwwhr,c,,d
+wwwmin,c,,e
+moredays,e,,c
+hlthdays,e,,d
+usetech,e,,d
+weight,e,,c
+quallife,very good,very good,poor
+hlthmntl,very good,very good,fair
+satsoc,very good,very good,very good
+emoprobs,b,,e
+fatigue,mild,,moderate
+abfelegl,should,,should
+abmoral,not morally opposed,,it depends
+ABSTATE1,very easy,easy,hard
+ABHELP3,yes,,yes
+numpets,e,c,c
+yearval,e,,d
+numemps,e,,d
+newsfrom,newspapers,family,family
+nextgen,strongly agree,,strongly agree
+advfront,disagree,,agree
+astrolgy,no,,no
+astrosci,sort of scientific,,sort of scientific
+scitext,classification,redundancies incorrect,classification
+ODDS1,no,,yes
+hotcore,True,True,True
+boyorgrl,True,,True
+electron,False,True,True
+viruses,True,True,True
+solarrev,one year,,one day
+hsbio,yes,,no
+hschem,yes,yes,yes
+hsphys,yes,,yes
+intintl,very interested,moderately interested,moderately interested
+inttech,very interested,moderately interested,very interested
+intmed,very interested,,moderately interested
+intspace,moderately interested,moderately interested,very interested
+intenvir,very interested,,not at all interested
+intmil,very interested,very interested,very interested
+vissci,c,,e
+SCINEWS2,printed magazines,,online magazines
+scientgo,agree,agree,strongly disagree
+scientod,agree,,disagree
+scientbe,agree,agree,agree
+buyvalue,e,e,d
+numorg,e,,c
+posslq,married with partner,,no steady partner
+marcohab,married,,"not married, cohabitating partner"
+trcourts,e,c,c
+trbigbus,e,c,a
+meovrwrk,strongly agree,disagree,agree
+SATFAM7,very satisfied,,fairly dissatisfied
+XMARSEX1,always wrong,,always wrong
+conchurh,very little confidence,,complete confidence
+conschls,some confidence,very little confidence,some confidence
+afterlif,"yes, definitely","yes, probably","yes, definitely"
+heaven,"yes, definitely",,"no, definitely not"
+hell,"no, definitely not",,"no, definitely not"
+miracles,"yes, definitely",,"no, definitely not"
+theism,neither agree nor disagree,,strongly disagree
+fatalism,strongly disagree,,agree
+nihilism,strongly disagree,disagree,strongly disagree
+prayfreq,several times a week,,nearly every week
+relscrpt,yes,,yes
+feelrel,somwhat relgious,,not rel or non
+religcon,agree,agree,disagree
+religint,agree,,agree
+relmarry,definitely accept,probably accept,definitely accept
+RELEXT1,definitely not,probably,probably
+RELEXT3,definitely not,probably,definitely
+ancestrs,"yes, definitely",,"no, probably not"
+mywaygod,agree,,neither agree nor disagree
+vistholy,never,,less than once a year
+makefrnd,agree,,agree
+comfort,agree,,strongly disagree
+relgenbar,strongly agree,agree,agree
+difrel,neither agree nor disagree,,neither agree nor disagree
+relrlvnt,neither agree nor disagree,disagree,strongly disagree
+muslims,neither positive nor negative,somewhat positive,very positive
+jews,very positive,,somewhat negative
+atheists,neither positive nor negative,,neither positive nor negative
+LETIN1A,reduced a little,remain the same as it is,remain the same as it is
+partners,1 partner,1 partner,3 partners
+matesex,yes,yes,no
+SEXSEX5,exclusively male,,exclusively female
+evstray,no,,yes
+condom,not used,,not used
+relatsex,"yes, in relationship",,"no, no relationship"
+evidu,no,,yes
+evcrack,no,,no
+HIVTEST1,b,,a
+sexornt,heterosexual or straight,heterosexual or straight,heterosexual or straight
+sexbirth,female,female,male
+sexnow,women,,women
+GENEGOO2,e,e,c
+realrinc,e,c,c
+coninc,c,,b
+conrinc,e,,d
+ETH1,other spanish,,japan
+ethnum,names 1,,names 1
+RACECEN2,black or african american,,native hawaiian
+vetyears,none,2 to 4  years,2 to 4  years
+dwelling,detached 1-fam house,,other
+dwelown,pays rent,,own or is buying
+worda,correct,,incorrect
+worde,correct,correct,correct
+wordf,correct,,incorrect
+wordsum,c,c,d
+GENDER1,male,male,female
+MAR1,married,,never married
+GENDER2,female,female,male
+RELATE3,child,,parent or parent-in-law
+GENDER3,female,,female
+OLD3,c,,b
+OLD6,e,e,c
+OLD7,e,e,d
+OLD8,e,e,b
+OLD9,e,e,e
+OLD10,e,,c
+OLD11,e,,b
+OLD12,e,,b
+RELHHD3,"child,natural or adopted,stepchild",,cousin
+respnum,2nd person,,1st person
+hhtype,"2adlts,mar,1+kids",,"2adlts,mar,1+kids"
+HHTYPE1,married couple w children,,"unsure, no children"
+visitors,no visitors,,no visitors
+RELHH2,spouse,spouse,spouse
+RELHH3,"child, unsp",,child of non-relative
+RELHH4,"child, unsp",,parent
+RELSP1,spouse,,spouse
+RELSP4,"child, not specified",,"grandchild, great-grandchild"
+MAISCO88,e,,e
+SPISCO88,c,,c
+SPISCO08,accountants,,receptionists (general)
+SEI10,c,,d
+SEI10INC,c,,c
+PASEI10,c,,b
+PASEI10EDUC,c,,e
+SPSEI10,d,,d
+SPSEI10INC,c,c,e
+COSEI10,e,,e
+inthisp,not hispanic,,puerto rican
+INTRACE1,white,,other pacific islander
+WHOELSE2,no,,no
+WHOELSE3,no,,no
+WHOELSE6,yes,,yes
+intid,43,,96
+lngthinv,73,97,48
+intethn,white,hispanic,hispanic
+mode,in-person,in-person,na
+intsex,female,,female
+consent,r consents to recording interview,,r consents to partcipate in the survey but does not want to be recorded
+issp,did issp,,didnt do issp
+phase,phase one - initial cases,,phase one - initial cases
+dwellpre,detached single family house,,"apartment house (5 or more units, 3 stories or less)"
+incuspop,average,,higher than average
+neisafe,very safe,,very safe
+rlooks,attractive,unattractive,very unattractive
+rweight,about the right weight,about the right weight,very overweight
+rhlthend,excellent,,excellent
+vstrat,3303,3366,3353

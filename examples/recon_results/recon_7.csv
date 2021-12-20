@@ -1,117 +1,282 @@
 feature_names,sample,qsampled,random_sample
-ptsd4,1,,4
-ptsd5,1,,3
-ptsd8,1,,1
-ptsd9,2,4,5
-ptsd10,4,,1
-ptsd11,1,2,3
-ptsd12,1,3,4
-ptsd15,1,,5
-ptsd18,1,,4
-ptsd23,1,,1
-ptsd24,1,1,2
-ptsd25,1,,1
-ptsd26,3,,1
-ptsd27,4,2,1
-ptsd29,1,,4
-ptsd30,2,1,4
-ptsd31,3,,1
-ptsd32,1,,3
-ptsd33,1,4,3
-ptsd36,1,,3
-ptsd37,1,3,2
-ptsd40,3,1,4
-ptsd41,1,3,4
-ptsd44,2,1,1
-ptsd46,1,1,5
-ptsd48,1,,2
-ptsd49,1,3,1
-ptsd50,1,3,2
-ptsd52,1,,3
-ptsd53,3,4,4
-ptsd56,1,,3
-ptsd57,2,,2
-ptsd58,1,5,1
-ptsd59,1,,2
-ptsd65,1,3,4
-ptsd66,3,2,4
-ptsd67,1,2,2
-ptsd68,1,3,5
-ptsd69,1,1,1
-ptsd71,1,1,4
-ptsd72,1,3,5
-ptsd74,1,4,2
-ptsd75,1,1,5
-ptsd77,1,1,4
-ptsd79,1,,4
-ptsd80,1,1,1
-ptsd86,1,,3
-ptsd89,1,1,3
-ptsd90,1,4,2
-ptsd91,1,2,2
-ptsd92,1,2,2
-ptsd95,1,,3
-ptsd96,1,1,2
-ptsd97,1,5,1
-ptsd98,1,1,5
-ptsd99,1,3,2
-ptsd101,1,4,4
-ptsd102,1,2,3
-ptsd104,1,,5
-ptsd106,2,3,3
-ptsd108,2,3,2
-ptsd110,1,5,3
-ptsd111,1,,1
-ptsd113,4,4,1
-ptsd114,1,,4
-ptsd117,1,1,4
-ptsd119,1,4,1
-ptsd123,1,1,3
-ptsd124,1,,3
-ptsd126,1,3,2
-ptsd127,1,,3
-ptsd128,1,1,3
-ptsd129,1,,4
-ptsd130,3,5,2
-ptsd131,1,,5
-ptsd132,2,4,1
-ptsd134,1,1,5
-ptsd135,1,,3
-ptsd136,1,2,1
-ptsd140,1,,5
-ptsd141,1,1,4
-ptsd142,1,3,5
-ptsd148,1,,5
-ptsd149,1,2,1
-ptsd150,2,4,3
-ptsd151,1,1,3
-ptsd154,1,,3
-ptsd155,1,2,5
-ptsd156,1,,1
-ptsd157,1,3,3
-ptsd159,1,,4
-ptsd160,1,,2
-ptsd161,1,,5
-ptsd166,3,,3
-ptsd167,1,1,3
-ptsd169,2,,4
-ptsd170,3,1,2
-ptsd171,1,1,3
-ptsd172,2,,3
-ptsd173,1,1,2
-ptsd174,1,4,3
-ptsd177,1,1,3
-ptsd179,1,,3
-ptsd180,1,,2
-ptsd184,1,1,4
-ptsd187,1,4,2
-ptsd188,1,,4
-ptsd190,1,1,3
-ptsd191,1,,1
-ptsd192,1,3,4
-ptsd193,1,,1
-ptsd194,1,3,5
-ptsd196,1,4,1
-ptsd197,1,1,3
-ptsd203,1,4,1
-ptsd211,2,,3
+HRS1,e,e,d
+OCC10,c,,d
+PRESTG10,c,,b
+PRESTG105PLUS,c,,b
+INDUS10,c,,e
+widowed,no,,yes
+SPHRS1,e,e,e
+SPHRS2,e,,e
+SPOCC10,e,,c
+SPPRES10,e,,b
+SPPRES105PLUS,e,e,b
+COOCC10,e,,d
+pawrkslf,someone else,someone else,someone else
+PAOCC10,d,,c
+PAPRES105PLUS,b,,d
+MAOCC10,c,,d
+MAPRES10,c,,e
+MAIND10,not specified retail trade,outpatient care centers,"sporting goods, camera, and hobby and toy stores"
+age,c,,d
+paeduc,e,,c
+speduc,e,c,a
+coeduc,e,,b
+degree,high school,high school,junior college
+padeg,high school,,graduate
+sex,female,,male
+MOBILE16,same city,"same st,dif city",same city
+FAMILY16,mother & stpfather,,m and f relatives
+mawrkgrw,yes,,no
+unrelat,e,,e
+earnrs,b,,e
+income,$20000 - 24999,,lt $1000
+xnorcsiz,"suburb, med city",,"suburb, med city"
+srcbelt,"suburb, 13-100",,other rural
+VOTE12,did not vote,,ineligible
+VOTE16,did not vote,did not vote,ineligible
+IF16WHO,clinton,clinton,trump
+polviews,moderate,,slightly liberal
+natspac,too much,,too little
+natenvir,too little,,too much
+natheal,too little,too little,about right
+natcity,too little,,about right
+natcrime,too little,,too much
+natdrug,too little,about right,too little
+nateduc,too little,,about right
+natroad,too little,too little,about right
+natsoc,too little,too little,too much
+natpark,too little,too little,too much
+natchld,too little,too little,too much
+natenrgy,about right,too much,too little
+tax,too high,,too low
+spkath,allowed,,not allowed
+colath,not allowed,,allowed
+spkmil,allowed,,not allowed
+colmil,not allowed,not allowed,not allowed
+spkhomo,allowed,allowed,not allowed
+spkmslm,"yes, allowed",,"yes, allowed"
+gunlaw,favor,,favor
+attend,never,,nrly every week
+pray,once a day,,once a day
+popespks,uncertain true or false,,probably false
+prayer,disapprove,approve,approve
+bible,word of god,word of god,inspired word
+racopen,owner decides,,cant discriminate
+affrmact,oppose pref,,strongly support pref
+wrkwayup,agree strongly,neither agree nor disagree,agree somewhat
+happy,not too happy,,very happy
+health,poor,,fair
+life,routine,exciting,exciting
+socrel,once a year,once a year,once a year
+socfrend,once a year,,once a month
+socbar,never,once a year,sev times a year
+weekswrk,b,,e
+class,working class,,upper class
+satfin,not at all sat,not at all sat,more or less
+finalter,worse,,better
+finrela,below average,,average
+abnomore,no,,no
+abpoor,no,,no
+abrape,yes,,yes
+chldidel,c,c,c
+pillok,agree,,strongly disagree
+divlaw,easier,,easier
+premarsx,always wrong,,always wrong
+teensex,always wrong,,always wrong
+homosex,not wrong at all,,not wrong at all
+spanking,disagree,agree,agree
+LETDIE1,yes,no,no
+SUICIDE2,no,,no
+SUICIDE3,no,no,yes
+SUICIDE4,no,,no
+fear,yes,yes,yes
+owngun,no,,yes
+pistol,no,,refused
+shotgun,no,,refused
+rifle,no,,yes
+hunt,neither,neither,spouse
+phone,phone in home,,phone elsewhere
+comprend,good,good,poor
+random,c,,c
+RACDIF2,yes,no,no
+RACDIF3,no,,no
+helppoor,e,e,e
+helpnot,e,,c
+helpsick,e,d,b
+helpblk,e,,b
+god,know god exists,,believe but doubts
+wlthblks,c,,c
+workwhts,c,,e
+workhsps,c,,c
+intlblks,c,,e
+intlhsps,c,,e
+marblk,neither favor nor oppose,,strongly favor
+MARAsian,neither favor nor oppose,,strongly favor
+marhisp,neither favor nor oppose,,oppose
+marwht,neither favor nor oppose,neither favor nor oppose,favor
+discaff,somewhat likely,very likely,not very likely
+yousup,e,,c
+fejobaff,strongly for,strongly for,strongly for
+vigversn,e,,b
+CLOSETO1,e,c,c
+CLOSETO2,e,e,c
+CLOSETO3,e,,c
+CLOSETO4,e,,b
+CLOSETO5,e,,c
+SEETALK2,e,,b
+SEETALK4,e,,e
+MYPROBS1,e,,e
+MYPROBS2,e,c,e
+MYPROBS5,e,e,d
+SEVERE4,e,,b
+SEVERE5,e,e,e
+DANGOTH3,e,,c
+DANGOTH4,e,,d
+DANGSLF1,e,,c
+relpersn,modrte religious,very religious,very religious
+sprtprsn,modeate spirtual,,slight spiritual
+othlang,no,no,yes
+compuse,no,yes,no
+wwwmin,c,,d
+yearsjob,e,,e
+waypaid,e,e,e
+moredays,e,,d
+physhlth,e,,c
+mntlhlth,e,,e
+hlthdays,e,e,c
+hurtatwk,e,,e
+weight,e,,e
+height,e,e,c
+ntwkhard,e,,c
+misswork,e,e,d
+poorserv,a few times a year,,never
+notsmart,less than once a year,,almost every day
+threaten,never,a few times a year,a few times a year
+quallife,fair,,fair
+hlthmntl,fair,fair,excellent
+satsoc,good,excellent,good
+emoprobs,d,,b
+fatigue,moderate,,mild
+ratepain,d,b,d
+ABSTATE1,very easy,,very easy
+ABSTATE2,make it harder,stay the same as now,stay the same as now
+ABHELP3,no,,yes
+ABHELP4,no,,yes
+numpets,e,c,c
+extraval,e,e,e
+yearval,e,e,c
+numemps,e,,e
+newsfrom,tv,,radio
+scifrom,newspapers,,government agencies
+astrolgy,yes,yes,no
+astrosci,sort of scientific,sort of scientific,very scientific
+balpos,slightly in favor,slightly in favor,strongly in favor
+scistudy,general sense,,little understanding
+expdesgn,500 get the drug 500 dont,,500 get the drug 500 dont
+exptext,correct wrong reason,,wrong other reason
+radioact,True,True,True
+boyorgrl,True,True,False
+viruses,True,,False
+bigbang,False,,True
+hsbio,no,,yes
+hschem,no,,no
+intintl,not at all interested,,very interested
+intfarm,moderately interested,not at all interested,very interested
+intecon,moderately interested,,not at all interested
+inttech,moderately interested,,moderately interested
+intmil,not at all interested,,very interested
+viszoo,c,c,c
+SCINEWS1,printed newspapers,,printed newspapers
+scientgo,agree,agree,strongly agree
+scienthe,strongly agree,agree,disagree
+scientbe,strongly agree,agree,agree
+compwage,e,,d
+numorg,e,,c
+ratetone,e,,d
+posslq,no steady partner,,no steady partner
+marcohab,"not married, no cohabitating partner",,"not married, no cohabitating partner"
+trcourts,e,c,a
+trbigbus,e,,a
+healthissp,poor,good,excellent
+hubbywrk,disagree,strongly disagree,strongly disagree
+marhomo,neither agree nor disagree,,agree
+hapunhap,fairly happy,,not at all happy
+abpoorw,always wrong,always wrong,almost always wrong
+conchurh,a great deal of confidence,some confidence,complete confidence
+conschls,some confidence,,very little confidence
+clergvte,strongly agree,,disagree
+churhpow,too much power,,right amount pwr
+godchnge,"believe now, always have",,"don't believe now, used to"
+heaven,"yes, probably",,"yes, definitely"
+hell,"yes, probably",,"no, probably not"
+theism,agree,,agree
+egomeans,disagree,,agree
+attendma,every week,never,about once or twice a yr
+attendpa,2-3 times a month,,less than once a yr
+ATTEND12,every week,,2-3 times a month
+relactiv,never,never,about once or twice a year
+feelrel,somwhat relgious,somwhat relgious,extreme non-rel
+trustsci,not agree/dsagre,,disagree
+religcon,not agree/dsagre,,not agree/dsagre
+relsprt,"i follow a religion, but dont consider myself to be a spiritual person interested in the sacred and",,i dont follow a religion and dont consider myself to be a spiritual person interested in the sacred
+relgenbar,neither agree nor disagree,,strongly agree
+difrel,disagree,agree,disagree
+muslims,neither positive nor negative,,very negative
+hindus,neither positive nor negative,,somewhat negative
+buddhsts,neither positive nor negative,,somewhat positive
+jews,neither positive nor negative,somewhat positive,very negative
+atheists,neither positive nor negative,,very positive
+nukegen,extremely dangerous,very dangerous,not very dangerous
+watergen,somewhat dangerous,very dangerous,somewhat dangerous
+tempgen,very dangerous,,somewhat dangerous
+LETIN1A,reduced a little,reduced a little,remain the same as it is
+nummen,e,,e
+HIVTEST1,e,,b
+GENETST1,not very much,,nothing at all
+GENESELF2,yes,no,yes
+realinc,c,c,b
+realrinc,e,e,d
+coninc,c,c,b
+ETH1,lithuania,germany,switzerland
+RACECEN1,white,,white
+mnthsusa,e,,b
+dwelown,pays rent,,other
+worda,correct,,incorrect
+wordb,correct,,correct
+worde,correct,,incorrect
+wordsum,c,,a
+GENDER1,female,,female
+OLD1,c,c,e
+OLD3,e,,d
+OLD5,e,,e
+OLD6,e,,e
+OLD8,e,,d
+OLD10,e,,e
+OLD11,e,,c
+hefinfo,1st person,,3rd person
+hhrace,white,,"other, mixed"
+HHTYPE1,single adult,,"unsure, no children"
+rplace,head of household,,head of household
+rvisitor,r. is household member,,r. is household member
+PAISCO08,"metal finishing, plating and coating machine operators",welders and flamecutters,"textile, fur and leather products machine operators not elsewhere classified"
+SEI10INC,d,,e
+PASEI10EDUC,b,,d
+MASEI10EDUC,c,,e
+SPSEI10EDUC,e,,d
+COSEI10INC,e,,e
+zodiac,leo,,gemini
+WHOELSE1,no,,no
+WHOELSE2,no,no,yes
+WHOELSE3,no,yes,no
+WHOELSE6,yes,yes,no
+intid,125,,78
+feeused,"yes, money",,"yes, money"
+lngthinv,84,,184
+intage,68,,40
+intyrs,23,,14
+sampcode,601,,640
+kidsinhh,no,,no
+incuspop,average,average,average
+wtss,c,c,e
+wtssnr,c,,b
+vstrat,3301,3358,3353

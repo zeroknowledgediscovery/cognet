@@ -1,0 +1,292 @@
+feature_names,sample,qsampled,random_sample
+HRS1,e,d,d
+HRS2,e,e,a
+evwork,yes,yes,no
+OCC10,c,,b
+PRESTG10,c,d,e
+PRESTG105PLUS,c,,b
+INDUS10,c,c,e
+SPHRS1,e,,e
+COHRS1,c,,b
+COHRS2,e,e,c
+SPPRES10,d,,e
+PAPRES105PLUS,e,,c
+PAIND10,e,e,d
+mawrkslf,someone else,someone else,self-employed
+MAPRES10,c,,d
+MAIND10,truck transportation,,pharmaceutical and medicine manufacturing
+childs,b,,d
+age,c,,b
+educ,c,c,c
+maeduc,c,,a
+speduc,e,,b
+coeduc,c,e,d
+codeg,junior college,,graduate
+degree,junior college,graduate,graduate
+madeg,bachelor,,bachelor
+MAJOR1,business administration,marketing,educational administration
+race,white,,other
+RES16,big-city suburb,,city gt 250000
+REG16,south atlantic,south atlantic,new england
+FAMILY16,mother,,mother
+mawrkgrw,yes,no,yes
+babies,c,c,e
+preteen,c,c,c
+teens,c,,e
+adults,2,,3
+region,middle atlantic,,south atlantic
+xnorcsiz,"city,50-250000",,"city,10-49999"
+PRES12,obama,obama,didn't vote for president
+VOTE16,did not vote,,did not vote
+IF16WHO,clinton,,trump
+natsoc,too little,,too little
+natenrgy,too little,,too much
+natcrimy,about right,about right,too little
+nateducy,too little,too little,too little
+natracey,too little,,too little
+natarmsy,too much,,too little
+nataidy,about right,,too much
+cappun,oppose,,oppose
+courts,too harsh,,about right
+attend,never,never,nrly every week
+postlife,no,no,no
+pray,lt once a week,,once a day
+FUND16,liberal,liberal,liberal
+cofund,liberal,liberal,fundamentalist
+bible,book of fables,book of fables,word of god
+raclive,yes,yes,yes
+affrmact,strongly support pref,oppose pref,support pref
+helpful,helpful,,depends
+trust,can trust,,depends
+confinan,only some,,a great deal
+conbus,only some,only some,hardly any
+confed,hardly any,,a great deal
+conlabor,only some,,a great deal
+contv,only some,hardly any,only some
+conjudge,a great deal,,hardly any
+conarmy,only some,,a great deal
+obey,least important,least important,3rd important
+thnkself,2nd important,,least important
+workhard,3rd important,,least important
+helpoth,most important,4th important,most important
+socrel,never,,once a year
+socommun,once a year,,almost daily
+aged,a good idea,a bad idea,depends
+weekswrk,b,,c
+finrela,above average,,far below average
+UNION1,spouse or partner belongs,neither belongs,r and spouse or partner belong
+parsol,about the same,,about the same
+sexeduc,favor,,oppose
+divlaw,easier,,stay same
+xmovie,no,,yes
+LETDIE1,yes,,yes
+polhitok,no,,no
+polabuse,no,no,no
+polmurdr,no,,yes
+polescap,no,,no
+polattak,yes,,yes
+tvhours,d,c,c
+coop,"friendly,interested","friendly,interested",hostile
+comprend,good,good,fair
+fefam,strongly disagree,disagree,strongly agree
+RACDIF1,yes,,yes
+RACDIF2,no,no,no
+RACDIF3,yes,,yes
+RACDIF4,no,,yes
+helpblk,b,,c
+god,no way to find out,some higher power,believe but doubts
+numcong,e,,e
+workhsps,c,,c
+liveblks,strongly favor,,oppose
+MARAsian,favor,,oppose
+marhisp,favor,,neither favor nor oppose
+marwht,favor,,favor
+yousup,e,,e
+discaffw,somewhat likely,,very likely
+fehire,strongly agree,,strongly disagree
+seriousp,somewhat serious,,somewhat serious
+charactr,not at all likely,,somewhat likely
+stresses,somewhat likely,,not at all likely
+godswill,not at all likely,,very likely
+mentlill,somewhat likely,,very likely
+dectreat,somewhat able,,not able at all
+imprvown,somewhat likely,,not likely at all
+vigfrnd,probably willing,,definitely willing
+vigmar,probably willing,probably unwilling,probably willing
+hurtoth,not very likely,,very likely
+hurtself,not very likely,somewhat likely,not likely at all
+tlkfam,yes,,no
+tlkclrgy,yes,,yes
+sphealer,no,,no
+otcmed,yes,no,no
+rxmed,yes,yes,yes
+dofirst,talk to family and friends about it,,"go to a therapist, or counselor, like a psychologist, social worker, or other mental health professional for help"
+mustmed,no,no,yes
+musthosp,no,,yes
+dangrslf,yes,yes,yes
+KNWMW2,female,,transgender ftm
+MHP2R1,acquaintance,,child
+CLOSETO1,b,,d
+CLOSETO5,e,e,c
+SEETALK1,b,,b
+SEETALK2,b,c,d
+SEETALK3,e,,b
+SEETALK4,e,,c
+SEETALK5,e,,d
+MHTREAT2,yes,,no
+MYPROBS5,e,e,e
+SEVERE3,e,e,d
+SEVERE5,e,,d
+DANGOTH2,e,,e
+DANGOTH5,e,,c
+DANGSLF2,e,,e
+othmhneg,not at all,,somewhat
+diagnosd,no,,yes
+MCSDS1,True,,False
+MCSDS2,False,,True
+MCSDS4,False,False,True
+MCSDS5,False,,False
+relpersn,not religious,,slight religious
+sprtprsn,modeate spirtual,,modeate spirtual
+webmob,yes,,no
+emailmin,e,,c
+wwwhr,e,,e
+yearsjob,e,,c
+moredays,e,e,d
+physhlth,e,,d
+mntlhlth,e,,d
+hlthdays,e,,d
+usetech,e,,e
+lifenow,e,e,a
+LIFEIN5,e,,d
+hlthphys,fair,very good,good
+hlthmntl,excellent,,excellent
+satsoc,good,,fair
+actssoc,very good,,very good
+physacts,moderately,,moderately
+emoprobs,b,c,e
+abmoral,not morally opposed,morally opposed,it depends
+ABSTATE1,easy,easy,very easy
+ABHELP1,yes,,yes
+ABHELP2,yes,,no
+abinspay,people should be able,,people should be able
+natnotice,strongly agree,,strongly disagree
+nataccess,somewhat agree,,strongly agree
+nattime,somewhat disagree,strongly agree,somewhat agree
+natlack,somewhat disagree,,strongly agree
+numpets,c,e,e
+PETB4,no,yes,yes
+dog,does not have,has,has
+smammal,does not have,,does not have
+bird,does not have,,has
+fish,does not have,does not have,does not have
+horse,does not have,,does not have
+pig,does not have,,has
+othpet,does not have,does not have,does not have
+petplay,often,often,never
+petcmfrt,often,,never
+petfam,almost always,almost always,never
+extrayr,e,e,c
+colscinm,e,e,e
+viszoo,e,,c
+vissci,e,,e
+buyvalue,e,,d
+compwage,e,c,c
+POLEFF11,neither agree nor disagree,,disagree
+posslqy,"i have a steady partner, and we live in the same household.",,i am married and living in the same household as my husband or wife.
+kidpars,agree,agree,agree
+demands,"no, never","no, never","yes, but seldom"
+knwhrman,someone else i know,,no one
+knwcop,family or relative,close friend,no one
+smallgap,strongly agree,,strongly disagree
+partlsc,several times a year,,several times a year
+hlphome,close friend,,more distant family member
+hlpadvce,close friend,close family member,no one
+hlppaper,other organizations,other persons,no person or organization
+hlpresde,public services,,other organizations
+LONELY2,never,never,rarely
+trcourts,b,c,b
+trbigbus,c,,c
+fampress,"yes, sometimes",,"yes, but rarely"
+upset,rarely,,sometimes
+dinefrds,never,never,less often
+conwkday,5-9 people,,0-4 people
+CONF2F,some of them,,most of them
+cntctsib,never,,once a week
+pilingup,never,,often
+incgap,strongly agree,,strongly agree
+goveqinc,strongly agree,disagree,neither
+relactiv,never,,every week
+cantrust,usually trusted,,always trusted
+matesex,yes,no,yes
+PARTNRS5,3 partners,1 partner,21-100 partners
+evpaidsx,no,,no
+condom,not used,,not used
+evcrack,yes,,yes
+CRACK30,more than 3 years ago,more than 3 years ago,more than 30 days ago but within the past 12 months
+hivtest,no,no,no
+HIVTEST1,e,,b
+sexbirth,male,,male
+GENEGOO2,e,,c
+realinc,c,,c
+realrinc,e,,e
+coninc,c,,e
+ETH2,belgium,,denmark
+ethnum,chooses 1 of 2+,,cannot choose 1
+hispanic,not hispanic,not hispanic,"mexican, mexican american, chicano/a"
+RACECEN1,white,,white
+yearsusa,e,,b
+vetyears,none,,none
+dwelown,pays rent,,pays rent
+DWELOWN16,owned or was buying,,paid rent
+wordc,incorrect,,incorrect
+wordf,correct,correct,incorrect
+wordg,correct,,correct
+wordh,correct,,correct
+wordi,incorrect,,incorrect
+wordsum,c,c,a
+GENDER1,male,,female
+OLD1,c,c,e
+OLD2,c,,a
+OLD3,e,,c
+OLD4,e,,c
+OLD5,e,e,e
+OLD6,e,,e
+OLD7,e,,d
+OLD8,e,,c
+OLD9,e,,d
+OLD11,e,e,d
+hefinfo,1st person,,not in household
+respnum,1st person,,2nd person
+HHTYPE1,"cohab couple, no children","other fam., no children",married couple w children
+rvisitor,r. is household member,,r. is household member
+dateintv,415,424,1004
+ISCO88,b,,d
+SPISCO88,b,c,e
+COISCO08,health services managers,,teachers' aides
+PASEI10,e,,e
+PASEI10EDUC,e,,e
+SPSEI10INC,d,,c
+COSEI10,d,,b
+COPRES105PLUS,d,c,e
+cohort,c,,b
+inthisp,not hispanic,,not hispanic
+INTRACE1,black or african,,american indian
+WHOELSE1,yes,no,yes
+WHOELSE2,no,,no
+WHOELSE5,no,,no
+intid,123,,7
+mode,in-person,,na
+intsex,female,,female
+sampcode,601,,649
+phase,phase one - initial cases,phase one - initial cases,phase one - initial cases
+spaneng,english,,english
+hlthstrt,fair,,excellent
+huadd,yes,yes,no
+dwellpre,"apartment house (5 or more units, 4 stories or more)",,apartment in a partly commercial structure
+neisafe,very safe,,very unsafe
+rgroomed,very poorly groomed,,poorly groomed
+rweight,slightly overweight,,very underweight
+wtss,c,c,c
+wtssnr,c,c,d
+vstrat,3307,,3312

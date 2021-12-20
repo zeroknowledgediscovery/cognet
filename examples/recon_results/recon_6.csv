@@ -1,113 +1,350 @@
 feature_names,sample,qsampled,random_sample
-ptsd1,2,,4
-ptsd2,4,,4
-ptsd4,3,1,1
-ptsd7,1,,5
-ptsd8,1,,5
-ptsd9,2,3,2
-ptsd10,1,3,1
-ptsd14,2,,4
-ptsd18,1,,1
-ptsd19,2,1,5
-ptsd20,1,2,5
-ptsd21,1,,1
-ptsd22,1,,4
-ptsd23,1,2,4
-ptsd26,1,1,1
-ptsd27,1,,4
-ptsd29,1,,3
-ptsd31,1,1,3
-ptsd33,1,1,4
-ptsd34,1,1,1
-ptsd35,1,1,5
-ptsd39,1,3,2
-ptsd41,1,1,5
-ptsd44,1,3,3
-ptsd48,1,,3
-ptsd49,1,2,2
-ptsd50,2,1,4
-ptsd52,1,,1
-ptsd53,2,2,2
-ptsd54,1,,2
-ptsd55,1,,2
-ptsd59,1,5,2
-ptsd60,1,,5
-ptsd63,1,1,2
-ptsd65,3,2,1
-ptsd67,1,2,4
-ptsd69,1,,5
-ptsd70,1,4,2
-ptsd72,1,,5
-ptsd76,1,4,4
-ptsd77,1,4,4
-ptsd79,1,3,1
-ptsd80,1,1,3
-ptsd82,1,2,3
-ptsd84,1,1,3
-ptsd86,1,,3
-ptsd87,1,1,2
-ptsd88,1,3,1
-ptsd91,1,4,3
-ptsd93,1,2,2
-ptsd94,2,1,1
-ptsd95,2,2,2
-ptsd98,1,,4
-ptsd100,1,3,3
-ptsd101,1,4,5
-ptsd102,1,3,4
-ptsd103,1,,3
-ptsd106,3,3,4
-ptsd110,1,3,1
-ptsd113,5,5,1
-ptsd117,1,,4
-ptsd121,2,3,3
-ptsd122,2,,1
-ptsd123,1,3,3
-ptsd124,1,4,3
-ptsd126,2,1,2
-ptsd127,2,1,3
-ptsd130,1,4,3
-ptsd133,1,,2
-ptsd135,1,1,5
-ptsd136,1,2,1
-ptsd138,3,2,3
-ptsd140,1,4,5
-ptsd141,2,1,2
-ptsd143,1,,1
-ptsd144,2,,4
-ptsd149,1,1,5
-ptsd152,1,1,5
-ptsd156,1,3,5
-ptsd160,2,,1
-ptsd162,1,2,3
-ptsd168,1,1,3
-ptsd169,1,3,5
-ptsd170,1,,1
-ptsd172,1,2,3
-ptsd173,2,,4
-ptsd174,1,1,2
-ptsd175,1,,5
-ptsd176,1,,4
-ptsd177,1,,2
-ptsd178,1,,4
-ptsd179,1,2,3
-ptsd181,1,,2
-ptsd184,1,1,3
-ptsd185,2,1,3
-ptsd186,2,1,3
-ptsd187,2,1,2
-ptsd188,3,1,3
-ptsd189,3,,2
-ptsd191,2,,4
-ptsd192,1,,4
-ptsd194,1,1,5
-ptsd195,1,5,4
-ptsd197,1,1,1
-ptsd198,1,,5
-ptsd199,1,1,1
-ptsd201,1,2,3
-ptsd202,1,2,1
-ptsd203,1,4,3
-ptsd206,1,1,3
-ptsd209,1,4,1
-ptsd211,1,,2
+wrkstat,working fulltime,,working fulltime
+HRS2,e,e,a
+wrkgovt,private,,private
+INDUS10,c,c,b
+marital,divorced,,divorced
+SPHRS1,e,,e
+COHRS2,e,,b
+COOCC10,c,,b
+COIND10,nursing care facilities,,medical equipment and supplies manufacturing
+PAOCC10,c,c,b
+PAPRES10,c,d,e
+PAIND10,c,,c
+mawrkslf,someone else,,self-employed
+MAOCC10,c,,b
+MAPRES105PLUS,d,c,b
+MAIND10,hospitals,,personal and household goods repair and maintenance
+agekdbrn,c,,e
+educ,d,,e
+coeduc,c,c,d
+codeg,high school,,lt high school
+padeg,high school,,junior college
+madeg,high school,,high school
+dipged,high school diploma,,other
+REG16,new england,e. nor. central,foreign
+MOBILE16,"same st,dif city",same city,same city
+FAMILY16,mother & father,mother & father,m and f relatives
+granborn,c,,d
+babies,c,d,c
+preteen,c,,c
+teens,c,c,e
+adults,2,3,5
+unrelat,d,,e
+income,$25000 or more,,lt $1000
+rincome,$25000 or more,$3000 to 3999,$8000 to 9999
+INCOME16,$150000 to $169999,,$3 000 to 3 999
+RINCOM16,$110000 to $129999,,$90000 to $109999
+region,new england,,e. sou. central
+srcbelt,"suburb, 13-100",,"suburb, 13-100"
+size,56,,15
+VOTE12,voted,,ineligible
+PRES12,romney,,didn't vote for president
+PRES16,trump,,clinton
+natroad,too little,too little,too much
+natsci,about right,,too little
+natspacy,about right,,about right
+natenviy,too much,,about right
+nathealy,too much,about right,too little
+natcrimy,about right,,too little
+natracey,about right,,too much
+nataidy,too much,,too much
+tax,too high,,too low
+spkath,allowed,allowed,not allowed
+colath,allowed,allowed,allowed
+libath,not remove,,not remove
+spkrac,allowed,allowed,not allowed
+colcom,not fired,,fired
+libcom,not remove,,remove
+libmil,not remove,not remove,remove
+spkhomo,allowed,not allowed,not allowed
+colhomo,allowed,,not allowed
+libhomo,not remove,,remove
+spkmslm,"yes, allowed","yes, allowed","yes, allowed"
+libmslm,not remove,,remove
+cappun,favor,favor,oppose
+gunlaw,favor,favor,favor
+reliten,not very strong,,no religion
+RELIG16,catholic,,jewish
+corel,catholic,protestant,jewish
+cofund,moderate,,moderate
+prayer,approve,disapprove,disapprove
+bible,inspired word,,word of god
+racopen,cant discriminate,,neither
+wrkwayup,agree somewhat,,disagree strongly
+happy,pretty happy,,pretty happy
+life,exciting,routine,dull
+socommun,sev times a week,sev times a week,almost daily
+joblose,not too likely,,fairly likely
+jobfind,somewhat easy,very easy,somewhat easy
+satfin,more or less,,more or less
+finalter,better,,worse
+wksub,no,yes,yes
+WKSUB1,no,,no
+wksup,yes,,yes
+WKSUPS1,yes,,yes
+fepol,disagree,,agree
+abdefect,yes,,yes
+abnomore,yes,yes,yes
+sexeduc,favor,favor,favor
+premarsx,not wrong at all,not wrong at all,not wrong at all
+xmarsex,almst always wrg,almst always wrg,sometimes wrong
+SUICIDE3,no,,no
+fear,yes,no,no
+owngun,yes,,no
+rifle,no,,yes
+rowngun,yes,,yes
+news,everyday,once a week,once a week
+tvhours,c,d,e
+coop,"friendly,interested",,"friendly,interested"
+comprend,good,,poor
+fechld,strongly agree,,disagree
+fepresch,strongly disagree,,strongly disagree
+RACDIF1,no,,yes
+RACDIF2,no,,no
+RACDIF4,no,,no
+helpnot,e,,e
+reborn,no,yes,yes
+numcong,e,,e
+wlthblks,e,e,c
+wlthhsps,e,,e
+workwhts,c,,c
+workblks,c,c,e
+workhsps,c,,e
+liveblks,neither favor nor oppose,,strongly favor
+marwht,strongly favor,neither favor nor oppose,strongly favor
+racwork,half white-black,,all white
+yousup,c,d,e
+fehire,disagree,,strongly disagree
+vigversn,e,,c
+CLOSETO3,e,,b
+CLOSETO4,e,,c
+SEETALK1,e,,c
+SEETALK3,e,,c
+SEETALK4,e,,b
+SEETALK5,e,,c
+MYPROBS2,e,,e
+MYPROBS3,e,e,e
+MYPROBS4,e,e,e
+MYPROBS5,e,,d
+SEVERE1,e,,c
+SEVERE4,e,e,e
+DANGOTH2,e,e,d
+DANGOTH3,e,e,d
+DANGOTH4,e,,c
+DANGOTH5,e,,d
+DANGSLF2,e,,c
+DANGSLF4,e,,d
+relpersn,slight religious,,very religious
+spklang,poorly/hardly at all,,poorly/hardly at all
+compuse,yes,,no
+emailmin,c,,d
+emailhr,d,,d
+wwwhr,c,,e
+wwwmin,c,,c
+yearsjob,c,,e
+wrksched,day shift,,day shift
+moredays,c,,c
+mustwork,yes,,yes
+famwkoff,not too hard,very hard,not at all hard
+wkvsfam,sometimes,,often
+famvswk,sometimes,,rarely
+hrsrelax,b,c,b
+secondwk,no,,no
+workfast,agree,,agree
+workdiff,strongly agree,,disagree
+knowwhat,agree,,strongly agree
+safefrst,strongly agree,,agree
+teamsafe,strongly agree,,strongly disagree
+prodctiv,agree,strongly agree,strongly disagree
+hlpequip,very true,,very true
+haveinfo,very true,,very true
+supcares,very true,,very true
+condemnd,not too true,,not too true
+cowrkint,very true,,very true
+suphelp,somewhat true,very true,somewhat true
+fairearn,somewhat less than you deserve,,somewhat less than you deserve
+rincblls,yes,,no
+laidoff,no,,no
+JOBFIND1,somewhat easy to find similar job,somewhat easy to find similar job,somewhat easy to find similar job
+wkharsex,no,no,yes
+HEALTH1,excellent,,very good
+physhlth,c,,e
+hlthdays,c,,d
+backpain,no,,yes
+painarms,no,,no
+strredpg,no,,yes
+knowschd,between 1 and 2 weeks,4 weeks or more,4 weeks or more
+usetech,c,c,d
+arthrtis,no,,no
+diabetes,no,no,no
+height,c,,a
+misswork,c,,e
+LIFEIN5,c,,b
+poorserv,a few times a year,,less than once a year
+afraidof,never,,at least once a week
+threaten,never,,a few times a year
+quallife,very good,very good,good
+hlthphys,excellent,,excellent
+hlthmntl,excellent,very good,fair
+actssoc,very good,,fair
+physacts,completely,,a little
+fatigue,mild,,moderate
+ABSTATE1,easy,easy,hard
+ABHELP2,yes,,no
+ABMEDGOV2,a woman and her medical professional should decide,,a woman and her medical professional should decide
+abinspay,people should be able,people should be able,people should be able
+stockval,e,,c
+extrapay,yes,,yes
+indperf,yes,no,no
+EXTR2017,yes,yes,no
+extrayr,e,,c
+yearval,e,e,c
+numemps,e,,c
+newsfrom,newspapers,,government agencies
+scifrom,the internet,the internet,government agencies
+advfront,agree,agree,disagree
+scistudy,clear understanding,clear understanding,general sense
+exptext,correct control group,correct control group,wrong reservations about control group
+ODDS1,no,no,no
+radioact,False,False,False
+lasers,False,,True
+BIGBANG2,True,,True
+condrift,True,,True
+earthsun,earth around sun,,sun around earth
+COLDEG1,mba,,bachelor's
+majorcol,finance,,general sciences
+hsphys,no,,no
+nanowill,benefits greater,,benefits greater
+nanoben,strongly in favor,,slightly in favor
+intfarm,moderately interested,,moderately interested
+inttech,very interested,,very interested
+intspace,moderately interested,,not at all interested
+visnhist,c,,c
+vissci,c,,d
+SCINEWS3,"search engine (google, bing)",,science site
+scienthe,agree,,disagree
+scientod,disagree,,strongly disagree
+buyvalue,e,,c
+empinput,yes,,yes
+slfmangd,no,,yes
+emptrain,no,,no
+wealth,"$250,000 to $500,000",,$2 million to $3 million
+defpensn,no,,yes
+buyesop,i would be neither more nor less likely to buy from an employee-owned company,,i would be neither more nor less likely to buy from an employee-owned company
+esopnot,i would probably take the job with the esop (employee stock ownership plan) or cash profit sharing,,i would definitely take the job without the esop (employee stock ownership plan) or cash profit sharing
+trbigbus,e,,a
+healthissp,excellent,very good,good
+hubbywrk,disagree,,agree
+marhomo,agree,,strongly agree
+meovrwrk,disagree,neither agree nor disagree,neither agree nor disagree
+supervis,supervises,,doesnt supervise
+localnum,50-99,500-999,"1,000-1,999"
+hapunhap,very happy,,not at all happy
+XMARSEX1,almost always wrong,,wrong only sometimes
+abpoorw,not wrong at all,always wrong,not wrong at all
+concong,very little confidence,,a great deal of confidence
+concourt,a great deal of confidence,,some confidence
+conschls,a great deal of confidence,some confidence,a great deal of confidence
+clergvte,agree,,strongly disagree
+afterlif,"no, probably not",,"yes, probably"
+heaven,"yes, probably",,"yes, definitely"
+hell,"yes, probably",,"yes, definitely"
+miracles,"yes, probably","yes, definitely","yes, probably"
+fatalism,disagree,strongly disagree,agree
+godmeans,disagree,,neither agree nor disagree
+nihilism,strongly disagree,strongly disagree,strongly disagree
+parelkid,catholic,protestant,christian
+religkid,catholic,,native american
+attendma,every week,,every week
+attendpa,never,,several times a week
+prayfreq,about once or twice a year,,2-3 times a month
+trustsci,disagree,,strongly agree
+RELEXT1,definitely,,probably not
+RELEXT3,probably,,definitely not
+ancestrs,"no, probably not",,"yes, definitely"
+relobjct,yes,yes,no
+vistholy,never,several times a year,about once a month or more
+relsprt,"i follow a religion, but dont consider myself to be a spiritual person interested in the sacred and",i follow a religion and consider myself to be a spiritual person interested in the sacred and the sup,"i dont follow a religion, but consider myself to be a spiritual person interested in the sacred and"
+makefrnd,agree,,agree
+comfort,agree,agree,agree
+relgenbar,disagree,,agree
+relrlvnt,agree,,strongly disagree
+christns,very positive,very positive,somewhat negative
+buddhsts,very positive,,very negative
+jews,very positive,,somewhat positive
+atheists,neither positive nor negative,,neither positive nor negative
+nukegen,somewhat dangerous,,extremely dangerous
+indusgen,very dangerous,somewhat dangerous,somewhat dangerous
+watergen,somewhat dangerous,,very dangerous
+genegen,not very dangerous,,not very dangerous
+LETIN1A,"reduced a lot, or",,increased a lot
+numwomen,e,e,e
+GENEGOO2,c,,e
+maleornt,r is not homosexual/gay,,r sexual orientation uncertain
+GENESELF2,yes,,no
+realinc,d,,e
+conrinc,d,,e
+ethnum,names 1,names 1,cannot name any
+RACECEN1,white,white,other asian
+yearsusa,e,,c
+mnthsusa,e,,e
+vetyears,none,,more than 4 yrs
+dwelling,detached 1-fam house,,2 units-one above
+dwelown,own or is buying,,other
+DWELOWN16,owned or was buying,other (specify),paid rent
+wordb,correct,,incorrect
+wordc,incorrect,,correct
+wordd,correct,,incorrect
+worde,correct,,correct
+wordf,correct,,incorrect
+GENDER1,female,,female
+RELATE2,non-relative,parent or parent-in-law,grand or great-grandchild
+GENDER2,male,,female
+OLD3,e,,b
+OLD6,e,,e
+OLD7,e,e,d
+OLD9,e,,d
+OLD10,e,e,b
+OLD11,e,,e
+hhrace,white,,"asiatic, oriental"
+respnum,2nd person,1st person,5th person
+hhtype,"2as,ntmar,ntrel,opsex,0ks","2adlts,mar,0kids","3adlts,0mar,ntrel,0kids"
+HHTYPE1,"cohab couple, no children","married couple, no children","cohab couple, no children"
+famgen,1 gen,1 gen,4 gens
+visitors,no visitors,,2 visitors
+RELHH2,"partner,girl(boy)friend","brother, sister",parent-in-law
+dateintv,508,,1015
+ISCO88,b,,c
+PAISCO88,b,,d
+SPISCO88,d,,d
+PAISCO08,office supervisors,,debt-collectors and related workers
+SPISCO08,"cleaners and helpers in offices, hotels and other establishments",,medical imaging and therapeutic equipment technicians
+COISCO08,"cleaners and helpers in offices, hotels and other establishments",heavy truck and lorry drivers,specialist medical practitioners
+SEI10EDUC,c,,c
+PASEI10INC,c,,c
+MASEI10,d,,b
+COPRES10,b,,d
+COPRES105PLUS,b,,b
+cohort,c,,c
+zodiac,gemini,aries,taurus
+inthisp,not hispanic,,not hispanic
+INTRACE1,white,white,chinese
+WHOELSE2,no,,yes
+WHOELSE4,no,,yes
+WHOELSE6,yes,,no
+intid,32,,74
+feeused,"yes, money",,"yes, other (flowers, food, etc.)"
+intethn,white,,two or more race
+mode,in-person,in-person,in-person
+intsex,female,,female
+intyrs,21,11,14
+ballot,ballot a,ballot a,ballot b
+issp,did issp,did issp,did issp
+spaneng,english,,english
+hlthstrt,excellent,,poor
+kidsinhh,yes,yes,no
+rgroomed,very well groomed,,very well groomed
+rweight,about the right weight,about the right weight,slightly underweight
+wtssall,c,,e
+vstrat,3301,,3322
