@@ -1,8 +1,9 @@
 feature_names,sample,qsampled,random_sample
-grass,legal,not legal,not legal
-pray,lt once a week,lt once a week,several times a day
-prayer,approve,disapprove,disapprove
-bible,inspired word,book of fables,book of fables
-prayfreq,2-3 times a month,several times a week,less than once a year
-religint,agree,agree,strongly agree
-comfort,agree,strongly agree,strongly agree
+reliten,no religion,not very strong,no religion
+pillok,disagree,strongly disagree,strongly agree
+viruses,True,True,True
+godchnge,"don't believe now, used to","believe now, always have","believe now, always have"
+prayfreq,2-3 times a month,several times a week,nearly every week
+religcon,not agree/dsagre,disagree,strong disagree
+religint,agree,not agree/dsagre,agree
+comfort,agree,strongly agree,strongly disagree

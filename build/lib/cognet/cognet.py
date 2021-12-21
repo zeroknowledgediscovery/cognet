@@ -45,6 +45,7 @@ class cognet:
         self.polar_matrix = None
         self.nsamples = None
         self.restricted = False
+        self.MAX_PROCESSES = 0
     
     def load_from_model(self,
                         model,
@@ -338,48 +339,37 @@ class cognet:
         if VERBOSE:
             print("{} pole features not found in sample features".format(invalid_count))
 
-    def __mpcollector(self, 
-                      processes,
-                      func, 
-                      cols,
-                      outfile, 
-                      args=[]):
-        """[summary]
+    def __mp_compute(self, 
+                     processes,
+                     func, 
+                     cols,
+                     outfile, 
+                     args=[]):
+        """
+        Compute desired function through multiprocessing and save result to csv.
 
         Args:
-          processes ([type]): [description]
-          func ([type]): [description]
-          args (list): list containing arguments for desired function
-          cols ([type]): [description]
-          outfile ([type]): [description]
-
-        Raises:
-            ValueError: [description]
+          processes (int): number of processes to use.
+          func (func): function to compute using multiprocessing
+          cols (list): column names of resulting csv
+          outfile (str)): filepath + filename for resulting csv
+          args (list): list containing arguments for desired function. Defaults to empty list.
         """
 
         # init mp.Manager and result dict
         manager = mp.Manager()
         return_dict = manager.dict()
 
-        # init mp.Processes for each individual sample
-        # run once collected processes hit max
-        if func == "polar_distance":
-            target = self.polar_distance
-        elif func == "distance":
-            target = self.distfunc_line
-        elif func == "ideology":
-            target = self.ideology
-        elif func == "dispersion":
-            target = self.dispersion
-        elif func == "dissonance":
-            target = self.dissonance
-        elif func == "recon":
-            target = self.randomMaskReconstruction
-        
-        print(args)
+        # set processes as given, unless class parameter is set
         max_processes = processes
+        if self.MAX_PROCESSES != 0:
+            max_processes = self.MAX_PROCESSES
+            print("Number of Processes {} has been set using class parameter".format(self.MAX_PROCESSES))
         num_processes = 0
         process_list = []
+        
+        # init mp.Processes for each individual sample
+        # run once collected processes hit max
         for i in range(len(self.samples)):
             params = tuple([i, return_dict] + args)
             num_processes += 1
@@ -401,7 +391,7 @@ class cognet:
         
         # format and save resulting dict
         result=[x for x in return_dict.values()]
-        pd.DataFrame(result,columns=cols).to_csv(outfile)
+        pd.DataFrame(result,columns=cols).to_csv(outfile, index=None)
         return result
     
     def distance(self,
@@ -484,28 +474,15 @@ class cognet:
         """
         if all(x is not None for x in [self.samples, self.features]):
             cols = [i for i in range(len(self.samples))]
-            result = self.__mpcollector(processes,
+            result = self.__mp_compute(processes,
                                         self.distfunc_line,
                                         cols,
                                         outfile)
-            """
-            # init mp.Manager and result dict
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-
-            # init and start mp.Processes for individual samples
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.distfunc_line, args=(i, return_dict))
-                processes.append(p)
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            """
             # format and save resulting dict, and tranpose symmetrical distance matrix
             result = pd.DataFrame(result,columns=cols, index=cols).sort_index(ascending=False)
             result = result.to_numpy()
             result = pd.DataFrame(np.maximum(result, result.transpose()))
-            result.to_csv(outfile)
+            result.to_csv(outfile, index=None)
         else:
             raise ValueError("load data first!")
         
@@ -546,34 +523,14 @@ class cognet:
         """
         if all(x is not None for x in [self.samples, self.cols,
                                     self.polar_features]):
+            # get the column names
             pole_names = []
             for index, row in self.polar_features[self.cols].iterrows():
                 pole_names.append(index)
-            result = self.__mpcollector(processes,
+            result = self.__mp_compute(processes,
                                         self.polarDistance,
                                         pole_names,
                                         outfile)
-            """
-            # init mp.Manager and result dict
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-            
-            # init and start mp.Processes for individual samples
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.polarDistance, args=(i, return_dict))
-                processes.append(p)
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-
-            # format and save resulting dict
-            pole_names = []
-            for index, row in self.polar_features[self.cols].iterrows():
-                pole_names.append(index)
-            result=[x for x in return_dict.values()]
-            result=pd.DataFrame(result,columns=pole_names).to_csv(outfile)
-            """
-            
         else:
             raise ValueError("load data first!")
         return result
@@ -757,61 +714,10 @@ class cognet:
             else:
                 raise ValueError("Type must be either dispersion or ideology!")
             
-            result = self.__mpcollector(processes,
+            result = self.__mp_compute(processes,
                                         func_,
                                         cols,
                                         outfile)
-            
-            """
-            # init mp.Manager and result dict
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-
-            # init mp.Processes for each individual sample
-            # run once collected processes hit max
-            max_processes = processes
-            num_processes = 0
-            for i in range(len(self.samples)):
-                num_processes += 1
-                p = mp.Process(target=self.dissonance,
-                            args=(i, return_dict))
-                processes.append(p)
-                if num_processes == max_processes:
-                    [x.start() for x in processes]
-                    [x.join() for x in processes]
-                    processes = []
-                    num_processes = 0
-             
-            # compute remaining processes
-            if num_processes != 0:
-                [x.start() for x in processes]
-                [x.join() for x in processes]
-                processes = []
-                num_processes = 0
-                
-            # init mp.Processes for individual samples based on type of calulation
-            if type == 'ideology':
-                for i in range(len(self.samples)):
-                    p = mp.Process(target=self.ideology, args=(i, return_dict))
-                    processes.append(p)
-                columns=['ideology', 'dR', 'dL', 'd0']
-            elif type == 'dispersion':
-                for i in range(len(self.samples)):
-                    p = mp.Process(target=self.dispersion, args=(i, return_dict))
-                    processes.append(p)
-                columns=['Qsd', 'Qmax']
-            else:
-                raise ValueError("Type must be either dispersion or ideology!")
-            
-            # start mp.Processes for individual samples
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            
-            # format and save resulting dict
-            result=[x for x in return_dict.values()]
-            result=pd.DataFrame(result,columns=columns).to_csv(outfile)
-            """
         elif self.pL is None or self.pR is None:
             raise ValueError("set_poles first!")
         else:
@@ -901,50 +807,11 @@ class cognet:
         else:
             cols = self.cols
         
-        result = self.__mpcollector(processes,
+        result = self.__mp_compute(processes,
                                     self.dissonance,
                                     cols,
                                     outfile)
         return pd.DataFrame(result, columns=cols)
-        
-        """
-        # init mp.Manager and result dict
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        # init mp.Processes for each individual sample
-        # run once collected processes hit max
-        max_processes = processes
-        num_processes = 0
-        for i in range(len(self.samples)):
-            num_processes += 1
-            p = mp.Process(target=self.dissonance,
-                           args=(i, return_dict))
-            processes.append(p)
-            if num_processes == max_processes:
-                [x.start() for x in processes]
-                [x.join() for x in processes]
-                processes = []
-                num_processes = 0
-                
-        # compute remaining processes
-        if num_processes != 0:
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            processes = []
-            num_processes = 0
-
-        # format and save resulting dict
-        result=[x for x in return_dict.values()]
-        if self.polar_indices is not None:
-            polar_features = pd.concat([self.features, self.poles], axis=0)
-            cols = polar_features[self.cols].dropna(axis=1).columns
-        else:
-            cols = self.cols
-        result=pd.DataFrame(result,columns=cols).to_csv(output_file)
-        return pd.DataFrame(return_dict.copy())
-        """
     
     def __choose_one(self,
                 X):
@@ -1142,63 +1009,21 @@ class cognet:
         Returns:
           result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error
         '''
-        # set columns
+        # set columns for mp_compute
         if save_samples:
             cols = ['rederr','r_prob','rand_err','sample','qsampled','random_sample','mask_']
         else:
             cols = ['rederr','r_prob','rand_err','mask_']
-            
+        
+        # 
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable]
         
-        result = self.__mpcollector(processes,
+        result = self.__mp_compute(processes,
                                     self.randomMaskReconstruction,
                                     cols,
                                     outfile,
                                     args=args)
-        """
-        # init mp.Manager and result dict
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        # init mp.Processes for each individual sample
-        # run once collected processes hit max
-        max_processes = processes
-        num_processes = 0
-        for i in range(len(self.samples)):
-            num_processes += 1
-            p = mp.Process(target=self.randomMaskReconstruction,
-                           args=(i, 
-                                 return_dict,
-                                 None,
-                                 index_colname,
-                                 output_dir,
-                                 file_name,
-                                 mask_prob,
-                                 allow_all_mutable))
-            processes.append(p)
-            if num_processes == max_processes:
-                [x.start() for x in processes]
-                [x.join() for x in processes]
-                processes = []
-                num_processes = 0
-                
-        # compute remaining processes
-        if num_processes != 0:
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            processes = []
-            num_processes = 0
-        
-        # format and save resulting dict
-        result=[x for x in return_dict.values() if isinstance(x, tuple)]
-        result_cols = ['rederr','r_prob','rand_err','mask_']
-        if save_samples:
-            result_cols = ['rederr','r_prob','rand_err','sample','qsampled','random_sample','mask_']
-        result=pd.DataFrame(result,columns=result_cols)
-        result.rederr=result.rederr.astype(float)
-        """
         return result
     
     def dmat_filewriter(self,
