@@ -390,8 +390,8 @@ class cognet:
             num_processes = 0
         
         # format and save resulting dict
-        result=[x for x in return_dict.values()]
-        pd.DataFrame(result,columns=cols).to_csv(outfile, index=None)
+        result = pd.DataFrame(return_dict.values(), columns=cols, index=return_dict.keys()).sort_index()
+        result.to_csv(outfile, index=None)
         return result
     
     def distance(self,
@@ -470,7 +470,7 @@ class cognet:
           outfile (str): desired output filename and path
           
         Returns:
-          return_dict: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing distance matrix
         """
         if all(x is not None for x in [self.samples, self.features]):
             cols = [i for i in range(len(self.samples))]
@@ -479,7 +479,6 @@ class cognet:
                                         cols,
                                         outfile)
             # format and save resulting dict, and tranpose symmetrical distance matrix
-            result = pd.DataFrame(result,columns=cols, index=cols).sort_index(ascending=False)
             result = result.to_numpy()
             result = pd.DataFrame(np.maximum(result, result.transpose()))
             result.to_csv(outfile, index=None)
@@ -519,7 +518,7 @@ class cognet:
           outfile (str): desired output filename and path
           
         Returns:
-          return_dict: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing polar distance results
         """
         if all(x is not None for x in [self.samples, self.cols,
                                     self.polar_features]):
@@ -695,7 +694,7 @@ class cognet:
           ValueError: load data if samples or features are not present
             
         Returns:
-          Result: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing multiprocessing results
         """
         if all(x is not None for x in [self.samples, self.features,
                                     self.pL, self.pR]):
@@ -715,14 +714,14 @@ class cognet:
                 raise ValueError("Type must be either dispersion or ideology!")
             
             result = self.mp_compute(processes,
-                                        func_,
-                                        cols,
-                                        outfile)
+                                     func_,
+                                     cols,
+                                     outfile)
         elif self.pL is None or self.pR is None:
             raise ValueError("set_poles first!")
         else:
             raise ValueError("load_data first!")
-        return pd.DataFrame(result, columns=cols)
+        return result
 
     def compute_polar_indices(self,
                               num_samples=None,
@@ -798,7 +797,7 @@ class cognet:
           processes (int): max number of processes. Defaults to 6.
 
         Returns:
-          pandas.DataFrame
+          result: pandas.DataFrame containing dissonances for each sample
         '''
         # set columns
         if self.polar_indices is not None:
@@ -811,7 +810,7 @@ class cognet:
                                     self.dissonance,
                                     cols,
                                     outfile)
-        return pd.DataFrame(result, columns=cols)
+        return result
     
     def __choose_one(self,
                 X):
@@ -1007,7 +1006,7 @@ class cognet:
           allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
           
         Returns:
-          result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error
+          result: pandas.DataFrame containing masking and reconstruction results.
         '''
         # set columns for mp_compute
         if save_samples:
