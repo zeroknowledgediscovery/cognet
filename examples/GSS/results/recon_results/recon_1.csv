@@ -1,9 +1,10 @@
 feature_names,sample,qsampled,random_sample
-reliten,no religion,not very strong,no religion
-pillok,disagree,strongly disagree,strongly agree
-viruses,True,True,True
-godchnge,"don't believe now, used to","believe now, always have","believe now, always have"
-prayfreq,2-3 times a month,several times a week,nearly every week
+grass,legal,not legal,not legal
+prayer,approve,disapprove,disapprove
+conlabor,hardly any,only some,only some
+intmil,moderately interested,moderately interested,not at all interested
+godchnge,"don't believe now, used to","believe now, always have","don't believe now, used to"
+prayfreq,2-3 times a month,about once or twice a year,never
 religcon,not agree/dsagre,disagree,strong disagree
-religint,agree,not agree/dsagre,agree
-comfort,agree,strongly agree,strongly disagree
+religint,agree,not agree/dsagre,disagree
+comfort,agree,agree,disagree

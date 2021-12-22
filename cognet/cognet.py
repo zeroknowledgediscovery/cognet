@@ -339,12 +339,12 @@ class cognet:
         if VERBOSE:
             print("{} pole features not found in sample features".format(invalid_count))
 
-    def __mp_compute(self, 
-                     processes,
-                     func, 
-                     cols,
-                     outfile, 
-                     args=[]):
+    def mp_compute(self, 
+                   processes,
+                   func, 
+                   cols,
+                   outfile, 
+                   args=[]):
         """
         Compute desired function through multiprocessing and save result to csv.
 
@@ -474,7 +474,7 @@ class cognet:
         """
         if all(x is not None for x in [self.samples, self.features]):
             cols = [i for i in range(len(self.samples))]
-            result = self.__mp_compute(processes,
+            result = self.mp_compute(processes,
                                         self.distfunc_line,
                                         cols,
                                         outfile)
@@ -527,7 +527,7 @@ class cognet:
             pole_names = []
             for index, row in self.polar_features[self.cols].iterrows():
                 pole_names.append(index)
-            result = self.__mp_compute(processes,
+            result = self.mp_compute(processes,
                                         self.polarDistance,
                                         pole_names,
                                         outfile)
@@ -714,7 +714,7 @@ class cognet:
             else:
                 raise ValueError("Type must be either dispersion or ideology!")
             
-            result = self.__mp_compute(processes,
+            result = self.mp_compute(processes,
                                         func_,
                                         cols,
                                         outfile)
@@ -807,7 +807,7 @@ class cognet:
         else:
             cols = self.cols
         
-        result = self.__mp_compute(processes,
+        result = self.mp_compute(processes,
                                     self.dissonance,
                                     cols,
                                     outfile)
@@ -1019,7 +1019,7 @@ class cognet:
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable]
         
-        result = self.__mp_compute(processes,
+        result = self.mp_compute(processes,
                                     self.randomMaskReconstruction,
                                     cols,
                                     outfile,

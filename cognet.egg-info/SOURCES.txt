@@ -109,6 +109,10 @@ examples/GSS/results/no_class_featurenames_and_vectors.csv
 examples/GSS/results/polarDistance_multiple_test.csv
 examples/GSS/results/randomMaskRecon_test.csv
 examples/GSS/results/randomMaskRecon_test1.csv
+examples/GSS/results/.ipynb_checkpoints/DISSONANCE_matrix-checkpoint.csv
+examples/GSS/results/.ipynb_checkpoints/dispersion_test-checkpoint.csv
+examples/GSS/results/.ipynb_checkpoints/distfunc_multiples_testing-checkpoint.csv
+examples/GSS/results/.ipynb_checkpoints/ideology-checkpoint.csv
 examples/GSS/results/CMPF_2018/CMPF-0.csv
 examples/GSS/results/CMPF_2018/CMPF-1.csv
 examples/GSS/results/CMPF_2018/CMPF-10.csv
