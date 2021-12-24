@@ -1027,6 +1027,7 @@ class cognet:
     
     def dmat_filewriter(self,
                         QNETPATH,
+                        mpi_path="mpi_tmp/",
                         pyfile="cognet_qdistmatrix.py",
                         MPI_SETUP_FILE="mpi_setup.sh",
                         MPI_RUN_FILE="mpi_run.sh",
@@ -1061,7 +1062,7 @@ class cognet:
                 self.set_nsamples(num_samples)
             
             # init and make tmp dir 
-            tmp_path = "mpi_tmp/"
+            tmp_path = mpi_path
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
             
