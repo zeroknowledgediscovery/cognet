@@ -25,4 +25,4 @@ def dfunc_line(k):
 if __name__ == '__main__':
 	with MPIPoolExecutor() as executor:
 		result = executor.map(dfunc_line, range(h))
-		pd.DataFrame(result).to_csv('tmp_distmatrix.csv',index=None,header=None)
+		pd.DataFrame(result).to_csv('GSS_2018_distmatrix.csv',index=None,header=None)

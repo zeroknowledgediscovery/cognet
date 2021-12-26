@@ -278,7 +278,7 @@ class cognet:
                   mutable=False,
                   VERBOSE=False,
                   restrict=True,
-                  nsamples = False,
+                  nsamples = None,
                   random=False):
         '''set the poles and samples such that the samples contain features in poles
 
@@ -313,9 +313,11 @@ class cognet:
                 cols = [x for x in self.poles.columns if x in self.samples.columns]
                 self.samples=self.samples[cols]
                 self.restricted = True
-              
-            # if poles had been restricted before, unrestrict it and set original
-            elif self.restricted:
+                self.samples = pd.concat([self.features,self.samples], axis=0).replace("nan","").fillna('')
+                self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+                
+            # if restrict=False, unrestrict it and set original
+            elif:
                 self.restricted = False
                 self.samples = self.all_samples
                 if self.nsamples is not None:
@@ -327,9 +329,6 @@ class cognet:
                     if x not in self.samples.columns:
                         invalid_count += 1
                         self.samples[x]=''
-
-            self.samples = pd.concat([self.features,self.samples], axis=0).fillna('')
-            self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -481,7 +480,7 @@ class cognet:
             # format and save resulting dict, and tranpose symmetrical distance matrix
             result = result.to_numpy()
             result = pd.DataFrame(np.maximum(result, result.transpose()))
-            result.to_csv(outfile, index=None)
+            result.to_csv(outfile, index=None, header=None)
         else:
             raise ValueError("load data first!")
         
