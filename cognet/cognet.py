@@ -341,7 +341,7 @@ class cognet:
                 self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
                 
             # if restrict==False, unrestrict it and set original
-            elif:
+            else:
                 self.restricted = False
                 self.samples = self.all_samples
                 if self.nsamples is not None:
