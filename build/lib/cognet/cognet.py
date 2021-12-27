@@ -352,7 +352,7 @@ class cognet:
                 for x in self.poles.columns:
                     if x not in self.samples.columns:
                         invalid_count += 1
-                        self.samples[x]=''
+                        #self.samples[x]=''
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -443,8 +443,8 @@ class cognet:
         return qdistance(sample1, sample2, self.qnet, self.qnet)
     
     def __distfunc(self, 
-                x, 
-                y):
+                   x, 
+                   y):
         '''Compute distance between two samples
 
         Args:
