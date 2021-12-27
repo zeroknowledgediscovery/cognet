@@ -63,6 +63,7 @@ docs/dark_templates/search.mako
 docs/dark_templates/text.mako
 examples/.gitattributes
 examples/README.md
+examples/Random_sampling_test.ipynb
 examples/URL_to_Qnet.ipynb
 examples/Yearly_polarseparation.ipynb
 examples/cognet_example-Copy1.ipynb
@@ -73,6 +74,7 @@ examples/cognet_example_setup.sh
 examples/launcher.sh
 examples/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
+examples/.ipynb_checkpoints/Random_sampling_test-checkpoint.ipynb
 examples/.ipynb_checkpoints/URL_to_Qnet-checkpoint.ipynb
 examples/.ipynb_checkpoints/Yearly_polarseparation-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-Copy1-checkpoint.ipynb
@@ -80,6 +82,8 @@ examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.py
 examples/.ipynb_checkpoints/cognet_example_run-checkpoint.sh
 examples/.ipynb_checkpoints/cognet_example_setup-checkpoint.sh
+examples/GSS/GSS_cognet.ipynb
+examples/GSS/.ipynb_checkpoints/GSS_cognet-checkpoint.ipynb
 examples/GSS/data/2018_features.csv
 examples/GSS/data/2021 XSEC R1 Methodological Primer.pdf
 examples/GSS/data/2021_sas.zip
@@ -150,6 +154,11 @@ examples/PTSD/PTSD_cognet_test.py
 examples/PTSD/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
 examples/PTSD/data/.gitattributes
 examples/PTSD/data/PTSD_cognet_test_processed.csv
+examples/PTSD/mpi_tmp/PTSD_cognet.py
+examples/PTSD/mpi_tmp/mpi_launcher.sh
+examples/PTSD/mpi_tmp/mpi_run.sh
+examples/PTSD/mpi_tmp/mpi_setup.sh
+examples/PTSD/mpi_tmp/tmp_samples_as_strings.csv
 examples/PTSD/recon_results/recon_0.csv
 examples/PTSD/recon_results/recon_1.csv
 examples/PTSD/recon_results/recon_10.csv
