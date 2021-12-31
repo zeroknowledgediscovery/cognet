@@ -271,12 +271,14 @@ class cognet:
             return qsample(sample,self.qnet,steps)
 
     def random_sample(self,
-                      df=None):
+                      df=None,
+                      n=1):
         '''compute a random sample from the underlying distributions of the dataset, by column.
         
         
         Args:
           df (pandas.DataFrame): Desired data to take random sample of. Defaults to None, in which case qnet samples are used.
+          n (int): number of random samples to take. Defaults to 1.
           
         Returns:
           return_df (pd.DataFrame): Random sample drawn from underlying distribution of each column.
@@ -290,7 +292,7 @@ class cognet:
         # take random sample from each of the columns based on their distribution
         return_df = pd.DataFrame()
         for col in samples_.columns:
-            return_df[col] = samples_[col].sample(n=1)
+            return_df[col] = samples_[col].sample(n=n, replace=True).values
             
         return return_df
     
@@ -776,21 +778,26 @@ class cognet:
             raise ValueError("load_data first!")
 
     def dissonance(self,
-                sample_index,
-                return_dict=None,
-                MISSING_VAL=0.0):
+                    sample_index=0,
+                    return_dict=None,
+                    MISSING_VAL=0.0,
+                    sample=None):
         '''compute dissonance for a single sample, helper function for all_dissonance
         
         Args:
-          sample_index (int): index of the sample to compute dissonance
+          sample_index (int): index of the sample to compute dissonance. Defaults to 0.
           return_dict (dict): dictionary containing multiprocessing results
           MISSING_VAL (float): default dissonance value
+          sample (1D array): sample to compute dissonance of, instead of using sample index. Defaults to None.
           
         Returns: 
           diss[self.polar_indices]: ndarray containing dissonance for sample
         '''
         if all(x is not None for x in [self.samples, self.features]):
-            s = self.samples_as_strings[sample_index]
+            if sample is None:
+                s = self.samples_as_strings[sample_index]
+            else:
+                s = sample
             if self.polar_indices is None:
                 self.polar_indices = range(len(s))
 
