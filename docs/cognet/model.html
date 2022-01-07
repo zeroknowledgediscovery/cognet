@@ -30,6 +30,10 @@
 <pre><code class="python">from quasinet.qnet import Qnet, load_qnet, save_qnet
 from quasinet.qnet import export_qnet_tree, export_qnet_graph
 from cognet.util import assert_None
+
+from io import BytesIO, StringIO
+import requests
+
 class model:
     &#34;&#34;&#34;Facilitate training and constructing Qnet
     &#34;&#34;&#34;
@@ -47,6 +51,13 @@ class model:
             featurenames=None,
             samples=None,
             data_obj=None,
+            min_samples_split=2,
+            alpha=0.05,
+            max_depth=-1,
+            max_feats=-1,
+            early_stopping=False,
+            verbose=0,
+            random_state=None,
             njobs=4):
         &#34;&#34;&#34;fit Quasinet Qnet model
 
@@ -61,15 +72,23 @@ class model:
             raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
         elif data_obj is not None:
             featurenames, samples=data_obj.Qnet_formatter() # returns the training data
+            print(len(samples))
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None &gt; 1:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
-        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+        print(&#34;training Qnet -------------&#34;)
+        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames,
+                           min_samples_split=min_samples_split, alpha=alpha,
+                           max_depth=max_depth, max_feats=max_feats,
+                           early_stopping=early_stopping,
+                           verbose=verbose, random_state=random_state)
         self.myQnet.fit(samples)
+        print(&#34;Qnet trained --------------&#34;)
         self.features = featurenames
 
     def save(self,
-             file_path=None):
+             file_path=None,
+             low_mem = False):
         &#34;&#34;&#34;save qnet
 
         Args:
@@ -78,7 +97,7 @@ class model:
         assert_None([self.myQnet])
         if file_path is None:
             file_path = &#39;tmp_Qnet.joblib&#39;
-        save_qnet(self.myQnet, file_path)
+        save_qnet(self.myQnet, file_path, low_mem=low_mem)
     
     def load(self,
              file_path,
@@ -94,7 +113,12 @@ class model:
         &#34;&#34;&#34;
         if VERBOSE:
             print(&#34;loading..&#34;)
-        self.myQnet = load_qnet(file_path)
+        # check if reading from url or local directory
+        if &#34;https&#34; in file_path or &#34;www.&#34; in file_path:
+            url_file = BytesIO(requests.get(file_path).content)
+            self.myQnet = load_qnet(url_file)
+        else:
+            self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
         if VERBOSE:
             print(&#34;done&#34;)
@@ -162,6 +186,13 @@ class model:
             featurenames=None,
             samples=None,
             data_obj=None,
+            min_samples_split=2,
+            alpha=0.05,
+            max_depth=-1,
+            max_feats=-1,
+            early_stopping=False,
+            verbose=0,
+            random_state=None,
             njobs=4):
         &#34;&#34;&#34;fit Quasinet Qnet model
 
@@ -176,15 +207,23 @@ class model:
             raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
         elif data_obj is not None:
             featurenames, samples=data_obj.Qnet_formatter() # returns the training data
+            print(len(samples))
             self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
         elif num_None &gt; 1:
             raise ValueError(&#34;input both samples and features or data object!&#34;)
-        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+        print(&#34;training Qnet -------------&#34;)
+        self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames,
+                           min_samples_split=min_samples_split, alpha=alpha,
+                           max_depth=max_depth, max_feats=max_feats,
+                           early_stopping=early_stopping,
+                           verbose=verbose, random_state=random_state)
         self.myQnet.fit(samples)
+        print(&#34;Qnet trained --------------&#34;)
         self.features = featurenames
 
     def save(self,
-             file_path=None):
+             file_path=None,
+             low_mem = False):
         &#34;&#34;&#34;save qnet
 
         Args:
@@ -193,7 +232,7 @@ class model:
         assert_None([self.myQnet])
         if file_path is None:
             file_path = &#39;tmp_Qnet.joblib&#39;
-        save_qnet(self.myQnet, file_path)
+        save_qnet(self.myQnet, file_path, low_mem=low_mem)
     
     def load(self,
              file_path,
@@ -209,7 +248,12 @@ class model:
         &#34;&#34;&#34;
         if VERBOSE:
             print(&#34;loading..&#34;)
-        self.myQnet = load_qnet(file_path)
+        # check if reading from url or local directory
+        if &#34;https&#34; in file_path or &#34;www.&#34; in file_path:
+            url_file = BytesIO(requests.get(file_path).content)
+            self.myQnet = load_qnet(url_file)
+        else:
+            self.myQnet = load_qnet(file_path)
         self.features = self.myQnet.feature_names
         if VERBOSE:
             print(&#34;done&#34;)
@@ -293,7 +337,7 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 </details>
 </dd>
 <dt id="cognet.model.model.fit"><code class="name flex">
-<span>def <span class="ident">fit</span></span>(<span>self, featurenames=None, samples=None, data_obj=None, njobs=4)</span>
+<span>def <span class="ident">fit</span></span>(<span>self, featurenames=None, samples=None, data_obj=None, min_samples_split=2, alpha=0.05, max_depth=-1, max_feats=-1, early_stopping=False, verbose=0, random_state=None, njobs=4)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>fit Quasinet Qnet model</p>
@@ -316,6 +360,13 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
         featurenames=None,
         samples=None,
         data_obj=None,
+        min_samples_split=2,
+        alpha=0.05,
+        max_depth=-1,
+        max_feats=-1,
+        early_stopping=False,
+        verbose=0,
+        random_state=None,
         njobs=4):
     &#34;&#34;&#34;fit Quasinet Qnet model
 
@@ -330,11 +381,18 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
         raise ValueError(&#34;input either samples and features or data object, not both!&#34;)
     elif data_obj is not None:
         featurenames, samples=data_obj.Qnet_formatter() # returns the training data
+        print(len(samples))
         self.immutable_vars, self.mutable_vars = data_obj.immutable_vars, data_obj.mutable_vars
     elif num_None &gt; 1:
         raise ValueError(&#34;input both samples and features or data object!&#34;)
-    self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames)
+    print(&#34;training Qnet -------------&#34;)
+    self.myQnet = Qnet(n_jobs=njobs, feature_names=featurenames,
+                       min_samples_split=min_samples_split, alpha=alpha,
+                       max_depth=max_depth, max_feats=max_feats,
+                       early_stopping=early_stopping,
+                       verbose=verbose, random_state=random_state)
     self.myQnet.fit(samples)
+    print(&#34;Qnet trained --------------&#34;)
     self.features = featurenames</code></pre>
 </details>
 </dd>
@@ -373,7 +431,12 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
     &#34;&#34;&#34;
     if VERBOSE:
         print(&#34;loading..&#34;)
-    self.myQnet = load_qnet(file_path)
+    # check if reading from url or local directory
+    if &#34;https&#34; in file_path or &#34;www.&#34; in file_path:
+        url_file = BytesIO(requests.get(file_path).content)
+        self.myQnet = load_qnet(url_file)
+    else:
+        self.myQnet = load_qnet(file_path)
     self.features = self.myQnet.feature_names
     if VERBOSE:
         print(&#34;done&#34;)
@@ -381,7 +444,7 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 </details>
 </dd>
 <dt id="cognet.model.model.save"><code class="name flex">
-<span>def <span class="ident">save</span></span>(<span>self, file_path=None)</span>
+<span>def <span class="ident">save</span></span>(<span>self, file_path=None, low_mem=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>save qnet</p>
@@ -395,7 +458,8 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def save(self,
-         file_path=None):
+         file_path=None,
+         low_mem = False):
     &#34;&#34;&#34;save qnet
 
     Args:
@@ -404,7 +468,7 @@ this cutoff, then we include it into the graph. Defaults to 0.2.</dd>
     assert_None([self.myQnet])
     if file_path is None:
         file_path = &#39;tmp_Qnet.joblib&#39;
-    save_qnet(self.myQnet, file_path)</code></pre>
+    save_qnet(self.myQnet, file_path, low_mem=low_mem)</code></pre>
 </details>
 </dd>
 </dl>
