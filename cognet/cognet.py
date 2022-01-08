@@ -254,7 +254,7 @@ class cognet:
                 sample,
                 steps,
                 immutable=False):
-        '''perturb the sample based on thet qnet distributions and number of steps
+        '''perturb the sample based on the qnet distributions and number of steps
 
         Args:
           sample (1d array-like): sample vector, must have the same num of features as the qnet
@@ -462,7 +462,7 @@ class cognet:
     def distfunc_line(self,
                     i,
                     return_dict=None):
-        '''compute the distance for a single sample from all other samples
+        '''compute the distance for a single sample against all other samples
 
         Args:
           i (int): row
@@ -912,8 +912,10 @@ class cognet:
                 random_sample[np.where(
                     self.cols==i)[0][0]]=self.__choose_one(
                         self.D_null[np.where(self.cols==i)[0][0]].keys())
+                    
                 rnd_match_prob=np.append(rnd_match_prob,1/len(
                     self.D_null[np.where(self.cols==i)[0][0]].keys()))
+                
                 max_match_prob=np.append(
                     max_match_prob,np.max(
                         list(D[np.where(
@@ -998,10 +1000,10 @@ class cognet:
         if not os.path.exists(output_dir):
             os.mkdir(output_dir)
 
-        # qsample sample and calculate distances between original and qsampled 
+        # qsample sample and calculate distances between original vs qsampled and masked
         qs=qsample(s1,self.qnet,self.steps,bp)
         dqestim=qdistance(s,qs,self.qnet,self.qnet)
-        dactual=qdistance(s,s1,self.qnet,self.qnet)
+        dmask=qdistance(s,s1,self.qnet,self.qnet)
         
         # format and save sample, qsample statistics and values
         cmpf=pd.DataFrame([s,qs,random_sample],
@@ -1013,9 +1015,9 @@ class cognet:
             cmpf.to_csv(output_dir+file_name)
             
         if save_samples:
-            return_values= (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,random_sample,mask_
+            return_values = (1 - (dqestim/dmask))*100,rmatch_u,rmatch,mask_,s,qs,random_sample
         else:
-            return_values = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,mask_
+            return_values = (1 - (dqestim/dmask))*100,rmatch_u,rmatch,mask_
         
         if return_dict is not None:
             return_dict[index] = return_values
@@ -1025,36 +1027,39 @@ class cognet:
     def randomMaskReconstruction_multiple(self,
                                           outfile,
                                           processes=6,
-                                          save_samples=False,
                                           index_colname="feature_names",
                                           output_dir="recon_results/",
                                           file_name="recon_tmp.csv",
                                           mask_prob=0.5,
-                                          allow_all_mutable=False):
+                                          allow_all_mutable=False,
+                                          save_samples=False,
+                                          save_output=True):
         '''runs and saves the results of the predicted masked sample
 
         Args:
           output_file (str): directory and/or file for output.
           processes (int): max number of processes. Defaults to 6.
-          save_samples (boolean): whether or not to save the generated qsamples, random samples, etc. Defaults to False.
           index_colname="feature_names",
           output_dir="recon_results/",
           file_name="recon_tmp.csv",
           mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
           allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
+          save_samples (boolean): whether or not to save the generated qsamples, random samples, etc. Defaults to False.
+          save_output (bool): whether or not to save output df to file. Defaults to True.
           
         Returns:
           result: pandas.DataFrame containing masking and reconstruction results.
         '''
         # set columns for mp_compute
         if save_samples:
-            cols = ['rederr','r_prob','rand_err','sample','qsampled','random_sample','mask_']
+            cols = ['rederr','r_prob','rand_err','mask_','sample','qsampled','random_sample']
         else:
             cols = ['rederr','r_prob','rand_err','mask_']
         
         # 
         args=[None, index_colname, output_dir,
-              file_name, mask_prob, allow_all_mutable]
+              file_name, mask_prob, allow_all_mutable, 
+              save_samples, save_output]
         
         result = self.mp_compute(processes,
                                     self.randomMaskReconstruction,
