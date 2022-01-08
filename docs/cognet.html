@@ -27,10 +27,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import numpy as np
-import pandas as pd
-import random
-from quasinet.qnet import Qnet, qdistance, load_qnet, qdistance_matrix
+<pre><code class="python">from quasinet.qnet import Qnet, qdistance, load_qnet, qdistance_matrix
 from quasinet.qsampling import qsample, targeted_qsample
 #from mpi4py.futures import MPIPoolExecutor
 import sys
@@ -41,6 +38,10 @@ import time
 from cognet.util import embed_to_pca
 import pkgutil
 import os
+
+import numpy as np
+import pandas as pd
+import random
 
 class cognet:
     &#34;&#34;&#34;Aggregate related Qnet functions
@@ -66,8 +67,6 @@ class cognet:
         self.polar_indices = None
         self.poles_dict = {}
         self.d0 = None
-        self.qdistance_matrix_file = None
-        self.dissonance_file = None
         self.s_null = None
         self.D_null = None
         self.mask_prob = 0.5
@@ -75,6 +74,7 @@ class cognet:
         self.polar_matrix = None
         self.nsamples = None
         self.restricted = False
+        self.MAX_PROCESSES = 0
     
     def load_from_model(self,
                         model,
@@ -92,12 +92,14 @@ class cognet:
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
         &#34;&#34;&#34;
         if model is not None:
+            # inherit atrributes from model object
             self.qnet = model.myQnet
-            # self.cols = np.array(model.features)
             featurenames, samples = data_obj.format_samples(key)
             samples = pd.DataFrame(samples)
             self.cols = np.array(featurenames)
             self.features = pd.DataFrame(columns=np.array(featurenames))
+            
+            # inherit mutable and immutable variables from model obj
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
                     self.immutable_vars = model.immutable_vars
@@ -108,6 +110,7 @@ class cognet:
             else:
                 self.mutable_vars = self.features
             
+            # inherit and set class attributes.
             self.samples = pd.DataFrame(samples).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#34;&#34;)
             self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
@@ -126,7 +129,8 @@ class cognet:
     def load_from_dataformatter(self, 
                                 data_obj,
                                 key):
-        &#34;&#34;&#34;read in either train or test data, specified by key, from data obj
+        &#34;&#34;&#34;read in either train or test data, specified by key, from data obj,
+        and inherit other attributes.
 
         Args:
           data_obj (class): instance of dataformatter class
@@ -135,6 +139,7 @@ class cognet:
         Returns:
           featurenames, samples: formatted arrays
         &#34;&#34;&#34;
+        # inherit attributes from dataformatter object
         featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print(&#34;replacing original features/samples with dataformatter data&#34;)
@@ -150,7 +155,7 @@ class cognet:
                   year,
                   features_by_year,
                   samples,
-                  qnet):
+                  Qnet):
         &#39;&#39;&#39;load cols, features, samples, and qnet.
 
         Args:
@@ -159,6 +164,7 @@ class cognet:
           samples (str): file of samples for that year.
           Qnet (str): Qnet file location.
         &#39;&#39;&#39;
+        # set attributes from given files and data
         self.qnet = load_qnet(qnet)
         self.year = year
         self.cols = np.array((pd.read_csv(features_by_year,
@@ -170,6 +176,7 @@ class cognet:
         self.mutable_vars = [x for x in self.cols]
         #[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
 
+        # read in samples and initialize related attributes
         self.samples=pd.read_csv(samples)
         self.samples = pd.concat([self.samples,self.features], axis=0)
         self.all_samples = self.samples
@@ -192,6 +199,7 @@ class cognet:
         Args:
           IMMUTABLE_FILE (str): file containing the immutable features/vars
         &#39;&#39;&#39;
+        # set mutable and immutable variable attributes 
         if self.cols is None:
             raise ValueError(&#34;load_data first!&#34;)
         self.immutable_vars = pd.read_csv(IMMUTABLE_FILE,index_col=0).transpose()
@@ -208,8 +216,11 @@ class cognet:
           num_samples (int): Set num of samples to subset, default to None, resets to all samples
           random (bool): take random sample if true, ordered sample if false
         &#39;&#39;&#39;
+        # each time function is called, reset samples to use_all_samples
+        # this allows us to call nsamples numerous times 
         self.samples = self.all_samples
-        if num_samples is not None:
+        if self.samples is not None:
+            # if a greater number of sample is selected than available, raise error
             if all(x is not None for x in [num_samples, self.samples]):
                 if num_samples &gt; len(self.samples.index):
                     string = &#39;The number of selected samples ({}) &#39; + \
@@ -217,11 +228,14 @@ class cognet:
                     string = string.format(num_samples, len(self.samples.index))
                     raise ValueError(string)
 
+                # if the same number of samples is selected as available, print warning
                 if num_samples == len(self.samples.index):
                     string = &#39;The number of selected samples ({}) &#39; + \
                         &#39;is equal to the number of samples ({})!&#39;
                     string = string.format(num_samples, len(self.samples.index))
                     print(string)
+                    
+                # if random is true, return random sample, otherwise return an ordered slice
                 if random:
                     self.samples = self.samples.sample(num_samples)
                 else:
@@ -250,14 +264,15 @@ class cognet:
         Args:
           sample (list[str]): vector of sample, must have the same num of features as the qnet
         &#39;&#39;&#39;
+        # if variable is not mutable, set its base frequency to zero 
         MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
-                
+             
         for m in self.mutable_vars:
             MUTABLE[m]=1.0
         mutable_x=MUTABLE.values[0]
         base_frequency=mutable_x/mutable_x.sum()
-
-        # commented out for now for testing using smaller qnet
+        
+        # otherwise, set base frequency weighted by variation weight
         for i in range(len(base_frequency)):
             if base_frequency[i]&gt;0.0:
                 base_frequency[i]= self.variation_weight[i]*base_frequency[i]
@@ -275,14 +290,41 @@ class cognet:
           steps (int): number of steps to qsample
           immutable (bool): are there variables that are immutable?
         &#39;&#39;&#39;
-        if all(x is not None for x in [self.mutable_vars, sample]):
-            if immutable == True:
+        # immutable, check that mutable variables have been initialized
+        if immutable == True:
+            if all(x is not None for x in [self.mutable_vars, sample]):
                 return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
-            else:
-                return qsample(sample,self.qnet,steps)
-        elif self.mutable_vars is None:
-            raise ValueError(&#34;load_data first!&#34;)
+            elif self.mutable_vars is None:
+                raise ValueError(&#34;set mutable and immutable variables first!&#34;)
+        else:
+            return qsample(sample,self.qnet,steps)
 
+    def random_sample(self,
+                      df=None,
+                      n=1):
+        &#39;&#39;&#39;compute a random sample from the underlying distributions of the dataset, by column.
+        
+        
+        Args:
+          df (pandas.DataFrame): Desired data to take random sample of. Defaults to None, in which case qnet samples are used.
+          n (int): number of random samples to take. Defaults to 1.
+          
+        Returns:
+          return_df (pd.DataFrame): Random sample drawn from underlying distribution of each column.
+        &#39;&#39;&#39;
+        # check if a new dataset was inputted
+        if df is None:
+            samples_ = self.samples
+        else:
+            samples_ = df
+
+        # take random sample from each of the columns based on their distribution
+        return_df = pd.DataFrame()
+        for col in samples_.columns:
+            return_df[col] = samples_[col].sample(n=n, replace=True).values
+            
+        return return_df
+    
     def set_poles(self,
                   POLEFILE,
                   pole_1,
@@ -291,15 +333,15 @@ class cognet:
                   mutable=False,
                   VERBOSE=False,
                   restrict=True,
-                  nsamples = False,
+                  nsamples = None,
                   random=False):
         &#39;&#39;&#39;set the poles and samples such that the samples contain features in poles
 
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
-          pole_1 (str): column name for first pole to use
-          pole_2 (str): column name for second pole to use
+          pole_1 (str): column name for first pole
+          pole_2 (str): column name for second pole
           mutable (bool): Whether or not to set poles as the only mutable_vars
           VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
           restrict (bool): boolean flag restricts the sample features to polar features if True
@@ -307,41 +349,41 @@ class cognet:
         &#39;&#39;&#39;
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
+            # read and set poles
             poles = pd.read_csv(POLEFILE, index_col=0)
             self.poles=poles.transpose()
             self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna(&#39;&#39;)
             poles_dict = {}
             for column in poles:
                 p_ = self.polar_features.loc[column][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+                # qsample poles to qnet
                 poles_dict[column] = self.qsampling(p_,steps)
             self.poles_dict = poles_dict
             self.pL = self.poles_dict[pole_1]
             self.pR = self.poles_dict[pole_2]
-            # self.pL = list(poles_dict.values())[0]
-            # self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
+            # restrict sample columns to polar columns
             if restrict:
-                # restrict sample columns to polar columns
                 cols = [x for x in self.poles.columns if x in self.samples.columns]
                 self.samples=self.samples[cols]
                 self.restricted = True
+                self.samples = pd.concat([self.features,self.samples], axis=0).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#39;&#39;)
+                self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
                 
-            elif self.restricted:
-                # if poles had been restricted before, unrestrict it
+            # if restrict==False, unrestrict it and set original
+            else:
                 self.restricted = False
                 self.samples = self.all_samples
                 if self.nsamples is not None:
                     self.set_nsamples(nsamples, random)
-
-            for x in self.poles.columns:
-                if x not in self.samples.columns:
-                    invalid_count += 1
-                    self.samples[x]=&#39;&#39;
-
-            self.samples = pd.concat([self.features,self.samples], axis=0).fillna(&#39;&#39;)
-            #self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            
+            # identify pole features that were excluded due to sample features restriction
+            if VERBOSE:
+                for x in self.poles.columns:
+                    if x not in self.samples.columns:
+                        invalid_count += 1
+                        #self.samples[x]=&#39;&#39;
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -351,6 +393,61 @@ class cognet:
         if VERBOSE:
             print(&#34;{} pole features not found in sample features&#34;.format(invalid_count))
 
+    def mp_compute(self, 
+                   processes,
+                   func, 
+                   cols,
+                   outfile, 
+                   args=[]):
+        &#34;&#34;&#34;
+        Compute desired function through multiprocessing and save result to csv.
+
+        Args:
+          processes (int): number of processes to use.
+          func (func): function to compute using multiprocessing
+          cols (list): column names of resulting csv
+          outfile (str)): filepath + filename for resulting csv
+          args (list): list containing arguments for desired function. Defaults to empty list.
+        &#34;&#34;&#34;
+
+        # init mp.Manager and result dict
+        manager = mp.Manager()
+        return_dict = manager.dict()
+
+        # set processes as given, unless class parameter is set
+        max_processes = processes
+        if self.MAX_PROCESSES != 0:
+            max_processes = self.MAX_PROCESSES
+            print(&#34;Number of Processes {} has been set using class parameter&#34;.format(self.MAX_PROCESSES))
+        num_processes = 0
+        process_list = []
+        
+        # init mp.Processes for each individual sample
+        # run once collected processes hit max
+        for i in range(len(self.samples)):
+            params = tuple([i, return_dict] + args)
+            num_processes += 1
+            p = mp.Process(target=func,
+                        args=params)
+            process_list.append(p)
+            if num_processes == max_processes:
+                [x.start() for x in process_list]
+                [x.join() for x in process_list]
+                process_list = []
+                num_processes = 0
+                
+        # compute remaining processes
+        if num_processes != 0:
+            [x.start() for x in process_list]
+            [x.join() for x in process_list]
+            process_list = []
+            num_processes = 0
+        
+        # format and save resulting dict
+        result = pd.DataFrame(return_dict.values(), columns=cols, index=return_dict.keys()).sort_index()
+        result.to_csv(outfile, index=None)
+        return result
+    
     def distance(self,
                 sample1,
                 sample2,
@@ -369,15 +466,16 @@ class cognet:
         &#34;&#34;&#34;
         if self.qnet is None:
             raise ValueError(&#34;load qnet first!&#34;)
-        bp1 = self.getBaseFrequency(sample1)
-        bp2 = self.getBaseFrequency(sample2)
+        #bp1 = self.getBaseFrequency(sample1)
+        #bp2 = self.getBaseFrequency(sample2)
+        # qsample samples
         sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
         sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
         return qdistance(sample1, sample2, self.qnet, self.qnet)
     
     def __distfunc(self, 
-                x, 
-                y):
+                   x, 
+                   y):
         &#39;&#39;&#39;Compute distance between two samples
 
         Args:
@@ -390,68 +488,14 @@ class cognet:
         d=qdistance(x,y,self.qnet,self.qnet)
         return d
     
-    def polarDistance(self,
-                    i,
-                    return_dict=None):
-        &#34;&#34;&#34;return the distance from a sample to the poles
-
-        Args:
-          i (int): index of sample to take
-          return_dict (dict): dict used for multiple sample function
-
-        Returns:
-          distances: float, distance from sample to each pole
-        &#34;&#34;&#34;
-        samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
-        p = samples_as_strings[i]
-        distances = []
-        for index, row in self.polar_features[self.cols].iterrows():
-            row = row.fillna(&#39;&#39;).values.astype(str)[:]
-            distances.append(self.distance(p, np.array(row)))
-        if return_dict is not None:
-            return_dict[i] = distances
-        return distances
-            
-    def polarDistance_multiple(self,
-                            outfile):
-        &#34;&#34;&#34;return the distance from all samples to the poles
-
-        Args:
-          outfile (str): desired output filename and path
-          
-        Returns:
-          return_dict: dictionary containing multiprocessing results
-        &#34;&#34;&#34;
-        if all(x is not None for x in [self.samples, self.cols,
-                                    self.polar_features]):
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-            
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.polarDistance, args=(i, return_dict))
-                processes.append(p)
-
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-
-            pole_names = []
-            for index, row in self.polar_features[self.cols].iterrows():
-                pole_names.append(index)
-            result=[x for x in return_dict.values()]
-            result=pd.DataFrame(result,columns=pole_names).to_csv(outfile)
-            
-        else:
-            raise ValueError(&#34;load data first!&#34;)
-        return return_dict
-        
     def distfunc_line(self,
                     i,
                     return_dict=None):
-        &#39;&#39;&#39;compute the dist for a row, or vector of samples
+        &#39;&#39;&#39;compute the distance for a single sample from all other samples
 
         Args:
           i (int): row
+          return_dict (dict): dictionary containing multiprocessing results
         
         Return:
           line: float, numpy.ndarray
@@ -472,36 +516,77 @@ class cognet:
         return line
     
     def distfunc_multiples(self,
-                        outfile):
+                           outfile,
+                           processes=6):
         &#34;&#34;&#34;compute distance matrix for all samples in the dataset
 
         Args:
           outfile (str): desired output filename and path
           
         Returns:
-          return_dict: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing distance matrix
         &#34;&#34;&#34;
         if all(x is not None for x in [self.samples, self.features]):
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.distfunc_line, args=(i, return_dict))
-                processes.append(p)
-            
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            result=[x for x in return_dict.values()]
-            columns = [i for i in range(len(self.samples))]
-            result=pd.DataFrame(result,columns=columns, index=columns).sort_index(ascending=False)
+            cols = [i for i in range(len(self.samples))]
+            result = self.mp_compute(processes,
+                                        self.distfunc_line,
+                                        cols,
+                                        outfile)
+            # format and save resulting dict, and tranpose symmetrical distance matrix
             result = result.to_numpy()
             result = pd.DataFrame(np.maximum(result, result.transpose()))
-            result.to_csv(outfile)
+            result.to_csv(outfile, index=None, header=None)
         else:
             raise ValueError(&#34;load data first!&#34;)
         
-        return pd.DataFrame(return_dict.copy())
+        return result
+    
+    def polarDistance(self,
+                    i,
+                    return_dict=None):
+        &#34;&#34;&#34;return the distances from a single sample to the poles
+
+        Args:
+          i (int): index of sample to take
+          return_dict (dict): dictionary containing multiprocessing results
+
+        Returns:
+          distances: float, distance from sample to each pole
+        &#34;&#34;&#34;
+        p = self.samples_as_strings[i]
+        distances = []
+        # calculate from each pole to the sample, and append to array
+        for index, row in self.polar_features[self.cols].iterrows():
+            row = row.fillna(&#39;&#39;).values.astype(str)[:]
+            distances.append(self.distance(p, np.array(row)))
+        if return_dict is not None:
+            return_dict[i] = distances
+        return distances
+            
+    def polarDistance_multiple(self,
+                               outfile,
+                               processes=6):
+        &#34;&#34;&#34;return the distance from all samples to the poles
+
+        Args:
+          outfile (str): desired output filename and path
+          
+        Returns:
+          result: pandas.DataFrame containing polar distance results
+        &#34;&#34;&#34;
+        if all(x is not None for x in [self.samples, self.cols,
+                                    self.polar_features]):
+            # get the column names
+            pole_names = []
+            for index, row in self.polar_features[self.cols].iterrows():
+                pole_names.append(index)
+            result = self.mp_compute(processes,
+                                        self.polarDistance,
+                                        pole_names,
+                                        outfile)
+        else:
+            raise ValueError(&#34;load data first!&#34;)
+        return result
     
     def polar_separation(self,
                         nsteps=0):
@@ -513,6 +598,7 @@ class cognet:
         Returns:
           self.polar_matrix: dictionary containing multiprocessing results
         &#34;&#34;&#34;
+        # vectorize and qsample poles
         polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
@@ -520,6 +606,7 @@ class cognet:
             sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
+        # calculate distance matrix for poles
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
         return self.polar_matrix
         
@@ -540,18 +627,21 @@ class cognet:
           EMBED_BINARY (os.path.abspath): path to embed binary
         &#39;&#39;&#39;
         if all(x is not None for x in [self.year]):
+            # init file names 
             yr = self.year
             PREF = name_pref
             FILE = infile
-
+            DATAFILE = out_dir + &#39;data_&#39; +yr
+            EFILE = out_dir + PREF + &#39;_E_&#39; +yr
+            DFILE = out_dir + PREF + &#39;_D_&#39; +yr
+            
+            # set embed binary directory
             if EMBED_BINARY is None:
                 EMBED = pkgutil.get_data(&#34;cognet.bin&#34;, &#34;__embed__.so&#34;) 
             else:
                 EMBED = EMBED_BINARY
-            DATAFILE = out_dir + &#39;data_&#39; +yr
-            EFILE = out_dir + PREF + &#39;_E_&#39; +yr
-            DFILE = out_dir + PREF + &#39;_D_&#39; +yr
-
+            
+            # embed data files
             pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
             STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
             subprocess.call(STR,shell=True)
@@ -592,37 +682,43 @@ class cognet:
                                              distance from the left pole,
                                              and distance between poles, respectively
         &#34;&#34;&#34;
+        # calculate base distance between two poles
         if pole_1 is not None or pole_2 is not None:
             self.__calc_d0(pole_1, pole_2)
-            
+        
+        # calculate distances between sample and the two poles
         p = self.samples_as_strings[i]
         dR = qdistance(self.pR, p, self.qnet, self.qnet)
         dL = qdistance(self.pL, p, self.qnet, self.qnet)
+        
         ideology_index = (dR-dL)/self.d0
         if return_dict is not None:
             return_dict[i] = [ideology_index, dR, dL, self.d0]
         return [ideology_index, dR, dL, self.d0]
 
     def dispersion(self,
-                i,
-                return_dict=None):
+                   i,
+                   return_dict=None):
         &#34;&#34;&#34;qsamples a sample n times and takes distance matrix 
         to determine max and std of distances between qsamples
 
         Args:
           i (int): index of sample
-          return_dict (dict): dict containing results
+          return_dict (dict): dictionary containing multiprocessing results
 
         Returns:
           list[float]: std and max of the distances btwn qsamples
         &#34;&#34;&#34;
+        # qsample sample num_qsample times
         p = self.samples_as_strings[i]
         Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
         Qset = np.array(Qset)
 
+        # calculate qdistance matrix for qsampled samples
         matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
         Q = matrix.max()
         Qsd = matrix.std()
+        
         if return_dict is not None:
             return_dict[i] = [Qsd, Q]
         return [Qsd, Q]
@@ -634,7 +730,8 @@ class cognet:
                         steps=120,
                         n_jobs=28,
                         pole_1=0,
-                        pole_2=1):
+                        pole_2=1,
+                        processes=6):
         &#34;&#34;&#34;compute and save ideology index or dispersion for all samples
 
         Args:
@@ -651,51 +748,40 @@ class cognet:
           ValueError: load data if samples or features are not present
             
         Returns:
-          Result: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing multiprocessing results
         &#34;&#34;&#34;
         if all(x is not None for x in [self.samples, self.features,
                                     self.pL, self.pR]):
+            # init vars
             self.num_qsamples = num_qsamples
             self.steps = steps
             if pole_1 != 0 or pole_2 != 1:
                 self.__calc_d0(pole_1, pole_2)
             
-            # testing
-            # pd.DataFrame(self.samples_as_strings).to_csv(&#39;examples_results/class_allsamples_2018.csv&#39;)
-            
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-
             if type == &#39;ideology&#39;:
-                for i in range(len(self.samples)):
-                    p = mp.Process(target=self.ideology, args=(i, return_dict))
-                    processes.append(p)
-                columns=[&#39;ideology&#39;, &#39;dR&#39;, &#39;dL&#39;, &#39;d0&#39;]
+                func_ = self.ideology
+                cols=[&#39;ideology&#39;, &#39;dR&#39;, &#39;dL&#39;, &#39;d0&#39;]
             elif type == &#39;dispersion&#39;:
-                for i in range(len(self.samples)):
-                    p = mp.Process(target=self.dispersion, args=(i, return_dict))
-                    processes.append(p)
-                columns=[&#39;Qsd&#39;, &#39;Qmax&#39;]
+                func_ = self.dispersion
+                cols=[&#39;Qsd&#39;, &#39;Qmax&#39;]
             else:
                 raise ValueError(&#34;Type must be either dispersion or ideology!&#34;)
             
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            result=[x for x in return_dict.values()]
-            result=pd.DataFrame(result,columns=columns).to_csv(outfile)
-
+            result = self.mp_compute(processes,
+                                     func_,
+                                     cols,
+                                     outfile)
         elif self.pL is None or self.pR is None:
             raise ValueError(&#34;set_poles first!&#34;)
         else:
             raise ValueError(&#34;load_data first!&#34;)
-        return pd.DataFrame(return_dict.copy())
+        return result
 
     def compute_polar_indices(self,
-                            num_samples = None,
-                            polar_comp = False,
-                            POLEFILE = None,
-                            steps = 5):
+                              num_samples=None,
+                              polar_comp=False,
+                              POLEFILE=None,
+                              steps=5):
         &#39;&#39;&#39;set up polar indices for dissonance func
 
         Args:
@@ -708,10 +794,10 @@ class cognet:
             if num_samples is not None:
                 self.set_nsamples(num_samples)
 
-            # read sample data
             if polar_comp:
                 self.set_poles(self.qnet, steps, POLEFILE)
             
+            # calculate polar indices
             polar_features = pd.concat([self.features, self.poles], axis=0)
             self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
         
@@ -721,26 +807,31 @@ class cognet:
             raise ValueError(&#34;load_data first!&#34;)
 
     def dissonance(self,
-                sample_index,
-                return_dict=None,
-                MISSING_VAL=0.0):
-        &#39;&#39;&#39;compute dissonance for each sample_index, helper function for all_dissonance
+                    sample_index=0,
+                    return_dict=None,
+                    MISSING_VAL=0.0,
+                    sample=None):
+        &#39;&#39;&#39;compute dissonance for a single sample, helper function for all_dissonance
         
         Args:
-          sample_index (int): index of the sample to compute dissonance
-          return_dict (dict): dict containing results
+          sample_index (int): index of the sample to compute dissonance. Defaults to 0.
+          return_dict (dict): dictionary containing multiprocessing results
           MISSING_VAL (float): default dissonance value
+          sample (1D array): sample to compute dissonance of, instead of using sample index. Defaults to None.
           
         Returns: 
-          diss: ndarray containing dissonance for sample
+          diss[self.polar_indices]: ndarray containing dissonance for sample
         &#39;&#39;&#39;
         if all(x is not None for x in [self.samples, self.features]):
-            s = self.samples_as_strings[sample_index]
+            if sample is None:
+                s = self.samples_as_strings[sample_index]
+            else:
+                s = sample
             if self.polar_indices is None:
                 self.polar_indices = range(len(s))
 
+            # init vars and calculate dissonance for sample
             Ds=self.qnet.predict_distributions(s)
-            
             diss=np.ones(len(Ds))*MISSING_VAL
             for i in self.polar_indices:
                 if s[i] != &#39;&#39;:
@@ -756,38 +847,29 @@ class cognet:
             raise ValueError(&#34;load_data first!&#34;)
     
     def dissonance_matrix(self,
-                        output_file=&#39;/example_results/DISSONANCE_matrix.csv&#39;,
-                        n_jobs=28):
+                        outfile=&#39;/example_results/DISSONANCE_matrix.csv&#39;,
+                        processes=6):
         &#39;&#39;&#39;get the dissonance for all samples
 
         Args:
           output_file (str): directory and/or file for output
-          n_jobs (int): number of jobs for pdqm
+          processes (int): max number of processes. Defaults to 6.
 
         Returns:
-          pandas.DataFrame
+          result: pandas.DataFrame containing dissonances for each sample
         &#39;&#39;&#39;
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        for i in range(len(self.samples)):
-            p = mp.Process(target=self.dissonance, args=(i, return_dict))
-            processes.append(p)
-
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-
-        result=[x for x in return_dict.values()]
+        # set columns
         if self.polar_indices is not None:
             polar_features = pd.concat([self.features, self.poles], axis=0)
             cols = polar_features[self.cols].dropna(axis=1).columns
         else:
             cols = self.cols
-        result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
-        self.dissonance_file = output_file
-        return pd.DataFrame(return_dict.copy())
+        result = self.mp_compute(processes,
+                                    self.dissonance,
+                                    cols,
+                                    outfile)
+        return result
     
     def __choose_one(self,
                 X):
@@ -812,20 +894,25 @@ class cognet:
         &#39;&#39;&#39;inputs a sample and randomly mask elements of the sample
 
         Args:
-          s (list[str]): vector of sample, must have the same num of features as the qnet
-          mask_prob (float): float btwn 0 and 1, prob to mask element of sample
-          allow_all_mutable (bool): whether or not all variables are mutable
+          s (list[str]): vector of sample, must have the same num of features as the qnet.
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+          allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
           
         Returns:
-          s1,base_frequency,MASKrand,
+          s1,
+          base_frequency,
+          MASKrand,
           np.where(base_frequency)[0],
           np.mean(rnd_match_prob),
           np.mean(max_match_prob),
-          s_rand
+          random_sample
         &#39;&#39;&#39;
         if self.samples is not None:
+            # init random mutable variable masking
             s0=s.copy()
             s0=np.array(s0)   
+            # double check, because code seems to imply that masking happens in order,
+            # i.e. limited to the first 100 features, if there are only 100 mutable features
             MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
             WITHVAL=[x for x in self.cols[np.where(s0)[0]] if x in self.mutable_vars ]
             MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
@@ -839,17 +926,19 @@ class cognet:
             #     return np.nan,np.nan,np.nan
             #     return self.getMaskedSample(s)
 
+            # mask sample according to masking (base_frequency)
             s1=s.copy()
             for i in range(len(base_frequency)):
                 if base_frequency[i]&gt;0.0001:
                     s1[i]=&#39;&#39;
-                    
-            s_rand=np.copy(s)
+                
+            # create a random sample to test reconstruction effectiveness
+            random_sample=np.copy(s)
             rnd_match_prob=[]        
             max_match_prob=[]        
             D=self.qnet.predict_distributions(s)
             for i in MASKrand:
-                s_rand[np.where(
+                random_sample[np.where(
                     self.cols==i)[0][0]]=self.__choose_one(
                         self.D_null[np.where(self.cols==i)[0][0]].keys())
                 rnd_match_prob=np.append(rnd_match_prob,1/len(
@@ -858,126 +947,197 @@ class cognet:
                     max_match_prob,np.max(
                         list(D[np.where(
                             self.cols==i)[0][0]].values())))
-                
+            
+            # calculate base_frequency if all variables are mutable
             if allow_all_mutable:
-                for m in mutable_vars:
+                WITHVAL=[x for x in self.cols[np.where(s0)[0]]]
+                MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
+                for m in MASKrand:
                     MUTABLE[m]=1.0
                 mutable_x=MUTABLE.values[0]
                 base_frequency=mutable_x/mutable_x.sum()
+                s1=s.copy()
+                for i in range(len(base_frequency)):
+                    if base_frequency[i]&gt;0.0001:
+                        s1[i]=&#39;&#39;
 
             return s1,base_frequency,MASKrand,np.where(
-                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),random_sample
         else:
             raise ValueError(&#34;load_data first!&#34;)
 
     def randomMaskReconstruction(self,
                                 index=None,
                                 return_dict=None,
-                                sample=None):
+                                sample=None,
+                                index_colname=&#34;feature_names&#34;,
+                                output_dir=&#34;recon_results/&#34;,
+                                file_name=&#34;recon_tmp.csv&#34;,
+                                mask_prob=0.5,
+                                allow_all_mutable=False,
+                                save_samples=False,
+                                save_output=True):
         &#34;&#34;&#34;reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
         Args:
-          return_dict (dict): dict containing results. Defaults to None.
+          index (int): index of sample to take.
+          return_dict (dict): dictionary containing multiprocessing results. Defaults to None.
           sample (list[str], optional): sample vector, must have the same num of features as the qnet. Defaults to None.
-          index (int): index of sample to take. Defaults to None.
+          index_colname (str): column name for index. Defaults to &#34;feature_names&#34;
+          output_dir (str): directory name for output files. Defaults to &#34;recon_results/&#34;.
+          file_name (str): base file name for output files Defaults to &#34;recon_tmp.csv&#34;.
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+          allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
+          save_samples (bool): whether to include sample vectors in the savefile. Defaults to False.
+          save_output (bool): whether or not to save output df to file. Defaults to True.
 
         Raises:
           ValueError: Neither sample or index were given
           ValueError: Both sample and index were given
+          
+        Returns:
+          return_values:(1 - (dqestim/dactual))*100,
+                            rmatch_u,
+                            rmatch,
+                            s,
+                            qs,
+                            random_sample,
+                            mask_
         &#34;&#34;&#34;
         if all(x is None for x in [sample, index]):
             raise ValueError(&#34;Must input either sample or index!&#34;)
         elif all(x is not None for x in [sample, index]):
             raise ValueError(&#34;Must input either sample or index not both!&#34;)
         elif sample is not None:
-            s=np.array(pd.DataFrame(sample).fillna(&#39;&#39;).values.astype(str)[:])
+            s=sample#np.array(pd.DataFrame(sample).fillna(&#39;&#39;).values.astype(str)[:])
         elif index is not None:
             s=self.samples_as_strings[index]
-            
-        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s, 
-                                                                        mask_prob=self.mask_prob)
+        
+        # calculate masked sample and get variables
+        s1,bp,mask_,maskindex,rmatch_u,rmatch,random_sample=self.getMaskedSample(s, 
+                                                                        mask_prob=mask_prob,
+                                                                        allow_all_mutable=allow_all_mutable)
+        # if base_frequency is nan, set return_dict to nans
         if np.isnan(bp).any():
             return_dict[index] = np.nan,np.nan,np.nan
             return np.nan,np.nan,np.nan
+        
+        # make directories
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
 
+        # qsample sample and calculate distances between original and qsampled 
         qs=qsample(s1,self.qnet,self.steps,bp)
-
         dqestim=qdistance(s,qs,self.qnet,self.qnet)
         dactual=qdistance(s,s1,self.qnet,self.qnet)
-        qdistance_time_end = time.time()
-
-        cmpf=pd.DataFrame([s,qs,s_rand],columns=self.cols,index=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])[mask_].transpose()
-        cmpf.index.name=&#39;gssvar&#39;
-        cmpf.to_csv(&#39;examples_results/CMPF_2018/CMPF-&#39;+str(index)+&#39;.csv&#39;)
-        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
-        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
+        
+        # format and save sample, qsample statistics and values
+        cmpf=pd.DataFrame([s,qs,random_sample],
+                          columns=self.cols,
+                          index=[&#39;sample&#39;,&#39;qsampled&#39;,&#39;random_sample&#39;])[mask_].transpose()
+        cmpf.index.name= index_colname
+        if save_output:
+            file_name = file_name.replace(&#34;tmp&#34;, str(index))
+            cmpf.to_csv(output_dir+file_name)
+            
+        if save_samples:
+            return_values= (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,random_sample,mask_
+        else:
+            return_values = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,mask_
+        
+        if return_dict is not None:
+            return_dict[index] = return_values
+            return return_dict[index]
+        return return_values
 
     def randomMaskReconstruction_multiple(self,
-                                          out_file):
+                                          outfile,
+                                          processes=6,
+                                          save_samples=False,
+                                          index_colname=&#34;feature_names&#34;,
+                                          output_dir=&#34;recon_results/&#34;,
+                                          file_name=&#34;recon_tmp.csv&#34;,
+                                          mask_prob=0.5,
+                                          allow_all_mutable=False):
         &#39;&#39;&#39;runs and saves the results of the predicted masked sample
 
         Args:
-          output_file (str): directory and/or file for output
+          output_file (str): directory and/or file for output.
+          processes (int): max number of processes. Defaults to 6.
+          save_samples (boolean): whether or not to save the generated qsamples, random samples, etc. Defaults to False.
+          index_colname=&#34;feature_names&#34;,
+          output_dir=&#34;recon_results/&#34;,
+          file_name=&#34;recon_tmp.csv&#34;,
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+          allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
           
-        Returmns:
-          result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error
+        Returns:
+          result: pandas.DataFrame containing masking and reconstruction results.
         &#39;&#39;&#39;
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        for i in range(len(self.samples)):
-            p = mp.Process(target=self.randomMaskReconstruction, args=(i, return_dict))
-            processes.append(p)
-
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-        
-        #result=pd.DataFrame(return_dict.items())[1]#, columns=[&#39;sample&#39;,&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])
-        result=[x for x in return_dict.values() if isinstance(x, tuple)]
-        # #result=pd.DataFrame(result.tolist())
-        # print(result)
-        # cmprdf=result[[3,4,5]]
-        # mask_=result[[6]]
-        # cmprdf.columns=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;]#[mask_].transpose()
-        # cmprdf.to_csv(&#34;examples_results/CMPF_&#34;+&#34;tmp&#34;+&#34;.csv&#34;)
-        # print(cmprdf)
-        # result=result[[0,1,2]]
-        result=pd.DataFrame(result,columns=[&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;])
-        result.rederr=result.rederr.astype(float)
-
-        if self.poles is not None:
-            result.to_csv(out_file)
+        # set columns for mp_compute
+        if save_samples:
+            cols = [&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;sample&#39;,&#39;qsampled&#39;,&#39;random_sample&#39;,&#39;mask_&#39;]
         else:
-            result.to_csv(out_file)
+            cols = [&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;mask_&#39;]
         
-        return pd.DataFrame(return_dict.copy())
+        # 
+        args=[None, index_colname, output_dir,
+              file_name, mask_prob, allow_all_mutable]
+        
+        result = self.mp_compute(processes,
+                                    self.randomMaskReconstruction,
+                                    cols,
+                                    outfile,
+                                    args=args)
+        return result
     
     def dmat_filewriter(self,
-                        pyfile,
                         QNETPATH,
+                        mpi_path=&#34;mpi_tmp/&#34;,
+                        pyfile=&#34;cognet_qdistmatrix.py&#34;,
                         MPI_SETUP_FILE=&#34;mpi_setup.sh&#34;,
                         MPI_RUN_FILE=&#34;mpi_run.sh&#34;,
-                        MPI_LAUNCHER_FILE=&#34;mpi_launcher.sh&#34;,
+                        MPI_LAUNCHER_FILE=&#34;../launcher.sh&#34;,
                         YEARS=&#39;2016&#39;,
                         NODES=4,
                         T=12,
                         num_samples=None,
                         OUTFILE=&#39;tmp_distmatrix.csv&#39;,
                         tmp_samplesfile=&#34;tmp_samples_as_strings.csv&#34;):
-        if all(x is not None for x in [self.poles_dict,self.features,
+        &#34;&#34;&#34;generate files to compute qdistance matrix using mpi parallelization
+
+        Args:
+          QNETPATH (str): Qnet filepath
+          pyfile (str, optional): Name of generated python file. Defaults to &#34;cognet_qdistmatrix.py&#34;.
+          MPI_SETUP_FILE (str, optional): Name of mpi setup script. Defaults to &#34;mpi_setup.sh&#34;.
+          MPI_RUN_FILE (str, optional): Name of mpi run script. Defaults to &#34;mpi_run.sh&#34;.
+          MPI_LAUNCHER_FILE (str, optional): Launcher script filepath. Defaults to &#34;launcher.sh&#34;.
+          YEARS (str, optional): If looping by year, not currently implemented. Defaults to &#39;2016&#39;.
+          NODES (int, optional): Number of nodes to use. Defaults to 4.
+          T (int, optional): Number of hours to reserve nodes for. Defaults to 12.
+          num_samples ([type], optional): How many samples to take. Defaults to None.
+          OUTFILE (str, optional): CSV File to write computed qdist matrix. Defaults to &#39;tmp_distmatrix.csv&#39;.
+          tmp_samplesfile (str, optional): CSV File to write samples as strings. Defaults to &#34;tmp_samples_as_strings.csv&#34;.
+
+        Raises:
+            ValueError: load data if qnet, features, or samples are not present]
+        &#34;&#34;&#34;
+        if all(x is not None for x in [self.samples,self.features,
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
             
-            tmp_path = &#34;mpi_tmp/&#34;
+            # init and make tmp dir 
+            tmp_path = mpi_path
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
             
             pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+tmp_samplesfile, header=None, index=None)
             
             w = self.samples.index.size
+            
+            # writing python file
             with open(tmp_path+pyfile, &#39;w+&#39;) as f:
                 f.writelines([&#34;from mpi4py.futures import MPIPoolExecutor\n&#34;,
                               &#34;import numpy as np\n&#34;,
@@ -988,7 +1148,7 @@ class cognet:
 
                 f.writelines([&#34;w = {}\n&#34;.format(w),
                               &#34;h = w\n&#34;,
-                              &#34;p_all = pd.read_csv(\&#34;{}\&#34;, header=None)\n\n&#34;.format(tmp_samplesfile)])
+                              &#34;p_all = pd.read_csv(\&#34;{}\&#34;, header=None).values.astype(str)[:]\n\n&#34;.format(tmp_samplesfile)])
 
                 f.writelines([&#34;def distfunc(x,y):\n&#34;,
                               &#34;\td=qdistance(x,y,qnet,qnet)\n&#34;,
@@ -996,10 +1156,10 @@ class cognet:
 
                 f.writelines([&#34;def dfunc_line(k):\n&#34;,
                               &#34;\tline = np.zeros(w)\n&#34;,
-                              &#34;\ty = np.array(p_all.iloc[k])\n&#34;,
+                              &#34;\ty = p_all[k]\n&#34;,
                               &#34;\tfor j in range(w):\n&#34;,
                               &#34;\t\tif j &gt; k:\n&#34;,
-                              &#34;\t\t\tx = np.array(p_all.iloc[j])\n&#34;,
+                              &#34;\t\t\tx = p_all[j]\n&#34;,
                               &#34;\t\t\tline[j] = distfunc(x, y)\n&#34;,
                               &#34;\treturn line\n\n&#34;])
 
@@ -1010,7 +1170,8 @@ class cognet:
                                   &#34;\tresult = result.to_numpy()\n&#34;,
                               &#34;\tresult = pd.DataFrame(np.maximum(result, result.transpose()))\n&#34;
                               &#34;\tresult.to_csv(\&#39;{}\&#39;,index=None,header=None)&#34;.format(OUTFILE)])
-                
+            
+            # writing MPI setup file
             with open(tmp_path+MPI_SETUP_FILE, &#39;w+&#39;) as ms:
                 ms.writelines([&#34;#!/bin/bash\n&#34;,
                                &#34;YEAR=$1\n\n&#34;,
@@ -1038,6 +1199,7 @@ class cognet:
                                &#34;echo \&#34;date; mpiexec -n \&#34;$NUMPROC\&#34; python3 -m mpi4py.futures {}; date\&#34;  &gt;&gt; $PROG\n&#34;.format(pyfile),
                                 ])
 
+            # writing MPI run file
             with open(tmp_path+MPI_RUN_FILE, &#39;w+&#39;) as mr:
                 mr.writelines([&#34;#!/bin/bash\n&#34;,
                                &#34;YEARS=\&#39;{}\&#39;\n&#34;.format(YEARS),
@@ -1046,14 +1208,16 @@ class cognet:
                                &#34;# time requested\n&#34;,
                                &#34;T={}\n&#34;.format(T),
                                &#34;NUM=\&#39;all\&#39;\n&#34;,
-                               &#34;LAUNCH=\&#39;../mpi_launcher.sh\&#39;\n\n&#34;,
+                               &#34;LAUNCH=\&#39;{}\&#39;\n\n&#34;.format(MPI_LAUNCHER_FILE),
                                &#34;for yr in `echo $YEARS`\n&#34;,
                                &#34;do\n&#34;,
                                &#34;\techo $yr\n&#34;,
                                &#34;\t./{} $yr $NODES $NUM tmp_\&#34;$yr\&#34;\n&#34;.format(MPI_SETUP_FILE),
-                               &#34;\t$LAUNCH -P tmp_\&#34;$yr\&#34; -F -T $T -N \&#34;$NODES\&#34; -C 28 -p broadwl -J ACRDALL_\&#34;$yr\&#34; -M 56\n&#34;,
+                               &#34;\t$LAUNCH -P tmp_\&#34;$yr\&#34; -F -T $T -N \&#34;$NODES\&#34; -C 28 -p broadwl -J MPI_TMP_\&#34;$yr\&#34; -M 56\n&#34;,
                                &#34;done\n&#34;,
                                &#34;rm tmp_\&#34;$yr\&#34;*\n&#34;])
+            os.system(&#34;cp {} {}&#34;.format(MPI_LAUNCHER_FILE,tmp_path+&#39;mpi_launcher.sh&#39;))
+        
         else:
             raise ValueError(&#34;load data first!&#34;)</code></pre>
 </details>
@@ -1101,8 +1265,6 @@ class cognet:
         self.polar_indices = None
         self.poles_dict = {}
         self.d0 = None
-        self.qdistance_matrix_file = None
-        self.dissonance_file = None
         self.s_null = None
         self.D_null = None
         self.mask_prob = 0.5
@@ -1110,6 +1272,7 @@ class cognet:
         self.polar_matrix = None
         self.nsamples = None
         self.restricted = False
+        self.MAX_PROCESSES = 0
     
     def load_from_model(self,
                         model,
@@ -1127,12 +1290,14 @@ class cognet:
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
         &#34;&#34;&#34;
         if model is not None:
+            # inherit atrributes from model object
             self.qnet = model.myQnet
-            # self.cols = np.array(model.features)
             featurenames, samples = data_obj.format_samples(key)
             samples = pd.DataFrame(samples)
             self.cols = np.array(featurenames)
             self.features = pd.DataFrame(columns=np.array(featurenames))
+            
+            # inherit mutable and immutable variables from model obj
             if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
                 if model.immutable_vars is not None:
                     self.immutable_vars = model.immutable_vars
@@ -1143,6 +1308,7 @@ class cognet:
             else:
                 self.mutable_vars = self.features
             
+            # inherit and set class attributes.
             self.samples = pd.DataFrame(samples).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#34;&#34;)
             self.samples.columns = np.array(featurenames)
             self.all_samples = self.samples
@@ -1161,7 +1327,8 @@ class cognet:
     def load_from_dataformatter(self, 
                                 data_obj,
                                 key):
-        &#34;&#34;&#34;read in either train or test data, specified by key, from data obj
+        &#34;&#34;&#34;read in either train or test data, specified by key, from data obj,
+        and inherit other attributes.
 
         Args:
           data_obj (class): instance of dataformatter class
@@ -1170,6 +1337,7 @@ class cognet:
         Returns:
           featurenames, samples: formatted arrays
         &#34;&#34;&#34;
+        # inherit attributes from dataformatter object
         featurenames, samples = data_obj.format_samples(key)
         if any(x is not None for x in [self.features, self.samples]):
             print(&#34;replacing original features/samples with dataformatter data&#34;)
@@ -1185,7 +1353,7 @@ class cognet:
                   year,
                   features_by_year,
                   samples,
-                  qnet):
+                  Qnet):
         &#39;&#39;&#39;load cols, features, samples, and qnet.
 
         Args:
@@ -1194,6 +1362,7 @@ class cognet:
           samples (str): file of samples for that year.
           Qnet (str): Qnet file location.
         &#39;&#39;&#39;
+        # set attributes from given files and data
         self.qnet = load_qnet(qnet)
         self.year = year
         self.cols = np.array((pd.read_csv(features_by_year,
@@ -1205,6 +1374,7 @@ class cognet:
         self.mutable_vars = [x for x in self.cols]
         #[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
 
+        # read in samples and initialize related attributes
         self.samples=pd.read_csv(samples)
         self.samples = pd.concat([self.samples,self.features], axis=0)
         self.all_samples = self.samples
@@ -1227,6 +1397,7 @@ class cognet:
         Args:
           IMMUTABLE_FILE (str): file containing the immutable features/vars
         &#39;&#39;&#39;
+        # set mutable and immutable variable attributes 
         if self.cols is None:
             raise ValueError(&#34;load_data first!&#34;)
         self.immutable_vars = pd.read_csv(IMMUTABLE_FILE,index_col=0).transpose()
@@ -1243,8 +1414,11 @@ class cognet:
           num_samples (int): Set num of samples to subset, default to None, resets to all samples
           random (bool): take random sample if true, ordered sample if false
         &#39;&#39;&#39;
+        # each time function is called, reset samples to use_all_samples
+        # this allows us to call nsamples numerous times 
         self.samples = self.all_samples
-        if num_samples is not None:
+        if self.samples is not None:
+            # if a greater number of sample is selected than available, raise error
             if all(x is not None for x in [num_samples, self.samples]):
                 if num_samples &gt; len(self.samples.index):
                     string = &#39;The number of selected samples ({}) &#39; + \
@@ -1252,11 +1426,14 @@ class cognet:
                     string = string.format(num_samples, len(self.samples.index))
                     raise ValueError(string)
 
+                # if the same number of samples is selected as available, print warning
                 if num_samples == len(self.samples.index):
                     string = &#39;The number of selected samples ({}) &#39; + \
                         &#39;is equal to the number of samples ({})!&#39;
                     string = string.format(num_samples, len(self.samples.index))
                     print(string)
+                    
+                # if random is true, return random sample, otherwise return an ordered slice
                 if random:
                     self.samples = self.samples.sample(num_samples)
                 else:
@@ -1285,14 +1462,15 @@ class cognet:
         Args:
           sample (list[str]): vector of sample, must have the same num of features as the qnet
         &#39;&#39;&#39;
+        # if variable is not mutable, set its base frequency to zero 
         MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
-                
+             
         for m in self.mutable_vars:
             MUTABLE[m]=1.0
         mutable_x=MUTABLE.values[0]
         base_frequency=mutable_x/mutable_x.sum()
-
-        # commented out for now for testing using smaller qnet
+        
+        # otherwise, set base frequency weighted by variation weight
         for i in range(len(base_frequency)):
             if base_frequency[i]&gt;0.0:
                 base_frequency[i]= self.variation_weight[i]*base_frequency[i]
@@ -1310,14 +1488,41 @@ class cognet:
           steps (int): number of steps to qsample
           immutable (bool): are there variables that are immutable?
         &#39;&#39;&#39;
-        if all(x is not None for x in [self.mutable_vars, sample]):
-            if immutable == True:
+        # immutable, check that mutable variables have been initialized
+        if immutable == True:
+            if all(x is not None for x in [self.mutable_vars, sample]):
                 return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
-            else:
-                return qsample(sample,self.qnet,steps)
-        elif self.mutable_vars is None:
-            raise ValueError(&#34;load_data first!&#34;)
+            elif self.mutable_vars is None:
+                raise ValueError(&#34;set mutable and immutable variables first!&#34;)
+        else:
+            return qsample(sample,self.qnet,steps)
 
+    def random_sample(self,
+                      df=None,
+                      n=1):
+        &#39;&#39;&#39;compute a random sample from the underlying distributions of the dataset, by column.
+        
+        
+        Args:
+          df (pandas.DataFrame): Desired data to take random sample of. Defaults to None, in which case qnet samples are used.
+          n (int): number of random samples to take. Defaults to 1.
+          
+        Returns:
+          return_df (pd.DataFrame): Random sample drawn from underlying distribution of each column.
+        &#39;&#39;&#39;
+        # check if a new dataset was inputted
+        if df is None:
+            samples_ = self.samples
+        else:
+            samples_ = df
+
+        # take random sample from each of the columns based on their distribution
+        return_df = pd.DataFrame()
+        for col in samples_.columns:
+            return_df[col] = samples_[col].sample(n=n, replace=True).values
+            
+        return return_df
+    
     def set_poles(self,
                   POLEFILE,
                   pole_1,
@@ -1326,15 +1531,15 @@ class cognet:
                   mutable=False,
                   VERBOSE=False,
                   restrict=True,
-                  nsamples = False,
+                  nsamples = None,
                   random=False):
         &#39;&#39;&#39;set the poles and samples such that the samples contain features in poles
 
         Args:
           steps (int): number of steps to qsample
           POLEFILE (str): file containing poles samples and features
-          pole_1 (str): column name for first pole to use
-          pole_2 (str): column name for second pole to use
+          pole_1 (str): column name for first pole
+          pole_2 (str): column name for second pole
           mutable (bool): Whether or not to set poles as the only mutable_vars
           VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
           restrict (bool): boolean flag restricts the sample features to polar features if True
@@ -1342,41 +1547,41 @@ class cognet:
         &#39;&#39;&#39;
         invalid_count = 0
         if all(x is not None for x in [self.samples, self.qnet]):
+            # read and set poles
             poles = pd.read_csv(POLEFILE, index_col=0)
             self.poles=poles.transpose()
             self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna(&#39;&#39;)
             poles_dict = {}
             for column in poles:
                 p_ = self.polar_features.loc[column][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+                # qsample poles to qnet
                 poles_dict[column] = self.qsampling(p_,steps)
             self.poles_dict = poles_dict
             self.pL = self.poles_dict[pole_1]
             self.pR = self.poles_dict[pole_2]
-            # self.pL = list(poles_dict.values())[0]
-            # self.pR = list(poles_dict.values())[1]
             self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
             
+            # restrict sample columns to polar columns
             if restrict:
-                # restrict sample columns to polar columns
                 cols = [x for x in self.poles.columns if x in self.samples.columns]
                 self.samples=self.samples[cols]
                 self.restricted = True
+                self.samples = pd.concat([self.features,self.samples], axis=0).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#39;&#39;)
+                self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
                 
-            elif self.restricted:
-                # if poles had been restricted before, unrestrict it
+            # if restrict==False, unrestrict it and set original
+            else:
                 self.restricted = False
                 self.samples = self.all_samples
                 if self.nsamples is not None:
                     self.set_nsamples(nsamples, random)
-
-            for x in self.poles.columns:
-                if x not in self.samples.columns:
-                    invalid_count += 1
-                    self.samples[x]=&#39;&#39;
-
-            self.samples = pd.concat([self.features,self.samples], axis=0).fillna(&#39;&#39;)
-            #self.all_samples = self.samples
-            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            
+            # identify pole features that were excluded due to sample features restriction
+            if VERBOSE:
+                for x in self.poles.columns:
+                    if x not in self.samples.columns:
+                        invalid_count += 1
+                        #self.samples[x]=&#39;&#39;
             
             if mutable:
                 self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -1386,6 +1591,61 @@ class cognet:
         if VERBOSE:
             print(&#34;{} pole features not found in sample features&#34;.format(invalid_count))
 
+    def mp_compute(self, 
+                   processes,
+                   func, 
+                   cols,
+                   outfile, 
+                   args=[]):
+        &#34;&#34;&#34;
+        Compute desired function through multiprocessing and save result to csv.
+
+        Args:
+          processes (int): number of processes to use.
+          func (func): function to compute using multiprocessing
+          cols (list): column names of resulting csv
+          outfile (str)): filepath + filename for resulting csv
+          args (list): list containing arguments for desired function. Defaults to empty list.
+        &#34;&#34;&#34;
+
+        # init mp.Manager and result dict
+        manager = mp.Manager()
+        return_dict = manager.dict()
+
+        # set processes as given, unless class parameter is set
+        max_processes = processes
+        if self.MAX_PROCESSES != 0:
+            max_processes = self.MAX_PROCESSES
+            print(&#34;Number of Processes {} has been set using class parameter&#34;.format(self.MAX_PROCESSES))
+        num_processes = 0
+        process_list = []
+        
+        # init mp.Processes for each individual sample
+        # run once collected processes hit max
+        for i in range(len(self.samples)):
+            params = tuple([i, return_dict] + args)
+            num_processes += 1
+            p = mp.Process(target=func,
+                        args=params)
+            process_list.append(p)
+            if num_processes == max_processes:
+                [x.start() for x in process_list]
+                [x.join() for x in process_list]
+                process_list = []
+                num_processes = 0
+                
+        # compute remaining processes
+        if num_processes != 0:
+            [x.start() for x in process_list]
+            [x.join() for x in process_list]
+            process_list = []
+            num_processes = 0
+        
+        # format and save resulting dict
+        result = pd.DataFrame(return_dict.values(), columns=cols, index=return_dict.keys()).sort_index()
+        result.to_csv(outfile, index=None)
+        return result
+    
     def distance(self,
                 sample1,
                 sample2,
@@ -1404,15 +1664,16 @@ class cognet:
         &#34;&#34;&#34;
         if self.qnet is None:
             raise ValueError(&#34;load qnet first!&#34;)
-        bp1 = self.getBaseFrequency(sample1)
-        bp2 = self.getBaseFrequency(sample2)
+        #bp1 = self.getBaseFrequency(sample1)
+        #bp2 = self.getBaseFrequency(sample2)
+        # qsample samples
         sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
         sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
         return qdistance(sample1, sample2, self.qnet, self.qnet)
     
     def __distfunc(self, 
-                x, 
-                y):
+                   x, 
+                   y):
         &#39;&#39;&#39;Compute distance between two samples
 
         Args:
@@ -1425,68 +1686,14 @@ class cognet:
         d=qdistance(x,y,self.qnet,self.qnet)
         return d
     
-    def polarDistance(self,
-                    i,
-                    return_dict=None):
-        &#34;&#34;&#34;return the distance from a sample to the poles
-
-        Args:
-          i (int): index of sample to take
-          return_dict (dict): dict used for multiple sample function
-
-        Returns:
-          distances: float, distance from sample to each pole
-        &#34;&#34;&#34;
-        samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
-        p = samples_as_strings[i]
-        distances = []
-        for index, row in self.polar_features[self.cols].iterrows():
-            row = row.fillna(&#39;&#39;).values.astype(str)[:]
-            distances.append(self.distance(p, np.array(row)))
-        if return_dict is not None:
-            return_dict[i] = distances
-        return distances
-            
-    def polarDistance_multiple(self,
-                            outfile):
-        &#34;&#34;&#34;return the distance from all samples to the poles
-
-        Args:
-          outfile (str): desired output filename and path
-          
-        Returns:
-          return_dict: dictionary containing multiprocessing results
-        &#34;&#34;&#34;
-        if all(x is not None for x in [self.samples, self.cols,
-                                    self.polar_features]):
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-            
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.polarDistance, args=(i, return_dict))
-                processes.append(p)
-
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-
-            pole_names = []
-            for index, row in self.polar_features[self.cols].iterrows():
-                pole_names.append(index)
-            result=[x for x in return_dict.values()]
-            result=pd.DataFrame(result,columns=pole_names).to_csv(outfile)
-            
-        else:
-            raise ValueError(&#34;load data first!&#34;)
-        return return_dict
-        
     def distfunc_line(self,
                     i,
                     return_dict=None):
-        &#39;&#39;&#39;compute the dist for a row, or vector of samples
+        &#39;&#39;&#39;compute the distance for a single sample from all other samples
 
         Args:
           i (int): row
+          return_dict (dict): dictionary containing multiprocessing results
         
         Return:
           line: float, numpy.ndarray
@@ -1507,36 +1714,77 @@ class cognet:
         return line
     
     def distfunc_multiples(self,
-                        outfile):
+                           outfile,
+                           processes=6):
         &#34;&#34;&#34;compute distance matrix for all samples in the dataset
 
         Args:
           outfile (str): desired output filename and path
           
         Returns:
-          return_dict: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing distance matrix
         &#34;&#34;&#34;
         if all(x is not None for x in [self.samples, self.features]):
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.distfunc_line, args=(i, return_dict))
-                processes.append(p)
-            
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            result=[x for x in return_dict.values()]
-            columns = [i for i in range(len(self.samples))]
-            result=pd.DataFrame(result,columns=columns, index=columns).sort_index(ascending=False)
+            cols = [i for i in range(len(self.samples))]
+            result = self.mp_compute(processes,
+                                        self.distfunc_line,
+                                        cols,
+                                        outfile)
+            # format and save resulting dict, and tranpose symmetrical distance matrix
             result = result.to_numpy()
             result = pd.DataFrame(np.maximum(result, result.transpose()))
-            result.to_csv(outfile)
+            result.to_csv(outfile, index=None, header=None)
         else:
             raise ValueError(&#34;load data first!&#34;)
         
-        return pd.DataFrame(return_dict.copy())
+        return result
+    
+    def polarDistance(self,
+                    i,
+                    return_dict=None):
+        &#34;&#34;&#34;return the distances from a single sample to the poles
+
+        Args:
+          i (int): index of sample to take
+          return_dict (dict): dictionary containing multiprocessing results
+
+        Returns:
+          distances: float, distance from sample to each pole
+        &#34;&#34;&#34;
+        p = self.samples_as_strings[i]
+        distances = []
+        # calculate from each pole to the sample, and append to array
+        for index, row in self.polar_features[self.cols].iterrows():
+            row = row.fillna(&#39;&#39;).values.astype(str)[:]
+            distances.append(self.distance(p, np.array(row)))
+        if return_dict is not None:
+            return_dict[i] = distances
+        return distances
+            
+    def polarDistance_multiple(self,
+                               outfile,
+                               processes=6):
+        &#34;&#34;&#34;return the distance from all samples to the poles
+
+        Args:
+          outfile (str): desired output filename and path
+          
+        Returns:
+          result: pandas.DataFrame containing polar distance results
+        &#34;&#34;&#34;
+        if all(x is not None for x in [self.samples, self.cols,
+                                    self.polar_features]):
+            # get the column names
+            pole_names = []
+            for index, row in self.polar_features[self.cols].iterrows():
+                pole_names.append(index)
+            result = self.mp_compute(processes,
+                                        self.polarDistance,
+                                        pole_names,
+                                        outfile)
+        else:
+            raise ValueError(&#34;load data first!&#34;)
+        return result
     
     def polar_separation(self,
                         nsteps=0):
@@ -1548,6 +1796,7 @@ class cognet:
         Returns:
           self.polar_matrix: dictionary containing multiprocessing results
         &#34;&#34;&#34;
+        # vectorize and qsample poles
         polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
         samples_ = []
         for vector in polar_arraydata:
@@ -1555,6 +1804,7 @@ class cognet:
             sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
             samples_.append(sample)
         samples_ = np.array(samples_)
+        # calculate distance matrix for poles
         self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
         return self.polar_matrix
         
@@ -1575,18 +1825,21 @@ class cognet:
           EMBED_BINARY (os.path.abspath): path to embed binary
         &#39;&#39;&#39;
         if all(x is not None for x in [self.year]):
+            # init file names 
             yr = self.year
             PREF = name_pref
             FILE = infile
-
+            DATAFILE = out_dir + &#39;data_&#39; +yr
+            EFILE = out_dir + PREF + &#39;_E_&#39; +yr
+            DFILE = out_dir + PREF + &#39;_D_&#39; +yr
+            
+            # set embed binary directory
             if EMBED_BINARY is None:
                 EMBED = pkgutil.get_data(&#34;cognet.bin&#34;, &#34;__embed__.so&#34;) 
             else:
                 EMBED = EMBED_BINARY
-            DATAFILE = out_dir + &#39;data_&#39; +yr
-            EFILE = out_dir + PREF + &#39;_E_&#39; +yr
-            DFILE = out_dir + PREF + &#39;_D_&#39; +yr
-
+            
+            # embed data files
             pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
             STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
             subprocess.call(STR,shell=True)
@@ -1627,37 +1880,43 @@ class cognet:
                                              distance from the left pole,
                                              and distance between poles, respectively
         &#34;&#34;&#34;
+        # calculate base distance between two poles
         if pole_1 is not None or pole_2 is not None:
             self.__calc_d0(pole_1, pole_2)
-            
+        
+        # calculate distances between sample and the two poles
         p = self.samples_as_strings[i]
         dR = qdistance(self.pR, p, self.qnet, self.qnet)
         dL = qdistance(self.pL, p, self.qnet, self.qnet)
+        
         ideology_index = (dR-dL)/self.d0
         if return_dict is not None:
             return_dict[i] = [ideology_index, dR, dL, self.d0]
         return [ideology_index, dR, dL, self.d0]
 
     def dispersion(self,
-                i,
-                return_dict=None):
+                   i,
+                   return_dict=None):
         &#34;&#34;&#34;qsamples a sample n times and takes distance matrix 
         to determine max and std of distances between qsamples
 
         Args:
           i (int): index of sample
-          return_dict (dict): dict containing results
+          return_dict (dict): dictionary containing multiprocessing results
 
         Returns:
           list[float]: std and max of the distances btwn qsamples
         &#34;&#34;&#34;
+        # qsample sample num_qsample times
         p = self.samples_as_strings[i]
         Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
         Qset = np.array(Qset)
 
+        # calculate qdistance matrix for qsampled samples
         matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
         Q = matrix.max()
         Qsd = matrix.std()
+        
         if return_dict is not None:
             return_dict[i] = [Qsd, Q]
         return [Qsd, Q]
@@ -1669,7 +1928,8 @@ class cognet:
                         steps=120,
                         n_jobs=28,
                         pole_1=0,
-                        pole_2=1):
+                        pole_2=1,
+                        processes=6):
         &#34;&#34;&#34;compute and save ideology index or dispersion for all samples
 
         Args:
@@ -1686,51 +1946,40 @@ class cognet:
           ValueError: load data if samples or features are not present
             
         Returns:
-          Result: dictionary containing multiprocessing results
+          result: pandas.DataFrame containing multiprocessing results
         &#34;&#34;&#34;
         if all(x is not None for x in [self.samples, self.features,
                                     self.pL, self.pR]):
+            # init vars
             self.num_qsamples = num_qsamples
             self.steps = steps
             if pole_1 != 0 or pole_2 != 1:
                 self.__calc_d0(pole_1, pole_2)
             
-            # testing
-            # pd.DataFrame(self.samples_as_strings).to_csv(&#39;examples_results/class_allsamples_2018.csv&#39;)
-            
-            manager = mp.Manager()
-            return_dict = manager.dict()
-            processes = []
-
             if type == &#39;ideology&#39;:
-                for i in range(len(self.samples)):
-                    p = mp.Process(target=self.ideology, args=(i, return_dict))
-                    processes.append(p)
-                columns=[&#39;ideology&#39;, &#39;dR&#39;, &#39;dL&#39;, &#39;d0&#39;]
+                func_ = self.ideology
+                cols=[&#39;ideology&#39;, &#39;dR&#39;, &#39;dL&#39;, &#39;d0&#39;]
             elif type == &#39;dispersion&#39;:
-                for i in range(len(self.samples)):
-                    p = mp.Process(target=self.dispersion, args=(i, return_dict))
-                    processes.append(p)
-                columns=[&#39;Qsd&#39;, &#39;Qmax&#39;]
+                func_ = self.dispersion
+                cols=[&#39;Qsd&#39;, &#39;Qmax&#39;]
             else:
                 raise ValueError(&#34;Type must be either dispersion or ideology!&#34;)
             
-            [x.start() for x in processes]
-            [x.join() for x in processes]
-            result=[x for x in return_dict.values()]
-            result=pd.DataFrame(result,columns=columns).to_csv(outfile)
-
+            result = self.mp_compute(processes,
+                                     func_,
+                                     cols,
+                                     outfile)
         elif self.pL is None or self.pR is None:
             raise ValueError(&#34;set_poles first!&#34;)
         else:
             raise ValueError(&#34;load_data first!&#34;)
-        return pd.DataFrame(return_dict.copy())
+        return result
 
     def compute_polar_indices(self,
-                            num_samples = None,
-                            polar_comp = False,
-                            POLEFILE = None,
-                            steps = 5):
+                              num_samples=None,
+                              polar_comp=False,
+                              POLEFILE=None,
+                              steps=5):
         &#39;&#39;&#39;set up polar indices for dissonance func
 
         Args:
@@ -1743,10 +1992,10 @@ class cognet:
             if num_samples is not None:
                 self.set_nsamples(num_samples)
 
-            # read sample data
             if polar_comp:
                 self.set_poles(self.qnet, steps, POLEFILE)
             
+            # calculate polar indices
             polar_features = pd.concat([self.features, self.poles], axis=0)
             self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
         
@@ -1756,26 +2005,31 @@ class cognet:
             raise ValueError(&#34;load_data first!&#34;)
 
     def dissonance(self,
-                sample_index,
-                return_dict=None,
-                MISSING_VAL=0.0):
-        &#39;&#39;&#39;compute dissonance for each sample_index, helper function for all_dissonance
+                    sample_index=0,
+                    return_dict=None,
+                    MISSING_VAL=0.0,
+                    sample=None):
+        &#39;&#39;&#39;compute dissonance for a single sample, helper function for all_dissonance
         
         Args:
-          sample_index (int): index of the sample to compute dissonance
-          return_dict (dict): dict containing results
+          sample_index (int): index of the sample to compute dissonance. Defaults to 0.
+          return_dict (dict): dictionary containing multiprocessing results
           MISSING_VAL (float): default dissonance value
+          sample (1D array): sample to compute dissonance of, instead of using sample index. Defaults to None.
           
         Returns: 
-          diss: ndarray containing dissonance for sample
+          diss[self.polar_indices]: ndarray containing dissonance for sample
         &#39;&#39;&#39;
         if all(x is not None for x in [self.samples, self.features]):
-            s = self.samples_as_strings[sample_index]
+            if sample is None:
+                s = self.samples_as_strings[sample_index]
+            else:
+                s = sample
             if self.polar_indices is None:
                 self.polar_indices = range(len(s))
 
+            # init vars and calculate dissonance for sample
             Ds=self.qnet.predict_distributions(s)
-            
             diss=np.ones(len(Ds))*MISSING_VAL
             for i in self.polar_indices:
                 if s[i] != &#39;&#39;:
@@ -1791,38 +2045,29 @@ class cognet:
             raise ValueError(&#34;load_data first!&#34;)
     
     def dissonance_matrix(self,
-                        output_file=&#39;/example_results/DISSONANCE_matrix.csv&#39;,
-                        n_jobs=28):
+                        outfile=&#39;/example_results/DISSONANCE_matrix.csv&#39;,
+                        processes=6):
         &#39;&#39;&#39;get the dissonance for all samples
 
         Args:
           output_file (str): directory and/or file for output
-          n_jobs (int): number of jobs for pdqm
+          processes (int): max number of processes. Defaults to 6.
 
         Returns:
-          pandas.DataFrame
+          result: pandas.DataFrame containing dissonances for each sample
         &#39;&#39;&#39;
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        for i in range(len(self.samples)):
-            p = mp.Process(target=self.dissonance, args=(i, return_dict))
-            processes.append(p)
-
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-
-        result=[x for x in return_dict.values()]
+        # set columns
         if self.polar_indices is not None:
             polar_features = pd.concat([self.features, self.poles], axis=0)
             cols = polar_features[self.cols].dropna(axis=1).columns
         else:
             cols = self.cols
-        result=pd.DataFrame(result,columns=cols).to_csv(output_file)
         
-        self.dissonance_file = output_file
-        return pd.DataFrame(return_dict.copy())
+        result = self.mp_compute(processes,
+                                    self.dissonance,
+                                    cols,
+                                    outfile)
+        return result
     
     def __choose_one(self,
                 X):
@@ -1847,20 +2092,25 @@ class cognet:
         &#39;&#39;&#39;inputs a sample and randomly mask elements of the sample
 
         Args:
-          s (list[str]): vector of sample, must have the same num of features as the qnet
-          mask_prob (float): float btwn 0 and 1, prob to mask element of sample
-          allow_all_mutable (bool): whether or not all variables are mutable
+          s (list[str]): vector of sample, must have the same num of features as the qnet.
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+          allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
           
         Returns:
-          s1,base_frequency,MASKrand,
+          s1,
+          base_frequency,
+          MASKrand,
           np.where(base_frequency)[0],
           np.mean(rnd_match_prob),
           np.mean(max_match_prob),
-          s_rand
+          random_sample
         &#39;&#39;&#39;
         if self.samples is not None:
+            # init random mutable variable masking
             s0=s.copy()
             s0=np.array(s0)   
+            # double check, because code seems to imply that masking happens in order,
+            # i.e. limited to the first 100 features, if there are only 100 mutable features
             MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
             WITHVAL=[x for x in self.cols[np.where(s0)[0]] if x in self.mutable_vars ]
             MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
@@ -1874,17 +2124,19 @@ class cognet:
             #     return np.nan,np.nan,np.nan
             #     return self.getMaskedSample(s)
 
+            # mask sample according to masking (base_frequency)
             s1=s.copy()
             for i in range(len(base_frequency)):
                 if base_frequency[i]&gt;0.0001:
                     s1[i]=&#39;&#39;
-                    
-            s_rand=np.copy(s)
+                
+            # create a random sample to test reconstruction effectiveness
+            random_sample=np.copy(s)
             rnd_match_prob=[]        
             max_match_prob=[]        
             D=self.qnet.predict_distributions(s)
             for i in MASKrand:
-                s_rand[np.where(
+                random_sample[np.where(
                     self.cols==i)[0][0]]=self.__choose_one(
                         self.D_null[np.where(self.cols==i)[0][0]].keys())
                 rnd_match_prob=np.append(rnd_match_prob,1/len(
@@ -1893,126 +2145,197 @@ class cognet:
                     max_match_prob,np.max(
                         list(D[np.where(
                             self.cols==i)[0][0]].values())))
-                
+            
+            # calculate base_frequency if all variables are mutable
             if allow_all_mutable:
-                for m in mutable_vars:
+                WITHVAL=[x for x in self.cols[np.where(s0)[0]]]
+                MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
+                for m in MASKrand:
                     MUTABLE[m]=1.0
                 mutable_x=MUTABLE.values[0]
                 base_frequency=mutable_x/mutable_x.sum()
+                s1=s.copy()
+                for i in range(len(base_frequency)):
+                    if base_frequency[i]&gt;0.0001:
+                        s1[i]=&#39;&#39;
 
             return s1,base_frequency,MASKrand,np.where(
-                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+                base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),random_sample
         else:
             raise ValueError(&#34;load_data first!&#34;)
 
     def randomMaskReconstruction(self,
                                 index=None,
                                 return_dict=None,
-                                sample=None):
+                                sample=None,
+                                index_colname=&#34;feature_names&#34;,
+                                output_dir=&#34;recon_results/&#34;,
+                                file_name=&#34;recon_tmp.csv&#34;,
+                                mask_prob=0.5,
+                                allow_all_mutable=False,
+                                save_samples=False,
+                                save_output=True):
         &#34;&#34;&#34;reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
         Args:
-          return_dict (dict): dict containing results. Defaults to None.
+          index (int): index of sample to take.
+          return_dict (dict): dictionary containing multiprocessing results. Defaults to None.
           sample (list[str], optional): sample vector, must have the same num of features as the qnet. Defaults to None.
-          index (int): index of sample to take. Defaults to None.
+          index_colname (str): column name for index. Defaults to &#34;feature_names&#34;
+          output_dir (str): directory name for output files. Defaults to &#34;recon_results/&#34;.
+          file_name (str): base file name for output files Defaults to &#34;recon_tmp.csv&#34;.
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+          allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
+          save_samples (bool): whether to include sample vectors in the savefile. Defaults to False.
+          save_output (bool): whether or not to save output df to file. Defaults to True.
 
         Raises:
           ValueError: Neither sample or index were given
           ValueError: Both sample and index were given
+          
+        Returns:
+          return_values:(1 - (dqestim/dactual))*100,
+                            rmatch_u,
+                            rmatch,
+                            s,
+                            qs,
+                            random_sample,
+                            mask_
         &#34;&#34;&#34;
         if all(x is None for x in [sample, index]):
             raise ValueError(&#34;Must input either sample or index!&#34;)
         elif all(x is not None for x in [sample, index]):
             raise ValueError(&#34;Must input either sample or index not both!&#34;)
         elif sample is not None:
-            s=np.array(pd.DataFrame(sample).fillna(&#39;&#39;).values.astype(str)[:])
+            s=sample#np.array(pd.DataFrame(sample).fillna(&#39;&#39;).values.astype(str)[:])
         elif index is not None:
             s=self.samples_as_strings[index]
-            
-        s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s, 
-                                                                        mask_prob=self.mask_prob)
+        
+        # calculate masked sample and get variables
+        s1,bp,mask_,maskindex,rmatch_u,rmatch,random_sample=self.getMaskedSample(s, 
+                                                                        mask_prob=mask_prob,
+                                                                        allow_all_mutable=allow_all_mutable)
+        # if base_frequency is nan, set return_dict to nans
         if np.isnan(bp).any():
             return_dict[index] = np.nan,np.nan,np.nan
             return np.nan,np.nan,np.nan
+        
+        # make directories
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
 
+        # qsample sample and calculate distances between original and qsampled 
         qs=qsample(s1,self.qnet,self.steps,bp)
-
         dqestim=qdistance(s,qs,self.qnet,self.qnet)
         dactual=qdistance(s,s1,self.qnet,self.qnet)
-        qdistance_time_end = time.time()
-
-        cmpf=pd.DataFrame([s,qs,s_rand],columns=self.cols,index=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])[mask_].transpose()
-        cmpf.index.name=&#39;gssvar&#39;
-        cmpf.to_csv(&#39;examples_results/CMPF_2018/CMPF-&#39;+str(index)+&#39;.csv&#39;)
-        return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
-        return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_
+        
+        # format and save sample, qsample statistics and values
+        cmpf=pd.DataFrame([s,qs,random_sample],
+                          columns=self.cols,
+                          index=[&#39;sample&#39;,&#39;qsampled&#39;,&#39;random_sample&#39;])[mask_].transpose()
+        cmpf.index.name= index_colname
+        if save_output:
+            file_name = file_name.replace(&#34;tmp&#34;, str(index))
+            cmpf.to_csv(output_dir+file_name)
+            
+        if save_samples:
+            return_values= (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,random_sample,mask_
+        else:
+            return_values = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,mask_
+        
+        if return_dict is not None:
+            return_dict[index] = return_values
+            return return_dict[index]
+        return return_values
 
     def randomMaskReconstruction_multiple(self,
-                                          out_file):
+                                          outfile,
+                                          processes=6,
+                                          save_samples=False,
+                                          index_colname=&#34;feature_names&#34;,
+                                          output_dir=&#34;recon_results/&#34;,
+                                          file_name=&#34;recon_tmp.csv&#34;,
+                                          mask_prob=0.5,
+                                          allow_all_mutable=False):
         &#39;&#39;&#39;runs and saves the results of the predicted masked sample
 
         Args:
-          output_file (str): directory and/or file for output
+          output_file (str): directory and/or file for output.
+          processes (int): max number of processes. Defaults to 6.
+          save_samples (boolean): whether or not to save the generated qsamples, random samples, etc. Defaults to False.
+          index_colname=&#34;feature_names&#34;,
+          output_dir=&#34;recon_results/&#34;,
+          file_name=&#34;recon_tmp.csv&#34;,
+          mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+          allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
           
-        Returmns:
-          result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error
+        Returns:
+          result: pandas.DataFrame containing masking and reconstruction results.
         &#39;&#39;&#39;
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        for i in range(len(self.samples)):
-            p = mp.Process(target=self.randomMaskReconstruction, args=(i, return_dict))
-            processes.append(p)
-
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-        
-        #result=pd.DataFrame(return_dict.items())[1]#, columns=[&#39;sample&#39;,&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])
-        result=[x for x in return_dict.values() if isinstance(x, tuple)]
-        # #result=pd.DataFrame(result.tolist())
-        # print(result)
-        # cmprdf=result[[3,4,5]]
-        # mask_=result[[6]]
-        # cmprdf.columns=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;]#[mask_].transpose()
-        # cmprdf.to_csv(&#34;examples_results/CMPF_&#34;+&#34;tmp&#34;+&#34;.csv&#34;)
-        # print(cmprdf)
-        # result=result[[0,1,2]]
-        result=pd.DataFrame(result,columns=[&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;])
-        result.rederr=result.rederr.astype(float)
-
-        if self.poles is not None:
-            result.to_csv(out_file)
+        # set columns for mp_compute
+        if save_samples:
+            cols = [&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;sample&#39;,&#39;qsampled&#39;,&#39;random_sample&#39;,&#39;mask_&#39;]
         else:
-            result.to_csv(out_file)
+            cols = [&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;mask_&#39;]
         
-        return pd.DataFrame(return_dict.copy())
+        # 
+        args=[None, index_colname, output_dir,
+              file_name, mask_prob, allow_all_mutable]
+        
+        result = self.mp_compute(processes,
+                                    self.randomMaskReconstruction,
+                                    cols,
+                                    outfile,
+                                    args=args)
+        return result
     
     def dmat_filewriter(self,
-                        pyfile,
                         QNETPATH,
+                        mpi_path=&#34;mpi_tmp/&#34;,
+                        pyfile=&#34;cognet_qdistmatrix.py&#34;,
                         MPI_SETUP_FILE=&#34;mpi_setup.sh&#34;,
                         MPI_RUN_FILE=&#34;mpi_run.sh&#34;,
-                        MPI_LAUNCHER_FILE=&#34;mpi_launcher.sh&#34;,
+                        MPI_LAUNCHER_FILE=&#34;../launcher.sh&#34;,
                         YEARS=&#39;2016&#39;,
                         NODES=4,
                         T=12,
                         num_samples=None,
                         OUTFILE=&#39;tmp_distmatrix.csv&#39;,
                         tmp_samplesfile=&#34;tmp_samples_as_strings.csv&#34;):
-        if all(x is not None for x in [self.poles_dict,self.features,
+        &#34;&#34;&#34;generate files to compute qdistance matrix using mpi parallelization
+
+        Args:
+          QNETPATH (str): Qnet filepath
+          pyfile (str, optional): Name of generated python file. Defaults to &#34;cognet_qdistmatrix.py&#34;.
+          MPI_SETUP_FILE (str, optional): Name of mpi setup script. Defaults to &#34;mpi_setup.sh&#34;.
+          MPI_RUN_FILE (str, optional): Name of mpi run script. Defaults to &#34;mpi_run.sh&#34;.
+          MPI_LAUNCHER_FILE (str, optional): Launcher script filepath. Defaults to &#34;launcher.sh&#34;.
+          YEARS (str, optional): If looping by year, not currently implemented. Defaults to &#39;2016&#39;.
+          NODES (int, optional): Number of nodes to use. Defaults to 4.
+          T (int, optional): Number of hours to reserve nodes for. Defaults to 12.
+          num_samples ([type], optional): How many samples to take. Defaults to None.
+          OUTFILE (str, optional): CSV File to write computed qdist matrix. Defaults to &#39;tmp_distmatrix.csv&#39;.
+          tmp_samplesfile (str, optional): CSV File to write samples as strings. Defaults to &#34;tmp_samples_as_strings.csv&#34;.
+
+        Raises:
+            ValueError: load data if qnet, features, or samples are not present]
+        &#34;&#34;&#34;
+        if all(x is not None for x in [self.samples,self.features,
                                        self.qnet, self.cols]):
             if num_samples is not None:
                 self.set_nsamples(num_samples)
             
-            tmp_path = &#34;mpi_tmp/&#34;
+            # init and make tmp dir 
+            tmp_path = mpi_path
             if not os.path.exists(tmp_path):
                 os.makedirs(tmp_path)
             
             pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+tmp_samplesfile, header=None, index=None)
             
             w = self.samples.index.size
+            
+            # writing python file
             with open(tmp_path+pyfile, &#39;w+&#39;) as f:
                 f.writelines([&#34;from mpi4py.futures import MPIPoolExecutor\n&#34;,
                               &#34;import numpy as np\n&#34;,
@@ -2023,7 +2346,7 @@ class cognet:
 
                 f.writelines([&#34;w = {}\n&#34;.format(w),
                               &#34;h = w\n&#34;,
-                              &#34;p_all = pd.read_csv(\&#34;{}\&#34;, header=None)\n\n&#34;.format(tmp_samplesfile)])
+                              &#34;p_all = pd.read_csv(\&#34;{}\&#34;, header=None).values.astype(str)[:]\n\n&#34;.format(tmp_samplesfile)])
 
                 f.writelines([&#34;def distfunc(x,y):\n&#34;,
                               &#34;\td=qdistance(x,y,qnet,qnet)\n&#34;,
@@ -2031,10 +2354,10 @@ class cognet:
 
                 f.writelines([&#34;def dfunc_line(k):\n&#34;,
                               &#34;\tline = np.zeros(w)\n&#34;,
-                              &#34;\ty = np.array(p_all.iloc[k])\n&#34;,
+                              &#34;\ty = p_all[k]\n&#34;,
                               &#34;\tfor j in range(w):\n&#34;,
                               &#34;\t\tif j &gt; k:\n&#34;,
-                              &#34;\t\t\tx = np.array(p_all.iloc[j])\n&#34;,
+                              &#34;\t\t\tx = p_all[j]\n&#34;,
                               &#34;\t\t\tline[j] = distfunc(x, y)\n&#34;,
                               &#34;\treturn line\n\n&#34;])
 
@@ -2045,7 +2368,8 @@ class cognet:
                                   &#34;\tresult = result.to_numpy()\n&#34;,
                               &#34;\tresult = pd.DataFrame(np.maximum(result, result.transpose()))\n&#34;
                               &#34;\tresult.to_csv(\&#39;{}\&#39;,index=None,header=None)&#34;.format(OUTFILE)])
-                
+            
+            # writing MPI setup file
             with open(tmp_path+MPI_SETUP_FILE, &#39;w+&#39;) as ms:
                 ms.writelines([&#34;#!/bin/bash\n&#34;,
                                &#34;YEAR=$1\n\n&#34;,
@@ -2073,6 +2397,7 @@ class cognet:
                                &#34;echo \&#34;date; mpiexec -n \&#34;$NUMPROC\&#34; python3 -m mpi4py.futures {}; date\&#34;  &gt;&gt; $PROG\n&#34;.format(pyfile),
                                 ])
 
+            # writing MPI run file
             with open(tmp_path+MPI_RUN_FILE, &#39;w+&#39;) as mr:
                 mr.writelines([&#34;#!/bin/bash\n&#34;,
                                &#34;YEARS=\&#39;{}\&#39;\n&#34;.format(YEARS),
@@ -2081,21 +2406,23 @@ class cognet:
                                &#34;# time requested\n&#34;,
                                &#34;T={}\n&#34;.format(T),
                                &#34;NUM=\&#39;all\&#39;\n&#34;,
-                               &#34;LAUNCH=\&#39;../mpi_launcher.sh\&#39;\n\n&#34;,
+                               &#34;LAUNCH=\&#39;{}\&#39;\n\n&#34;.format(MPI_LAUNCHER_FILE),
                                &#34;for yr in `echo $YEARS`\n&#34;,
                                &#34;do\n&#34;,
                                &#34;\techo $yr\n&#34;,
                                &#34;\t./{} $yr $NODES $NUM tmp_\&#34;$yr\&#34;\n&#34;.format(MPI_SETUP_FILE),
-                               &#34;\t$LAUNCH -P tmp_\&#34;$yr\&#34; -F -T $T -N \&#34;$NODES\&#34; -C 28 -p broadwl -J ACRDALL_\&#34;$yr\&#34; -M 56\n&#34;,
+                               &#34;\t$LAUNCH -P tmp_\&#34;$yr\&#34; -F -T $T -N \&#34;$NODES\&#34; -C 28 -p broadwl -J MPI_TMP_\&#34;$yr\&#34; -M 56\n&#34;,
                                &#34;done\n&#34;,
                                &#34;rm tmp_\&#34;$yr\&#34;*\n&#34;])
+            os.system(&#34;cp {} {}&#34;.format(MPI_LAUNCHER_FILE,tmp_path+&#39;mpi_launcher.sh&#39;))
+        
         else:
             raise ValueError(&#34;load data first!&#34;)</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="cognet.cognet.cognet.compute_DLI_samples"><code class="name flex">
-<span>def <span class="ident">compute_DLI_samples</span></span>(<span>self, type, outfile, num_qsamples=40, steps=120, n_jobs=28, pole_1=0, pole_2=1)</span>
+<span>def <span class="ident">compute_DLI_samples</span></span>(<span>self, type, outfile, num_qsamples=40, steps=120, n_jobs=28, pole_1=0, pole_2=1, processes=6)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>compute and save ideology index or dispersion for all samples</p>
@@ -2125,8 +2452,8 @@ class cognet:
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>Result</code></dt>
-<dd>dictionary containing multiprocessing results</dd>
+<dt><code>result</code></dt>
+<dd>pandas.DataFrame containing multiprocessing results</dd>
 </dl></div>
 <details class="source">
 <summary>
@@ -2139,7 +2466,8 @@ class cognet:
                     steps=120,
                     n_jobs=28,
                     pole_1=0,
-                    pole_2=1):
+                    pole_2=1,
+                    processes=6):
     &#34;&#34;&#34;compute and save ideology index or dispersion for all samples
 
     Args:
@@ -2156,45 +2484,34 @@ class cognet:
       ValueError: load data if samples or features are not present
         
     Returns:
-      Result: dictionary containing multiprocessing results
+      result: pandas.DataFrame containing multiprocessing results
     &#34;&#34;&#34;
     if all(x is not None for x in [self.samples, self.features,
                                 self.pL, self.pR]):
+        # init vars
         self.num_qsamples = num_qsamples
         self.steps = steps
         if pole_1 != 0 or pole_2 != 1:
             self.__calc_d0(pole_1, pole_2)
         
-        # testing
-        # pd.DataFrame(self.samples_as_strings).to_csv(&#39;examples_results/class_allsamples_2018.csv&#39;)
-        
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-
         if type == &#39;ideology&#39;:
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.ideology, args=(i, return_dict))
-                processes.append(p)
-            columns=[&#39;ideology&#39;, &#39;dR&#39;, &#39;dL&#39;, &#39;d0&#39;]
+            func_ = self.ideology
+            cols=[&#39;ideology&#39;, &#39;dR&#39;, &#39;dL&#39;, &#39;d0&#39;]
         elif type == &#39;dispersion&#39;:
-            for i in range(len(self.samples)):
-                p = mp.Process(target=self.dispersion, args=(i, return_dict))
-                processes.append(p)
-            columns=[&#39;Qsd&#39;, &#39;Qmax&#39;]
+            func_ = self.dispersion
+            cols=[&#39;Qsd&#39;, &#39;Qmax&#39;]
         else:
             raise ValueError(&#34;Type must be either dispersion or ideology!&#34;)
         
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-        result=[x for x in return_dict.values()]
-        result=pd.DataFrame(result,columns=columns).to_csv(outfile)
-
+        result = self.mp_compute(processes,
+                                 func_,
+                                 cols,
+                                 outfile)
     elif self.pL is None or self.pR is None:
         raise ValueError(&#34;set_poles first!&#34;)
     else:
         raise ValueError(&#34;load_data first!&#34;)
-    return pd.DataFrame(return_dict.copy())</code></pre>
+    return result</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.compute_polar_indices"><code class="name flex">
@@ -2218,10 +2535,10 @@ class cognet:
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def compute_polar_indices(self,
-                        num_samples = None,
-                        polar_comp = False,
-                        POLEFILE = None,
-                        steps = 5):
+                          num_samples=None,
+                          polar_comp=False,
+                          POLEFILE=None,
+                          steps=5):
     &#39;&#39;&#39;set up polar indices for dissonance func
 
     Args:
@@ -2234,10 +2551,10 @@ class cognet:
         if num_samples is not None:
             self.set_nsamples(num_samples)
 
-        # read sample data
         if polar_comp:
             self.set_poles(self.qnet, steps, POLEFILE)
         
+        # calculate polar indices
         polar_features = pd.concat([self.features, self.poles], axis=0)
         self.polar_indices=np.where(polar_features[self.cols].fillna(&#39;XXXX&#39;).values[0]!=&#39;XXXX&#39;)[0]
     
@@ -2258,7 +2575,7 @@ to determine max and std of distances between qsamples</p>
 <dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
 <dd>index of sample</dd>
 <dt><strong><code>return_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>dict containing results</dd>
+<dd>dictionary containing multiprocessing results</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -2270,71 +2587,81 @@ to determine max and std of distances between qsamples</p>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def dispersion(self,
-            i,
-            return_dict=None):
+               i,
+               return_dict=None):
     &#34;&#34;&#34;qsamples a sample n times and takes distance matrix 
     to determine max and std of distances between qsamples
 
     Args:
       i (int): index of sample
-      return_dict (dict): dict containing results
+      return_dict (dict): dictionary containing multiprocessing results
 
     Returns:
       list[float]: std and max of the distances btwn qsamples
     &#34;&#34;&#34;
+    # qsample sample num_qsample times
     p = self.samples_as_strings[i]
     Qset = [qsample(p, self.qnet, self.steps) for j in np.arange(self.num_qsamples)]
     Qset = np.array(Qset)
 
+    # calculate qdistance matrix for qsampled samples
     matrix = (qdistance_matrix(Qset, Qset, self.qnet, self.qnet))
     Q = matrix.max()
     Qsd = matrix.std()
+    
     if return_dict is not None:
         return_dict[i] = [Qsd, Q]
     return [Qsd, Q]</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.dissonance"><code class="name flex">
-<span>def <span class="ident">dissonance</span></span>(<span>self, sample_index, return_dict=None, MISSING_VAL=0.0)</span>
+<span>def <span class="ident">dissonance</span></span>(<span>self, sample_index=0, return_dict=None, MISSING_VAL=0.0, sample=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>compute dissonance for each sample_index, helper function for all_dissonance</p>
+<div class="desc"><p>compute dissonance for a single sample, helper function for all_dissonance</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>sample_index</code></strong> :&ensp;<code>int</code></dt>
-<dd>index of the sample to compute dissonance</dd>
+<dd>index of the sample to compute dissonance. Defaults to 0.</dd>
 <dt><strong><code>return_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>dict containing results</dd>
+<dd>dictionary containing multiprocessing results</dd>
 <dt><strong><code>MISSING_VAL</code></strong> :&ensp;<code>float</code></dt>
 <dd>default dissonance value</dd>
+<dt><strong><code>sample</code></strong> :&ensp;<code>1D array</code></dt>
+<dd>sample to compute dissonance of, instead of using sample index. Defaults to None.</dd>
 </dl>
 <p>Returns:
-diss: ndarray containing dissonance for sample</p></div>
+diss[self.polar_indices]: ndarray containing dissonance for sample</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def dissonance(self,
-            sample_index,
-            return_dict=None,
-            MISSING_VAL=0.0):
-    &#39;&#39;&#39;compute dissonance for each sample_index, helper function for all_dissonance
+                sample_index=0,
+                return_dict=None,
+                MISSING_VAL=0.0,
+                sample=None):
+    &#39;&#39;&#39;compute dissonance for a single sample, helper function for all_dissonance
     
     Args:
-      sample_index (int): index of the sample to compute dissonance
-      return_dict (dict): dict containing results
+      sample_index (int): index of the sample to compute dissonance. Defaults to 0.
+      return_dict (dict): dictionary containing multiprocessing results
       MISSING_VAL (float): default dissonance value
+      sample (1D array): sample to compute dissonance of, instead of using sample index. Defaults to None.
       
     Returns: 
-      diss: ndarray containing dissonance for sample
+      diss[self.polar_indices]: ndarray containing dissonance for sample
     &#39;&#39;&#39;
     if all(x is not None for x in [self.samples, self.features]):
-        s = self.samples_as_strings[sample_index]
+        if sample is None:
+            s = self.samples_as_strings[sample_index]
+        else:
+            s = sample
         if self.polar_indices is None:
             self.polar_indices = range(len(s))
 
+        # init vars and calculate dissonance for sample
         Ds=self.qnet.predict_distributions(s)
-        
         diss=np.ones(len(Ds))*MISSING_VAL
         for i in self.polar_indices:
             if s[i] != &#39;&#39;:
@@ -2351,7 +2678,7 @@ diss: ndarray containing dissonance for sample</p></div>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.dissonance_matrix"><code class="name flex">
-<span>def <span class="ident">dissonance_matrix</span></span>(<span>self, output_file='/example_results/DISSONANCE_matrix.csv', n_jobs=28)</span>
+<span>def <span class="ident">dissonance_matrix</span></span>(<span>self, outfile='/example_results/DISSONANCE_matrix.csv', processes=6)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>get the dissonance for all samples</p>
@@ -2359,48 +2686,42 @@ diss: ndarray containing dissonance for sample</p></div>
 <dl>
 <dt><strong><code>output_file</code></strong> :&ensp;<code>str</code></dt>
 <dd>directory and/or file for output</dd>
-<dt><strong><code>n_jobs</code></strong> :&ensp;<code>int</code></dt>
-<dd>number of jobs for pdqm</dd>
+<dt><strong><code>processes</code></strong> :&ensp;<code>int</code></dt>
+<dd>max number of processes. Defaults to 6.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<p>pandas.DataFrame</p></div>
+<dl>
+<dt><code>result</code></dt>
+<dd>pandas.DataFrame containing dissonances for each sample</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def dissonance_matrix(self,
-                    output_file=&#39;/example_results/DISSONANCE_matrix.csv&#39;,
-                    n_jobs=28):
+                    outfile=&#39;/example_results/DISSONANCE_matrix.csv&#39;,
+                    processes=6):
     &#39;&#39;&#39;get the dissonance for all samples
 
     Args:
       output_file (str): directory and/or file for output
-      n_jobs (int): number of jobs for pdqm
+      processes (int): max number of processes. Defaults to 6.
 
     Returns:
-      pandas.DataFrame
+      result: pandas.DataFrame containing dissonances for each sample
     &#39;&#39;&#39;
-    manager = mp.Manager()
-    return_dict = manager.dict()
-    processes = []
-    
-    for i in range(len(self.samples)):
-        p = mp.Process(target=self.dissonance, args=(i, return_dict))
-        processes.append(p)
-
-    [x.start() for x in processes]
-    [x.join() for x in processes]
-
-    result=[x for x in return_dict.values()]
+    # set columns
     if self.polar_indices is not None:
         polar_features = pd.concat([self.features, self.poles], axis=0)
         cols = polar_features[self.cols].dropna(axis=1).columns
     else:
         cols = self.cols
-    result=pd.DataFrame(result,columns=cols).to_csv(output_file)
     
-    self.dissonance_file = output_file
-    return pd.DataFrame(return_dict.copy())</code></pre>
+    result = self.mp_compute(processes,
+                                self.dissonance,
+                                cols,
+                                outfile)
+    return result</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.distance"><code class="name flex">
@@ -2446,8 +2767,9 @@ diss: ndarray containing dissonance for sample</p></div>
     &#34;&#34;&#34;
     if self.qnet is None:
         raise ValueError(&#34;load qnet first!&#34;)
-    bp1 = self.getBaseFrequency(sample1)
-    bp2 = self.getBaseFrequency(sample2)
+    #bp1 = self.getBaseFrequency(sample1)
+    #bp2 = self.getBaseFrequency(sample2)
+    # qsample samples
     sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
     sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
     return qdistance(sample1, sample2, self.qnet, self.qnet)</code></pre>
@@ -2457,11 +2779,13 @@ diss: ndarray containing dissonance for sample</p></div>
 <span>def <span class="ident">distfunc_line</span></span>(<span>self, i, return_dict=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>compute the dist for a row, or vector of samples</p>
+<div class="desc"><p>compute the distance for a single sample from all other samples</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
 <dd>row</dd>
+<dt><strong><code>return_dict</code></strong> :&ensp;<code>dict</code></dt>
+<dd>dictionary containing multiprocessing results</dd>
 </dl>
 <h2 id="return">Return</h2>
 <p>line: float, numpy.ndarray</p></div>
@@ -2472,10 +2796,11 @@ diss: ndarray containing dissonance for sample</p></div>
 <pre><code class="python">def distfunc_line(self,
                 i,
                 return_dict=None):
-    &#39;&#39;&#39;compute the dist for a row, or vector of samples
+    &#39;&#39;&#39;compute the distance for a single sample from all other samples
 
     Args:
       i (int): row
+      return_dict (dict): dictionary containing multiprocessing results
     
     Return:
       line: float, numpy.ndarray
@@ -2497,7 +2822,7 @@ diss: ndarray containing dissonance for sample</p></div>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.distfunc_multiples"><code class="name flex">
-<span>def <span class="ident">distfunc_multiples</span></span>(<span>self, outfile)</span>
+<span>def <span class="ident">distfunc_multiples</span></span>(<span>self, outfile, processes=6)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>compute distance matrix for all samples in the dataset</p>
@@ -2508,79 +2833,125 @@ diss: ndarray containing dissonance for sample</p></div>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>return_dict</code></dt>
-<dd>dictionary containing multiprocessing results</dd>
+<dt><code>result</code></dt>
+<dd>pandas.DataFrame containing distance matrix</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def distfunc_multiples(self,
-                    outfile):
+                       outfile,
+                       processes=6):
     &#34;&#34;&#34;compute distance matrix for all samples in the dataset
 
     Args:
       outfile (str): desired output filename and path
       
     Returns:
-      return_dict: dictionary containing multiprocessing results
+      result: pandas.DataFrame containing distance matrix
     &#34;&#34;&#34;
     if all(x is not None for x in [self.samples, self.features]):
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-
-        for i in range(len(self.samples)):
-            p = mp.Process(target=self.distfunc_line, args=(i, return_dict))
-            processes.append(p)
-        
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-        result=[x for x in return_dict.values()]
-        columns = [i for i in range(len(self.samples))]
-        result=pd.DataFrame(result,columns=columns, index=columns).sort_index(ascending=False)
+        cols = [i for i in range(len(self.samples))]
+        result = self.mp_compute(processes,
+                                    self.distfunc_line,
+                                    cols,
+                                    outfile)
+        # format and save resulting dict, and tranpose symmetrical distance matrix
         result = result.to_numpy()
         result = pd.DataFrame(np.maximum(result, result.transpose()))
-        result.to_csv(outfile)
+        result.to_csv(outfile, index=None, header=None)
     else:
         raise ValueError(&#34;load data first!&#34;)
     
-    return pd.DataFrame(return_dict.copy())</code></pre>
+    return result</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.dmat_filewriter"><code class="name flex">
-<span>def <span class="ident">dmat_filewriter</span></span>(<span>self, pyfile, QNETPATH, MPI_SETUP_FILE='mpi_setup.sh', MPI_RUN_FILE='mpi_run.sh', MPI_LAUNCHER_FILE='mpi_launcher.sh', YEARS='2016', NODES=4, T=12, num_samples=None, OUTFILE='tmp_distmatrix.csv', tmp_samplesfile='tmp_samples_as_strings.csv')</span>
+<span>def <span class="ident">dmat_filewriter</span></span>(<span>self, QNETPATH, mpi_path='mpi_tmp/', pyfile='cognet_qdistmatrix.py', MPI_SETUP_FILE='mpi_setup.sh', MPI_RUN_FILE='mpi_run.sh', MPI_LAUNCHER_FILE='../launcher.sh', YEARS='2016', NODES=4, T=12, num_samples=None, OUTFILE='tmp_distmatrix.csv', tmp_samplesfile='tmp_samples_as_strings.csv')</span>
 </code></dt>
 <dd>
-<div class="desc"></div>
+<div class="desc"><p>generate files to compute qdistance matrix using mpi parallelization</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>QNETPATH</code></strong> :&ensp;<code>str</code></dt>
+<dd>Qnet filepath</dd>
+<dt><strong><code>pyfile</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Name of generated python file. Defaults to "cognet_qdistmatrix.py".</dd>
+<dt><strong><code>MPI_SETUP_FILE</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Name of mpi setup script. Defaults to "mpi_setup.sh".</dd>
+<dt><strong><code>MPI_RUN_FILE</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Name of mpi run script. Defaults to "mpi_run.sh".</dd>
+<dt><strong><code>MPI_LAUNCHER_FILE</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>Launcher script filepath. Defaults to "launcher.sh".</dd>
+<dt><strong><code>YEARS</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>If looping by year, not currently implemented. Defaults to '2016'.</dd>
+<dt><strong><code>NODES</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Number of nodes to use. Defaults to 4.</dd>
+<dt><strong><code>T</code></strong> :&ensp;<code>int</code>, optional</dt>
+<dd>Number of hours to reserve nodes for. Defaults to 12.</dd>
+<dt><strong><code>num_samples</code></strong> :&ensp;<code>[type]</code>, optional</dt>
+<dd>How many samples to take. Defaults to None.</dd>
+<dt><strong><code>OUTFILE</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>CSV File to write computed qdist matrix. Defaults to 'tmp_distmatrix.csv'.</dd>
+<dt><strong><code>tmp_samplesfile</code></strong> :&ensp;<code>str</code>, optional</dt>
+<dd>CSV File to write samples as strings. Defaults to "tmp_samples_as_strings.csv".</dd>
+</dl>
+<h2 id="raises">Raises</h2>
+<dl>
+<dt><code>ValueError</code></dt>
+<dd>load data if qnet, features, or samples are not present]</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def dmat_filewriter(self,
-                    pyfile,
                     QNETPATH,
+                    mpi_path=&#34;mpi_tmp/&#34;,
+                    pyfile=&#34;cognet_qdistmatrix.py&#34;,
                     MPI_SETUP_FILE=&#34;mpi_setup.sh&#34;,
                     MPI_RUN_FILE=&#34;mpi_run.sh&#34;,
-                    MPI_LAUNCHER_FILE=&#34;mpi_launcher.sh&#34;,
+                    MPI_LAUNCHER_FILE=&#34;../launcher.sh&#34;,
                     YEARS=&#39;2016&#39;,
                     NODES=4,
                     T=12,
                     num_samples=None,
                     OUTFILE=&#39;tmp_distmatrix.csv&#39;,
                     tmp_samplesfile=&#34;tmp_samples_as_strings.csv&#34;):
-    if all(x is not None for x in [self.poles_dict,self.features,
+    &#34;&#34;&#34;generate files to compute qdistance matrix using mpi parallelization
+
+    Args:
+      QNETPATH (str): Qnet filepath
+      pyfile (str, optional): Name of generated python file. Defaults to &#34;cognet_qdistmatrix.py&#34;.
+      MPI_SETUP_FILE (str, optional): Name of mpi setup script. Defaults to &#34;mpi_setup.sh&#34;.
+      MPI_RUN_FILE (str, optional): Name of mpi run script. Defaults to &#34;mpi_run.sh&#34;.
+      MPI_LAUNCHER_FILE (str, optional): Launcher script filepath. Defaults to &#34;launcher.sh&#34;.
+      YEARS (str, optional): If looping by year, not currently implemented. Defaults to &#39;2016&#39;.
+      NODES (int, optional): Number of nodes to use. Defaults to 4.
+      T (int, optional): Number of hours to reserve nodes for. Defaults to 12.
+      num_samples ([type], optional): How many samples to take. Defaults to None.
+      OUTFILE (str, optional): CSV File to write computed qdist matrix. Defaults to &#39;tmp_distmatrix.csv&#39;.
+      tmp_samplesfile (str, optional): CSV File to write samples as strings. Defaults to &#34;tmp_samples_as_strings.csv&#34;.
+
+    Raises:
+        ValueError: load data if qnet, features, or samples are not present]
+    &#34;&#34;&#34;
+    if all(x is not None for x in [self.samples,self.features,
                                    self.qnet, self.cols]):
         if num_samples is not None:
             self.set_nsamples(num_samples)
         
-        tmp_path = &#34;mpi_tmp/&#34;
+        # init and make tmp dir 
+        tmp_path = mpi_path
         if not os.path.exists(tmp_path):
             os.makedirs(tmp_path)
         
         pd.DataFrame(self.samples_as_strings).to_csv(tmp_path+tmp_samplesfile, header=None, index=None)
         
         w = self.samples.index.size
+        
+        # writing python file
         with open(tmp_path+pyfile, &#39;w+&#39;) as f:
             f.writelines([&#34;from mpi4py.futures import MPIPoolExecutor\n&#34;,
                           &#34;import numpy as np\n&#34;,
@@ -2591,7 +2962,7 @@ diss: ndarray containing dissonance for sample</p></div>
 
             f.writelines([&#34;w = {}\n&#34;.format(w),
                           &#34;h = w\n&#34;,
-                          &#34;p_all = pd.read_csv(\&#34;{}\&#34;, header=None)\n\n&#34;.format(tmp_samplesfile)])
+                          &#34;p_all = pd.read_csv(\&#34;{}\&#34;, header=None).values.astype(str)[:]\n\n&#34;.format(tmp_samplesfile)])
 
             f.writelines([&#34;def distfunc(x,y):\n&#34;,
                           &#34;\td=qdistance(x,y,qnet,qnet)\n&#34;,
@@ -2599,10 +2970,10 @@ diss: ndarray containing dissonance for sample</p></div>
 
             f.writelines([&#34;def dfunc_line(k):\n&#34;,
                           &#34;\tline = np.zeros(w)\n&#34;,
-                          &#34;\ty = np.array(p_all.iloc[k])\n&#34;,
+                          &#34;\ty = p_all[k]\n&#34;,
                           &#34;\tfor j in range(w):\n&#34;,
                           &#34;\t\tif j &gt; k:\n&#34;,
-                          &#34;\t\t\tx = np.array(p_all.iloc[j])\n&#34;,
+                          &#34;\t\t\tx = p_all[j]\n&#34;,
                           &#34;\t\t\tline[j] = distfunc(x, y)\n&#34;,
                           &#34;\treturn line\n\n&#34;])
 
@@ -2613,7 +2984,8 @@ diss: ndarray containing dissonance for sample</p></div>
                               &#34;\tresult = result.to_numpy()\n&#34;,
                           &#34;\tresult = pd.DataFrame(np.maximum(result, result.transpose()))\n&#34;
                           &#34;\tresult.to_csv(\&#39;{}\&#39;,index=None,header=None)&#34;.format(OUTFILE)])
-            
+        
+        # writing MPI setup file
         with open(tmp_path+MPI_SETUP_FILE, &#39;w+&#39;) as ms:
             ms.writelines([&#34;#!/bin/bash\n&#34;,
                            &#34;YEAR=$1\n\n&#34;,
@@ -2641,6 +3013,7 @@ diss: ndarray containing dissonance for sample</p></div>
                            &#34;echo \&#34;date; mpiexec -n \&#34;$NUMPROC\&#34; python3 -m mpi4py.futures {}; date\&#34;  &gt;&gt; $PROG\n&#34;.format(pyfile),
                             ])
 
+        # writing MPI run file
         with open(tmp_path+MPI_RUN_FILE, &#39;w+&#39;) as mr:
             mr.writelines([&#34;#!/bin/bash\n&#34;,
                            &#34;YEARS=\&#39;{}\&#39;\n&#34;.format(YEARS),
@@ -2649,14 +3022,16 @@ diss: ndarray containing dissonance for sample</p></div>
                            &#34;# time requested\n&#34;,
                            &#34;T={}\n&#34;.format(T),
                            &#34;NUM=\&#39;all\&#39;\n&#34;,
-                           &#34;LAUNCH=\&#39;../mpi_launcher.sh\&#39;\n\n&#34;,
+                           &#34;LAUNCH=\&#39;{}\&#39;\n\n&#34;.format(MPI_LAUNCHER_FILE),
                            &#34;for yr in `echo $YEARS`\n&#34;,
                            &#34;do\n&#34;,
                            &#34;\techo $yr\n&#34;,
                            &#34;\t./{} $yr $NODES $NUM tmp_\&#34;$yr\&#34;\n&#34;.format(MPI_SETUP_FILE),
-                           &#34;\t$LAUNCH -P tmp_\&#34;$yr\&#34; -F -T $T -N \&#34;$NODES\&#34; -C 28 -p broadwl -J ACRDALL_\&#34;$yr\&#34; -M 56\n&#34;,
+                           &#34;\t$LAUNCH -P tmp_\&#34;$yr\&#34; -F -T $T -N \&#34;$NODES\&#34; -C 28 -p broadwl -J MPI_TMP_\&#34;$yr\&#34; -M 56\n&#34;,
                            &#34;done\n&#34;,
                            &#34;rm tmp_\&#34;$yr\&#34;*\n&#34;])
+        os.system(&#34;cp {} {}&#34;.format(MPI_LAUNCHER_FILE,tmp_path+&#39;mpi_launcher.sh&#39;))
+    
     else:
         raise ValueError(&#34;load data first!&#34;)</code></pre>
 </details>
@@ -2700,18 +3075,21 @@ diss: ndarray containing dissonance for sample</p></div>
       EMBED_BINARY (os.path.abspath): path to embed binary
     &#39;&#39;&#39;
     if all(x is not None for x in [self.year]):
+        # init file names 
         yr = self.year
         PREF = name_pref
         FILE = infile
-
+        DATAFILE = out_dir + &#39;data_&#39; +yr
+        EFILE = out_dir + PREF + &#39;_E_&#39; +yr
+        DFILE = out_dir + PREF + &#39;_D_&#39; +yr
+        
+        # set embed binary directory
         if EMBED_BINARY is None:
             EMBED = pkgutil.get_data(&#34;cognet.bin&#34;, &#34;__embed__.so&#34;) 
         else:
             EMBED = EMBED_BINARY
-        DATAFILE = out_dir + &#39;data_&#39; +yr
-        EFILE = out_dir + PREF + &#39;_E_&#39; +yr
-        DFILE = out_dir + PREF + &#39;_D_&#39; +yr
-
+        
+        # embed data files
         pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=&#39; &#39;,header=None,index=None)
         STR=EMBED+&#39; -f &#39;+DATAFILE+&#39; -E &#39;+EFILE+&#39; -D &#39;+DFILE
         subprocess.call(STR,shell=True)
@@ -2744,14 +3122,15 @@ helper func for qsampling</p>
     Args:
       sample (list[str]): vector of sample, must have the same num of features as the qnet
     &#39;&#39;&#39;
+    # if variable is not mutable, set its base frequency to zero 
     MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
-            
+         
     for m in self.mutable_vars:
         MUTABLE[m]=1.0
     mutable_x=MUTABLE.values[0]
     base_frequency=mutable_x/mutable_x.sum()
-
-    # commented out for now for testing using smaller qnet
+    
+    # otherwise, set base frequency weighted by variation weight
     for i in range(len(base_frequency)):
         if base_frequency[i]&gt;0.0:
             base_frequency[i]= self.variation_weight[i]*base_frequency[i]
@@ -2767,18 +3146,20 @@ helper func for qsampling</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>s</code></strong> :&ensp;<code>list[str]</code></dt>
-<dd>vector of sample, must have the same num of features as the qnet</dd>
+<dd>vector of sample, must have the same num of features as the qnet.</dd>
 <dt><strong><code>mask_prob</code></strong> :&ensp;<code>float</code></dt>
-<dd>float btwn 0 and 1, prob to mask element of sample</dd>
+<dd>float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5</dd>
 <dt><strong><code>allow_all_mutable</code></strong> :&ensp;<code>bool</code></dt>
-<dd>whether or not all variables are mutable</dd>
+<dd>whether or not all variables are mutable. Defaults to False.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
-<p>s1,base_frequency,MASKrand,
+<p>s1,
+base_frequency,
+MASKrand,
 np.where(base_frequency)[0],
 np.mean(rnd_match_prob),
 np.mean(max_match_prob),
-s_rand</p></div>
+random_sample</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2790,20 +3171,25 @@ s_rand</p></div>
     &#39;&#39;&#39;inputs a sample and randomly mask elements of the sample
 
     Args:
-      s (list[str]): vector of sample, must have the same num of features as the qnet
-      mask_prob (float): float btwn 0 and 1, prob to mask element of sample
-      allow_all_mutable (bool): whether or not all variables are mutable
+      s (list[str]): vector of sample, must have the same num of features as the qnet.
+      mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+      allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
       
     Returns:
-      s1,base_frequency,MASKrand,
+      s1,
+      base_frequency,
+      MASKrand,
       np.where(base_frequency)[0],
       np.mean(rnd_match_prob),
       np.mean(max_match_prob),
-      s_rand
+      random_sample
     &#39;&#39;&#39;
     if self.samples is not None:
+        # init random mutable variable masking
         s0=s.copy()
         s0=np.array(s0)   
+        # double check, because code seems to imply that masking happens in order,
+        # i.e. limited to the first 100 features, if there are only 100 mutable features
         MUTABLE=pd.DataFrame(np.zeros(len(self.cols)),index=self.cols).transpose()
         WITHVAL=[x for x in self.cols[np.where(s0)[0]] if x in self.mutable_vars ]
         MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
@@ -2817,17 +3203,19 @@ s_rand</p></div>
         #     return np.nan,np.nan,np.nan
         #     return self.getMaskedSample(s)
 
+        # mask sample according to masking (base_frequency)
         s1=s.copy()
         for i in range(len(base_frequency)):
             if base_frequency[i]&gt;0.0001:
                 s1[i]=&#39;&#39;
-                
-        s_rand=np.copy(s)
+            
+        # create a random sample to test reconstruction effectiveness
+        random_sample=np.copy(s)
         rnd_match_prob=[]        
         max_match_prob=[]        
         D=self.qnet.predict_distributions(s)
         for i in MASKrand:
-            s_rand[np.where(
+            random_sample[np.where(
                 self.cols==i)[0][0]]=self.__choose_one(
                     self.D_null[np.where(self.cols==i)[0][0]].keys())
             rnd_match_prob=np.append(rnd_match_prob,1/len(
@@ -2836,15 +3224,22 @@ s_rand</p></div>
                 max_match_prob,np.max(
                     list(D[np.where(
                         self.cols==i)[0][0]].values())))
-            
+        
+        # calculate base_frequency if all variables are mutable
         if allow_all_mutable:
-            for m in mutable_vars:
+            WITHVAL=[x for x in self.cols[np.where(s0)[0]]]
+            MASKrand=[x for x in WITHVAL if random.random() &lt; mask_prob ]
+            for m in MASKrand:
                 MUTABLE[m]=1.0
             mutable_x=MUTABLE.values[0]
             base_frequency=mutable_x/mutable_x.sum()
+            s1=s.copy()
+            for i in range(len(base_frequency)):
+                if base_frequency[i]&gt;0.0001:
+                    s1[i]=&#39;&#39;
 
         return s1,base_frequency,MASKrand,np.where(
-            base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),s_rand
+            base_frequency)[0],np.mean(rnd_match_prob),np.mean(max_match_prob),random_sample
     else:
         raise ValueError(&#34;load_data first!&#34;)</code></pre>
 </details>
@@ -2896,12 +3291,15 @@ and distance between poles, respectively</dd>
                                          distance from the left pole,
                                          and distance between poles, respectively
     &#34;&#34;&#34;
+    # calculate base distance between two poles
     if pole_1 is not None or pole_2 is not None:
         self.__calc_d0(pole_1, pole_2)
-        
+    
+    # calculate distances between sample and the two poles
     p = self.samples_as_strings[i]
     dR = qdistance(self.pR, p, self.qnet, self.qnet)
     dL = qdistance(self.pL, p, self.qnet, self.qnet)
+    
     ideology_index = (dR-dL)/self.d0
     if return_dict is not None:
         return_dict[i] = [ideology_index, dR, dL, self.d0]
@@ -2909,7 +3307,7 @@ and distance between poles, respectively</dd>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.load_data"><code class="name flex">
-<span>def <span class="ident">load_data</span></span>(<span>self, year, features_by_year, samples, qnet)</span>
+<span>def <span class="ident">load_data</span></span>(<span>self, year, features_by_year, samples, Qnet)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>load cols, features, samples, and qnet.</p>
@@ -2932,7 +3330,7 @@ and distance between poles, respectively</dd>
               year,
               features_by_year,
               samples,
-              qnet):
+              Qnet):
     &#39;&#39;&#39;load cols, features, samples, and qnet.
 
     Args:
@@ -2941,6 +3339,7 @@ and distance between poles, respectively</dd>
       samples (str): file of samples for that year.
       Qnet (str): Qnet file location.
     &#39;&#39;&#39;
+    # set attributes from given files and data
     self.qnet = load_qnet(qnet)
     self.year = year
     self.cols = np.array((pd.read_csv(features_by_year,
@@ -2952,6 +3351,7 @@ and distance between poles, respectively</dd>
     self.mutable_vars = [x for x in self.cols]
     #[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
 
+    # read in samples and initialize related attributes
     self.samples=pd.read_csv(samples)
     self.samples = pd.concat([self.samples,self.features], axis=0)
     self.all_samples = self.samples
@@ -2971,7 +3371,8 @@ and distance between poles, respectively</dd>
 <span>def <span class="ident">load_from_dataformatter</span></span>(<span>self, data_obj, key)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>read in either train or test data, specified by key, from data obj</p>
+<div class="desc"><p>read in either train or test data, specified by key, from data obj,
+and inherit other attributes.</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>data_obj</code></strong> :&ensp;<code>class</code></dt>
@@ -2991,7 +3392,8 @@ and distance between poles, respectively</dd>
 <pre><code class="python">def load_from_dataformatter(self, 
                             data_obj,
                             key):
-    &#34;&#34;&#34;read in either train or test data, specified by key, from data obj
+    &#34;&#34;&#34;read in either train or test data, specified by key, from data obj,
+    and inherit other attributes.
 
     Args:
       data_obj (class): instance of dataformatter class
@@ -3000,6 +3402,7 @@ and distance between poles, respectively</dd>
     Returns:
       featurenames, samples: formatted arrays
     &#34;&#34;&#34;
+    # inherit attributes from dataformatter object
     featurenames, samples = data_obj.format_samples(key)
     if any(x is not None for x in [self.features, self.samples]):
         print(&#34;replacing original features/samples with dataformatter data&#34;)
@@ -3050,12 +3453,14 @@ and distance between poles, respectively</dd>
       m_vars (list[str], optional): Not implemented yet. Defaults to None.
     &#34;&#34;&#34;
     if model is not None:
+        # inherit atrributes from model object
         self.qnet = model.myQnet
-        # self.cols = np.array(model.features)
         featurenames, samples = data_obj.format_samples(key)
         samples = pd.DataFrame(samples)
         self.cols = np.array(featurenames)
         self.features = pd.DataFrame(columns=np.array(featurenames))
+        
+        # inherit mutable and immutable variables from model obj
         if any(x is not None for x in [model.immutable_vars, model.mutable_vars]):
             if model.immutable_vars is not None:
                 self.immutable_vars = model.immutable_vars
@@ -3066,6 +3471,7 @@ and distance between poles, respectively</dd>
         else:
             self.mutable_vars = self.features
         
+        # inherit and set class attributes.
         self.samples = pd.DataFrame(samples).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#34;&#34;)
         self.samples.columns = np.array(featurenames)
         self.all_samples = self.samples
@@ -3082,17 +3488,94 @@ and distance between poles, respectively</dd>
         self.variation_weight = variation_weight</code></pre>
 </details>
 </dd>
+<dt id="cognet.cognet.cognet.mp_compute"><code class="name flex">
+<span>def <span class="ident">mp_compute</span></span>(<span>self, processes, func, cols, outfile, args=[])</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Compute desired function through multiprocessing and save result to csv.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>processes</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of processes to use.</dd>
+<dt><strong><code>func</code></strong> :&ensp;<code>func</code></dt>
+<dd>function to compute using multiprocessing</dd>
+<dt><strong><code>cols</code></strong> :&ensp;<code>list</code></dt>
+<dd>column names of resulting csv</dd>
+<dt>outfile (str)): filepath + filename for resulting csv</dt>
+<dt><strong><code>args</code></strong> :&ensp;<code>list</code></dt>
+<dd>list containing arguments for desired function. Defaults to empty list.</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def mp_compute(self, 
+               processes,
+               func, 
+               cols,
+               outfile, 
+               args=[]):
+    &#34;&#34;&#34;
+    Compute desired function through multiprocessing and save result to csv.
+
+    Args:
+      processes (int): number of processes to use.
+      func (func): function to compute using multiprocessing
+      cols (list): column names of resulting csv
+      outfile (str)): filepath + filename for resulting csv
+      args (list): list containing arguments for desired function. Defaults to empty list.
+    &#34;&#34;&#34;
+
+    # init mp.Manager and result dict
+    manager = mp.Manager()
+    return_dict = manager.dict()
+
+    # set processes as given, unless class parameter is set
+    max_processes = processes
+    if self.MAX_PROCESSES != 0:
+        max_processes = self.MAX_PROCESSES
+        print(&#34;Number of Processes {} has been set using class parameter&#34;.format(self.MAX_PROCESSES))
+    num_processes = 0
+    process_list = []
+    
+    # init mp.Processes for each individual sample
+    # run once collected processes hit max
+    for i in range(len(self.samples)):
+        params = tuple([i, return_dict] + args)
+        num_processes += 1
+        p = mp.Process(target=func,
+                    args=params)
+        process_list.append(p)
+        if num_processes == max_processes:
+            [x.start() for x in process_list]
+            [x.join() for x in process_list]
+            process_list = []
+            num_processes = 0
+            
+    # compute remaining processes
+    if num_processes != 0:
+        [x.start() for x in process_list]
+        [x.join() for x in process_list]
+        process_list = []
+        num_processes = 0
+    
+    # format and save resulting dict
+    result = pd.DataFrame(return_dict.values(), columns=cols, index=return_dict.keys()).sort_index()
+    result.to_csv(outfile, index=None)
+    return result</code></pre>
+</details>
+</dd>
 <dt id="cognet.cognet.cognet.polarDistance"><code class="name flex">
 <span>def <span class="ident">polarDistance</span></span>(<span>self, i, return_dict=None)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>return the distance from a sample to the poles</p>
+<div class="desc"><p>return the distances from a single sample to the poles</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>i</code></strong> :&ensp;<code>int</code></dt>
 <dd>index of sample to take</dd>
 <dt><strong><code>return_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>dict used for multiple sample function</dd>
+<dd>dictionary containing multiprocessing results</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -3106,18 +3589,18 @@ and distance between poles, respectively</dd>
 <pre><code class="python">def polarDistance(self,
                 i,
                 return_dict=None):
-    &#34;&#34;&#34;return the distance from a sample to the poles
+    &#34;&#34;&#34;return the distances from a single sample to the poles
 
     Args:
       i (int): index of sample to take
-      return_dict (dict): dict used for multiple sample function
+      return_dict (dict): dictionary containing multiprocessing results
 
     Returns:
       distances: float, distance from sample to each pole
     &#34;&#34;&#34;
-    samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
-    p = samples_as_strings[i]
+    p = self.samples_as_strings[i]
     distances = []
+    # calculate from each pole to the sample, and append to array
     for index, row in self.polar_features[self.cols].iterrows():
         row = row.fillna(&#39;&#39;).values.astype(str)[:]
         distances.append(self.distance(p, np.array(row)))
@@ -3127,7 +3610,7 @@ and distance between poles, respectively</dd>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.polarDistance_multiple"><code class="name flex">
-<span>def <span class="ident">polarDistance_multiple</span></span>(<span>self, outfile)</span>
+<span>def <span class="ident">polarDistance_multiple</span></span>(<span>self, outfile, processes=6)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>return the distance from all samples to the poles</p>
@@ -3138,45 +3621,37 @@ and distance between poles, respectively</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>return_dict</code></dt>
-<dd>dictionary containing multiprocessing results</dd>
+<dt><code>result</code></dt>
+<dd>pandas.DataFrame containing polar distance results</dd>
 </dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def polarDistance_multiple(self,
-                        outfile):
+                           outfile,
+                           processes=6):
     &#34;&#34;&#34;return the distance from all samples to the poles
 
     Args:
       outfile (str): desired output filename and path
       
     Returns:
-      return_dict: dictionary containing multiprocessing results
+      result: pandas.DataFrame containing polar distance results
     &#34;&#34;&#34;
     if all(x is not None for x in [self.samples, self.cols,
                                 self.polar_features]):
-        manager = mp.Manager()
-        return_dict = manager.dict()
-        processes = []
-        
-        for i in range(len(self.samples)):
-            p = mp.Process(target=self.polarDistance, args=(i, return_dict))
-            processes.append(p)
-
-        [x.start() for x in processes]
-        [x.join() for x in processes]
-
+        # get the column names
         pole_names = []
         for index, row in self.polar_features[self.cols].iterrows():
             pole_names.append(index)
-        result=[x for x in return_dict.values()]
-        result=pd.DataFrame(result,columns=pole_names).to_csv(outfile)
-        
+        result = self.mp_compute(processes,
+                                    self.polarDistance,
+                                    pole_names,
+                                    outfile)
     else:
         raise ValueError(&#34;load data first!&#34;)
-    return return_dict</code></pre>
+    return result</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.polar_separation"><code class="name flex">
@@ -3208,6 +3683,7 @@ and distance between poles, respectively</dd>
     Returns:
       self.polar_matrix: dictionary containing multiprocessing results
     &#34;&#34;&#34;
+    # vectorize and qsample poles
     polar_arraydata = self.polar_features[self.cols].values.astype(str)[:]
     samples_ = []
     for vector in polar_arraydata:
@@ -3215,6 +3691,7 @@ and distance between poles, respectively</dd>
         sample = qsample(vector, self.qnet, nsteps, baseline_prob=bp)
         samples_.append(sample)
     samples_ = np.array(samples_)
+    # calculate distance matrix for poles
     self.polar_matrix = qdistance_matrix(samples_, samples_, self.qnet, self.qnet)
     return self.polar_matrix</code></pre>
 </details>
@@ -3248,29 +3725,44 @@ and distance between poles, respectively</dd>
       steps (int): number of steps to qsample
       immutable (bool): are there variables that are immutable?
     &#39;&#39;&#39;
-    if all(x is not None for x in [self.mutable_vars, sample]):
-        if immutable == True:
+    # immutable, check that mutable variables have been initialized
+    if immutable == True:
+        if all(x is not None for x in [self.mutable_vars, sample]):
             return qsample(sample,self.qnet,steps,self.getBaseFrequency(self.samples))
-        else:
-            return qsample(sample,self.qnet,steps)
-    elif self.mutable_vars is None:
-        raise ValueError(&#34;load_data first!&#34;)</code></pre>
+        elif self.mutable_vars is None:
+            raise ValueError(&#34;set mutable and immutable variables first!&#34;)
+    else:
+        return qsample(sample,self.qnet,steps)</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.randomMaskReconstruction"><code class="name flex">
-<span>def <span class="ident">randomMaskReconstruction</span></span>(<span>self, index=None, return_dict=None, sample=None)</span>
+<span>def <span class="ident">randomMaskReconstruction</span></span>(<span>self, index=None, return_dict=None, sample=None, index_colname='feature_names', output_dir='recon_results/', file_name='recon_tmp.csv', mask_prob=0.5, allow_all_mutable=False, save_samples=False, save_output=True)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>reconstruct the masked sample by qsampling and comparing to original
 set self.mask_prob and self.steps if needed</p>
 <h2 id="args">Args</h2>
 <dl>
+<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
+<dd>index of sample to take.</dd>
 <dt><strong><code>return_dict</code></strong> :&ensp;<code>dict</code></dt>
-<dd>dict containing results. Defaults to None.</dd>
+<dd>dictionary containing multiprocessing results. Defaults to None.</dd>
 <dt><strong><code>sample</code></strong> :&ensp;<code>list[str]</code>, optional</dt>
 <dd>sample vector, must have the same num of features as the qnet. Defaults to None.</dd>
-<dt><strong><code>index</code></strong> :&ensp;<code>int</code></dt>
-<dd>index of sample to take. Defaults to None.</dd>
+<dt><strong><code>index_colname</code></strong> :&ensp;<code>str</code></dt>
+<dd>column name for index. Defaults to "feature_names"</dd>
+<dt><strong><code>output_dir</code></strong> :&ensp;<code>str</code></dt>
+<dd>directory name for output files. Defaults to "recon_results/".</dd>
+<dt><strong><code>file_name</code></strong> :&ensp;<code>str</code></dt>
+<dd>base file name for output files Defaults to "recon_tmp.csv".</dd>
+<dt><strong><code>mask_prob</code></strong> :&ensp;<code>float</code></dt>
+<dd>float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5</dd>
+<dt><strong><code>allow_all_mutable</code></strong> :&ensp;<code>bool</code></dt>
+<dd>whether or not all variables are mutable. Defaults to False.</dd>
+<dt><strong><code>save_samples</code></strong> :&ensp;<code>bool</code></dt>
+<dd>whether to include sample vectors in the savefile. Defaults to False.</dd>
+<dt><strong><code>save_output</code></strong> :&ensp;<code>bool</code></dt>
+<dd>whether or not to save output df to file. Defaults to True.</dd>
 </dl>
 <h2 id="raises">Raises</h2>
 <dl>
@@ -3278,7 +3770,15 @@ set self.mask_prob and self.steps if needed</p>
 <dd>Neither sample or index were given</dd>
 <dt><code>ValueError</code></dt>
 <dd>Both sample and index were given</dd>
-</dl></div>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>return_values:(1 - (dqestim/dactual))*100,
+rmatch_u,
+rmatch,
+s,
+qs,
+random_sample,
+mask_</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3286,103 +3786,204 @@ set self.mask_prob and self.steps if needed</p>
 <pre><code class="python">def randomMaskReconstruction(self,
                             index=None,
                             return_dict=None,
-                            sample=None):
+                            sample=None,
+                            index_colname=&#34;feature_names&#34;,
+                            output_dir=&#34;recon_results/&#34;,
+                            file_name=&#34;recon_tmp.csv&#34;,
+                            mask_prob=0.5,
+                            allow_all_mutable=False,
+                            save_samples=False,
+                            save_output=True):
     &#34;&#34;&#34;reconstruct the masked sample by qsampling and comparing to original
     set self.mask_prob and self.steps if needed
 
     Args:
-      return_dict (dict): dict containing results. Defaults to None.
+      index (int): index of sample to take.
+      return_dict (dict): dictionary containing multiprocessing results. Defaults to None.
       sample (list[str], optional): sample vector, must have the same num of features as the qnet. Defaults to None.
-      index (int): index of sample to take. Defaults to None.
+      index_colname (str): column name for index. Defaults to &#34;feature_names&#34;
+      output_dir (str): directory name for output files. Defaults to &#34;recon_results/&#34;.
+      file_name (str): base file name for output files Defaults to &#34;recon_tmp.csv&#34;.
+      mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+      allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
+      save_samples (bool): whether to include sample vectors in the savefile. Defaults to False.
+      save_output (bool): whether or not to save output df to file. Defaults to True.
 
     Raises:
       ValueError: Neither sample or index were given
       ValueError: Both sample and index were given
+      
+    Returns:
+      return_values:(1 - (dqestim/dactual))*100,
+                        rmatch_u,
+                        rmatch,
+                        s,
+                        qs,
+                        random_sample,
+                        mask_
     &#34;&#34;&#34;
     if all(x is None for x in [sample, index]):
         raise ValueError(&#34;Must input either sample or index!&#34;)
     elif all(x is not None for x in [sample, index]):
         raise ValueError(&#34;Must input either sample or index not both!&#34;)
     elif sample is not None:
-        s=np.array(pd.DataFrame(sample).fillna(&#39;&#39;).values.astype(str)[:])
+        s=sample#np.array(pd.DataFrame(sample).fillna(&#39;&#39;).values.astype(str)[:])
     elif index is not None:
         s=self.samples_as_strings[index]
-        
-    s1,bp,mask_,maskindex,rmatch_u,rmatch,s_rand=self.getMaskedSample(s, 
-                                                                    mask_prob=self.mask_prob)
+    
+    # calculate masked sample and get variables
+    s1,bp,mask_,maskindex,rmatch_u,rmatch,random_sample=self.getMaskedSample(s, 
+                                                                    mask_prob=mask_prob,
+                                                                    allow_all_mutable=allow_all_mutable)
+    # if base_frequency is nan, set return_dict to nans
     if np.isnan(bp).any():
         return_dict[index] = np.nan,np.nan,np.nan
         return np.nan,np.nan,np.nan
+    
+    # make directories
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
 
+    # qsample sample and calculate distances between original and qsampled 
     qs=qsample(s1,self.qnet,self.steps,bp)
-
     dqestim=qdistance(s,qs,self.qnet,self.qnet)
     dactual=qdistance(s,s1,self.qnet,self.qnet)
-    qdistance_time_end = time.time()
-
-    cmpf=pd.DataFrame([s,qs,s_rand],columns=self.cols,index=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])[mask_].transpose()
-    cmpf.index.name=&#39;gssvar&#39;
-    cmpf.to_csv(&#39;examples_results/CMPF_2018/CMPF-&#39;+str(index)+&#39;.csv&#39;)
-    return_dict[index] = (1 - (dqestim/dactual))*100,rmatch_u,rmatch
-    return (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,s_rand,mask_</code></pre>
+    
+    # format and save sample, qsample statistics and values
+    cmpf=pd.DataFrame([s,qs,random_sample],
+                      columns=self.cols,
+                      index=[&#39;sample&#39;,&#39;qsampled&#39;,&#39;random_sample&#39;])[mask_].transpose()
+    cmpf.index.name= index_colname
+    if save_output:
+        file_name = file_name.replace(&#34;tmp&#34;, str(index))
+        cmpf.to_csv(output_dir+file_name)
+        
+    if save_samples:
+        return_values= (1 - (dqestim/dactual))*100,rmatch_u,rmatch,s,qs,random_sample,mask_
+    else:
+        return_values = (1 - (dqestim/dactual))*100,rmatch_u,rmatch,mask_
+    
+    if return_dict is not None:
+        return_dict[index] = return_values
+        return return_dict[index]
+    return return_values</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.randomMaskReconstruction_multiple"><code class="name flex">
-<span>def <span class="ident">randomMaskReconstruction_multiple</span></span>(<span>self, out_file)</span>
+<span>def <span class="ident">randomMaskReconstruction_multiple</span></span>(<span>self, outfile, processes=6, save_samples=False, index_colname='feature_names', output_dir='recon_results/', file_name='recon_tmp.csv', mask_prob=0.5, allow_all_mutable=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>runs and saves the results of the predicted masked sample</p>
 <h2 id="args">Args</h2>
 <dl>
 <dt><strong><code>output_file</code></strong> :&ensp;<code>str</code></dt>
-<dd>directory and/or file for output</dd>
+<dd>directory and/or file for output.</dd>
+<dt><strong><code>processes</code></strong> :&ensp;<code>int</code></dt>
+<dd>max number of processes. Defaults to 6.</dd>
+<dt><strong><code>save_samples</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>whether or not to save the generated qsamples, random samples, etc. Defaults to False.</dd>
+<dt>index_colname="feature_names",</dt>
+<dt>output_dir="recon_results/",</dt>
+<dt>file_name="recon_tmp.csv",</dt>
+<dt><strong><code>mask_prob</code></strong> :&ensp;<code>float</code></dt>
+<dd>float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5</dd>
+<dt><strong><code>allow_all_mutable</code></strong> :&ensp;<code>bool</code></dt>
+<dd>whether or not all variables are mutable. Defaults to False.</dd>
 </dl>
-<h2 id="returmns">Returmns</h2>
-<p>result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error</p></div>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>result</code></dt>
+<dd>pandas.DataFrame containing masking and reconstruction results.</dd>
+</dl></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">def randomMaskReconstruction_multiple(self,
-                                      out_file):
+                                      outfile,
+                                      processes=6,
+                                      save_samples=False,
+                                      index_colname=&#34;feature_names&#34;,
+                                      output_dir=&#34;recon_results/&#34;,
+                                      file_name=&#34;recon_tmp.csv&#34;,
+                                      mask_prob=0.5,
+                                      allow_all_mutable=False):
     &#39;&#39;&#39;runs and saves the results of the predicted masked sample
 
     Args:
-      output_file (str): directory and/or file for output
+      output_file (str): directory and/or file for output.
+      processes (int): max number of processes. Defaults to 6.
+      save_samples (boolean): whether or not to save the generated qsamples, random samples, etc. Defaults to False.
+      index_colname=&#34;feature_names&#34;,
+      output_dir=&#34;recon_results/&#34;,
+      file_name=&#34;recon_tmp.csv&#34;,
+      mask_prob (float): float btwn 0 and 1, prob to mask element of sample. Defaults to 0.5
+      allow_all_mutable (bool): whether or not all variables are mutable. Defaults to False.
       
-    Returmns:
-      result.rederr.mean(), result.rand_err.mean(): mean of reconstruction error and random error
+    Returns:
+      result: pandas.DataFrame containing masking and reconstruction results.
     &#39;&#39;&#39;
-    manager = mp.Manager()
-    return_dict = manager.dict()
-    processes = []
-    
-    for i in range(len(self.samples)):
-        p = mp.Process(target=self.randomMaskReconstruction, args=(i, return_dict))
-        processes.append(p)
-
-    [x.start() for x in processes]
-    [x.join() for x in processes]
-    
-    #result=pd.DataFrame(return_dict.items())[1]#, columns=[&#39;sample&#39;,&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;s&#39;,&#39;q&#39;,&#39;r&#39;])
-    result=[x for x in return_dict.values() if isinstance(x, tuple)]
-    # #result=pd.DataFrame(result.tolist())
-    # print(result)
-    # cmprdf=result[[3,4,5]]
-    # mask_=result[[6]]
-    # cmprdf.columns=[&#39;s&#39;,&#39;q&#39;,&#39;r&#39;]#[mask_].transpose()
-    # cmprdf.to_csv(&#34;examples_results/CMPF_&#34;+&#34;tmp&#34;+&#34;.csv&#34;)
-    # print(cmprdf)
-    # result=result[[0,1,2]]
-    result=pd.DataFrame(result,columns=[&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;])
-    result.rederr=result.rederr.astype(float)
-
-    if self.poles is not None:
-        result.to_csv(out_file)
+    # set columns for mp_compute
+    if save_samples:
+        cols = [&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;sample&#39;,&#39;qsampled&#39;,&#39;random_sample&#39;,&#39;mask_&#39;]
     else:
-        result.to_csv(out_file)
+        cols = [&#39;rederr&#39;,&#39;r_prob&#39;,&#39;rand_err&#39;,&#39;mask_&#39;]
     
-    return pd.DataFrame(return_dict.copy())</code></pre>
+    # 
+    args=[None, index_colname, output_dir,
+          file_name, mask_prob, allow_all_mutable]
+    
+    result = self.mp_compute(processes,
+                                self.randomMaskReconstruction,
+                                cols,
+                                outfile,
+                                args=args)
+    return result</code></pre>
+</details>
+</dd>
+<dt id="cognet.cognet.cognet.random_sample"><code class="name flex">
+<span>def <span class="ident">random_sample</span></span>(<span>self, df=None, n=1)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>compute a random sample from the underlying distributions of the dataset, by column.</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt><strong><code>df</code></strong> :&ensp;<code>pandas.DataFrame</code></dt>
+<dd>Desired data to take random sample of. Defaults to None, in which case qnet samples are used.</dd>
+<dt><strong><code>n</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of random samples to take. Defaults to 1.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>return_df (pd.DataFrame): Random sample drawn from underlying distribution of each column.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def random_sample(self,
+                  df=None,
+                  n=1):
+    &#39;&#39;&#39;compute a random sample from the underlying distributions of the dataset, by column.
+    
+    
+    Args:
+      df (pandas.DataFrame): Desired data to take random sample of. Defaults to None, in which case qnet samples are used.
+      n (int): number of random samples to take. Defaults to 1.
+      
+    Returns:
+      return_df (pd.DataFrame): Random sample drawn from underlying distribution of each column.
+    &#39;&#39;&#39;
+    # check if a new dataset was inputted
+    if df is None:
+        samples_ = self.samples
+    else:
+        samples_ = df
+
+    # take random sample from each of the columns based on their distribution
+    return_df = pd.DataFrame()
+    for col in samples_.columns:
+        return_df[col] = samples_[col].sample(n=n, replace=True).values
+        
+    return return_df</code></pre>
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.set_immutable_vars"><code class="name flex">
@@ -3408,6 +4009,7 @@ can prob combine this with the load_data func: only set the immutable vars if ne
     Args:
       IMMUTABLE_FILE (str): file containing the immutable features/vars
     &#39;&#39;&#39;
+    # set mutable and immutable variable attributes 
     if self.cols is None:
         raise ValueError(&#34;load_data first!&#34;)
     self.immutable_vars = pd.read_csv(IMMUTABLE_FILE,index_col=0).transpose()
@@ -3441,8 +4043,11 @@ can prob combine this with the load_data func: only set the immutable vars if ne
       num_samples (int): Set num of samples to subset, default to None, resets to all samples
       random (bool): take random sample if true, ordered sample if false
     &#39;&#39;&#39;
+    # each time function is called, reset samples to use_all_samples
+    # this allows us to call nsamples numerous times 
     self.samples = self.all_samples
-    if num_samples is not None:
+    if self.samples is not None:
+        # if a greater number of sample is selected than available, raise error
         if all(x is not None for x in [num_samples, self.samples]):
             if num_samples &gt; len(self.samples.index):
                 string = &#39;The number of selected samples ({}) &#39; + \
@@ -3450,11 +4055,14 @@ can prob combine this with the load_data func: only set the immutable vars if ne
                 string = string.format(num_samples, len(self.samples.index))
                 raise ValueError(string)
 
+            # if the same number of samples is selected as available, print warning
             if num_samples == len(self.samples.index):
                 string = &#39;The number of selected samples ({}) &#39; + \
                     &#39;is equal to the number of samples ({})!&#39;
                 string = string.format(num_samples, len(self.samples.index))
                 print(string)
+                
+            # if random is true, return random sample, otherwise return an ordered slice
             if random:
                 self.samples = self.samples.sample(num_samples)
             else:
@@ -3467,7 +4075,7 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 </details>
 </dd>
 <dt id="cognet.cognet.cognet.set_poles"><code class="name flex">
-<span>def <span class="ident">set_poles</span></span>(<span>self, POLEFILE, pole_1, pole_2, steps=0, mutable=False, VERBOSE=False, restrict=True, nsamples=False, random=False)</span>
+<span>def <span class="ident">set_poles</span></span>(<span>self, POLEFILE, pole_1, pole_2, steps=0, mutable=False, VERBOSE=False, restrict=True, nsamples=None, random=False)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>set the poles and samples such that the samples contain features in poles</p>
@@ -3478,9 +4086,9 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 <dt><strong><code>POLEFILE</code></strong> :&ensp;<code>str</code></dt>
 <dd>file containing poles samples and features</dd>
 <dt><strong><code>pole_1</code></strong> :&ensp;<code>str</code></dt>
-<dd>column name for first pole to use</dd>
+<dd>column name for first pole</dd>
 <dt><strong><code>pole_2</code></strong> :&ensp;<code>str</code></dt>
-<dd>column name for second pole to use</dd>
+<dd>column name for second pole</dd>
 <dt><strong><code>mutable</code></strong> :&ensp;<code>bool</code></dt>
 <dd>Whether or not to set poles as the only mutable_vars</dd>
 <dt><strong><code>VERBOSE</code></strong> :&ensp;<code>bool</code></dt>
@@ -3502,15 +4110,15 @@ can prob combine this with the load_data func: only set the immutable vars if ne
               mutable=False,
               VERBOSE=False,
               restrict=True,
-              nsamples = False,
+              nsamples = None,
               random=False):
     &#39;&#39;&#39;set the poles and samples such that the samples contain features in poles
 
     Args:
       steps (int): number of steps to qsample
       POLEFILE (str): file containing poles samples and features
-      pole_1 (str): column name for first pole to use
-      pole_2 (str): column name for second pole to use
+      pole_1 (str): column name for first pole
+      pole_2 (str): column name for second pole
       mutable (bool): Whether or not to set poles as the only mutable_vars
       VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
       restrict (bool): boolean flag restricts the sample features to polar features if True
@@ -3518,41 +4126,41 @@ can prob combine this with the load_data func: only set the immutable vars if ne
     &#39;&#39;&#39;
     invalid_count = 0
     if all(x is not None for x in [self.samples, self.qnet]):
+        # read and set poles
         poles = pd.read_csv(POLEFILE, index_col=0)
         self.poles=poles.transpose()
         self.polar_features = pd.concat([self.features, self.poles], axis=0).fillna(&#39;&#39;)
         poles_dict = {}
         for column in poles:
             p_ = self.polar_features.loc[column][self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+            # qsample poles to qnet
             poles_dict[column] = self.qsampling(p_,steps)
         self.poles_dict = poles_dict
         self.pL = self.poles_dict[pole_1]
         self.pR = self.poles_dict[pole_2]
-        # self.pL = list(poles_dict.values())[0]
-        # self.pR = list(poles_dict.values())[1]
         self.d0 = qdistance(self.pL, self.pR, self.qnet, self.qnet)
         
+        # restrict sample columns to polar columns
         if restrict:
-            # restrict sample columns to polar columns
             cols = [x for x in self.poles.columns if x in self.samples.columns]
             self.samples=self.samples[cols]
             self.restricted = True
+            self.samples = pd.concat([self.features,self.samples], axis=0).replace(&#34;nan&#34;,&#34;&#34;).fillna(&#39;&#39;)
+            self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
             
-        elif self.restricted:
-            # if poles had been restricted before, unrestrict it
+        # if restrict==False, unrestrict it and set original
+        else:
             self.restricted = False
             self.samples = self.all_samples
             if self.nsamples is not None:
                 self.set_nsamples(nsamples, random)
-
-        for x in self.poles.columns:
-            if x not in self.samples.columns:
-                invalid_count += 1
-                self.samples[x]=&#39;&#39;
-
-        self.samples = pd.concat([self.features,self.samples], axis=0).fillna(&#39;&#39;)
-        #self.all_samples = self.samples
-        self.samples_as_strings = self.samples[self.cols].fillna(&#39;&#39;).values.astype(str)[:]
+        
+        # identify pole features that were excluded due to sample features restriction
+        if VERBOSE:
+            for x in self.poles.columns:
+                if x not in self.samples.columns:
+                    invalid_count += 1
+                    #self.samples[x]=&#39;&#39;
         
         if mutable:
             self.mutable_vars=[x for x in self.cols if x in self.poles.columns]
@@ -3601,12 +4209,14 @@ can prob combine this with the load_data func: only set the immutable vars if ne
 <li><code><a title="cognet.cognet.cognet.load_data" href="#cognet.cognet.cognet.load_data">load_data</a></code></li>
 <li><code><a title="cognet.cognet.cognet.load_from_dataformatter" href="#cognet.cognet.cognet.load_from_dataformatter">load_from_dataformatter</a></code></li>
 <li><code><a title="cognet.cognet.cognet.load_from_model" href="#cognet.cognet.cognet.load_from_model">load_from_model</a></code></li>
+<li><code><a title="cognet.cognet.cognet.mp_compute" href="#cognet.cognet.cognet.mp_compute">mp_compute</a></code></li>
 <li><code><a title="cognet.cognet.cognet.polarDistance" href="#cognet.cognet.cognet.polarDistance">polarDistance</a></code></li>
 <li><code><a title="cognet.cognet.cognet.polarDistance_multiple" href="#cognet.cognet.cognet.polarDistance_multiple">polarDistance_multiple</a></code></li>
 <li><code><a title="cognet.cognet.cognet.polar_separation" href="#cognet.cognet.cognet.polar_separation">polar_separation</a></code></li>
 <li><code><a title="cognet.cognet.cognet.qsampling" href="#cognet.cognet.cognet.qsampling">qsampling</a></code></li>
 <li><code><a title="cognet.cognet.cognet.randomMaskReconstruction" href="#cognet.cognet.cognet.randomMaskReconstruction">randomMaskReconstruction</a></code></li>
 <li><code><a title="cognet.cognet.cognet.randomMaskReconstruction_multiple" href="#cognet.cognet.cognet.randomMaskReconstruction_multiple">randomMaskReconstruction_multiple</a></code></li>
+<li><code><a title="cognet.cognet.cognet.random_sample" href="#cognet.cognet.cognet.random_sample">random_sample</a></code></li>
 <li><code><a title="cognet.cognet.cognet.set_immutable_vars" href="#cognet.cognet.cognet.set_immutable_vars">set_immutable_vars</a></code></li>
 <li><code><a title="cognet.cognet.cognet.set_nsamples" href="#cognet.cognet.cognet.set_nsamples">set_nsamples</a></code></li>
 <li><code><a title="cognet.cognet.cognet.set_poles" href="#cognet.cognet.cognet.set_poles">set_poles</a></code></li>
