@@ -1026,6 +1026,7 @@ class cognet:
 
     def randomMaskReconstruction_multiple(self,
                                           outfile,
+                                          steps=200,
                                           processes=6,
                                           index_colname="feature_names",
                                           output_dir="recon_results/",
@@ -1056,7 +1057,10 @@ class cognet:
         else:
             cols = ['rederr','r_prob','rand_err','mask_']
         
-        # 
+        # update class steps
+        self.steps = steps
+        
+        # set args
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
