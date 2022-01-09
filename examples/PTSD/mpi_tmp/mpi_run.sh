@@ -5,7 +5,7 @@ NODES=4
 # time requested
 T=2
 NUM='all'
-LAUNCH='../launcher.sh'
+LAUNCH='./mpi_launcher.sh'
 
 for yr in `echo $YEARS`
 do
