@@ -597,29 +597,29 @@ class cognet:
           pca_model (bool): whether or not to generate PCA model
           EMBED_BINARY (os.path.abspath): path to embed binary
         '''
-        if all(x is not None for x in [self.year]):
+        # if all(x is not None for x in [self.year]):
             # init file names 
-            yr = self.year
-            PREF = name_pref
-            FILE = infile
-            DATAFILE = out_dir + 'data_' +yr
-            EFILE = out_dir + PREF + '_E_' +yr
-            DFILE = out_dir + PREF + '_D_' +yr
-            
-            # set embed binary directory
-            if EMBED_BINARY is None:
-                EMBED = pkgutil.get_data("cognet.bin", "__embed__.so") 
-            else:
-                EMBED = EMBED_BINARY
-            
-            # embed data files
-            pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=' ',header=None,index=None)
-            STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+' -D '+DFILE
-            subprocess.call(STR,shell=True)
-            if pca_model:
-                embed_to_pca(EFILE, EFILE+'_PCA')
-        elif self.year is None:
-            raise ValueError("load_data first!")
+        yr = self.year
+        PREF = name_pref
+        FILE = infile
+        DATAFILE = out_dir + 'data_' +yr
+        EFILE = out_dir + PREF + '_E_' +yr
+        DFILE = out_dir + PREF + '_D_' +yr
+        
+        # set embed binary directory
+        if EMBED_BINARY is None:
+            EMBED = pkgutil.get_data("cognet.bin", "__embed__.so") 
+        else:
+            EMBED = EMBED_BINARY
+        
+        # embed data files
+        pd.read_csv(FILE, header=None).to_csv(DATAFILE,sep=' ',header=None,index=None)
+        STR=EMBED+' -f '+DATAFILE+' -E '+EFILE+' -D '+DFILE
+        subprocess.call(STR,shell=True)
+        if pca_model:
+            embed_to_pca(EFILE, EFILE+'_PCA')
+        # elif self.year is None:
+        #    raise ValueError("load_data first!")
     
     def __calc_d0(self,
                 pole_1,
@@ -1026,6 +1026,7 @@ class cognet:
 
     def randomMaskReconstruction_multiple(self,
                                           outfile,
+                                          steps=200,
                                           processes=6,
                                           index_colname="feature_names",
                                           output_dir="recon_results/",
@@ -1056,7 +1057,10 @@ class cognet:
         else:
             cols = ['rederr','r_prob','rand_err','mask_']
         
-        # 
+        # update class steps
+        self.steps = steps
+        
+        # set args
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
