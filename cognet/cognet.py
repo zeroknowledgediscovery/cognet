@@ -599,7 +599,9 @@ class cognet:
         '''
         # if all(x is not None for x in [self.year]):
             # init file names 
-        yr = self.year
+        yr = ''
+        if self.year is not None:
+            yr = self.year
         PREF = name_pref
         FILE = infile
         DATAFILE = out_dir + 'data_' +yr
