@@ -1190,7 +1190,7 @@ class cognet:
                                "# time requested\n",
                                "T={}\n".format(T),
                                "NUM=\'all\'\n",
-                               "LAUNCH=\'{}\'\n\n".format(MPI_LAUNCHER_FILE),
+                               "LAUNCH=./\'{}\'\n\n".format(MPI_LAUNCHER_FILE),
                                "for yr in `echo $YEARS`\n",
                                "do\n",
                                "\techo $yr\n",
