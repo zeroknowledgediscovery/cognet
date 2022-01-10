@@ -1,335 +1,106 @@
 feature_names,sample,qsampled,random_sample
-HRS2,e,e,e
-wrkslf,someone else,,someone else
-wrkgovt,private,private,government
-PRESTG105PLUS,c,,e
-INDUS10,b,,a
-marital,married,,never married
-martype,marriage between a man and a woman,,marriage between people of the same gender
-divorce,yes,,no
-spwrksta,working fulltime,,working parttime
-SPHRS2,e,,b
-COHRS1,e,,a
-COHRS2,e,,b
-SPOCC10,c,,c
-SPPRES105PLUS,d,,b
-SPIND10,"colleges and universities, including junior colleges",bus service and urban transit, restaurants and other food services
-pawrkslf,someone else,,self-employed
-PAOCC10,c,,d
-PAIND10,c,,d
-mawrkslf,someone else,,someone else
-MAOCC10,c,,b
-MAPRES10,c,,d
-MAIND10,real estate,religious organizations,wired telecommunications carriers
-age,d,d,c
-speduc,d,,e
-coeduc,e,,e
-degree,bachelor,,junior college
-MAJOR1,foreign language,business administration,environmental science/ecology
-mawrkgrw,yes,,no
-INCOM16,average,average,far above average
-born,yes,,no
-parborn,both in u.s,,mother only
-granborn,c,c,d
-babies,c,c,c
-unrelat,c,c,d
-rincome,$25000 or more,,$25000 or more
-INCOME16,$170000 or over,,$6 000 to 6 999
-region,middle atlantic,new england,e. sou. central
-srcbelt,12 lrgst smsa's,,other urban
-PRES12,obama,,obama
-VOTE16,voted,,voted
-natpark,about right,,too much
-natsci,about right,,too much
-natenrgy,about right,too little,about right
-natspacy,too little,,too much
-natenviy,about right,too little,too little
-nathealy,too little,,too much
-natcrimy,too much,too little,about right
-nataidy,too little,,about right
-eqwlth,c,c,c
-courts,too harsh,,about right
-fund,moderate,fundamentalist,moderate
-attend,once a year,,once a year
-reliten,not very strong,,not very strong
-pray,lt once a week,,several times a day
-RELIG16,protestant,,protestant
-DENOM16,other,,evangelical luth
-sprel,protestant,,jewish
-spden,evangelical luth,,wi evan luth synod
-spfund,moderate,,fundamentalist
-bible,book of fables,,other
-happy,pretty happy,,very happy
-helpful,helpful,helpful,depends
-trust,can trust,can trust,can't be too careful
-confinan,hardly any,a great deal,hardly any
-conclerg,only some,,a great deal
-coneduc,only some,,only some
-contv,hardly any,,a great deal
-consci,a great deal,only some,hardly any
-conarmy,only some,,only some
-obey,least important,,most important
-popular,4th important,4th important,2nd important
-socrel,once a month,,sev times a mnth
-socbar,sev times a mnth,,sev times a mnth
-aged,a good idea,a good idea,depends
-jobfind,somewhat easy,,not easy
-satjob,very satisfied,,very dissatisfied
-rank,c,,c
-satfin,satisfied,not at all sat,satisfied
-finalter,better,,better
-finrela,far below average,below average,far above average
-wksubs,yes,,yes
-unemp,yes,no,yes
-parsol,much better,,somewhat worse
-chldidel,c,c,e
-divlaw,easier,more difficult,easier
-premarsx,not wrong at all,,not wrong at all
-xmovie,no,,yes
-SUICIDE1,yes,no,yes
-SUICIDE2,yes,,no
-SUICIDE3,yes,no,no
-polhitok,yes,,yes
-form,alternate <y>,alternate <y>,alternate <y>
-random,e,,b
-fechld,agree,disagree,strongly disagree
-fepresch,agree,agree,disagree
-RACDIF1,yes,yes,yes
-RACDIF2,no,no,yes
-helppoor,c,,b
-helpsick,b,,c
-helpblk,b,,d
-reborn,no,,no
-savesoul,no,,yes
-numcong,c,c,d
-wlthwhts,c,,c
-wlthhsps,e,,c
-workwhts,c,c,c
-intlwhts,c,,c
-intlhsps,c,,e
-marwht,favor,,oppose
-yousup,e,,e
-spwksup,yes,,yes
-fehire,strongly agree,agree,agree
-vigversn,c,,d
-charactr,not very likely,,not at all likely
-imbalnce,somewhat likely,,not at all likely
-stresses,somewhat likely,,very likely
-godswill,not at all likely,not very likely,very likely
-upsdowns,somewhat likely,,not very likely
-breakdwn,not very likely,,not very likely
-viglabel,somewhat likely,,very likely
-dectreat,somewhat able,,not able at all
-vigfrnd,probably willing,probably unwilling,probably willing
-hurtoth,not very likely,,somewhat likely
-hurtself,somewhat likely,,somewhat likely
-tlkfam,yes,,yes
-mentloth,yes,yes,yes
-rxmed,yes,,no
-dofirst,go to a general medical doctor for help,,join a self-help group where people with similar problems help each other
-mustdoc,no,,yes
-dangrslf,yes,yes,yes
-CLOSETO2,e,e,d
-CLOSETO3,e,,c
-CLOSETO5,e,,e
-SEETALK1,e,,b
-SEETALK2,e,,b
-MYPROBS2,e,c,c
-MYPROBS3,e,e,c
-MYPROBS5,e,,d
-SEVERE5,e,,d
-DANGOTH1,e,e,c
-DANGOTH3,e,,e
-DANGOTH4,e,,e
-DANGOTH5,e,,c
-DANGSLF1,e,,c
-DANGSLF2,e,,e
-DANGSLF5,e,e,d
-fammhneg,not very much,,very much
-othmhneg,somewhat,,very much
-MCSDS3,True,,True
-MCSDS5,False,,False
-MCSDS6,True,,True
-MCSDS7,False,,True
-sprtprsn,modeate spirtual,,not spiritual
-spklang,not well,,very well
-betrlang,language 1,,language 2
-emailmin,c,c,c
-emailhr,d,c,e
-wwwhr,c,,c
-huclean,very clean,,clean
-wrktype,"regular, permanent employee",,"on-call, work only when called to work"
-waypaid,c,c,e
-moredays,c,,d
-mustwork,yes,,no
-whywkhme,worker wants to work at home,worker wants to work at home,worker has to work at home to keep up with job
-famwkoff,not too hard,,very hard
-wkvsfam,rarely,often,rarely
-hrsrelax,c,,e
-secondwk,no,no,yes
-learnnew,strongly agree,,strongly disagree
-workfast,disagree,,disagree
-knowwhat,strongly agree,,disagree
-safefrst,strongly agree,,agree
-safehlth,strongly agree,,strongly agree
-wksmooth,agree,,disagree
-toofewwk,sometimes,,never
-promteok,somewhat true,,somewhat true
-opdevel,somewhat true,,somewhat true
-haveinfo,somewhat true,,somewhat true
-wkfreedm,very true,somewhat true,not too true
-condemnd,somewhat true,somewhat true,not at all true
-promtefr,somewhat true,very true,not at all true
-hvylift,no,,yes
-handmove,no,yes,no
-wkpraise,yes,,no
-fairearn,somewhat less than you deserve,somewhat less than you deserve,about as much as you deserve
-rincblls,yes,,no
-trynewjb,not at all likely,not at all likely,not at all likely
-wkracism,no,,yes
-wksexism,no,no,no
-wkharoth,no,,no
-HEALTH1,very good,,good
-physhlth,c,,e
-hlthdays,c,,d
-hurtatwk,c,,c
-phyeffrt,fairly light,fairly light,fairly light
-slpprblm,rarely,,sometimes
-SATJOB1,very satisfied,very satisfied,not too satisfied
-usetech,c,c,b
-hyperten,no,no,no
-arthrtis,no,,no
-depress,no,,no
-height,d,d,d
-quallife,excellent,,excellent
-hlthphys,very good,,fair
-satsoc,excellent,,poor
-actssoc,very good,,excellent
-physacts,completely,,completely
-fatigue,none,mild,none
-abmelegl,should,,it depends
-ABSTATE1,easy,,very hard
-ABHELP1,yes,yes,yes
-ABHELP2,yes,no,no
-ABHELP4,yes,,no
-ABMEDGOV2,a woman and her medical professional should decide,,a woman and her medical professional should decide
-natnotice,strongly agree,,strongly agree
-natviews,strongly agree,,somewhat disagree
-nataccess,strongly agree,strongly agree,somewhat agree
-nattime,strongly agree,strongly agree,somewhat agree
-natsat,strongly agree,strongly agree,strongly disagree
-natrelax,somewhat agree,strongly agree,strongly disagree
-natactive,strongly agree,strongly agree,strongly disagree
-natmeet,strongly agree,,strongly disagree
-natlack,strongly disagree,,strongly disagree
-ownstock,"no, my company has stock but i do not own any","no, i work for a company that does not have stock",yes
-stockval,e,e,c
-extrapay,yes,,yes
-deptperf,yes,,no
-extrayr,e,e,a
-yearval,e,,c
-viszoo,e,,c
-vissci,e,,d
-buyvalue,e,,e
-numorg,c,,d
-empinput,no,,yes
-slfmangd,no,no,no
-emptrain,no,yes,no
-defpensn,no,,no
-company,a company whose stock is owned by the employees who appoint the management to run the company's operations,,a company whose stock is owned by the employees who appoint the management to run the company's operations
-mhunsure,"disagree, or",,strongly disagree?
-mhdiagno,no,,no
-ratetone,c,,d
-prvdold,non-profit organizations/charities/cooperatives,,"family, relatives or friends"
-posslqy,i am married and living in the same household as my husband or wife.,,i am married and living in the same household as my husband or wife.
-demands,"no, never","no, never","yes, sometimes"
-knwbus,no one,,family or relative
-knwexec,close friend,,close friend
-knwclenr,close friend,,someone else i know
-knwcuttr,someone else i know,someone else i know,close friend
-knwhrman,someone else i know,,close friend
-knwmchnc,someone else i know,,close friend
-knwcop,no one,,no one
-partlsc,several times a year,several times a year,never
-partpart,several times a year,never,several times a year
-partvol,several times a year,,once a week or more
-hlpadvce,more distant family member,,someone i work with
-hlpjob,family members or close friends,,other persons
-LONELY2,never,,very often
-trcourts,d,b,a
-trbigbus,c,,a
-fampress,"no, never",,"yes, very often"
-dinefrds,several times a year,,once a month
-conwkday,20-49 people,,50-99 people
-cntctpar,my parents are no longer alive,, two to three times a month
-cntctkid,several times a week,,once a week
-cntctfrd,once a week,,daily
-intcntct,c,,b
-healthissp,very good,,fair
-unhappy,never,,never
-pilingup,rarely,,very often
-satlife,mostly satisfied,,neither satisfied nor dissatisfied
-incgap,strongly agree,,neither
-goveqinc,agree,disagree,strongly agree
-localnum,100-499,,10-49
-befair,fair mst of time,fair mst of time,fair all of time
-cantrust,usually trusted,,usually trusted
-matesex,yes,,yes
-sexsex,exclusively female,,exclusively female
-sexfreq,weekly,,4+ per week
-numwomen,c,,d
-nummen,c,,c
-HIVTEST2,private doctor or hmo office,,private doctor or hmo office
-sexbirth,male,,male
-GENEGOO2,e,c,c
-mnthsusa,e,e,c
-dwelling,detached 1-fam house,,other
-DWELOWN16,owned or was buying,paid rent,other (specify)
-wordb,correct,,incorrect
-wordc,correct,,correct
-worde,correct,,correct
-wordg,correct,,incorrect
-wordh,correct,incorrect,correct
-wordi,correct,,correct
-wordj,correct,,correct
-wordsum,e,,b
-MAR1,married,,never married
-OLD2,e,a,a
-OLD3,e,,d
-OLD5,e,,c
-OLD6,e,,c
-OLD7,e,e,b
-OLD9,e,,d
-OLD11,e,,e
-OLD12,e,e,e
-hefinfo,1st person,1st person,2nd person
-hhtype,"2adlts,mar,0kids",,"2adlts,ntmar,rel,0kids"
-HHTYPE1,"married couple, no children",,"cohab couple, no children"
-famgen,1 gen,1 gen,1 gen
-rvisitor,r. is household member,r. is household member,r. is visitor
-RELHH2,spouse,,niece or nephew
-dateintv,512,605,924
-ISCO88,c,,d
-PAISCO88,c,,d
-SPISCO88,c,,c
-SEI10,c,,c
-SEI10INC,c,,d
-PASEI10,c,,d
-PASEI10INC,c,,e
-MASEI10EDUC,c,,b
-SPSEI10EDUC,d,,b
-SPSEI10INC,c,,b
-COSEI10,e,,b
-COSEI10INC,e,,c
-COPRES10,e,,e
-inthisp,not hispanic,,not hispanic
-INTRACE1,white,white,chinese
-WHOELSE6,no,,no
-intid,123,132,34
-intage,67,,38
-intethn,black,hispanic,hispanic
-intyrs,10,,7
-version,2,,3
-spaneng,english,english,spanish
-kidsinhh,no,,no
-wtss,c,,e
+ptsd1,3,3,5
+ptsd2,2,,4
+ptsd4,4,1,1
+ptsd5,1,1,2
+ptsd8,3,,5
+ptsd9,1,1,2
+ptsd14,3,3,2
+ptsd17,3,3,2
+ptsd18,3,4,4
+ptsd20,1,,5
+ptsd21,1,1,2
+ptsd22,1,1,2
+ptsd28,2,3,2
+ptsd29,4,4,1
+ptsd31,1,2,5
+ptsd33,2,,1
+ptsd35,1,,5
+ptsd36,4,,3
+ptsd38,1,1,4
+ptsd39,3,1,3
+ptsd41,3,2,5
+ptsd42,1,3,3
+ptsd44,5,1,4
+ptsd46,1,,5
+ptsd47,1,3,3
+ptsd50,3,,2
+ptsd51,1,1,1
+ptsd53,3,,3
+ptsd54,1,,2
+ptsd55,4,3,2
+ptsd56,2,3,4
+ptsd59,2,1,5
+ptsd60,2,1,4
+ptsd63,1,1,3
+ptsd64,1,2,3
+ptsd67,4,1,3
+ptsd68,2,1,2
+ptsd69,3,3,4
+ptsd71,3,4,5
+ptsd74,3,3,5
+ptsd76,1,5,2
+ptsd77,2,4,3
+ptsd78,1,1,2
+ptsd80,4,,2
+ptsd81,1,2,5
+ptsd83,1,1,4
+ptsd87,2,5,5
+ptsd89,1,4,2
+ptsd90,3,3,2
+ptsd91,3,1,4
+ptsd92,2,3,4
+ptsd97,3,3,4
+ptsd99,1,,2
+ptsd103,1,3,4
+ptsd104,3,4,4
+ptsd106,3,4,2
+ptsd108,1,1,4
+ptsd109,3,4,4
+ptsd110,3,1,4
+ptsd112,1,2,1
+ptsd114,1,2,2
+ptsd115,2,1,5
+ptsd120,3,3,2
+ptsd121,1,2,4
+ptsd124,2,3,3
+ptsd126,2,1,4
+ptsd130,1,1,5
+ptsd133,2,,2
+ptsd134,1,2,2
+ptsd136,1,2,4
+ptsd137,1,,3
+ptsd138,1,2,4
+ptsd141,1,1,4
+ptsd142,1,1,1
+ptsd143,2,,1
+ptsd148,1,1,5
+ptsd149,1,2,2
+ptsd150,1,5,5
+ptsd151,1,1,3
+ptsd152,1,1,2
+ptsd153,2,4,3
+ptsd155,1,4,5
+ptsd158,1,2,2
+ptsd159,2,1,2
+ptsd161,1,1,4
+ptsd162,1,3,3
+ptsd163,1,,4
+ptsd172,1,1,2
+ptsd173,2,1,2
+ptsd175,1,5,3
+ptsd177,3,,3
+ptsd180,1,3,3
+ptsd181,2,2,2
+ptsd182,1,3,4
+ptsd184,1,3,4
+ptsd185,1,2,1
+ptsd191,2,2,2
+ptsd192,2,4,1
+ptsd194,1,1,4
+ptsd199,1,1,5
+ptsd200,2,2,2
+ptsd202,3,3,2
+ptsd206,1,2,3
+ptsd209,2,3,3
+ptsd210,3,,5

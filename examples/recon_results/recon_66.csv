@@ -1,341 +1,108 @@
 feature_names,sample,qsampled,random_sample
-OCC10,c,c,e
-divorce,yes,,no
-COHRS1,e,,d
-COHRS2,e,,e
-SPPRES10,e,,b
-SPPRES105PLUS,d,d,e
-SPIND10,"colleges and universities, including junior colleges",,religious organizations
-PAPRES10,c,,a
-PAPRES105PLUS,d,d,b
-PAIND10,c,,d
-mawrkslf,someone else,someone else,someone else
-MAPRES105PLUS,e,,b
-MAIND10,hospitals,,waste management and remediation services
-sibs,c,c,c
-age,d,,b
-paeduc,c,a,b
-padeg,junior college,,bachelor
-madeg,lt high school,,lt high school
-sex,female,,male
-race,white,,black
-REG16,middle atlantic,,mountain
-MOBILE16,different state,,different state
-FAMILY16,mother & father,mother,father
-parborn,both in u.s,,father only
-hompop,1,2,2
-preteen,c,,e
-teens,c,,e
-earnrs,c,c,c
-income,$25000 or more,$25000 or more,$25000 or more
-rincome,$15000 - 19999,,$25000 or more
-INCOME16,$110000 to $129999,,$6 000 to 6 999
-RINCOM16,$17500 to 19999,,$3 000 to 3 999
-region,middle atlantic,,w. sou. central
-srcbelt,12 lrgst smsa's,other urban,other urban
-size,8175,,88
-PRES12,obama,,romney
-natspac,too little,,too much
-natcity,too little,,about right
-natcrime,too much,too little,too much
-natarms,too much,,too little
-nataid,about right,,too much
-natfare,too little,,about right
-natmass,too little,about right,about right
-natchld,too little,,about right
-natsci,about right,,about right
-eqwlth,e,e,b
-librac,not remove,not remove,remove
-spkcom,allowed,,not allowed
-colcom,not fired,,fired
-libcom,not remove,,remove
-colmil,allowed,,not allowed
-colhomo,allowed,,not allowed
-libhomo,not remove,,remove
-relig,protestant,protestant,christian
-denom,other,no denomination,afr meth episcopal
-other,quaker,,7th day adventist
-postlife,yes,,no
-pray,once a day,,several times a day
-DENOM16,other,other,other presbyterian
-FUND16,liberal,,moderate
-spfund,liberal,,liberal
-racopen,cant discriminate,owner decides,neither
-raclive,yes,no,no
-affrmact,support pref,strongly oppose pref,strongly support pref
-wrkwayup,disagree strongly,,agree somewhat
-happy,not too happy,,very happy
-health,excellent,good,excellent
-socrel,sev times a week,,sev times a mnth
-socfrend,sev times a year,,once a year
-socbar,once a year,,sev times a week
-joblose,fairly likely,,fairly likely
-jobfind,not easy,,somewhat easy
-richwork,stop working,,continue working
-satfin,more or less,,satisfied
-finalter,stayed same,,better
-wksubs,yes,,no
-wksup,no,,yes
-getahead,luck or help,,luck or help
-fepol,agree,agree,agree
-abdefect,yes,,yes
-abany,yes,,yes
-sexeduc,favor,,favor
-teensex,almst always wrg,,almst always wrg
-xmarsex,sometimes wrong,,not wrong at all
-homosex,not wrong at all,,always wrong
-spanking,strongly disagree,,agree
-LETDIE1,yes,,yes
-SUICIDE2,yes,,yes
-pistol,no,,refused
-shotgun,no,,refused
-hunt,neither,neither,spouse
-HUNT1,neither hunts,,spouse or partner hunts
-news,everyday,,everyday
-phone,cellphone,,no phone
-coop,"friendly,interested",,hostile
-random,c,,b
-fefam,strongly disagree,,agree
-RACDIF1,yes,,no
-RACDIF2,no,,no
-helppoor,e,,c
-helpnot,e,,b
-helpsick,e,e,d
-god,believe sometimes,believe but doubts,some higher power
-reborn,yes,no,no
-wlthhsps,c,,e
-workwhts,c,,e
-workblks,c,,c
-intlblks,c,,c
-liveblks,strongly favor,favor,oppose
-marblk,neither favor nor oppose,neither favor nor oppose,neither favor nor oppose
-MARAsian,neither favor nor oppose,,neither favor nor oppose
-marhisp,neither favor nor oppose,neither favor nor oppose,oppose
-marwht,strongly favor,,neither favor nor oppose
-racwork,half white-black,,all white
-discaff,somewhat likely,,somewhat likely
-yousup,e,,e
-vigversn,e,,d
-CLOSETO1,e,c,e
-CLOSETO2,e,e,b
-CLOSETO3,e,,c
-CLOSETO4,e,,e
-CLOSETO5,e,,e
-MYPROBS1,e,e,d
-MYPROBS3,e,,c
-MYPROBS4,e,,e
-MYPROBS5,e,e,c
-SEVERE1,e,c,b
-SEVERE3,e,c,d
-SEVERE4,e,e,d
-DANGOTH2,e,,c
-DANGOTH3,e,e,e
-DANGOTH4,e,,e
-DANGSLF1,e,b,c
-DANGSLF3,e,,c
-DANGSLF4,e,,e
-compuse,yes,,no
-emailmin,c,,d
-yearsjob,e,,d
-waypaid,c,c,e
-moredays,c,,d
-mustwork,yes,yes,no
-wrkhome,worker works mainly at home,,about once a month
-wkvsfam,sometimes,,sometimes
-famvswk,rarely,,often
-hrsrelax,c,,e
-secondwk,no,no,no
-myskills,agree,,strongly agree
-safetywk,agree,,agree
-proudemp,agree,,disagree
-prodctiv,agree,disagree,strongly disagree
-trdunion,strongly agree,strongly disagree,agree
-haveinfo,very true,,somewhat true
-fringeok,not at all true,somewhat true,not at all true
-supcares,somewhat true,somewhat true,very true
-suphelp,somewhat true,somewhat true,not at all true
-wrktime,somewhat true,,very true
-cowrkhlp,somewhat true,very true,very true
-manvsemp,quite good,,very bad
-hvylift,no,yes,yes
-fairearn,much less than you deserve,,somewhat less than you deserve
-trynewjb,not at all likely,,not at all likely
-wkracism,no,,no
-wksexism,no,,yes
-HEALTH1,excellent,fair,poor
-physhlth,c,,c
-mntlhlth,c,,e
-painarms,no,,yes
-spvtrfair,somewhat true,,somewhat true
-phyeffrt,somewhat hard,fairly light,very light
-slpprblm,sometimes,,sometimes
-SATJOB1,somewhat satisfied,very satisfied,not too satisfied
-knowschd,one week or less,,between 1 and 2 weeks
-usetech,d,c,b
-hyperten,yes,,yes
-diabetes,no,,no
-weight,c,c,d
-height,c,c,a
-ntwkhard,e,c,c
-misswork,c,c,d
-lifenow,c,,b
-LIFEIN5,c,c,a
-disrspct,never,,at least once a week
-notsmart,never,,never
-threaten,a few times a year,never,at least once a week
-quallife,very good,,good
-hlthphys,excellent,,fair
-physacts,mostly,,moderately
-ratepain,c,c,b
-abfelegl,should,,should
-ABSTATE1,hard,neither easy nor hard,easy
-ABSTATE2,make it easier,,stay the same as now
-ABHELP1,yes,,yes
-ABHELP3,yes,,no
-ABHELP4,yes,,no
-abinspay,people should be able,,people should be able
-numpets,e,,d
-WORKFOR1,non-profit or not-for-profit organization,,government or government agency
-stockval,e,,c
-extrapay,no,,yes
-extrayr,e,e,e
-yearval,e,e,d
-numemps,c,,c
-wrkslffam,no,,no
-newsfrom,newspapers,,books other printed material
-toofast,disagree,strongly agree,agree
-advfront,strongly agree,,agree
-astrolgy,no,,no
-scibnfts,benefits greater,,harmful results greater
-balpos,strongly in favor,,slightly in favor
-expdesgn,500 get the drug 500 dont,500 get the drug 500 dont,all 1000 get the drug
-exptext,correct vague reason,,correct don t know
-ODDS1,no,,yes
-hotcore,True,,False
-boyorgrl,True,,True
-electron,True,False,False
-viruses,False,False,True
-evolved,True,,False
-earthsun,earth around sun,,earth around sun
-majorcol,english,,biology
-colsci,yes,,yes
-hsbio,yes,,no
-nanoben,strongly in favor,,strongly in favor
-intfarm,moderately interested,,not at all interested
-inteduc,not at all interested,,not at all interested
-inttech,very interested,,moderately interested
-intmed,very interested,,not at all interested
-intenvir,moderately interested,,moderately interested
-visnhist,c,,d
-viszoo,c,,d
-buyvalue,e,,e
-compwage,b,,e
-defpensn,no,,no
-buyesop,i would be more likely to buy from an employee-owned company,i would be more likely to buy from an employee-owned company,i would be neither more nor less likely to buy from an employee-owned company
-esopnot,i would definitely take the job with the esop (employee stock ownership plan) or cash profit sharing,,i would probably take the job without the esop (employee stock ownership plan) or cash profit sharing
-company,a company whose stock is owned by the employees who appoint the management to run the company's operations,a company whose stock is owned by the employees who appoint the management to run the company's operations,a company in which the government owns the stock and appoints the management to run the company's operations
-posslq,married with partner,,living as married
-marcohab,married,,na
-trcourts,e,c,e
-trbigbus,e,,d
-intcntct,e,,c
-healthissp,excellent,,excellent
-marhomo,strongly agree,,agree
-localnum,1-9,,10-49
-hapunhap,very happy,,not very happy
-HOMOSEX1,not wrong at all,not wrong at all,almost always wrong
-concong,very little confidence,a great deal of confidence,no confidence at all
-conbiz,very little confidence,complete confidence,complete confidence
-conchurh,some confidence,some confidence,some confidence
-churhpow,too much power,,too much power
-hell,"no, definitely not",,"yes, probably"
-theism,agree,,disagree
-godmeans,strongly disagree,,neither agree nor disagree
-nihilism,neither agree nor disagree,,disagree
-marelkid,protestant,,none
-parelkid,protestant,protestant,none
-padenkid, quaker,,"brethren church, brethren"
-religkid,protestant,,moslem/islam
-relscrpt,yes,,yes
-relmarry,definitely accept,,definitely accept
-RELEXT1,definitely,,definitely not
-RELEXT3,definitely,,definitely not
-relgeneq,treats men better than women,treats men better than women,treats women better than men
-makefrnd,strongly agree,,disagree
-comfort,strongly agree,,neither agree nor disagree
-relgenbar,disagree,agree,disagree
-difrel,disagree,disagree,disagree
-relpast,neither agree nor disagree,,disagree
-relrlvnt,agree,,strongly disagree
-christns,somewhat positive,,somewhat negative
-hindus,somewhat positive,neither positive nor negative,somewhat negative
-jews,somewhat positive,somewhat positive,somewhat positive
-nukegen,extremely dangerous,,extremely dangerous
-indusgen,extremely dangerous,somewhat dangerous,very dangerous
-watergen,extremely dangerous,not very dangerous,somewhat dangerous
-nummen,e,,e
-HIVTEST1,e,,e
-GENETST1,not very much,,nothing at all
-GENESELF2,yes,no,yes
-GENEABRT2,yes,,yes
-coninc,c,c,e
-ethnic,germany,,puerto rico
-ETH1,germany,,other european
-ethnum,names 1,,chooses 1 of 2+
-RACECEN1,white,,filipino
-yearsusa,e,,d
-mnthsusa,e,e,c
-vetyears,none,none,less than 2 yrs
-DWELOWN16,owned or was buying,,paid rent
-worda,correct,correct,correct
-wordc,correct,,correct
-wordi,correct,,incorrect
-wordj,correct,,incorrect
-wordsum,e,,a
-OLD1,d,c,b
-OLD4,e,,c
-OLD6,e,,e
-OLD10,e,,b
-OLD11,e,,b
-famgen,1 gen,1 gen,"3 gens, grandchldrn"
-rplace,head of household,head of household,son or daughter-in-law
-rvisitor,r. is household member,r. is household member,r. is visitor
-PAISCO88,c,,d
-MAISCO88,c,,c
-SPISCO88,c,,b
-PAISCO08,advertising and marketing professionals,,bank tellers and related clerks
-SEI10INC,c,b,e
-PASEI10,d,,e
-MASEI10,e,,b
-SPSEI10,d,,e
-SPSEI10EDUC,d,,b
-COSEI10,e,e,b
-uswary,yes,,no
-cohort,b,,d
-zodiac,capricorn,,virgo
-INTRACE1,white,white,black or african
-WHOELSE1,no,,yes
-WHOELSE3,no,no,yes
-WHOELSE4,no,no,yes
-WHOELSE5,yes,,no
-feelevel,b,,a
-lngthinv,156,,140
-intage,58,,73
-intethn,hispanic,black,asian
-mode,in-person,,over the phone
-intsex,female,,male
-consent,r consents to recording interview,,r consents to recording interview
-issp,did issp,,did issp
-sampcode,601,,625
-phase,phase one - initial cases,,phase one - initial cases
-spaneng,english,,spanish
-huadd,yes,,yes
-dwellpre,"apartment house (5 or more units, 4 stories or more)",,other (specify on next page)
-respond,high,high,high
-incuspop,higher than average,,average
-rweight,about the right weight,slightly overweight,very underweight
-wtss,c,,d
-wtssnr,c,,e
-wtssall,c,,c
-vstrat,3305,3314,3338
-vpsu,2,,1
+ptsd1,5,4,5
+ptsd2,1,2,4
+ptsd3,2,,5
+ptsd5,3,1,3
+ptsd7,1,1,2
+ptsd10,2,1,1
+ptsd11,1,2,1
+ptsd13,2,3,4
+ptsd16,2,3,5
+ptsd17,2,3,2
+ptsd18,2,3,2
+ptsd20,2,4,3
+ptsd21,1,1,1
+ptsd22,1,1,5
+ptsd23,2,3,1
+ptsd25,3,4,1
+ptsd26,3,2,3
+ptsd27,3,,4
+ptsd28,3,2,3
+ptsd32,3,4,5
+ptsd33,3,3,4
+ptsd35,3,1,5
+ptsd37,3,2,2
+ptsd40,2,4,2
+ptsd42,2,2,1
+ptsd44,2,3,4
+ptsd48,3,3,4
+ptsd54,1,1,3
+ptsd56,3,4,4
+ptsd57,4,,5
+ptsd58,4,,4
+ptsd59,3,2,4
+ptsd60,2,,2
+ptsd62,1,1,1
+ptsd64,4,2,3
+ptsd66,3,,2
+ptsd67,1,1,4
+ptsd69,1,1,5
+ptsd70,3,3,5
+ptsd71,3,5,2
+ptsd72,3,2,3
+ptsd73,5,,2
+ptsd74,4,3,2
+ptsd77,3,1,5
+ptsd78,2,,4
+ptsd80,3,2,5
+ptsd81,3,4,2
+ptsd82,3,2,3
+ptsd85,3,4,1
+ptsd86,3,3,4
+ptsd92,3,3,2
+ptsd96,1,2,4
+ptsd99,2,3,2
+ptsd101,3,2,4
+ptsd103,3,3,4
+ptsd107,2,2,4
+ptsd108,2,3,4
+ptsd109,4,3,2
+ptsd111,2,2,4
+ptsd113,4,,1
+ptsd115,1,1,2
+ptsd117,1,1,2
+ptsd118,2,1,3
+ptsd119,2,2,4
+ptsd120,3,4,3
+ptsd121,2,,4
+ptsd123,3,1,3
+ptsd130,3,4,5
+ptsd133,2,,2
+ptsd134,2,3,2
+ptsd136,1,,4
+ptsd137,2,2,3
+ptsd138,2,1,4
+ptsd142,1,1,1
+ptsd143,1,3,1
+ptsd146,1,2,1
+ptsd151,1,1,1
+ptsd154,1,2,5
+ptsd156,1,1,2
+ptsd159,4,,5
+ptsd160,2,4,4
+ptsd161,2,1,2
+ptsd162,4,3,3
+ptsd163,1,1,5
+ptsd167,1,,4
+ptsd173,1,5,2
+ptsd175,1,4,2
+ptsd179,1,3,3
+ptsd182,2,2,3
+ptsd183,4,2,4
+ptsd185,1,1,1
+ptsd186,4,2,1
+ptsd187,4,1,4
+ptsd189,4,3,2
+ptsd190,1,1,3
+ptsd191,3,1,3
+ptsd192,1,3,3
+ptsd194,1,1,4
+ptsd195,1,2,4
+ptsd196,1,3,5
+ptsd198,1,2,1
+ptsd199,2,,4
+ptsd200,4,,5
+ptsd201,3,2,2
+ptsd203,3,3,2
+ptsd207,1,3,3
+ptsd210,3,2,3

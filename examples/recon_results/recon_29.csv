@@ -1,241 +1,112 @@
 feature_names,sample,qsampled,random_sample
-OCC10,e,e,e
-PRESTG105PLUS,e,,b
-SPHRS2,e,e,b
-COHRS2,e,,e
-SPOCC10,e,,b
-SPPRES10,e,,e
-COOCC10,e,,e
-PAPRES10,e,,c
-PAPRES105PLUS,e,d,c
-MAOCC10,e,e,a
-MAPRES10,e,,b
-sibs,e,,e
-age,c,,b
-agekdbrn,e,,c
-educ,c,,a
-paeduc,e,,c
-maeduc,e,,b
-dipged,high school diploma,high school diploma,ged
-INCOM16,average,below average,far below average
-unrelat,e,c,e
-earnrs,c,,e
-srcbelt,"suburb, 12 lrgst",,12 lrgst smsa's
-PRES16,no answer,,trump
-polviews,moderate,,conservative
-natroad,too little,too little,too much
-natpark,about right,,about right
-natchld,too little,too little,about right
-natsci,too little,,too little
-natenrgy,too little,,too much
-natcityy,about right,about right,about right
-natcrimy,about right,too little,about right
-nateducy,too little,,about right
-natfarey,too little,too little,too much
-tax,too high,,about right
-librac,remove,,not remove
-colcom,fired,,not fired
-spkmil,not allowed,allowed,allowed
-colmil,not allowed,allowed,not allowed
-spkhomo,allowed,,allowed
-libhomo,not remove,not remove,remove
-spkmslm,not allowed,not allowed,"yes, allowed"
-courts,too harsh,,not harsh enough
-relig,none,none,native american
-reliten,no religion,,not very strong
-prayer,disapprove,,approve
-bible,inspired word,,word of god
-racopen,cant discriminate,,owner decides
-raclive,yes,no,yes
-happy,pretty happy,very happy,not too happy
-socrel,sev times a mnth,,never
-socfrend,sev times a year,,once a month
-finalter,stayed same,,better
-getahead,both equally,hard work,luck or help
-fepol,disagree,disagree,disagree
-abdefect,yes,no,yes
-abnomore,yes,,yes
-abpoor,yes,,no
-abany,yes,,no
-chldidel,e,,b
-pillok,agree,agree,disagree
-divlaw,stay same,,easier
-teensex,almst always wrg,,almst always wrg
-homosex,not wrong at all,,always wrong
-LETDIE1,yes,,yes
-SUICIDE2,no,,no
-SUICIDE3,no,,yes
-fear,no,,no
-owngun,refused,,yes
-news,few times a week,,never
-coop,cooperative,"friendly,interested","friendly,interested"
-fechld,agree,agree,strongly disagree
-fepresch,disagree,,disagree
-fefam,disagree,,strongly disagree
-RACDIF3,yes,,no
-helpsick,e,,c
-reborn,no,yes,yes
-savesoul,no,,yes
-numcong,e,,e
-wlthhsps,e,e,c
-workwhts,c,c,e
-workblks,c,c,e
-workhsps,c,c,c
-MARAsian,neither favor nor oppose,,favor
-marhisp,neither favor nor oppose,neither favor nor oppose,favor
-discaff,not very likely,somewhat likely,not very likely
-CLOSETO1,e,,e
-CLOSETO3,e,,c
-CLOSETO4,e,,c
-CLOSETO5,e,,c
-SEETALK1,e,,c
-SEETALK2,e,,b
-SEETALK3,e,,c
-SEETALK5,e,e,b
-MYPROBS1,e,e,d
-MYPROBS3,e,,d
-SEVERE3,e,e,d
-SEVERE4,e,,e
-SEVERE5,e,,e
-DANGOTH1,e,,c
-DANGOTH2,e,e,d
-DANGOTH3,e,,d
-DANGSLF1,e,,b
-DANGSLF3,e,,c
-DANGSLF4,e,,d
-DANGSLF5,e,,d
-sprtprsn,modeate spirtual,,slight spiritual
-othlang,no,yes,yes
-compuse,yes,,no
-emailmin,e,e,c
-wwwhr,e,e,c
-waypaid,e,c,c
-moredays,e,,e
-hrsrelax,e,,b
-physhlth,e,c,d
-mntlhlth,e,,c
-hurtatwk,e,,e
-usetech,e,,b
-weight,e,e,a
-ntwkhard,e,,e
-LIFEIN5,e,e,a
-poorserv,a few times a year,a few times a month,less than once a year
-afraidof,never,,at least once a week
-quallife,good,very good,fair
-hlthmntl,good,poor,fair
-physacts,completely,completely,moderately
-emoprobs,c,d,b
-ratepain,b,c,b
-abfelegl,should,,should not
-abmoral,it depends,it depends,not morally opposed
-ABHELP1,yes,yes,yes
-ABHELP2,no,,no
-ABHELP4,yes,,no
-ABMEDGOV2,a woman and her medical professional should decide,,a woman and her medical professional should decide
-abinspay,people should be able,,people should be able
-extraval,e,,e
-toofast,agree,,disagree
-scistudy,little understanding,,clear understanding
-ODDS1,no,,yes
-ODDS2,yes,,no
-hotcore,True,,False
-radioact,False,,False
-boyorgrl,True,,False
-EVOLVED2,True,,True
-colsci,no,,no
-colscinm,e,c,c
-hsphys,no,,yes
-intfarm,not at all interested,,moderately interested
-inteduc,very interested,,moderately interested
-intsci,not at all interested,,very interested
-intecon,moderately interested,,not at all interested
-intspace,moderately interested,,very interested
-intenvir,very interested,,not at all interested
-visnhist,c,,d
-scientgo,agree,agree,agree
-scienthe,agree,agree,disagree
-compwage,e,,d
-marcohab,na,"not married, no cohabitating partner","not married, cohabitating partner"
-trcourts,e,,e
-trbigbus,e,,b
-healthissp,good,very good,poor
-hubbywrk,strongly disagree,,strongly disagree
-marhomo,agree,,neither agree nor disagree
-XMARSEX1,always wrong,,not wrong at all
-conbiz,some confidence,,very little confidence
-conchurh,some confidence,,complete confidence
-concourt,some confidence,some confidence,very little confidence
-conschls,some confidence,some confidence,very little confidence
-godmeans,disagree,,neither agree nor disagree
-egomeans,agree,agree,agree
-relactiv,never,less than once a year,about once or twice a year
-relscrpt,no,,no
-religcon,not agree/dsagre,disagree,disagree
-mywaygod,neither agree nor disagree,strongly disagree,disagree
-relobjct,no,,yes
-relgenbar,neither agree nor disagree,,disagree
-buddhsts,neither positive nor negative,,very negative
-jews,neither positive nor negative,neither positive nor negative,somewhat positive
-nukegen,somewhat dangerous,extremely dangerous,extremely dangerous
-indusgen,extremely dangerous,,somewhat dangerous
-chemgen,very dangerous,,not very dangerous
-LETIN1A,remain the same as it is,reduced a little,"reduced a lot, or"
-numwomen,e,,c
-GENETST1,nothing at all,,nothing at all
-realinc,e,,c
-coninc,e,,b
-conrinc,e,,e
-hispanic,not hispanic,not hispanic,not hispanic
-DWELOWN16,paid rent,owned or was buying,owned or was buying
-wordb,correct,,correct
-wordc,correct,,incorrect
-wordd,correct,correct,incorrect
-worde,correct,,incorrect
-GENDER1,female,female,female
-OLD1,c,,d
-OLD2,e,c,b
-OLD6,e,,c
-OLD7,e,e,c
-OLD8,e,e,b
-OLD11,e,,e
-OLD12,e,e,b
-hefinfo,1st person,,11th person
-hhrace,black,,"other, mixed"
-respnum,1st person,,11th person
-hhtype,"1adlt,0kids","1adlt,0kids","1adlt,0kids"
-famgen,1 gen,,"2 gens, children"
-rplace,head of household,head of household,non-relative
-visitors,no visitors,no visitors,1 visitor
-dateintv,628,615,514
-ISCO88,e,,e
-PAISCO88,e,b,e
-MAISCO88,e,,e
-SEI10,e,e,c
-PASEI10EDUC,e,,c
-MASEI10INC,e,,d
-SPSEI10,e,c,c
-SPSEI10INC,e,e,c
-COSEI10,e,,e
-COPRES105PLUS,e,e,d
-zodiac,leo,leo,cancer
-INTRACE1,white,,asian indian
-WHOELSE1,no,,no
-WHOELSE4,no,,yes
-feeused,"yes, money",,no
-feelevel,d,,c
-intage,60,,39
-intethn,white,,hispanic
-mode,over the phone,,in-person
-intyrs,0,8,3
-consent,r consents to recording interview,,r consents to recording interview
-version,1,,2
-phase,phase one - initial cases,,phase two - sub sampled cases
-spaneng,english,english,english
-hlthstrt,good,,good
-huadd,yes,,no
-kidsinhh,no,no,no
-incuspop,average,lower than average,higher than average
-neisafe,very safe,,somewhat safe
-wtssall,c,,c
-vstrat,3302,3314,3311
-vpsu,2,2,1
+ptsd2,2,1,2
+ptsd4,4,2,3
+ptsd6,3,5,5
+ptsd7,2,3,2
+ptsd10,2,,1
+ptsd13,2,2,2
+ptsd14,2,1,4
+ptsd19,1,3,5
+ptsd20,2,3,2
+ptsd23,1,2,2
+ptsd24,2,3,1
+ptsd25,1,3,4
+ptsd26,2,2,1
+ptsd27,1,1,4
+ptsd28,1,4,1
+ptsd33,1,2,1
+ptsd34,1,2,5
+ptsd35,2,1,4
+ptsd36,1,1,1
+ptsd37,1,,2
+ptsd39,1,1,2
+ptsd40,1,4,1
+ptsd41,1,,4
+ptsd42,1,,4
+ptsd43,4,5,2
+ptsd45,3,3,1
+ptsd46,1,1,5
+ptsd47,1,1,4
+ptsd49,1,3,3
+ptsd53,1,3,3
+ptsd54,1,1,2
+ptsd56,1,2,4
+ptsd57,3,3,2
+ptsd58,2,5,4
+ptsd60,2,2,5
+ptsd63,1,2,3
+ptsd66,3,,1
+ptsd67,1,1,2
+ptsd68,1,1,3
+ptsd71,2,2,2
+ptsd72,2,1,2
+ptsd73,2,4,5
+ptsd74,2,2,4
+ptsd76,1,,5
+ptsd78,2,2,2
+ptsd81,1,2,3
+ptsd82,2,3,1
+ptsd84,1,1,4
+ptsd85,1,,4
+ptsd87,2,4,4
+ptsd88,2,3,4
+ptsd89,2,1,4
+ptsd93,2,3,4
+ptsd99,1,2,4
+ptsd101,2,2,2
+ptsd104,2,4,5
+ptsd105,2,2,2
+ptsd106,1,3,4
+ptsd107,2,,3
+ptsd109,3,2,4
+ptsd111,2,2,5
+ptsd112,1,1,2
+ptsd114,2,2,2
+ptsd116,1,1,4
+ptsd117,1,1,1
+ptsd119,2,,4
+ptsd121,2,1,4
+ptsd123,3,1,4
+ptsd124,2,2,4
+ptsd126,2,,2
+ptsd128,2,2,1
+ptsd129,1,1,1
+ptsd130,1,4,5
+ptsd131,1,1,4
+ptsd134,1,1,2
+ptsd137,1,1,3
+ptsd147,1,1,5
+ptsd148,1,,2
+ptsd149,2,1,2
+ptsd150,1,,4
+ptsd153,1,5,3
+ptsd155,1,2,4
+ptsd156,1,4,2
+ptsd157,1,3,2
+ptsd158,2,2,3
+ptsd160,1,5,4
+ptsd166,2,2,3
+ptsd167,2,1,2
+ptsd168,1,1,4
+ptsd169,1,2,4
+ptsd173,1,1,5
+ptsd174,1,1,1
+ptsd175,1,3,4
+ptsd177,1,1,1
+ptsd178,1,1,4
+ptsd181,2,1,1
+ptsd182,1,1,2
+ptsd184,2,4,3
+ptsd185,2,2,2
+ptsd186,2,1,1
+ptsd187,1,2,3
+ptsd190,1,1,2
+ptsd194,1,1,1
+ptsd196,1,,4
+ptsd198,1,1,1
+ptsd201,1,3,3
+ptsd202,1,,1
+ptsd204,1,,1
+ptsd206,1,3,1
+ptsd209,2,4,4
+ptsd211,3,2,5
