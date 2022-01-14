@@ -1,111 +1,286 @@
 feature_names,sample,qsampled,random_sample
-ptsd1,5,2,5
-ptsd2,1,2,4
-ptsd3,3,5,5
-ptsd6,2,3,2
-ptsd9,4,,2
-ptsd14,3,2,2
-ptsd16,3,1,4
-ptsd17,3,3,5
-ptsd19,2,4,2
-ptsd23,5,2,2
-ptsd24,4,,1
-ptsd27,3,2,4
-ptsd29,3,4,5
-ptsd30,2,4,1
-ptsd31,5,5,5
-ptsd32,3,4,1
-ptsd33,3,2,5
-ptsd34,2,1,4
-ptsd36,4,3,1
-ptsd38,3,,2
-ptsd39,2,1,2
-ptsd41,1,5,5
-ptsd42,3,,3
-ptsd44,2,1,4
-ptsd45,1,3,2
-ptsd46,1,1,1
-ptsd47,5,1,5
-ptsd48,4,,3
-ptsd49,3,3,3
-ptsd50,4,3,3
-ptsd53,2,,3
-ptsd54,1,1,2
-ptsd55,2,,2
-ptsd58,5,5,4
-ptsd60,3,,5
-ptsd61,5,2,5
-ptsd63,1,1,2
-ptsd65,4,,2
-ptsd68,4,5,2
-ptsd70,4,1,2
-ptsd75,4,,5
-ptsd76,5,4,4
-ptsd79,4,2,5
-ptsd80,4,2,2
-ptsd81,4,4,3
-ptsd82,2,3,1
-ptsd84,5,1,4
-ptsd85,3,3,4
-ptsd86,5,2,4
-ptsd87,5,2,4
-ptsd88,3,,4
-ptsd89,5,1,1
-ptsd93,2,3,1
-ptsd95,3,1,1
-ptsd97,5,4,3
-ptsd98,1,1,1
-ptsd99,3,1,3
-ptsd102,5,2,5
-ptsd108,1,2,2
-ptsd111,5,2,2
-ptsd112,1,1,2
-ptsd116,1,2,4
-ptsd120,4,2,2
-ptsd121,1,1,4
-ptsd127,4,3,4
-ptsd129,3,2,4
-ptsd132,3,4,1
-ptsd133,3,2,5
-ptsd134,3,3,2
-ptsd136,3,2,5
-ptsd137,3,1,4
-ptsd139,4,3,1
-ptsd140,3,4,3
-ptsd141,3,1,1
-ptsd142,3,3,2
-ptsd146,3,1,2
-ptsd148,4,,4
-ptsd149,3,1,3
-ptsd150,4,,4
-ptsd151,1,1,2
-ptsd152,1,2,2
-ptsd153,4,4,3
-ptsd157,4,2,4
-ptsd158,3,3,4
-ptsd161,1,1,3
-ptsd163,2,1,4
-ptsd166,3,3,3
-ptsd168,2,3,5
-ptsd170,3,2,1
-ptsd171,3,,2
-ptsd174,3,1,5
-ptsd176,3,4,2
-ptsd177,3,,1
-ptsd178,3,3,2
-ptsd184,2,1,3
-ptsd188,4,1,1
-ptsd189,2,1,3
-ptsd190,1,1,2
-ptsd191,2,1,4
-ptsd192,3,3,4
-ptsd193,2,1,1
-ptsd195,2,1,3
-ptsd196,3,,1
-ptsd198,3,1,1
-ptsd201,3,3,1
-ptsd202,3,,4
-ptsd203,3,,5
-ptsd209,3,3,1
-ptsd210,4,4,2
-ptsd211,5,2,2
+wrkstat,school,working fulltime,school
+HRS1,e,,e
+evwork,yes,,no
+OCC10,c,d,b
+PRESTG105PLUS,d,,b
+widowed,no,,no
+spwrksta,working fulltime,,working parttime
+SPHRS1,d,e,b
+SPHRS2,e,,d
+spwrkslf,someone else,,self-employed
+SPOCC10,b,,b
+SPIND10,"management, scientific, and technical consulting services",,automotive repair and maintenance
+COOCC10,e,e,c
+pawrkslf,someone else,someone else,self-employed
+PAOCC10,c,d,d
+PAPRES105PLUS,d,,d
+PAIND10,d,,e
+mawrkslf,someone else,someone else,someone else
+MAPRES10,c,c,d
+MAPRES105PLUS,c,,d
+childs,c,,b
+paeduc,c,b,b
+speduc,d,c,b
+degree,graduate,,junior college
+padeg,graduate,high school,junior college
+spdeg,graduate,high school,lt high school
+dipged,high school diploma,high school diploma,other
+sex,female,female,female
+RES16,city gt 250000,50000 to 250000,town lt 50000
+REG16,foreign,new england,w. nor. central
+FAMILY16,mother & father,,mother & stpfather
+born,no,,no
+hompop,3,,8
+babies,d,,c
+teens,c,c,e
+adults,2,2,5
+earnrs,c,e,d
+income,$25000 or more,$25000 or more,$4000 to 4999
+rincome,$25000 or more,$25000 or more,lt $1000
+INCOME16,$50000 to 59999,$50000 to 59999,$10000 to 12499
+RINCOM16,$50000 to 59999,,$8 000 to 9 999
+xnorcsiz,"suburb, lrg city",,"city,50-250000"
+srcbelt,"suburb, 12 lrgst",other urban,12 lrgst smsa's
+partyid,independent,"ind,near dem","ind,near rep"
+VOTE12,ineligible,,did not vote
+VOTE16,ineligible,voted,did not vote
+natheal,too much,,about right
+natcrime,too little,,about right
+natdrug,too little,about right,about right
+natarms,about right,too little,about right
+natfare,too little,,too little
+natroad,too much,too little,too little
+natsci,about right,too little,about right
+natenrgy,too little,,too little
+eqwlth,b,c,e
+tax,too high,too high,too high
+spkath,not allowed,,not allowed
+colcom,not fired,not fired,fired
+colhomo,allowed,,not allowed
+libhomo,not remove,not remove,not remove
+libmslm,remove,not remove,remove
+postlife,yes,yes,no
+RELIG16,hinduism,,native american
+happy,very happy,,pretty happy
+hapmar,very happy,,very happy
+life,routine,exciting,dull
+helpful,lookout for self,helpful,lookout for self
+fair,take advantage,take advantage,depends
+trust,can't be too careful,can't be too careful,can't be too careful
+conclerg,only some,only some,a great deal
+coneduc,a great deal,,only some
+conmedic,only some,hardly any,hardly any
+contv,hardly any,,a great deal
+conarmy,a great deal,only some,only some
+obey,3rd important,,least important
+helpoth,most important,3rd important,least important
+weekswrk,c,,e
+partfull,full-time,full-time,part-time
+rank,c,d,d
+WKSUB1,yes,yes,yes
+wksup,yes,,yes
+wksups,yes,,yes
+WKSUP1,yes,,yes
+WKSUPS1,yes,no,yes
+parsol,about the same,,about the same
+kidssol,somewhat better,much worse,no children -volunteered-
+abnomore,yes,no,no
+abpoor,no,no,yes
+abrape,yes,yes,no
+absingle,yes,,yes
+chldidel,e,,b
+xmarsex,always wrong,always wrong,always wrong
+xmovie,yes,,no
+polhitok,no,,no
+polabuse,yes,,no
+polescap,yes,,no
+shotgun,no,no,no
+rifle,no,yes,refused
+hunt,neither,,neither
+tvhours,e,e,e
+phone,cellphone,,phone elsewhere
+form,standard <x>,standard <x>,alternate <y>
+helpblk,c,b,d
+god,some higher power,,believe sometimes
+wlthwhts,e,,e
+wlthhsps,e,c,c
+workwhts,e,,c
+workhsps,e,,c
+intlblks,e,,e
+intlhsps,e,,e
+vigversn,c,e,e
+seriousp,very serious,,not very serious
+charactr,not at all likely,not very likely,not very likely
+wayraise,not at all likely,,not very likely
+stresses,somewhat likely,,very likely
+breakdwn,somewhat likely,somewhat likely,very likely
+mentlill,not very likely,somewhat likely,somewhat likely
+dectreat,somewhat able,somewhat able,not very able
+imprvown,somewhat unlikely,somewhat unlikely,not likely at all
+vigwork,probably willing,,probably willing
+hurtself,somewhat likely,,very likely
+tlkclrgy,yes,yes,yes
+mentloth,yes,,yes
+rxmed,yes,,no
+mentlhos,yes,,no
+mustdoc,no,no,no
+mustmed,no,,yes
+musthosp,no,,no
+dangrslf,yes,yes,no
+CLOSETO2,e,d,b
+CLOSETO3,e,e,b
+SEETALK1,e,c,e
+SEETALK2,e,b,e
+SEETALK3,e,e,c
+SEETALK4,e,e,d
+MYPROBS1,e,,c
+MYPROBS2,e,,e
+MYPROBS3,e,,c
+MYPROBS4,e,e,d
+SEVERE1,e,e,c
+SEVERE2,e,,e
+SEVERE4,e,e,e
+DANGOTH1,e,e,d
+DANGOTH2,e,,c
+DANGOTH4,e,,d
+DANGSLF1,e,,c
+DANGSLF2,e,e,e
+DANGSLF3,e,,c
+DANGSLF4,e,e,c
+DANGSLF5,e,e,e
+fammhneg,not very much,,not at all
+diagnosd,no,,no
+MCSDS1,False,True,False
+MCSDS2,False,True,True
+MCSDS3,False,,False
+MCSDS6,True,,True
+relpersn,modrte religious,very religious,not religious
+othlang,yes,yes,no
+spklang,very well,,poorly/hardly at all
+emailmin,e,e,d
+emailhr,e,,d
+yearsjob,e,c,e
+waypaid,e,c,e
+moredays,e,c,e
+hrsrelax,e,,c
+physhlth,e,c,d
+hlthdays,e,,d
+usetech,e,e,e
+height,e,e,a
+misswork,e,,c
+notsmart,a few times a year,,never
+threaten,never,,never
+hlthphys,very good,,very good
+hlthmntl,very good,very good,excellent
+actssoc,very good,excellent,fair
+physacts,completely,completely,moderately
+fatigue,mild,moderate,mild
+ratepain,b,e,b
+abfelegl,it depends,it depends,should not
+abmoral,it depends,not morally opposed,not morally opposed
+ABHELP1,yes,,no
+ABHELP2,no,yes,no
+ABHELP3,yes,yes,no
+ABHELP4,yes,,yes
+natrelax,strongly agree,strongly agree,strongly disagree
+natactive,strongly agree,,strongly disagree
+natmeet,strongly agree,,strongly agree
+nattimeok,somewhat agree,somewhat agree,somewhat agree
+natlack,somewhat disagree,,somewhat agree
+numpets,c,,d
+extrayr,e,,e
+numemps,e,,d
+colscinm,e,,c
+visnhist,e,c,e
+vissci,e,c,d
+mhdiagno,no,,no
+ratetone,c,c,e
+prvdold,government,,private companies/for-profit organizations
+POLEFF11,agree,strongly agree,strongly agree
+marcohab,married,,"not married, missing on cohabitating"
+kidpars,strongly agree,,disagree
+helpfrds,agree,,strongly disagree
+knwbus,no one,no one,someone else i know
+knwexec,someone else i know,,someone else i know
+knwhrman,family or relative,,family or relative
+knwmchnc,someone else i know,no one,someone else i know
+knwtcher,family or relative,,no one
+smallgap,agree,,strongly disagree
+govlazy,agree,,neither agree nor disagree
+partlsc,several times a year,several times a year,one to three times a month
+hlpsick,close family member,close family member,more distant family member
+hlpdown,close family member,close family member,someone i work with
+hlpsococ,close family member,,neighbor
+hlpjob,other persons,,other organizations
+hlpresde,family members or close friends,,other organizations
+LONELY1,never,,rarely
+LONELY2,never,,sometimes
+cntctpar,daily,,several times a year
+cntctfam,several times a year,,i do not have other family members
+cntctfrd,several times a year, two to three times a month,daily
+intcntct,b,,e
+unhappy,never,never,often
+mygoals,mostly true,,completely untrue
+numlangs,four or more languages,three languages,four or more languages
+goveqinc,agree,,agree
+relactiv,about once or twice a year,never,about once or twice a year
+befair,fair mst of time,fair mst of time,fair mst of time
+partners,1 partner,1 partner,no partners
+sexfreq,once a month,,not at all
+numwomen,c,c,e
+SEXSEX5,exclusively male,,exclusively female
+relatsex,"yes, in relationship","yes, in relationship","yes, in relationship"
+evcrack,no,,no
+hivtest,no,,yes
+sexornt,heterosexual or straight,heterosexual or straight,bisexual
+realinc,c,,e
+ETH1,india,,africa
+RACECEN1,asian indian,black or african american,filipino
+mnthsusa,e,e,c
+vetyears,none,none,less than 2 yrs
+GENDER1,male,male,male
+MAR1,married,married,widowed
+RELATE2,spouse,spouse,non-relative
+OLD2,c,c,a
+OLD3,c,e,d
+OLD6,e,e,e
+OLD8,e,e,b
+OLD9,e,e,b
+OLD11,e,e,e
+OLD12,e,,e
+RELHHD2,spouse,spouse,"son-in-law,daughter-in-law"
+HHTYPE1,married couple w children,married couple w children,cohab couple w children
+famgen,"2 gens, children","2 gens, children","2 gens, grandchldrn"
+rvisitor,r. is household member,,r. is household member
+visitors,no visitors,no visitors,2 visitors
+RELHH2,spouse,,"roommate, housemate"
+MAISCO88,b,,c
+PAISCO08,specialist medical practitioners,,travel attendants and travel stewards
+SPISCO08,advertising and marketing professionals,product graders and testers (excluding foods and beverages),paper products machine operators
+SEI10,d,c,b
+SEI10EDUC,d,b,b
+PASEI10,e,,d
+MASEI10EDUC,d,,c
+MASEI10INC,d,,e
+SPSEI10,d,,e
+COSEI10EDUC,e,,e
+COPRES105PLUS,e,,c
+WHOELSE1,yes,,yes
+WHOELSE5,no,,no
+feeused,"yes, money",,"yes, other (flowers, food, etc.)"
+intage,60,71,72
+intethn,white,white,asian
+mode,in-person,over the phone,in-person
+consent,r consents to recording interview,r consents to partcipate in the survey but does not want to be recorded,r consents to partcipate in the survey but does not want to be recorded
+version,3,3,3
+issp,did issp,,didnt do issp
+phase,phase one - initial cases,,phase one - initial cases
+huadd,yes,,no
+dwellpre,detached single family house,,detached 3-4 family house
+incuspop,average,lower than average,lower than average
+neisafe,very safe,,somewhat safe
+rlooks,attractive,,unattractive
+rweight,about the right weight,slightly overweight,about the right weight
+wtssnr,c,c,b
+vstrat,3303,,3351

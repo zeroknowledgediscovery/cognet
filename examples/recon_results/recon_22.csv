@@ -1,112 +1,276 @@
 feature_names,sample,qsampled,random_sample
-ptsd4,4,3,1
-ptsd5,1,1,1
-ptsd7,5,,5
-ptsd8,5,3,2
-ptsd10,3,4,1
-ptsd11,3,2,1
-ptsd12,4,,3
-ptsd14,4,3,5
-ptsd15,3,3,2
-ptsd18,2,3,2
-ptsd19,3,3,3
-ptsd25,3,1,4
-ptsd26,3,3,1
-ptsd29,2,1,1
-ptsd30,4,4,5
-ptsd33,4,2,1
-ptsd35,3,1,5
-ptsd36,4,2,3
-ptsd37,4,2,2
-ptsd40,3,,3
-ptsd42,4,1,3
-ptsd45,2,1,4
-ptsd46,1,1,5
-ptsd47,2,1,3
-ptsd48,4,4,2
-ptsd49,4,3,1
-ptsd50,4,2,3
-ptsd54,1,1,2
-ptsd56,2,3,4
-ptsd57,4,5,2
-ptsd58,4,,1
-ptsd60,4,,5
-ptsd63,1,1,3
-ptsd64,2,,3
-ptsd65,4,3,3
-ptsd66,1,1,3
-ptsd67,2,2,3
-ptsd69,4,,2
-ptsd70,3,4,4
-ptsd72,4,3,5
-ptsd76,3,5,5
-ptsd83,3,2,2
-ptsd88,3,,3
-ptsd90,4,2,1
-ptsd91,4,4,3
-ptsd92,4,,3
-ptsd93,3,,1
-ptsd95,2,3,3
-ptsd100,5,5,5
-ptsd103,3,,2
-ptsd105,4,3,2
-ptsd106,4,4,4
-ptsd107,4,3,4
-ptsd109,4,3,2
-ptsd110,5,4,4
-ptsd113,2,,4
-ptsd114,3,2,4
-ptsd115,1,1,4
-ptsd117,4,1,4
-ptsd118,3,2,4
-ptsd120,4,3,4
-ptsd123,4,,4
-ptsd124,4,4,1
-ptsd125,3,4,1
-ptsd126,3,1,2
-ptsd128,4,,4
-ptsd129,3,2,3
-ptsd130,4,1,5
-ptsd132,4,,2
-ptsd133,4,3,2
-ptsd136,3,,4
-ptsd139,4,,2
-ptsd142,4,3,1
-ptsd143,4,,1
-ptsd145,4,1,4
-ptsd148,4,2,1
-ptsd149,3,1,5
-ptsd151,1,3,2
-ptsd153,4,5,5
-ptsd154,4,4,4
-ptsd156,4,2,2
-ptsd157,4,1,3
-ptsd159,4,,5
-ptsd161,1,1,2
-ptsd162,1,1,2
-ptsd163,4,2,4
-ptsd168,1,1,3
-ptsd173,4,,4
-ptsd174,4,5,2
-ptsd175,4,3,2
-ptsd176,2,2,3
-ptsd178,3,4,3
-ptsd180,4,2,3
-ptsd182,2,2,3
-ptsd183,1,4,4
-ptsd184,1,4,4
-ptsd185,3,1,1
-ptsd187,4,4,2
-ptsd188,4,2,4
-ptsd190,1,,3
-ptsd191,3,3,1
-ptsd192,4,4,2
-ptsd193,1,2,2
-ptsd194,3,2,3
-ptsd195,4,,3
-ptsd196,4,,5
-ptsd199,3,,5
-ptsd204,5,3,1
-ptsd206,4,,4
-ptsd207,4,3,1
-ptsd210,5,2,3
+HRS1,e,c,b
+HRS2,e,,a
+evwork,yes,,no
+wrkslf,someone else,someone else,someone else
+wrkgovt,private,,government
+OCC10,d,,d
+PRESTG10,c,,b
+PRESTG105PLUS,c,c,d
+INDUS10,c,,b
+marital,married,,separated
+spwrksta,retired,,temp not working
+COHRS1,e,,c
+COHRS2,e,e,c
+spwrkslf,someone else,,someone else
+SPPRES10,c,c,a
+SPIND10,wired telecommunications carriers,,"pottery, ceramics, and plumbing fixture manufacturing"
+COOCC10,e,e,d
+PAPRES10,d,c,c
+PAPRES105PLUS,d,,b
+PAIND10,d,,d
+MAOCC10,e,e,b
+MAPRES10,e,e,d
+MAPRES105PLUS,e,b,e
+sibs,c,c,b
+childs,e,c,e
+age,e,d,d
+agekdbrn,c,e,c
+educ,b,c,c
+maeduc,c,c,a
+coeduc,e,,b
+degree,lt high school,,bachelor
+madeg,high school,,bachelor
+spdeg,high school,,high school
+sex,male,female,male
+parborn,both in u.s,both in u.s,mother; fa. dk
+granborn,d,e,e
+babies,c,c,c
+preteen,c,c,c
+teens,c,,c
+adults,2,,5
+income,$25000 or more,,$15000 - 19999
+size,43,3,111
+PRES12,obama,obama,didn't vote for president
+natchld,too little,too little,about right
+natenrgy,too little,,about right
+natspacy,too much,,about right
+natcrimy,too much,about right,about right
+nateducy,too much,too little,about right
+natarmsy,about right,,about right
+spkath,allowed,allowed,not allowed
+libath,not remove,not remove,remove
+spkrac,allowed,,not allowed
+colmil,allowed,allowed,not allowed
+libmil,not remove,not remove,not remove
+colhomo,allowed,,not allowed
+spkmslm,"yes, allowed","yes, allowed",not allowed
+courts,not harsh enough,,not harsh enough
+grass,not legal,not legal,legal
+fund,moderate,moderate,fundamentalist
+attend,more thn once wk,more thn once wk,more thn once wk
+postlife,yes,,no
+pray,several times a day,,several times a day
+popespks,certainly true,,certainly false
+FUND16,moderate,moderate,liberal
+sprel,catholic,protestant,jewish
+spfund,moderate,moderate,fundamentalist
+bible,word of god,book of fables,inspired word
+racopen,owner decides,cant discriminate,owner decides
+happy,not too happy,,not too happy
+life,routine,routine,routine
+helpful,helpful,lookout for self,helpful
+fair,fair,,fair
+trust,can't be too careful,,depends
+conbus,only some,a great deal,only some
+coneduc,a great deal,hardly any,only some
+confed,only some,only some,a great deal
+conlabor,a great deal,,a great deal
+conpress,a great deal,hardly any,only some
+conmedic,a great deal,,only some
+conjudge,only some,,only some
+conlegis,hardly any,hardly any,only some
+conarmy,a great deal,,hardly any
+obey,4th important,3rd important,most important
+popular,least important,least important,least important
+thnkself,most important,most important,least important
+workhard,3rd important,3rd important,most important
+aged,a good idea,,a good idea
+class,middle class,,middle class
+rank,c,c,d
+unemp,no,,no
+union,neither belongs,,spouse belongs
+getahead,luck or help,,luck or help
+kidssol,somewhat better,somewhat better,much worse
+abany,no,yes,no
+chldidel,e,,d
+xmovie,no,no,no
+polabuse,no,no,no
+pistol,no,no,no
+rifle,no,no,yes
+phone,phone in home,,phone elsewhere
+coop,"friendly,interested",,"restless,impatient"
+random,e,e,e
+helppoor,b,c,e
+helpblk,b,,e
+god,know god exists,,believe sometimes
+wlthhsps,e,,c
+workblks,e,c,c
+intlblks,e,,e
+intlhsps,e,e,e
+vigversn,d,,c
+wayraise,not very likely,,somewhat likely
+godswill,not at all likely,not at all likely,somewhat likely
+physill,somewhat likely,somewhat likely,not very likely
+imprvtrt,very likely,very likely,somewhat unlikely
+vigfrnd,probably unwilling,definitely unwilling,probably willing
+vigmar,probably unwilling,,probably unwilling
+tlkclrgy,yes,,no
+meddoc,yes,yes,yes
+mentldoc,yes,,no
+sphealer,no,,yes
+selfhelp,no,yes,no
+otcmed,no,,no
+mentlhos,yes,,yes
+dofirst,talk to family and friends about it,,go to a psychiatrist for help
+mustmed,yes,no,yes
+musthosp,yes,yes,no
+dangrslf,yes,yes,no
+MHP1R1,child,,friend of a relative
+CLOSETO1,d,c,c
+CLOSETO2,e,e,c
+CLOSETO4,e,,b
+SEETALK4,e,,c
+MYPROBS1,c,,e
+MYPROBS4,e,e,e
+MYPROBS5,e,e,d
+SEVERE2,e,,d
+SEVERE3,e,e,d
+SEVERE4,e,e,c
+DANGOTH5,e,,e
+DANGSLF1,b,,c
+DANGSLF3,e,,c
+DANGSLF4,e,e,e
+DANGSLF5,e,,d
+fammhneg,not at all,somewhat,very much
+diagnosd,no,no,yes
+MCSDS1,False,,False
+MCSDS3,False,False,False
+MCSDS5,True,False,False
+sprtprsn,slight spiritual,,not spiritual
+othlang,no,,no
+emailmin,e,,d
+emailhr,e,c,d
+wwwmin,e,e,e
+waypaid,e,,e
+hrsrelax,e,c,e
+physhlth,e,e,d
+hurtatwk,e,,c
+height,e,b,d
+ntwkhard,e,,e
+misswork,e,c,d
+LIFEIN5,e,,a
+disrspct,a few times a month,at least once a week,never
+afraidof,never,never,never
+threaten,never,never,a few times a month
+hlthphys,fair,,excellent
+hlthmntl,good,,fair
+satsoc,good,,very good
+physacts,completely,completely,completely
+emoprobs,b,b,b
+abmelegl,should,should,should not
+ABSTATE1,easy,easy,neither easy nor hard
+ABHELP1,yes,no,no
+ABHELP2,no,,no
+ABHELP3,yes,no,yes
+ABHELP4,yes,yes,yes
+natnotice,strongly agree,,strongly agree
+natviews,strongly agree,somewhat agree,strongly agree
+natrelax,strongly agree,strongly agree,strongly agree
+natactive,strongly agree,,somewhat agree
+natmeet,somewhat agree,,strongly disagree
+PETB4,no,yes,yes
+extrayr,e,e,b
+viszoo,e,,e
+vissci,e,,d
+mhunsure,agree,,agree
+mhdiagno,yes,,no
+prvdold,non-profit organizations/charities/cooperatives,government,private companies/for-profit organizations
+posslqy,i am married and living in the same household as my husband or wife.,i am married and living in the same household as my husband or wife.,"i have a steady partner, and we live in the same household."
+helpfrds,agree,,neither agree nor disagree
+knwbus,someone else i know,family or relative,no one
+knwexec,family or relative,,close friend
+knwclenr,someone else i know,someone else i know,someone else i know
+knwhrman,no one,,someone else i know
+knwlawyr,family or relative,,family or relative
+knwnurse,family or relative,family or relative,family or relative
+knwcop,family or relative,close friend,no one
+partlsc,never,,once a week or more
+partpart,never,,several times a year
+partvol,once a week or more,one to three times a month,one to three times a month
+hlphome,close family member,,someone else
+hlploan,private companies,,other organizations
+hlppaper,family members or close friends,other persons,non-profit or religious organizations
+hlpsickr,family members or close friends,family members or close friends,public services
+LONELY1,never,never,very often
+LONELY2,never,,sometimes
+dinefrds,never,,never
+conwkday,5-9 people,,5-9 people
+CONF2F,all or almost all of them,,some of them
+cntctpar,my parents are no longer alive,,several times a year
+cntctkid,daily,,never
+cntctfam,less often,,daily
+cntctfrd,daily, two to three times a month,several times a year
+intcntct,e,,d
+satlife,mostly satisfied,,somewhat dissatisfied
+endsmeet,neither easy nor difficult,fairly difficult,neither easy nor difficult
+goodlife,disagree,disagree,strongly agree
+marhomo,agree,,agree
+relactiv,several times a week,less than once a year,nearly every week
+befair,fair mst of time,fair mst of time,advntge mst time
+cantrust,always trusted,usual not trsted,usual not trsted
+numwomen,e,,e
+nummen,e,c,c
+HIVTEST1,e,,b
+GENEGOO2,c,e,e
+maleornt,r sexual orientation uncertain,,r is homosexual/gay
+realinc,c,c,d
+ethnic,ireland,,africa
+ethnum,names 1,,names 1
+RACECEN1,white,,some other race
+mnthsusa,e,e,e
+OLD1,e,d,e
+MAR1,married,,widowed
+RELATE2,spouse,spouse,non-relative
+OLD4,e,e,e
+OLD6,e,e,e
+OLD7,e,e,d
+OLD9,e,,b
+OLD10,e,e,e
+OLD12,e,e,e
+RELHHD2,spouse,spouse,"son-in-law,daughter-in-law"
+hefinfo,1st person,1st person,2nd person
+respnum,1st person,2nd person,1st person
+hhtype,"2adlts,mar,0kids","2adlts,mar,0kids","4+adlts,3mar,0kids"
+HHTYPE1,"married couple, no children","married couple, no children",unsure w children
+famgen,1 gen,,4 gens
+rplace,head of household,spouse,other relative
+rvisitor,r. is household member,,r. is household member
+visitors,no visitors,,no visitors
+RELHH2,spouse,,biological child
+ISCO08,"supply, distribution and related managers",commercial sales representatives,mineral and stone processing plant operators
+SPISCO08,commercial sales representatives,administrative and executive secretaries,advertising and public relations managers
+PASEI10INC,d,d,c
+MASEI10EDUC,e,,e
+SPSEI10EDUC,c,,e
+SPSEI10INC,c,,e
+COSEI10EDUC,e,,c
+COSEI10INC,e,,c
+COPRES105PLUS,e,,e
+inthisp,not hispanic,,puerto rican
+INTRACE1,white,,asian indian
+WHOELSE2,no,,yes
+WHOELSE4,yes,no,no
+WHOELSE6,no,no,no
+feelevel,e,c,a
+lngthinv,83,136,130
+intethn,white,white,hispanic
+mode,in-person,,in-person
+intsex,female,,female
+phase,phase one - initial cases,,phase two - sub sampled cases
+dwellpre,detached single family house,detached single family house,detached 3-4 family house
+kidsinhh,no,,yes
+neisafe,very safe,,very safe
+rgroomed,about average,very well groomed,very poorly groomed
+wtssall,c,c,d
+vpsu,2,,1

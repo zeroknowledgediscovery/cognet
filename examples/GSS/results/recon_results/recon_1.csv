@@ -1,10 +1,12 @@
 feature_names,sample,qsampled,random_sample
-grass,legal,not legal,not legal
-prayer,approve,disapprove,disapprove
-conlabor,hardly any,only some,only some
-intmil,moderately interested,moderately interested,not at all interested
-godchnge,"don't believe now, used to","believe now, always have","don't believe now, used to"
-prayfreq,2-3 times a month,about once or twice a year,never
-religcon,not agree/dsagre,disagree,strong disagree
-religint,agree,not agree/dsagre,disagree
-comfort,agree,agree,disagree
+grass,legal,not legal,legal
+reliten,no religion,not very strong,strong
+bible,inspired word,word of god,word of god
+conlabor,hardly any,only some,hardly any
+polabuse,no,no,no
+viruses,True,True,False
+intmil,moderately interested,very interested,not at all interested
+abpoorw,wrong only sometimes,wrong only sometimes,always wrong
+religcon,not agree/dsagre,not agree/dsagre,agree
+religint,agree,agree,strongly agree
+comfort,agree,agree,strongly disagree
