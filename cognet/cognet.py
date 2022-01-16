@@ -303,7 +303,7 @@ class cognet:
                   steps=0,
                   mutable=False,
                   VERBOSE=False,
-                  restrict=True,
+                  restrict=False,
                   nsamples = None,
                   random=False):
         '''set the poles and samples such that the samples contain features in poles
@@ -315,7 +315,7 @@ class cognet:
           pole_2 (str): column name for second pole
           mutable (bool): Whether or not to set poles as the only mutable_vars
           VERBOSE (bool): boolean flag prints number of pole features not found in sample features if True
-          restrict (bool): boolean flag restricts the sample features to polar features if True
+          restrict (bool): boolean flag restricts the sample features to polar features if True. Defaults to False.
           random (bool): boolean flag takes random sample of all_samples
         '''
         invalid_count = 0
@@ -488,25 +488,41 @@ class cognet:
     
     def distfunc_multiples(self,
                            outfile,
-                           processes=6):
+                           processes=6,
+                           samples=None):
         """compute distance matrix for all samples in the dataset
 
         Args:
           outfile (str): desired output filename and path
+          processes (int): Number of processes to run in parallel. Defaults to 6.
+          samples (2D array): Dataset from which to calculate qdist matrix. Defaults to None.
           
         Returns:
           result: pandas.DataFrame containing distance matrix
         """
         if all(x is not None for x in [self.samples, self.features]):
+            # if exterior dataset is given, temporarily replace class attributes
+            if samples is not None:
+                original_samples = self.samples
+                original_samples_as_strings = self.samples_as_strings
+                self.samples = samples
+                samples = samples.fillna("").values.astype(str)
+                self.samples_as_strings = samples
             cols = [i for i in range(len(self.samples))]
             result = self.mp_compute(processes,
                                         self.distfunc_line,
                                         cols,
                                         outfile)
+            
             # format and save resulting dict, and tranpose symmetrical distance matrix
             result = result.to_numpy()
             result = pd.DataFrame(np.maximum(result, result.transpose()))
             result.to_csv(outfile, index=None, header=None)
+            
+            # replace class attributes with originals
+            if samples is not None:
+                self.samples = original_samples
+                self.samples_as_strings = original_samples_as_strings
         else:
             raise ValueError("load data first!")
         
