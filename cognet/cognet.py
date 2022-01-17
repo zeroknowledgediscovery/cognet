@@ -13,6 +13,8 @@ import os
 import numpy as np
 import pandas as pd
 import random
+from tqdm import tqdm
+from pqdm.threads import pqdm  
 
 class cognet:
     """Aggregate related Qnet functions
@@ -271,29 +273,53 @@ class cognet:
             return qsample(sample,self.qnet,steps)
 
     def random_sample(self,
+                      type="prob",
                       df=None,
-                      n=1):
+                      n=1,
+                      steps=200,
+                      n_jobs=3):
         '''compute a random sample from the underlying distributions of the dataset, by column.
         
         
         Args:
+          type (str): How to randomly draw samples. Can take on "null", "uniform", or "prob". Deafults to "prob".
           df (pandas.DataFrame): Desired data to take random sample of. Defaults to None, in which case qnet samples are used.
           n (int): number of random samples to take. Defaults to 1.
+          steps (int): number of steps to qsample. Defaults to 1000
           
         Returns:
-          return_df (pd.DataFrame): Random sample drawn from underlying distribution of each column.
+          return_df (pd.DataFrame): Drawn random sample.
         '''
-        # check if a new dataset was inputted
+        # check if a new dataset was given
         if df is None:
             samples_ = self.samples
         else:
             samples_ = df
 
-        # take random sample from each of the columns based on their distribution
         return_df = pd.DataFrame()
-        for col in samples_.columns:
-            return_df[col] = samples_[col].sample(n=n, replace=True).values
+        # take random sample from each of the columns based on their probability distribution
+        if type == "prob":
+            for col in samples_.columns:
+                return_df[col] = samples_[col].sample(n=n, replace=True).values
+                
+        # random sampling using Qnet qsampling
+        elif type == "null":
+            null_array = np.zeros((len(samples_.columns),), dtype=str)
+            args = [[null_array, steps] for i in range(n)]
+            qsamples = pqdm(args, self.qsampling, n_jobs=n_jobs, argument_type='args') 
             
+            # for i in range(n):
+            #     qsamples.append(self.qsampling(null_array, steps))
+            return_df = pd.DataFrame(qsamples, columns=samples_.columns)
+            
+        # random sampling using uniform distribution of values by Columns
+        elif type == "uniform":
+            for col in samples_.columns:
+                # get unqiue values for each column and draw n values randomly
+                values = samples_[col].unique().astype(str)
+                return_df[col]=np.random.choice(values, size=n, replace=True)
+        else:
+            raise ValueError("Type is not supported!")
         return return_df
     
     def set_poles(self,

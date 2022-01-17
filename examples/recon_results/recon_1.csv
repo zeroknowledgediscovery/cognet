@@ -1,332 +1,309 @@
 feature_names,sample,qsampled,random_sample
-wrkslf,someone else,,someone else
-wrkgovt,private,,private
-PRESTG10,d,,a
-PRESTG105PLUS,d,,b
+wrkstat,working fulltime,,other
+HRS1,c,c,c
+HRS2,e,,a
+OCC10,b,c,d
+PRESTG10,d,c,e
+INDUS10,c,,d
 martype,marriage between a man and a woman,marriage between a man and a woman,marriage between people of the same gender
-spwrksta,working fulltime,working fulltime,working parttime
-SPHRS1,c,e,d
-SPHRS2,e,e,b
-COHRS2,e,,b
-spwrkslf,someone else,someone else,someone else
-SPOCC10,c,c,e
-SPPRES10,c,d,a
-SPPRES105PLUS,c,,b
-COOCC10,e,b,d
-PAPRES105PLUS,d,c,c
-PAIND10,c,,c
-MAOCC10,c,,b
-MAPRES105PLUS,c,c,b
-educ,c,b,d
-speduc,c,,c
-degree,bachelor,,high school
-dipged,high school diploma,,high school diploma
-race,white,white,black
-MOBILE16,different state,,"same st,dif city"
-FAMILY16,father & stpmother,mother,other
-mawrkgrw,yes,,yes
-INCOM16,above average,,above average
-parborn,father only,,both in u.s
-granborn,c,,d
-hompop,4,,8
+divorce,no,no,yes
+widowed,no,,yes
+SPHRS2,e,,a
+COHRS1,e,,c
+SPOCC10,c,c,d
+SPPRES10,c,,e
+SPPRES105PLUS,c,,e
+SPIND10,pharmaceutical and medicine manufacturing,elementary and secondary schools,"other amusement, gambling, and recreation industries"
+PAPRES10,e,,b
+PAPRES105PLUS,d,,b
+mawrkslf,someone else,,self-employed
+MAPRES105PLUS,c,,b
+MAIND10,banking and related activities,,other motor vehicle dealers
+childs,c,,d
+age,c,,b
+agekdbrn,d,,e
+educ,c,c,e
+paeduc,c,c,b
+padeg,high school,high school,junior college
+madeg,bachelor,,lt high school
+spdeg,junior college,high school,junior college
+race,white,white,other
+MOBILE16,different state,,same city
+FAMILY16,father & stpmother,mother & father,mother & stpfather
+born,yes,,no
+parborn,father only,both in u.s,neither in u.s
+hompop,4,3,2
 babies,e,c,c
-teens,e,,c
-adults,2,1,5
-unrelat,c,,e
-rincome,$25000 or more,$25000 or more,$3000 to 3999
-INCOME16,$150000 to $169999,,$10000 to 12499
-RINCOM16,$90000 to $109999,,$30000 to 34999
-region,new england,,south atlantic
-size,14,,787
-VOTE12,voted,voted,voted
+teens,e,c,c
+rincome,$25000 or more,lt $1000,$1000 to 2999
+region,new england,e. sou. central,mountain
+size,14,209,584
+VOTE12,voted,voted,did not vote
+PRES12,romney,,didn't vote for president
+PRES16,trump,other candidate (specify),iap
 natspac,too little,,too much
-natenvir,too little,about right,about right
-natheal,too little,,too little
-natrace,too little,too little,too much
-natroad,too little,,about right
-natpark,about right,about right,too much
-natenrgy,too little,too much,about right
-eqwlth,c,,b
-cappun,favor,,favor
-courts,not harsh enough,,not harsh enough
-relig,none,catholic,buddhism
-fund,liberal,,moderate
-reliten,no religion,,not very strong
-postlife,yes,,no
-FUND16,moderate,moderate,liberal
-sprel,catholic,protestant,none
-spfund,moderate,,fundamentalist
-bible,inspired word,inspired word,other
-raclive,no,yes,yes
-happy,very happy,,not too happy
-helpful,helpful,helpful,depends
-fair,fair,take advantage,fair
-confinan,hardly any,,a great deal
-conbus,only some,,only some
-conlabor,hardly any,only some,a great deal
-conmedic,a great deal,,only some
-conjudge,a great deal,hardly any,only some
-conarmy,only some,a great deal,only some
-socrel,almost daily,sev times a week,sev times a year
-socbar,once a year,,once a month
-weekswrk,c,,c
-partfull,full-time,,full-time
-jobfind,somewhat easy,,very easy
-satjob,mod. satisfied,mod. satisfied,very satisfied
-class,middle class,middle class,working class
-finalter,better,stayed same,worse
-WKSUB1,yes,yes,yes
-WKSUBS1,yes,yes,no
-WKSUP1,yes,yes,no
-unemp,no,,no
-union,neither belongs,,neither belongs
-parsol,about the same,,about the same
-kidssol,somewhat better,somewhat better,no children -volunteered-
-fepol,disagree,,disagree
-pillok,disagree,,strongly agree
-sexeduc,oppose,,oppose
+natenvir,too little,,too little
+natheal,too little,too much,too much
+natcity,about right,,about right
+natdrug,too little,too little,about right
+nateduc,too little,too little,too much
+natfare,too little,too little,too much
+natroad,too little,too little,too much
+natmass,too little,too little,too little
+natpark,about right,too little,about right
+natenrgy,too little,,too much
+eqwlth,c,d,c
+grass,legal,legal,legal
+attend,once a year,,once a year
+pray,lt once a week,,once a day
+RELIG16,catholic,,moslem/islam
+spfund,moderate,liberal,moderate
+prayer,approve,approve,disapprove
+bible,inspired word,inspired word,word of god
+raclive,no,,yes
+trust,can't be too careful,can't be too careful,can't be too careful
+conclerg,hardly any,only some,only some
+conpress,hardly any,,hardly any
+contv,only some,,hardly any
+conjudge,a great deal,only some,hardly any
+consci,a great deal,,only some
+conlegis,hardly any,,hardly any
+conarmy,only some,,a great deal
+popular,4th important,,4th important
+thnkself,most important,2nd important,3rd important
+workhard,2nd important,3rd important,least important
+socrel,almost daily,,never
+socfrend,once a month,sev times a year,sev times a mnth
+socbar,once a year,sev times a year,once a month
+partfull,full-time,,part-time
+joblose,not likely,,not likely
+finrela,above average,average,far above average
+WKSUB1,yes,,yes
+WKSUBS1,yes,yes,yes
+wksup,yes,yes,no
+WKSUPS1,no,no,no
+union,neither belongs,neither belongs,r belongs
+UNION1,neither belongs,,neither belongs
+parsol,about the same,somewhat worse,somewhat worse
+chldidel,c,,e
+pillok,disagree,,disagree
+sexeduc,oppose,favor,favor
 divlaw,more difficult,,easier
-premarsx,not wrong at all,not wrong at all,almst always wrg
-teensex,always wrong,,sometimes wrong
+premarsx,not wrong at all,,always wrong
+teensex,always wrong,always wrong,almst always wrg
+xmovie,no,yes,no
 LETDIE1,yes,yes,yes
-SUICIDE2,no,yes,no
-SUICIDE3,no,,no
-polmurdr,no,,no
-polescap,yes,,no
-polattak,yes,,no
-news,never,,few times a week
-tvhours,c,,b
+SUICIDE2,no,,no
+polhitok,no,,no
+polabuse,no,,yes
+polattak,yes,no,no
+tvhours,c,c,e
+coop,"friendly,interested","friendly,interested",cooperative
 form,standard <x>,,alternate <y>
-random,b,,c
-fechld,strongly agree,,disagree
-fefam,disagree,,strongly disagree
+random,b,,e
+fefam,disagree,agree,disagree
 RACDIF1,yes,,no
-RACDIF2,no,,no
-helpnot,d,c,c
-numcong,c,,d
-wlthwhts,c,,e
-wlthblks,c,,c
-wlthhsps,c,c,c
-workblks,c,,c
-intlblks,c,,e
-liveblks,favor,favor,strongly favor
-marblk,strongly favor,,oppose
-marhisp,favor,oppose,oppose
-yousup,c,c,c
-spwksup,no,,yes
-vigversn,e,,b
-CLOSETO3,e,e,e
-SEETALK4,e,,e
-MYPROBS1,e,e,d
-MYPROBS4,e,e,d
-SEVERE2,e,e,c
-SEVERE3,e,,b
-SEVERE4,e,e,e
+RACDIF2,no,yes,yes
+RACDIF3,yes,no,yes
+RACDIF4,no,no,no
+helppoor,c,,d
+helpnot,d,,c
+helpblk,c,,e
+god,believe but doubts,,believe but doubts
+numcong,c,,e
+workwhts,c,,e
+workblks,c,,e
+workhsps,c,c,e
+liveblks,favor,,strongly oppose
+MARAsian,strongly favor,strongly favor,strongly oppose
+marwht,favor,favor,neither favor nor oppose
+spwksup,no,no,yes
+discaffm,somewhat unlikely,somewhat likely,very likely
+CLOSETO2,e,e,d
+CLOSETO3,e,e,c
+SEETALK4,e,,d
+MYPROBS2,e,,c
+SEVERE2,e,,c
+SEVERE3,e,e,d
+SEVERE4,e,,c
 SEVERE5,e,e,b
-DANGOTH3,e,,c
-DANGSLF1,e,e,c
-DANGSLF3,e,,d
-relpersn,slight religious,very religious,slight religious
-sprtprsn,modeate spirtual,,not spiritual
-othlang,no,yes,yes
+DANGOTH2,e,e,d
+DANGOTH4,e,c,e
+DANGOTH5,e,,c
+DANGSLF1,e,e,d
+DANGSLF3,e,e,d
+DANGSLF5,e,e,d
+othlang,no,yes,no
+compuse,yes,yes,no
 emailhr,d,,c
-wwwmin,c,c,d
-waypaid,c,,e
-moredays,c,c,c
-mustwork,no,no,yes
-wrkhome,a few times a year,,more than once a week
-wkvsfam,sometimes,sometimes,often
-hrsrelax,c,c,d
-workfast,disagree,agree,strongly disagree
-myskills,agree,agree,strongly disagree
-respect,agree,,strongly agree
-trustman,agree,agree,strongly disagree
-safetywk,agree,agree,agree
-teamsafe,agree,agree,strongly agree
-wksmooth,agree,,disagree
-toofewwk,often,rarely,rarely
-opdevel,somewhat true,somewhat true,not at all true
-hlpequip,very true,not too true,not at all true
-haveinfo,somewhat true,,not too true
-supcares,somewhat true,,not at all true
-condemnd,somewhat true,not too true,not at all true
-jobsecok,somewhat true,,not at all true
-wrktime,not too true,very true,somewhat true
-manvsemp,quite good,quite good,quite good
-hvylift,no,no,no
-wkpraise,yes,no,yes
-fairearn,somewhat more than you deserve,much less than you deserve,somewhat less than you deserve
-rincblls,yes,yes,no
-laidoff,no,,no
-JOBFIND1,somewhat easy to find similar job,somewhat easy to find similar job,very easy to find similar job
-wkageism,no,,yes
-wkracism,no,,no
-physhlth,c,,c
-mntlhlth,c,c,d
-backpain,no,,no
-painarms,no,no,no
-spvtrfair,somewhat true,,not at all true
-STRESS12,no,no,no
-arthrtis,no,yes,no
-diabetes,no,no,yes
-depress,no,no,no
-weight,c,,d
-ntwkhard,c,,d
-lifenow,c,,b
-LIFEIN5,d,,a
-quallife,excellent,,fair
-hlthphys,good,,excellent
-hlthmntl,very good,fair,good
-actssoc,excellent,,very good
-abmelegl,it depends,it depends,it depends
-ABSTATE1,very easy,,hard
-ABSTATE2,make it harder,make it easier,stay the same as now
-ABHELP2,no,no,yes
-ABHELP4,yes,,no
-ABMEDGOV1,a woman and her medical professional should decide,,a woman and her medical professional should decide
-WORKFOR1,for-profit company,,government or government agency
-stockops,no,no,yes
-compperf,yes,yes,no
+yearsjob,c,,d
+wrksched,night shift,split shift,rotating shifts
+mustwork,no,no,no
+whywkhme,worker wants to work at home,,worker has to work at home to keep up with job
+famwkoff,not at all hard,not at all hard,not at all hard
+famvswk,sometimes,,rarely
+secondwk,no,yes,yes
+learnnew,agree,,strongly disagree
+workfast,disagree,,disagree
+workdiff,agree,,strongly agree
+overwork,agree,disagree,agree
+myskills,agree,agree,agree
+respect,agree,,disagree
+safetywk,agree,agree,strongly disagree
+wksmooth,agree,agree,strongly disagree
+partteam,"yes, i work as part of a team",,"no, i work mostly on my own"
+toofewwk,often,,never
+promteok,somewhat true,,somewhat true
+haveinfo,somewhat true,,not at all true
+fringeok,very true,,not at all true
+supcares,somewhat true,,somewhat true
+condemnd,somewhat true,,very true
+cowrkint,somewhat true,somewhat true,very true
+jobsecok,somewhat true,,very true
+manvsemp,quite good,,very bad
+hvylift,no,,no
+fairearn,somewhat more than you deserve,about as much as you deserve,somewhat more than you deserve
+JOBFIND1,somewhat easy to find similar job,very easy to find similar job,not easy at all to find similar job
+trynewjb,not at all likely,,very likely
+wkracism,no,,yes
+physhlth,c,d,d
+mntlhlth,c,,c
+painarms,no,no,yes
+hurtatwk,c,c,c
+spvtrfair,somewhat true,somewhat true,not too true
+slpprblm,sometimes,,sometimes
+SATJOB1,somewhat satisfied,somewhat satisfied,somewhat satisfied
+knowschd,4 weeks or more,,between 3 and 4 weeks
+STRESS12,no,,no
+depress,no,no,yes
+weight,c,c,d
+misswork,c,,d
+LIFEIN5,d,c,e
+quallife,excellent,very good,excellent
+hlthphys,good,very good,good
+satsoc,very good,good,good
+physacts,completely,not at all,moderately
+ratepain,c,,c
+abmoral,it depends,,morally opposed
+ABSTATE2,make it harder,,make it harder
+ABHELP3,yes,,yes
+stockval,c,,d
+extrapay,yes,,yes
+compperf,yes,no,no
+deptperf,no,yes,yes
+indperf,yes,,no
+EXTR2017,yes,no,yes
 extraval,c,,c
-extrayr,e,,b
-yearval,e,,c
-newsfrom,radio,,government agencies
-advfront,disagree,strongly disagree,strongly disagree
-astrosci,not at all scientific,sort of scientific,very scientific
-scibnfts,benefits greater,,benefits greater
-scistudy,general sense,clear understanding,clear understanding
+extrayr,e,e,a
+yearval,e,e,e
+scifrom,books other printed material,the internet,radio
+astrosci,not at all scientific,,not at all scientific
+scitext,measurement,rigorous systematic comparison,classification
 expdesgn,500 get the drug 500 dont,,500 get the drug 500 dont
-hotcore,True,,True
-lasers,False,True,False
-viruses,True,,True
-condrift,True,,False
-earthsun,earth around sun,sun around earth,earth around sun
-solarrev,one year,one year,other time period if volunteered
-majorcol,electronics,communications/speech,urban and regional planning
-colsci,yes,no,yes
-colscinm,d,,c
-hschem,yes,,yes
-hsphys,no,,yes
+exptext,correct control group,,no answer
+ODDS1,no,,no
+hotcore,True,,False
+electron,False,,False
+earthsun,earth around sun,,sun around earth
+colscinm,d,c,e
+hsmath,pre-calculus,pre-calculus,"general math, business, or vocational math"
 intintl,moderately interested,,very interested
+intfarm,moderately interested,moderately interested,not at all interested
+inteduc,very interested,,very interested
 intsci,very interested,very interested,moderately interested
-intmed,very interested,moderately interested,not at all interested
-intspace,moderately interested,,very interested
-intenvir,very interested,very interested,not at all interested
-visnhist,c,,d
-viszoo,c,,d
-vissci,c,,c
-scientgo,agree,,strongly disagree
-scienthe,agree,,strongly disagree
-scientbe,agree,disagree,strongly disagree
-buyvalue,c,,c
-numorg,c,,c
-wealth,"$250,000 to $500,000","$5,000 to $20,000",$3 million to $4 million
-esop,no,no,yes
-defpensn,no,,no
-marcohab,married,married,"not married, no cohabitating partner"
-intcntct,e,e,c
-healthissp,very good,,poor
-SATFAM7,fairly satisfied,,neither satisfied nor dissatisfied
-stress,sometimes,,sometimes
-supervis,supervises,,doesnt supervise
-hapunhap,very happy,very happy,fairly happy
-HOMOSEX1,not wrong at all,not wrong at all,not wrong at all
-conchurh,very little confidence,some confidence,no confidence at all
-concourt,some confidence,some confidence,very little confidence
-conschls,some confidence,some confidence,no confidence at all
-clergvte,strongly agree,agree,disagree
-churhpow,too much power,too much power,too much power
-godchnge,"don't believe now, used to","believe now, always have","don't believe now, used to"
-afterlif,"yes, definitely",,"yes, probably"
-heaven,"yes, probably",,"no, definitely not"
-fatalism,disagree,strongly agree,agree
-godmeans,disagree,agree,strongly disagree
-egomeans,neither agree nor disagree,agree,strongly disagree
-attendma,several times a week,,several times a yr
-ATTEND12,several times a week,less than once a yr,several times a week
-prayfreq,2-3 times a month,several times a week,less than once a year
+intspace,moderately interested,moderately interested,very interested
+intenvir,very interested,,moderately interested
+visnhist,c,,e
+vissci,c,,e
+compwage,e,,e
+numorg,c,d,e
+slfmangd,no,,yes
+defpensn,no,,yes
+buyesop,i would be neither more nor less likely to buy from an employee-owned company,i would be less likely to buy from an employee-owned company,i would be less likely to buy from an employee-owned company
+marcohab,married,,na
+intcntct,e,,d
+hubbywrk,strongly disagree,,agree
+stress,sometimes,,never
+localnum,100-499,,100-499
+abpoorw,wrong only sometimes,always wrong,almost always wrong
+concong,very little confidence,some confidence,complete confidence
+concourt,some confidence,no confidence at all,a great deal of confidence
+conschls,some confidence,very little confidence,a great deal of confidence
+churhpow,too much power,right amount pwr,far too litl pwr
+theism,neither agree nor disagree,agree,disagree
+marelkid,catholic,protestant,other eastern
+attendpa,every week,,several times a yr
+prayfreq,2-3 times a month,,less than once a year
 relscrpt,no,yes,yes
-feelrel,not rel or non,somewhat non-rel,not rel or non
-religcon,not agree/dsagre,,strongly agree
-RELEXT1,probably,,probably
-mywaygod,agree,,disagree
-relgeneq,treats women better than men,treats men better than women,i don't belong to or follow any religion
-vistholy,never,,less than once a year
-relsprt,i follow a religion and consider myself to be a spiritual person interested in the sacred and the sup,i dont follow a religion and dont consider myself to be a spiritual person interested in the sacred,i follow a religion and consider myself to be a spiritual person interested in the sacred and the sup
-makefrnd,agree,strongly agree,agree
-difrel,agree,,strongly disagree
-atheists,neither positive nor negative,,somewhat positive
-partners,1 partner,no partners,1 partner
-matesex,yes,yes,no
+feelrel,not rel or non,,somwhat relgious
+trustsci,strong disagree,,not agree/dsagre
+religcon,not agree/dsagre,disagree,strongly agree
+RELEXT1,probably,definitely not,definitely not
+mywaygod,agree,,strongly agree
+relgeneq,treats women better than men,treats men and women equally,treats men and women equally
+relsprt,i follow a religion and consider myself to be a spiritual person interested in the sacred and the sup,i follow a religion and consider myself to be a spiritual person interested in the sacred and the sup,i dont follow a religion and dont consider myself to be a spiritual person interested in the sacred
+relgenbar,agree,strongly agree,disagree
+relpast,neither agree nor disagree,disagree,agree
+relrlvnt,disagree,disagree,agree
+christns,somewhat positive,,somewhat positive
+muslims,somewhat positive,,very positive
+buddhsts,somewhat positive,somewhat positive,very positive
+LETIN1A,reduced a little,remain the same as it is,"reduced a lot, or"
+partners,1 partner,,21-100 partners
 sexsex,exclusively female,,both male and female
-numwomen,c,,d
-SEXSEX5,exclusively female,,exclusively male
+numwomen,c,c,d
+PARTNRS5,1 partner,,more than 100 partners
+evpaidsx,no,no,yes
 condom,used last time,,not used
 relatsex,"yes, in relationship",,"yes, in relationship"
-evcrack,no,,yes
-hivtest,no,,no
-HIVTEST1,e,,a
-sexornt,heterosexual or straight,,"gay, lesbian, or homosexual"
-sexbirth,male,,male
-sexnow,man,,women
-realrinc,c,,e
-hispanic,chilean,,chilean
-RACECEN1,white,,black or african american
-dwelling,detached 1-fam house,detached 1-fam house,2 units-one above
+evcrack,no,no,yes
+HIVTEST1,e,,e
+sexornt,heterosexual or straight,,bisexual
+sexbirth,male,female,intersex
+sexnow,man,,man
+realinc,d,,b
+ETH1,italy,switzerland,other spanish
+vetyears,none,,less than 2 yrs
+dwelling,detached 1-fam house,,row house
 dwelown,own or is buying,own or is buying,pays rent
-wordb,correct,correct,incorrect
-wordd,correct,,correct
-worde,correct,,correct
+DWELOWN16,owned or was buying,,other (specify)
+worda,correct,,incorrect
+wordb,correct,,correct
+wordc,incorrect,,correct
 wordi,correct,,incorrect
-wordsum,c,d,b
+wordj,incorrect,correct,correct
 GENDER1,male,male,female
-OLD1,e,,e
-GENDER2,female,female,male
-GENDER3,male,,female
-OLD3,e,c,e
+OLD1,e,,d
+RELATE2,spouse,,grand or great-grandchild
+OLD2,e,,b
+RELATE3,child,child,other relative
 MAR3,never married,,married
-RELATE4,child,child,other relative
-GENDER4,female,,male
-OLD5,e,,c
-OLD7,e,,e
-OLD9,e,,d
-OLD10,e,,e
-OLD11,e,,c
-OLD12,e,e,d
-RELHHD3,"child,natural or adopted,stepchild","child,natural or adopted,stepchild",child of non-relative
-hhrace,"other, mixed",,"other, mixed"
-respnum,2nd person,,2nd person
-hhtype,"2adlts,mar,1+kids",,"2adlts,mar,0kids"
-visitors,no visitors,no visitors,1 visitor
-RELHH2,spouse,spouse,other relative
+MAR4,never married,married,divorced
+OLD8,e,,b
+OLD11,e,e,c
+OLD12,e,e,e
+RELHHD4,"child,natural or adopted,stepchild","child,natural or adopted,stepchild",niece or nephew
+hefinfo,1st person,1st person,4th person
+hhtype,"2adlts,mar,1+kids",,"4+adlts,4+mar,1+kids"
+rplace,spouse,head of household,spouse
+rvisitor,r. is household member,r. is household member,r. is household member
+visitors,no visitors,,2 visitors
+RELHH2,spouse,spouse,"brother, sister"
 RELSP1,spouse,,spouse
-dateintv,910,608,901
-ISCO88,c,,e
-PAISCO88,b,,c
-SEI10,d,,d
-SEI10EDUC,d,,e
-PASEI10INC,d,c,d
-SPSEI10,c,e,c
-SPSEI10INC,c,,c
-COSEI10,e,,d
-COSEI10INC,e,,d
-COPRES10,e,,c
-cohort,c,c,c
-WHOELSE3,no,yes,no
-WHOELSE5,no,yes,no
-WHOELSE6,yes,no,yes
-intid,125,,58
-feeused,"yes, money",,"yes, money"
-mode,in-person,in-person,over the phone
-intsex,female,female,male
-version,2,2,3
-sampcode,601,,607
-phase,phase one - initial cases,phase two - sub sampled cases,phase two - sub sampled cases
-spaneng,english,,spanish
-dwellpre,detached single family house,,trailer
-kidsinhh,yes,,no
-respond,high,high,high
-wtssnr,c,c,d
-wtssall,c,,e
-vstrat,3301,,3336
-vpsu,1,,2
+PAISCO88,b,,d
+MAISCO88,c,,c
+SPISCO88,c,,e
+SPISCO08,agricultural technicians,interior designers and decorators,"sewing, embroidery and related workers"
+SEI10INC,d,,d
+MASEI10EDUC,c,,e
+SPSEI10INC,c,,d
+COSEI10,e,,b
+COSEI10INC,e,,c
+WHOELSE5,no,,yes
+lngthinv,90,,111
+intyrs,23,,4
+spaneng,english,english,spanish
+incuspop,average,average,average
+neisafe,very safe,,very safe
+wtss,c,,c
+wtssnr,c,c,e

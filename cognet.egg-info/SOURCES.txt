@@ -101,6 +101,7 @@ examples/GSS/results/CMPF_tmp.csv
 examples/GSS/results/DISSONANCE_matrix.csv
 examples/GSS/results/data_2018
 examples/GSS/results/dispersion_test.csv
+examples/GSS/results/distfunc_multiples_samplestesting.csv
 examples/GSS/results/distfunc_multiples_testing.csv
 examples/GSS/results/ideology.csv
 examples/GSS/results/no_class_featurenames_and_vectors.csv
