@@ -23,4 +23,4 @@ echo "module unload python" >> $PROG
 echo "module unload openmpi" >> $PROG
 echo "module load python/anaconda-2020.02" >> $PROG
 echo "module load mpi4py" >> $PROG
-echo "date; mpiexec -n "$NUMPROC" python3 -m mpi4py.futures GSS_cognet.py; date"  >> $PROG
+echo "date; mpiexec -n "$NUMPROC" python3 -m mpi4py.futures cognet_qdistmatrix.py; date"  >> $PROG
