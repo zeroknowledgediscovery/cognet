@@ -1,11 +1,11 @@
 #!/bin/bash
 YEARS='2018'
 # nodes requested
-NODES=4
+NODES=2
 # time requested
 T=14
 NUM='all'
-LAUNCH=./'GSS_mpi_launcher.sh'
+LAUNCH=./'mpi_launcher.sh'
 
 for yr in `echo $YEARS`
 do

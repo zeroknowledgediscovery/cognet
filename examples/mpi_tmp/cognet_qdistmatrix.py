@@ -5,7 +5,7 @@ from quasinet.qnet import Qnet, qdistance, load_qnet, qdistance_matrix
 from quasinet.qsampling import qsample, targeted_qsample
 
 qnet=load_qnet('GSS/GSS_cognet.py')
-w = 30
+w = 1784
 h = w
 p_all = pd.read_csv("tmp_samples_as_strings.csv", header=None).values.astype(str)[:]
 
