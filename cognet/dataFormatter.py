@@ -58,7 +58,7 @@ class dataFormatter:
         if samples is None:
             samples = self.samples
         features = np.array(samples.columns.astype(str)[:])
-        samples = samples.values.astype(str)[:]
+        samples = samples.replace("nan","").fillna("").values.astype(str)[:]
         # remove columns that are all NaNs
         not_all_nan_cols = ~np.all(samples == '', axis=0)
         self.nan_cols = np.all(samples == '', axis=0)
