@@ -66,6 +66,7 @@ examples/README.md
 examples/Yearly_polarseparation.ipynb
 examples/cognet_example.ipynb
 examples/launcher.sh
+examples/testing_data.csv
 examples/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
 examples/.ipynb_checkpoints/PTSD_diss_recon-WORKINGCOPY-checkpoint.ipynb
 examples/.ipynb_checkpoints/README.md-checkpoint.ipynb
@@ -76,6 +77,7 @@ examples/.ipynb_checkpoints/cognet_example-checkpoint.ipynb
 examples/.ipynb_checkpoints/cognet_example-checkpoint.py
 examples/.ipynb_checkpoints/cognet_example_run-checkpoint.sh
 examples/.ipynb_checkpoints/cognet_example_setup-checkpoint.sh
+examples/.ipynb_checkpoints/testing_data-checkpoint.csv
 examples/GSS/GSS_cognet.ipynb
 examples/GSS/Polar_distances.ipynb
 examples/GSS/.ipynb_checkpoints/GSS_cognet-checkpoint.ipynb
@@ -152,12 +154,7 @@ examples/GSS/results/CMPF_2018/CMPF-8.csv
 examples/GSS/results/CMPF_2018/CMPF-9.csv
 examples/GSS/results/bin/embed
 examples/GSS/results/recon_results/recon_1.csv
-examples/PTSD/PTSD_cognet.ipynb
-examples/PTSD/PTSD_cognet_test.py
-examples/PTSD/PTSD_diss_recon-Copy1.ipynb
 examples/PTSD/PTSD_diss_recon.ipynb
-examples/PTSD/.ipynb_checkpoints/PTSD_cognet-checkpoint.ipynb
-examples/PTSD/.ipynb_checkpoints/PTSD_diss_recon-Copy1-checkpoint.ipynb
 examples/PTSD/.ipynb_checkpoints/PTSD_diss_recon-checkpoint.ipynb
 examples/PTSD/data/.gitattributes
 examples/PTSD/data/PTSD_cognet_test.csv
