@@ -155,7 +155,11 @@ examples/GSS/results/CMPF_2018/CMPF-9.csv
 examples/GSS/results/bin/embed
 examples/GSS/results/recon_results/recon_1.csv
 examples/PTSD/PTSD_diss_recon.ipynb
+examples/PTSD/PTSD_diss_recon_old.ipynb
+examples/PTSD/README.md
 examples/PTSD/.ipynb_checkpoints/PTSD_diss_recon-checkpoint.ipynb
+examples/PTSD/.ipynb_checkpoints/PTSD_diss_recon_old-checkpoint.ipynb
+examples/PTSD/.ipynb_checkpoints/README-checkpoint.md
 examples/PTSD/data/.gitattributes
 examples/PTSD/data/PTSD_cognet_test.csv
 examples/PTSD/data/PTSD_cognet_test_processed.csv

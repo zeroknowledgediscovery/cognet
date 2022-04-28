@@ -31,10 +31,10 @@ class cognet:
         self.all_samples = None
         self.samples = None
         self.samples_as_strings = None
-        self.features = None
-        self.cols = None
-        self.immutable_vars = None
-        self.mutable_vars = None
+        self.features = []
+        self.cols = []
+        self.immutable_vars = []
+        self.mutable_vars = []
         self.poles = None
         self.polar_features = None
         self.polar_indices = None
@@ -54,7 +54,8 @@ class cognet:
                         data_obj,
                         key,
                         im_vars=None,
-                        m_vars=None):
+                        m_vars=None,
+                        verbose=False):
         """load parameters from model object
 
         Args:
@@ -63,6 +64,7 @@ class cognet:
           key (str): 'all', 'train', or 'test', corresponding to sample type
           im_vars (list[str], optional): Not implemented yet. Defaults to None.
           m_vars (list[str], optional): Not implemented yet. Defaults to None.
+          verbos (bool, optional): Whether or not to print out model state. Defaults to False. 
         """
         if model is not None:
             # inherit atrributes from model object
@@ -98,6 +100,10 @@ class cognet:
                 variation_weight.append(entropy(v,base=len(v)))
             variation_weight = np.nan_to_num(variation_weight) # remove nans
             self.variation_weight = variation_weight
+        if verbose:
+            print("total features: " + str(len(self.features.columns)) + "\n" 
+                  + "mutable features: " + str(len(self.mutable_vars.columns)) + "\n"
+                  + "immutable features: " + str(len(self.immutable_vars)))
     
     def load_from_dataformatter(self, 
                                 data_obj,
@@ -180,14 +186,29 @@ class cognet:
         self.mutable_vars = [x for x in self.cols
                             if x.upper() not in self.immutable_vars.columns]
     
+    def model_state(self):
+        '''returns state of model
+        '''
+        immutable_var_len = 0
+        if self.immutable_vars:
+            immutabe_var_len =  len(self.immutable_vars.columns)
+        print("total features: " + str(len(self.features.columns)) + "\n" 
+                + "mutable features: " + str(len(self.mutable_vars.columns)) + "\n"
+                + "immutable features: " + str(immutable_var_len))
+        
+        print("total samples: " + str(len(self.samples)))
+        
+        
     def set_nsamples(self,
                     num_samples,
-                    random=False):
+                    random=False,
+                    verbose=True):
         '''select a subset of the samples
 
         Args:
           num_samples (int): Set num of samples to subset, default to None, resets to all samples
-          random (bool): take random sample if true, ordered sample if false
+          random (bool): take random sample if true, ordered sample if false. Defaults to False
+          verbose (bool): whether or not to print out model state regarding samples. Defaults to True.
         '''
         # each time function is called, reset samples to use_all_samples
         # this allows us to call nsamples numerous times 
@@ -215,9 +236,15 @@ class cognet:
                     self.samples = self.samples.iloc[:num_samples]
                 self.nsamples = num_samples
                 self.samples_as_strings = self.samples[self.cols].fillna('').values.astype(str)[:]
+                if verbose:
+                    if random:
+                        print("The number of random samples have been set to " + str(num_samples))
+                    else:
+                        print("The number of samples have been set to " + str(num_samples))
                 
             elif self.samples is None:
                 raise ValueError("load_data first!")
+            
 
     def __variation_weight(self,
                         index):
