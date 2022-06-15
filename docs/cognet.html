@@ -1164,12 +1164,19 @@ class cognet:
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
+
+
+        from functools import partial
+        reconstruct=partial(self.randomMaskReconstruction,output_dir=output_dir,
+                                file_name=filename)
         
         result = self.mp_compute(processes,
-                                    self.randomMaskReconstruction,
-                                    cols,
-                                    outfile,
-                                    args=args)
+                                 reconstruct,
+                                 cols,
+                                 outfile,
+                                 args=args)
+
+        
         return result
     
     def dmat_filewriter(self,
@@ -2440,12 +2447,19 @@ class cognet:
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
+
+
+        from functools import partial
+        reconstruct=partial(self.randomMaskReconstruction,output_dir=output_dir,
+                                file_name=filename)
         
         result = self.mp_compute(processes,
-                                    self.randomMaskReconstruction,
-                                    cols,
-                                    outfile,
-                                    args=args)
+                                 reconstruct,
+                                 cols,
+                                 outfile,
+                                 args=args)
+
+        
         return result
     
     def dmat_filewriter(self,
@@ -4153,12 +4167,19 @@ mask_</p></div>
     args=[None, index_colname, output_dir,
           file_name, mask_prob, allow_all_mutable, 
           save_samples, save_output]
+
+
+    from functools import partial
+    reconstruct=partial(self.randomMaskReconstruction,output_dir=output_dir,
+                            file_name=filename)
     
     result = self.mp_compute(processes,
-                                self.randomMaskReconstruction,
-                                cols,
-                                outfile,
-                                args=args)
+                             reconstruct,
+                             cols,
+                             outfile,
+                             args=args)
+
+    
     return result</code></pre>
 </details>
 </dd>
