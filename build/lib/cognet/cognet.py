@@ -1138,7 +1138,7 @@ class cognet:
 
         
         result = self.mp_compute(processes,
-                                 randomMaskReconstruction,
+                                 self.randomMaskReconstruction,
                                  cols,
                                  outfile,
                                  args=args)
