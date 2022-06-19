@@ -1136,13 +1136,9 @@ class cognet:
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
 
-
-        from functools import partial
-        reconstruct=partial(self.randomMaskReconstruction,output_dir=output_dir,
-                                file_name=filename)
         
         result = self.mp_compute(processes,
-                                 reconstruct,
+                                 randomMaskReconstruction,
                                  cols,
                                  outfile,
                                  args=args)

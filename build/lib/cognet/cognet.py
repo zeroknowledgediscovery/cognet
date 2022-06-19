@@ -1135,12 +1135,15 @@ class cognet:
         args=[None, index_colname, output_dir,
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
+
         
         result = self.mp_compute(processes,
-                                    self.randomMaskReconstruction,
-                                    cols,
-                                    outfile,
-                                    args=args)
+                                 randomMaskReconstruction,
+                                 cols,
+                                 outfile,
+                                 args=args)
+
+        
         return result
     
     def dmat_filewriter(self,
