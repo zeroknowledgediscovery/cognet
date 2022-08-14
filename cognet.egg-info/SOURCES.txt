@@ -44,7 +44,6 @@ cognet/__pycache__/viz.cpython-310.pyc
 cognet/__pycache__/viz.cpython-37.pyc
 cognet/__pycache__/viz.cpython-39.pyc
 cognet/bin/__embed__.so
-dist/cognet-0.0.197.tar.gz
 docs/cognet.html
 docs/dataFormatter.html
 docs/index.html
