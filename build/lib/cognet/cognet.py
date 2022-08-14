@@ -416,182 +416,18 @@ class cognet:
 
         if VERBOSE:
             print("{} pole features not found in sample features".format(invalid_count))
-
-    def mp_compute(self, 
-                   processes,
-                   func, 
-                   cols,
-                   outfile, 
-                   args=[]):
-        """
-        Compute desired function through multiprocessing and save result to csv.
-
-        Args:
-          processes (int): number of processes to use.
-          func (func): function to compute using multiprocessing
-          cols (list): column names of resulting csv
-          outfile (str)): filepath + filename for resulting csv
-          args (list): list containing arguments for desired function. Defaults to empty list.
-        """
-
-        # init mp.Manager and result dict
-        manager = mp.Manager()
-        return_dict = manager.dict()
-
-        # set processes as given, unless class parameter is set
-        max_processes = processes
-        if self.MAX_PROCESSES != 0:
-            max_processes = self.MAX_PROCESSES
-            print("Number of Processes {} has been set using class parameter".format(self.MAX_PROCESSES))
-        num_processes = 0
-        process_list = []
-        
-        # init mp.Processes for each individual sample
-        # run once collected processes hit max
-        for i in range(len(self.samples)):
-            params = tuple([i, return_dict] + args)
-            num_processes += 1
-            p = mp.Process(target=func,
-                        args=params)
-            process_list.append(p)
-            if num_processes == max_processes:
-                [x.start() for x in process_list]
-                [x.join() for x in process_list]
-                process_list = []
-                num_processes = 0
-                
-        # compute remaining processes
-        if num_processes != 0:
-            [x.start() for x in process_list]
-            [x.join() for x in process_list]
-            process_list = []
-            num_processes = 0
-        
-        # format and save resulting dict
-        result = pd.DataFrame(return_dict.values(), columns=cols, index=return_dict.keys()).sort_index()
-        result.to_csv(outfile, index=None)
-        return result
-    
-    def distance(self,
-                sample1,
-                sample2,
-                nsteps1=0,
-                nsteps2=0):
-        """qsamples each sample set num of steps, then takes qdistance
-
-        Args:
-          sample1 (list[str]): sample vector 1, must have the same num of features as the qnet
-          sample2 (list[str]): sample vector 2, must have the same num of features as the qnet
-          nsteps1 (int, optional): number of steps to qsample for sample1
-          nsteps2 (int, optional): number of steps to qsample for sample2
-
-        Returns:
-          qdistance: float, distance between two samples
-        """
-        if self.qnet is None:
-            raise ValueError("load qnet first!")
-        #bp1 = self.getBaseFrequency(sample1)
-        #bp2 = self.getBaseFrequency(sample2)
-        # qsample samples
-        sample1 = qsample(sample1, self.qnet, nsteps1)#, baseline_prob=bp1)
-        sample2 = qsample(sample2, self.qnet, nsteps2)#, baseline_prob=bp2)
-        return qdistance(sample1, sample2, self.qnet, self.qnet)
-    
-    def __distfunc(self, 
-                   x, 
-                   y):
-        '''Compute distance between two samples
-
-        Args:
-          x (list[str]): first sample
-          y (list[str]): second sample
-          
-        Returns:
-         d: qdistance
-        '''
-        d=qdistance(x,y,self.qnet,self.qnet)
-        return d
-    
-    def distfunc_line(self,
-                    i,
-                    return_dict=None):
-        '''compute the distance for a single sample against all other samples
-
-        Args:
-          i (int): row
-          return_dict (dict): dictionary containing multiprocessing results
-        
-        Return:
-          line: float, numpy.ndarray
-        '''
-        if all(x is not None for x in [self.samples, self.features]):
-            w = self.samples.index.size
-            line = np.zeros(w)
-            y = self.samples_as_strings[i]
-            for j in range(w):
-                # only compute half of the distance matrix
-                if j > i:
-                    x = self.samples_as_strings[j]
-                    line[j] = self.__distfunc(x, y)
-        else:
-            raise ValueError("load_data first!")
-        if return_dict is not None:
-            return_dict[i] = line
-        return line
-    
-    def distfunc_multiples(self,
-                           outfile,
-                           processes=6,
-                           samples=None):
-        """compute distance matrix for all samples in the dataset
-
-        Args:
-          outfile (str): desired output filename and path
-          processes (int): Number of processes to run in parallel. Defaults to 6.
-          samples (2D array): Dataset from which to calculate qdist matrix. Defaults to None.
-          
-        Returns:
-          result: pandas.DataFrame containing distance matrix
-        """
-        if all(x is not None for x in [self.samples, self.features]):
-            # if exterior dataset is given, temporarily replace class attributes
-            if samples is not None:
-                original_samples = self.samples
-                original_samples_as_strings = self.samples_as_strings
-                self.samples = samples
-                samples = samples.fillna("").values.astype(str)
-                self.samples_as_strings = samples
-            cols = [i for i in range(len(self.samples))]
-            result = self.mp_compute(processes,
-                                        self.distfunc_line,
-                                        cols,
-                                        outfile)
-            
-            # format and save resulting dict, and tranpose symmetrical distance matrix
-            result = result.to_numpy()
-            result = pd.DataFrame(np.maximum(result, result.transpose()))
-            result.to_csv(outfile, index=None, header=None)
-            
-            # replace class attributes with originals
-            if samples is not None:
-                self.samples = original_samples
-                self.samples_as_strings = original_samples_as_strings
-        else:
-            raise ValueError("load data first!")
-        
-        return result
     
     def polarDistance(self,
-                    i,
-                    return_dict=None):
+                i,
+                return_dict=None):
         """return the distances from a single sample to the poles
 
         Args:
-          i (int): index of sample to take
-          return_dict (dict): dictionary containing multiprocessing results
+            i (int): index of sample to take
+            return_dict (dict): dictionary containing multiprocessing results
 
         Returns:
-          distances: float, distance from sample to each pole
+            distances: float, distance from sample to each pole
         """
         p = self.samples_as_strings[i]
         distances = []
@@ -602,7 +438,7 @@ class cognet:
         if return_dict is not None:
             return_dict[i] = distances
         return distances
-            
+   
     def polarDistance_multiple(self,
                                outfile,
                                processes=6):
@@ -620,7 +456,7 @@ class cognet:
             pole_names = []
             for index, row in self.polar_features[self.cols].iterrows():
                 pole_names.append(index)
-            result = self.mp_compute(processes,
+            result = mp_compute(processes,
                                         self.polarDistance,
                                         pole_names,
                                         outfile)
@@ -809,7 +645,7 @@ class cognet:
             else:
                 raise ValueError("Type must be either dispersion or ideology!")
             
-            result = self.mp_compute(processes,
+            result = mp_compute(processes,
                                      func_,
                                      cols,
                                      outfile)
@@ -907,7 +743,7 @@ class cognet:
         else:
             cols = self.cols
         
-        result = self.mp_compute(processes,
+        result = mp_compute(processes,
                                     self.dissonance,
                                     cols,
                                     outfile)
@@ -1012,7 +848,6 @@ class cognet:
 
     def randomMaskReconstruction(self,
                                 index=None,
-                                return_dict=None,
                                 sample=None,
                                 index_colname="feature_names",
                                 output_dir="recon_results/",
@@ -1020,7 +855,8 @@ class cognet:
                                 mask_prob=0.5,
                                 allow_all_mutable=False,
                                 save_samples=False,
-                                save_output=True):
+                                save_output=True,
+                                return_dict=None):
         """reconstruct the masked sample by qsampling and comparing to original
         set self.mask_prob and self.steps if needed
 
@@ -1136,14 +972,11 @@ class cognet:
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
 
-        
-        result = self.mp_compute(processes,
-                                 self.randomMaskReconstruction,
-                                 cols,
-                                 outfile,
-                                 args=args)
-
-        
+        result = mp_compute(processes,
+                                    self.randomMaskReconstruction,
+                                    cols,
+                                    outfile,
+                                    args=args)
         return result
     
     def dmat_filewriter(self,
@@ -1274,3 +1107,145 @@ class cognet:
         
         else:
             raise ValueError("load data first!")
+
+def mp_compute(samples,
+               max_processes,
+               func, 
+               cols,
+               outfile, 
+               args=[]):
+    """
+    Compute desired function through multiprocessing and save result to csv.
+
+    Args:
+        samples (2d array): 2 dimensional numpy array
+        processes (int): number of processes to use.
+        func (func): function to compute using multiprocessing
+        cols (list): column names of resulting csv
+        outfile (str)): filepath + filename for resulting csv
+        args (list): list containing arguments for desired function. Defaults to empty list.
+    """
+
+    # init mp.Manager and result dict
+    manager = mp.Manager()
+    return_dict = manager.dict()
+
+    num_processes = 0
+    process_list = []
+    
+    # init mp.Processes for each individual sample
+    # run once collected processes hit max
+    for i in range(len(samples)):
+        params = tuple([i] + args + [return_dict])
+        num_processes += 1
+        p = mp.Process(target=func,
+                    args=params)
+        process_list.append(p)
+        if num_processes == max_processes:
+            [x.start() for x in process_list]
+            [x.join() for x in process_list]
+            process_list = []
+            num_processes = 0
+            
+    # compute remaining processes
+    if num_processes != 0:
+        [x.start() for x in process_list]
+        [x.join() for x in process_list]
+        process_list = []
+        num_processes = 0
+    
+    # format and save resulting dict
+    result = pd.DataFrame(return_dict.values(), columns=cols, index=return_dict.keys()).sort_index()
+    result.to_csv(outfile, index=None)
+    return result
+        
+def qsampled_distance(sample1,
+                      sample2,
+                      qnet1,
+                      qnet2,
+                      nsteps1=0,
+                      nsteps2=0):
+    """qsamples each sample set num of steps, then takes qdistance
+
+    Args:
+        sample1 (list[str]): sample vector 1, must have the same num of features as the qnet
+        sample2 (list[str]): sample vector 2, must have the same num of features as the qnet
+        qnet1 (quasinet object): quasinet object 1
+        qnet2 (quasinet object): quasinet object 2
+        nsteps1 (int, optional): number of steps to qsample for sample1
+        nsteps2 (int, optional): number of steps to qsample for sample2
+
+    Returns:
+        qdistance: float, distance between two samples
+    """
+    sample1 = qsample(sample1, qnet1, nsteps1)
+    sample2 = qsample(sample2, qnet2, nsteps2)
+    return qdistance(sample1, sample2, qnet1, qnet2)
+
+def __distfunc(sample1, sample2, qnet1, qnet2):
+    '''Compute distance between two samples
+
+    Args:
+        sample1 (list[str]): sample vector 1, must have the same num of features as the qnet
+        sample2 (list[str]): sample vector 2, must have the same num of features as the qnet
+        qnet1 (quasinet object): quasinet object 1
+        qnet2 (quasinet object): quasinet object 2
+        
+    Returns:
+        d: qdistance
+    '''
+    return qdistance(sample1, sample2, qnet1, qnet2)
+
+def distfunc_line(index, 
+                  samples_as_strings,
+                  return_dict=None):
+    '''compute the distance for a single sample against all other samples
+
+    Args:
+        i (int): index
+        return_dict (dict): dictionary containing multiprocessing results
+    
+    Return:
+        line: float, numpy.ndarray
+    '''
+    sample_size = samples_as_strings.size
+    line = np.zeros(sample_size)
+    sample_string = samples_as_strings[index]
+    # calculate qdistance for one line of the diagonal matrix
+    for j in range(sample_size):
+        if j > index:
+            line[j] = __distfunc(samples_as_strings[j], sample_string)
+    
+    if return_dict is not None:
+        return_dict[index] = line
+        
+    return line
+
+def distfunc_multiples(outfile,
+                       samples,
+                       processes=6):
+    """compute distance matrix for all samples in the dataset
+
+    Args:
+        outfile (str): desired output filename and path
+        processes (int): Number of processes to run in parallel. Defaults to 6.
+        samples (2D array): Dataset from which to calculate qdist matrix. Defaults to None.
+        
+    Returns:
+        result: pandas.DataFrame containing distance matrix
+    """
+    samples = samples.fillna("").values.astype(str)
+    samples_as_strings = samples
+    cols = [i for i in range(len(samples))]
+    result = mp_compute(processes,
+                        distfunc_line,
+                        cols,
+                        outfile,
+                        args=[samples_as_strings])
+    
+    # format and save resulting dict, and tranpose symmetrical distance matrix
+    result = result.to_numpy()
+    result = pd.DataFrame(np.maximum(result, result.transpose()))
+    result.to_csv(outfile, index=None, header=None)
+    
+    return result
