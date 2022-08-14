@@ -434,7 +434,7 @@ class cognet:
         # calculate from each pole to the sample, and append to array
         for index, row in self.polar_features[self.cols].iterrows():
             row = row.fillna('').values.astype(str)[:]
-            distances.append(self.distance(p, np.array(row)))
+            distances.append(qsampled_distance(p, np.array(row), self.qnet, self.qnet))
         if return_dict is not None:
             return_dict[i] = distances
         return distances
