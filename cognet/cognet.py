@@ -456,10 +456,11 @@ class cognet:
             pole_names = []
             for index, row in self.polar_features[self.cols].iterrows():
                 pole_names.append(index)
-            result = mp_compute(processes,
-                                        self.polarDistance,
-                                        pole_names,
-                                        outfile)
+            result = mp_compute(self.samples,
+                                processes,
+                                self.polarDistance,
+                                pole_names,
+                                outfile)
         else:
             raise ValueError("load data first!")
         return result
@@ -645,10 +646,11 @@ class cognet:
             else:
                 raise ValueError("Type must be either dispersion or ideology!")
             
-            result = mp_compute(processes,
-                                     func_,
-                                     cols,
-                                     outfile)
+            result = mp_compute(self.samples,
+                                processes,
+                                func_,
+                                cols,
+                                outfile)
         elif self.pL is None or self.pR is None:
             raise ValueError("set_poles first!")
         else:
@@ -743,10 +745,11 @@ class cognet:
         else:
             cols = self.cols
         
-        result = mp_compute(processes,
-                                    self.dissonance,
-                                    cols,
-                                    outfile)
+        result = mp_compute(self.samples,
+                            processes,
+                            self.dissonance,
+                            cols,
+                            outfile)
         return result
     
     def __choose_one(self,
@@ -972,11 +975,12 @@ class cognet:
               file_name, mask_prob, allow_all_mutable, 
               save_samples, save_output]
 
-        result = mp_compute(processes,
-                                    self.randomMaskReconstruction,
-                                    cols,
-                                    outfile,
-                                    args=args)
+        result = mp_compute(self.samples,
+                            processes,
+                            self.randomMaskReconstruction,
+                            cols,
+                            outfile,
+                            args=args)
         return result
     
     def dmat_filewriter(self,
@@ -1237,7 +1241,8 @@ def distfunc_multiples(outfile,
     samples = samples.fillna("").values.astype(str)
     samples_as_strings = samples
     cols = [i for i in range(len(samples))]
-    result = mp_compute(processes,
+    result = mp_compute(samples,
+                        processes,
                         distfunc_line,
                         cols,
                         outfile,
