@@ -1,12 +1,6 @@
 feature_names,sample,qsampled,random_sample
-reliten,no religion,no religion,somewhat strong
-pray,lt once a week,several times a day,never
-prayer,approve,approve,approve
-conlabor,hardly any,only some,hardly any
-pillok,disagree,agree,disagree
-polabuse,no,no,no
-intmil,moderately interested,not at all interested,not at all interested
-abpoorw,wrong only sometimes,not wrong at all,wrong only sometimes
-godchnge,"don't believe now, used to","believe now, always have","don't believe now, used to"
-religcon,not agree/dsagre,strongly agree,agree
-comfort,agree,strongly agree,agree
+polabuse,no,yes,no
+viruses,True,False,False
+intmil,moderately interested,not at all interested,very interested
+abpoorw,wrong only sometimes,always wrong,always wrong
+religint,agree,not agree/dsagre,agree
