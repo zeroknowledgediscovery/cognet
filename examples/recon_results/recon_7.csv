@@ -1,0 +1,271 @@
+feature_names,sample,qsampled,random_sample
+HRS2,e,e,e
+evwork,yes,yes,yes
+wrkslf,someone else,someone else,someone else
+wrkgovt,government,,private
+INDUS10,c,c,a
+SPHRS1,e,,b
+COHRS1,e,,e
+SPOCC10,e,c,e
+SPPRES10,e,e,b
+SPPRES105PLUS,e,e,c
+PAPRES105PLUS,b,c,e
+MAOCC10,c,,a
+sibs,d,c,e
+childs,c,c,b
+educ,c,c,c
+maeduc,c,,b
+speduc,e,,a
+coeduc,e,e,a
+degree,high school,,high school
+padeg,high school,lt high school,graduate
+madeg,high school,lt high school,lt high school
+dipged,high school diploma,high school diploma,ged
+sex,female,,female
+race,white,,other
+RES16,50000 to 250000,town lt 50000,big-city suburb
+REG16,new england,,mountain
+FAMDIF16,"divorce,separated",other,institution
+INCOM16,above average,far below average,average
+born,yes,,no
+parborn,both in u.s,both in u.s,mother; fa. dk
+babies,c,c,d
+adults,1,2,2
+unrelat,e,,d
+xnorcsiz,"suburb, med city",,"suburb, med city"
+VOTE12,did not vote,voted,did not vote
+IF12WHO,obama,romney,obama
+PRES16,iap,,don't know
+IF16WHO,clinton,,trump
+natenvir,too little,,too much
+nateduc,too little,too little,too little
+natarms,about right,,too little
+natfare,too little,,too much
+natroad,too little,,too little
+natsoc,too little,too little,too little
+natsci,too little,,too much
+natenrgy,about right,,too much
+tax,too high,about right,too low
+spkath,allowed,not allowed,allowed
+spkrac,allowed,,allowed
+spkcom,not allowed,,allowed
+libcom,remove,not remove,remove
+spkmil,allowed,,allowed
+colmil,not allowed,,not allowed
+spkhomo,allowed,allowed,not allowed
+libhomo,remove,,remove
+cappun,favor,,oppose
+gunlaw,favor,,oppose
+courts,not harsh enough,about right,too harsh
+relig,catholic,,moslem/islam
+attend,never,,every week
+reliten,not very strong,,strong
+postlife,yes,no,no
+popespks,uncertain true or false,,certainly false
+RELIG16,catholic,catholic,catholic
+racopen,owner decides,cant discriminate,owner decides
+raclive,yes,,yes
+happy,not too happy,,very happy
+health,poor,good,excellent
+life,routine,,dull
+socbar,never,,sev times a mnth
+class,working class,,middle class
+rank,e,,b
+satfin,not at all sat,more or less,satisfied
+finalter,worse,,better
+abdefect,yes,,no
+abhlth,yes,,yes
+abpoor,no,,no
+absingle,no,yes,no
+abany,no,no,no
+chldidel,c,c,d
+divlaw,easier,more difficult,more difficult
+premarsx,always wrong,not wrong at all,almst always wrg
+homosex,not wrong at all,always wrong,almst always wrg
+spanking,disagree,agree,agree
+SUICIDE1,no,,no
+SUICIDE3,no,no,no
+SUICIDE4,no,no,yes
+owngun,no,no,no
+HUNT1,neither hunts,,neither hunts
+tvhours,d,,d
+phone,phone in home,phone in home,cellphone
+comprend,good,,fair
+form,standard <x>,,alternate <y>
+fechld,disagree,agree,agree
+fefam,disagree,disagree,strongly disagree
+RACDIF3,no,yes,yes
+helpblk,e,c,c
+god,know god exists,know god exists,dont believe
+workwhts,c,,c
+workblks,c,,e
+workhsps,c,c,c
+intlwhts,c,,e
+intlblks,c,,e
+liveblks,oppose,favor,favor
+MARAsian,neither favor nor oppose,neither favor nor oppose,favor
+yousup,e,,d
+fejobaff,strongly for,,strongly for
+CLOSETO1,e,e,d
+CLOSETO3,e,e,b
+CLOSETO4,e,e,c
+CLOSETO5,e,e,d
+MYPROBS2,e,e,e
+DANGOTH3,e,e,c
+DANGSLF3,e,,c
+relpersn,modrte religious,modrte religious,modrte religious
+emailmin,c,e,c
+emailhr,c,c,d
+wwwhr,c,,e
+wwwmin,c,e,d
+yearsjob,e,,d
+hrsrelax,e,,d
+physhlth,e,,e
+mntlhlth,e,,e
+hurtatwk,e,,c
+usetech,e,,c
+weight,e,c,d
+height,e,c,d
+ntwkhard,e,e,c
+lifenow,e,,e
+LIFEIN5,e,,d
+poorserv,a few times a year,less than once a year,almost every day
+notsmart,less than once a year,,never
+quallife,fair,,excellent
+satsoc,good,very good,fair
+emoprobs,d,,e
+fatigue,moderate,,mild
+ratepain,d,,e
+abfelegl,it depends,,should not
+ABSTATE1,very easy,,very hard
+ABHELP2,no,,no
+ABHELP3,no,no,yes
+stockval,e,e,e
+extrayr,e,,b
+astrolgy,yes,yes,no
+balpos,slightly in favor,strongly in favor,strongly in favor
+scistudy,general sense,,little understanding
+expdesgn,500 get the drug 500 dont,500 get the drug 500 dont,500 get the drug 500 dont
+exptext,correct wrong reason,correct wrong reason,correct wrong reason
+hotcore,True,,False
+radioact,True,False,True
+boyorgrl,True,True,True
+earthsun,sun around earth,earth around sun,sun around earth
+colsci,no,,yes
+colscinm,e,c,e
+hsbio,no,yes,no
+hschem,no,yes,yes
+hsphys,no,,no
+nanowill,harmful results greater,benefits greater,benefits greater
+nanoharm,strongly in favor,slightly in favor,strongly in favor
+intfarm,moderately interested,,very interested
+intsci,moderately interested,very interested,not at all interested
+intecon,moderately interested,moderately interested,moderately interested
+inttech,moderately interested,moderately interested,very interested
+intenvir,moderately interested,very interested,moderately interested
+visnhist,c,c,d
+SCINEWS1,printed newspapers,,printed newspapers
+scienthe,strongly agree,,disagree
+scientod,disagree,,strongly agree
+scientbe,strongly agree,,strongly agree
+compwage,e,c,c
+numorg,e,d,d
+ratetone,e,c,d
+marcohab,"not married, no cohabitating partner",married,"not married, cohabitating partner"
+trbigbus,e,e,a
+healthissp,poor,poor,good
+hubbywrk,disagree,,strongly disagree
+marhomo,neither agree nor disagree,strongly disagree,neither agree nor disagree
+meovrwrk,disagree,,strongly disagree
+XMARSEX1,always wrong,always wrong,not wrong at all
+HOMOSEX1,not wrong at all,,always wrong
+abpoorw,always wrong,,not wrong at all
+concong,very little confidence,,no confidence at all
+churhpow,too much power,right amount pwr,too much power
+godchnge,"believe now, always have","believe now, always have","believe now, always have"
+heaven,"yes, probably","yes, definitely","yes, probably"
+hell,"yes, probably",,"no, probably not"
+miracles,"yes, probably",,"yes, probably"
+fatalism,disagree,,disagree
+godmeans,disagree,,agree
+nihilism,disagree,strongly disagree,strongly agree
+attendma,every week,about once a month,never
+attendpa,2-3 times a month,never,2-3 times a month
+ATTEND12,every week,never,nearly every week
+prayfreq,several times a week,,nearly every week
+trustsci,not agree/dsagre,disagree,disagree
+RELEXT3,probably not,,probably not
+relgeneq,treats men better than women,,treats women better than men
+relobjct,yes,,yes
+vistholy,never,,about once a month or more
+relsprt,"i follow a religion, but dont consider myself to be a spiritual person interested in the sacred and",,i dont follow a religion and dont consider myself to be a spiritual person interested in the sacred
+makefrnd,agree,strongly agree,agree
+relgenbar,neither agree nor disagree,agree,strongly agree
+relpast,disagree,,agree
+relrlvnt,disagree,agree,disagree
+muslims,neither positive nor negative,somewhat positive,somewhat negative
+buddhsts,neither positive nor negative,somewhat positive,very positive
+jews,neither positive nor negative,,neither positive nor negative
+atheists,neither positive nor negative,somewhat negative,neither positive nor negative
+watergen,somewhat dangerous,,extremely dangerous
+tempgen,very dangerous,,extremely dangerous
+genegen,somewhat dangerous,somewhat dangerous,very dangerous
+LETIN1A,reduced a little,remain the same as it is,increased a lot
+numwomen,e,c,c
+nummen,e,,c
+HIVTEST1,e,,a
+GENETST1,not very much,a great deal,a great deal
+GENEGOO2,c,c,c
+GENEABRT2,yes,no,yes
+coninc,c,b,d
+ethnic,lithuania,other canada,india
+ETH1,lithuania,,other
+hispanic,not hispanic,not hispanic,nicaraguan
+RACECEN1,white,,black or african american
+dwelling,3-4 fam house,detached 1-fam house,trailer
+dwelown,pays rent,own or is buying,other
+wordb,correct,correct,incorrect
+worde,correct,,correct
+wordi,correct,correct,correct
+wordj,incorrect,incorrect,correct
+wordsum,c,,e
+GENDER1,female,male,male
+MAR1,divorced,never married,divorced
+OLD2,e,,d
+OLD3,e,,e
+OLD4,e,e,b
+OLD5,e,,e
+OLD7,e,,c
+OLD10,e,,b
+OLD11,e,e,c
+OLD12,e,e,b
+hefinfo,1st person,1st person,3rd person
+hhrace,white,,amer indian
+HHTYPE1,single adult,other family w children,"cohab couple, no children"
+famgen,1 gen,"2 gens, children","2 gens, parents"
+visitors,no visitors,,2 visitors
+dateintv,810,,520
+PAISCO88,c,c,d
+MAISCO88,c,,b
+MAISCO08,waiters,,manufacturing managers
+SEI10,c,,d
+SEI10INC,d,,c
+PASEI10,c,,c
+PASEI10EDUC,b,c,b
+MASEI10,c,d,b
+MASEI10INC,b,,d
+SPSEI10,e,e,b
+COPRES105PLUS,e,e,b
+uswary,yes,,no
+cohort,c,c,a
+WHOELSE1,no,no,no
+WHOELSE3,no,,yes
+feeused,"yes, money",,no
+intyrs,23,,13
+ballot,ballot a,,ballot c
+huadd,yes,yes,yes
+kidsinhh,no,no,no
+incuspop,average,lower than average,higher than average
+neisafe,somewhat safe,very safe,very unsafe
+wtss,c,c,e
+vstrat,3301,3376,3318

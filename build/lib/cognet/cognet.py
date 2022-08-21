@@ -244,6 +244,7 @@ class cognet:
                 
             elif self.samples is None:
                 raise ValueError("load_data first!")
+        return self.samples
             
 
     def __variation_weight(self,
@@ -434,7 +435,7 @@ class cognet:
         # calculate from each pole to the sample, and append to array
         for index, row in self.polar_features[self.cols].iterrows():
             row = row.fillna('').values.astype(str)[:]
-            distances.append(self.distance(p, np.array(row)))
+            distances.append(qdistance(p, np.array(row), self.qnet, self.qnet))
         if return_dict is not None:
             return_dict[i] = distances
         return distances
@@ -1186,22 +1187,23 @@ def qsampled_distance(sample1,
     sample2 = qsample(sample2, qnet2, nsteps2)
     return qdistance(sample1, sample2, qnet1, qnet2)
 
-def __distfunc(sample1, sample2, qnet1, qnet2):
-    '''Compute distance between two samples
+# def __distfunc(sample1, sample2, qnet1, qnet2):
+#     '''Compute distance between two samples
 
-    Args:
-        sample1 (list[str]): sample vector 1, must have the same num of features as the qnet
-        sample2 (list[str]): sample vector 2, must have the same num of features as the qnet
-        qnet1 (quasinet object): quasinet object 1
-        qnet2 (quasinet object): quasinet object 2
+#     Args:
+#         sample1 (list[str]): sample vector 1, must have the same num of features as the qnet
+#         sample2 (list[str]): sample vector 2, must have the same num of features as the qnet
+#         qnet1 (quasinet object): quasinet object 1
+#         qnet2 (quasinet object): quasinet object 2
         
-    Returns:
-        d: qdistance
-    '''
-    return qdistance(sample1, sample2, qnet1, qnet2)
+#     Returns:
+#         d: qdistance
+#     '''
+#     return qdistance(sample1, sample2, qnet1, qnet2)
 
 def distfunc_line(index, 
                   samples_as_strings,
+                  qnet,
                   return_dict=None):
     '''compute the distance for a single sample against all other samples
 
@@ -1212,13 +1214,13 @@ def distfunc_line(index,
     Return:
         line: float, numpy.ndarray
     '''
-    sample_size = samples_as_strings.size
+    sample_size = len(samples_as_strings)
     line = np.zeros(sample_size)
     sample_string = samples_as_strings[index]
     # calculate qdistance for one line of the diagonal matrix
-    for j in range(sample_size):
+    for j in range(sample_size-1):
         if j > index:
-            line[j] = __distfunc(samples_as_strings[j], sample_string)
+            line[j] = qdistance(samples_as_strings[j], sample_string, qnet, qnet)
     
     if return_dict is not None:
         return_dict[index] = line
@@ -1227,6 +1229,7 @@ def distfunc_line(index,
 
 def distfunc_multiples(outfile,
                        samples,
+                       qnet,
                        processes=6):
     """compute distance matrix for all samples in the dataset
 
@@ -1238,7 +1241,7 @@ def distfunc_multiples(outfile,
     Returns:
         result: pandas.DataFrame containing distance matrix
     """
-    samples = samples.fillna("").values.astype(str)
+    samples = pd.DataFrame(samples).fillna("").values.astype(str)
     samples_as_strings = samples
     cols = [i for i in range(len(samples))]
     result = mp_compute(samples,
@@ -1246,7 +1249,7 @@ def distfunc_multiples(outfile,
                         distfunc_line,
                         cols,
                         outfile,
-                        args=[samples_as_strings])
+                        args=[samples_as_strings,qnet])
     
     # format and save resulting dict, and tranpose symmetrical distance matrix
     result = result.to_numpy()
