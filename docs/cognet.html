@@ -361,7 +361,7 @@ class cognet:
                 
         # random sampling using Qnet qsampling
         elif type == &#34;null&#34;:
-            null_array = np.zeros((len(samples_.columns),), dtype=str)
+            null_array = np.array([&#39;&#39;]*len(samples_.columns)).astype(&#39;U100&#39;)
             args = [[null_array, steps] for i in range(n)]
             qsamples = pqdm(args, self.qsampling, n_jobs=n_jobs, argument_type=&#39;args&#39;) 
             
@@ -1854,7 +1854,7 @@ def distfunc_multiples(outfile,
                 
         # random sampling using Qnet qsampling
         elif type == &#34;null&#34;:
-            null_array = np.zeros((len(samples_.columns),), dtype=str)
+            null_array = np.array([&#39;&#39;]*len(samples_.columns)).astype(&#39;U100&#39;)
             args = [[null_array, steps] for i in range(n)]
             qsamples = pqdm(args, self.qsampling, n_jobs=n_jobs, argument_type=&#39;args&#39;) 
             
@@ -4036,7 +4036,7 @@ mask_</p></div>
             
     # random sampling using Qnet qsampling
     elif type == &#34;null&#34;:
-        null_array = np.zeros((len(samples_.columns),), dtype=str)
+        null_array = np.array([&#39;&#39;]*len(samples_.columns)).astype(&#39;U100&#39;)
         args = [[null_array, steps] for i in range(n)]
         qsamples = pqdm(args, self.qsampling, n_jobs=n_jobs, argument_type=&#39;args&#39;) 
         

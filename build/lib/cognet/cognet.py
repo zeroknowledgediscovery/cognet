@@ -332,7 +332,7 @@ class cognet:
                 
         # random sampling using Qnet qsampling
         elif type == "null":
-            null_array = np.zeros((len(samples_.columns),), dtype=str)
+            null_array = np.array(['']*len(samples_.columns)).astype('U100')
             args = [[null_array, steps] for i in range(n)]
             qsamples = pqdm(args, self.qsampling, n_jobs=n_jobs, argument_type='args') 
             
